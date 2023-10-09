@@ -8,6 +8,7 @@ const myProfile: Profile = new Profile(
 	["Lost Melody", "王牌餅乾"],
 	["CTF", "DLUT"],
 	[
+		["本站", "https://lost-melody.github.io"],
 		["博客", "https://www.cnblogs.com/lost-melody"],
 		["雞蛋餅輸入法", "https://github.com/lost-melody/rime-smyh"],
 	],
@@ -17,7 +18,7 @@ const myProfile: Profile = new Profile(
 const friendLinks: Profile[] = [
 	new Profile(
 		"https://github.com/forfudan",
-		"https://avatars.githubusercontent.com/u/12560439",
+		"https://zhuyuhao.com/img/zhuyuhao.jpg",
 		["forFudan", "夢澤閑客"],
 		["金融學博士", "復旦大學", "荷蘭銀行"],
 		[
@@ -28,7 +29,7 @@ const friendLinks: Profile[] = [
 				"https://www.zhihu.com/column/c_1621352649865043968",
 			],
 		],
-		["荷蘭銀行高級量化模型驗証師", "宇浩輸入法作者", "標準上海話簡明教程作者"]
+		["荷蘭銀行高級量化模型驗證師", "宇浩輸入法作者", "標準上海話簡明教程作者"]
 	),
 	new Profile(
 		"https://github.com/loora1n",
