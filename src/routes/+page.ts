@@ -20,7 +20,7 @@ const friendLinks: Profile[] = [
 		"https://github.com/forfudan",
 		"https://zhuyuhao.com/img/zhuyuhao.jpg",
 		["forFudan", "夢澤閑客"],
-		["金融學博士", "復旦大學", "荷蘭銀行"],
+		["金融學博士", "復旦大學"],
 		[
 			["主頁", "https://zhuyuhao.com"],
 			["宇浩輸入法", "https://zhuyuhao.com/yuhao/"],
@@ -29,7 +29,7 @@ const friendLinks: Profile[] = [
 				"https://www.zhihu.com/column/c_1621352649865043968",
 			],
 		],
-		["荷蘭銀行高級量化模型驗證師", "宇浩輸入法作者", "標準上海話簡明教程作者"]
+		["宇浩輸入法作者", "標準上海話簡明教程作者"]
 	),
 	new Profile(
 		"https://github.com/loora1n",
