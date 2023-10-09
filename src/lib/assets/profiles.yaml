@@ -1,0 +1,40 @@
+profiles:
+  - github: lost-melody
+    avatar: https://avatars.githubusercontent.com/u/32810294
+    labels: [ Lost Melody, 王牌餅乾 ]
+    badges: [ CTF, DLUT ]
+    desc:
+      - Go語言後端工程師
+      - 雞蛋餅輸入法開發者
+      - 倉輸入法佈局編輯器
+    links:
+      - label: 本頁
+        address: https://lost-melody.github.io
+      - label: 博客
+        address: https://www.cnblogs.com/lost-melody
+      - label: 雞蛋餅輸入法
+        address: https://github.com/lost-melody/rime-smyh
+  - github: forfudan
+    avatar: https://zhuyuhao.com/img/zhuyuhao.jpg
+    labels: [ forFudan, 夢澤閑客]
+    badges: [ 金融學博士, 復旦大學 ]
+    desc: [ 宇浩輸入法作者, 標準上海話簡明教程作者 ]
+    links:
+      - label: 主頁
+        address: https://zhuyuhao.com
+      - label: 宇浩輸入法
+        address: https://zhuyuhao.com/yuhao/
+      - label: 上海話簡明教程
+        address: https://www.zhihu.com/column/c_1621352649865043968
+  - github: loora1n
+    avatar: https://avatars.githubusercontent.com/u/102774816
+    labels: [ Loora1N, 鷺雨 ]
+    badges: [ Scr1w隧長, CTF, DLUT ]
+    desc:
+      - PWN🖐️ from @DLUT
+      - Scr1w, Double-S, 大吉北！
+      - fuzz, Linux kernal, IOT 及虚擬化
+      - 藝術就是PWN🎆
+    links:
+      - label: Loora1N's Blog
+        address: https://loora1n.github.io

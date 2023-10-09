@@ -1,12 +1,16 @@
 <script lang="ts">
     import { Avatar } from "@skeletonlabs/skeleton";
+    import type { Profile } from "./AvatarCard";
 
-    export var src: string;
-    export var href: string;
-    export var labels: string[] = [];
-    export var badges: string[] = [];
-    export var links: [string, string][] = [];
-    export var descs: string[] = [];
+    export var profile: Profile;
+    var target = profile.github !== "" ? "_blank" : "_self";
+    var href =
+        profile.github !== "" ? "https://github.com/" + profile.github : "/";
+    var src = profile.avatar;
+    var labels = profile.labels;
+    var badges = profile.badges;
+    var links = profile.links;
+    var desc = profile.desc;
 </script>
 
 <div
@@ -14,7 +18,7 @@
 >
     <!-- 頭像, 名稱及主頁鏈接 -->
     <a
-        target="_blank"
+        {target}
         {href}
         class="flex gap-2 p-1 flex-row hover:variant-soft rounded-full justify-center items-center"
     >
@@ -38,17 +42,17 @@
         <div class="flex gap-1">
             {#each links as link}
                 <a
-                    target="_blank"
-                    href={link[1]}
+                    target={link.address.startsWith("/") ? "_self" : "_blank"}
+                    href={link.address}
                     class="badge variant-ghost hover:variant-ringed"
                 >
-                    {link[0]}
+                    {link.label}
                 </a>
             {/each}
         </div>
     {/if}
     <!-- 個人信息 -->
-    {#each descs as desc}
+    {#each desc as desc}
         <p class="text-center">{desc}</p>
     {/each}
 </div>

@@ -1,25 +1,17 @@
 <script lang="ts">
-  import type { PageData } from "./$types";
   import AvatarCard from "$lib/Card/AvatarCard.svelte";
   import type { Profile } from "$lib/Card/AvatarCard";
+  import { profilesFromYaml } from "$lib/Card/AvatarCard";
 
-  export var data: PageData;
+  // 導入 yaml 文件數據
+  import profilesYaml from "$lib/assets/profiles.yaml?raw";
 
-  // 個人資料
-  const myProfile: Profile = data.myProfile;
-  // 友情鏈接
-  const links: Profile[] = [myProfile, ...data.friendLinks];
+  // 資料卡列表
+  var profiles: Profile[] = profilesFromYaml(profilesYaml);
 </script>
 
 <div class="flex flex-wrap p-4 gap-4 justify-center">
-  {#each links as link}
-    <AvatarCard
-      href={link.href}
-      src={link.src}
-      labels={link.labels}
-      badges={link.badges}
-      links={link.links}
-      descs={link.descs}
-    />
+  {#each profiles as profile}
+    <AvatarCard {profile} />
   {/each}
 </div>
