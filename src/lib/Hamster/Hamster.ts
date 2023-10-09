@@ -168,7 +168,7 @@ export class Row {
 
 export class Keyboard {
     id: number = Date.now();
-    name: string = "";
+    name: string = "鍵盤";
     rows: Row[] = [];
     buttonInsets: ButtonInsets = new ButtonInsets();
 };
