@@ -4,7 +4,7 @@
     <!-- 第一個餅, 由一個正圓構成 -->
     <circle
         cx="15" cy="12" r="10"
-        stroke="black" fill="white"
+        stroke="black" stroke-width="1.5" fill="white"
     />
 
     <!-- 第一個餅上的小點點, 由一堆實心點構成 -->
@@ -22,8 +22,7 @@
             A 3 3 0 0 1 23 17
             A 3 3 0 0 1 20 13
             A 3 3 0 0 1 17 10"
-        stroke="black"
-        fill="white"
+        stroke="black" stroke-width="1.5" fill="white"
     />
 
     <!-- 第二個餅上的小點點, 由一批實心點構成 -->
