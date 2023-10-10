@@ -23,14 +23,6 @@ export enum ActionType {
     nextKeyboard = "nextKeyboard",
 };
 
-export enum WidthType {
-    input = "input",
-    inputPercentage = "inputPercentage",
-    percentage = "percentage",
-    points = "points",
-    available = "available",
-};
-
 export enum KeyboardType {
     alphabetic = "alphabetic",
     classifySymbolic = "classifySymbolic",
@@ -102,18 +94,6 @@ export class Action {
     }
 };
 
-export class KeyWidth {
-    type: WidthType = WidthType.input;
-    width: number = 1;
-
-    clone(): KeyWidth {
-        let width = new KeyWidth();
-        width.type = this.type;
-        width.width = this.width;
-        return width;
-    }
-};
-
 export class ButtonInsets {
     expr: boolean = false;
     value: number = 0;
@@ -140,14 +120,14 @@ export class Swipe {
 export class Key {
     id: number = Date.now();
     action: Action = new Action();
-    width: KeyWidth = new KeyWidth();;
+    /** 行寛百分比, 1~100 */
+    width: number = 10;
     label: string = "";
     swipe: { up?: Swipe, down?: Swipe } = {};
 
     clone(): Key {
         let key = new Key();
         key.action = this.action.clone();
-        key.width = this.width.clone();
         key.label = this.label;
         if (this.swipe.up) {
             key.swipe.up = this.swipe.up.clone();

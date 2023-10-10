@@ -2,13 +2,14 @@
     import Icon from "@iconify/svelte";
     import type { ButtonInsets } from "./Hamster";
 
+    /** 按鍵内距綁定值 */
     export var buttonInsets: ButtonInsets;
 
     const icons: [string, string, string, string] = [
-        "mdi:arrow-left",
-        "mdi:arrow-down",
-        "mdi:arrow-up",
-        "mdi:arrow-right",
+        "mdi:arrow-collapse-left",
+        "mdi:arrow-collapse-down",
+        "mdi:arrow-collapse-up",
+        "mdi:arrow-collapse-right",
     ];
     const [min, max, step] = [0x0, 0xf, 0x1];
 </script>
@@ -17,8 +18,8 @@
     <!-- 表達式内距 -->
     <div class="grid grid-cols-2 gap-1">
         {#each [0, 3, 2, 1] as index}
-            <div class="input-group flex justify-center items-center">
-                <Icon height="24" icon={icons[index]} />
+            <div class="input-group flex px-2 justify-center items-center">
+                <Icon height="20" icon={icons[index]} />
                 <input
                     type="number"
                     bind:value={buttonInsets.insets[index]}
@@ -33,7 +34,7 @@
 {:else}
     <!-- 數值内距 -->
     <div class="input-group flex justify-center items-center">
-        <Icon height="24" icon="mdi:arrow-left-right" />
+        <Icon height="24" icon="mdi:arrow-collapse" />
         <input
             type="number"
             bind:value={buttonInsets.value}
