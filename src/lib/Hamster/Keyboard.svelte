@@ -4,12 +4,30 @@
     import { Key, Row } from "./Hamster";
     import BtnInsetsEdit from "./ButtonInsets.svelte";
     import RowEdit from "./Row.svelte";
+    import KeyEdit from "./Key.svelte";
 
     /** 按鍵區域寛度 */
     var kbdAreaWidth: number = 512;
 
     /** 當前正在編輯的鍵盤 */
     export var keyboard: Keyboard;
+
+    /** 當前選中的按鍵: 某行某列 */
+    var selected: { row: number; col: number } = { row: 0, col: 0 };
+    /** 更新選中的按鍵坐標 */
+    function select(row: number, col: number): void {
+        selected = { row, col };
+    }
+    /** 判定當前坐標是否有效 */
+    function selectedValid(
+        selected: { row: number; col: number },
+        keyboard: Keyboard
+    ): boolean {
+        return (
+            selected.row < keyboard.rows.length &&
+            selected.col < keyboard.rows[selected.row].keys.length
+        );
+    }
 
     /** 新增一行按鍵 */
     function newRow(): void {
@@ -30,12 +48,30 @@
     function newButton(index: number): void {
         keyboard.rows[index].keys = [...keyboard.rows[index].keys, new Key()];
     }
+    /** 删除按鍵 */
+    function delButton(): void {
+        if (selectedValid(selected, keyboard)) {
+            keyboard.rows[selected.row].keys = keyboard.rows[selected.row].keys
+                .slice(0, selected.col)
+                .concat(
+                    keyboard.rows[selected.row].keys.slice(selected.col + 1)
+                );
+        }
+    }
 
-    /** 當前選中的按鍵: 某行某列 */
-    var selected: { row: number; col: number } = { row: 0, col: 0 };
-    /** 更新選中的按鍵坐標 */
-    function select(row: number, col: number): void {
-        selected = { row, col };
+    /** 當前選中的按鍵對象 */
+    var selectedKey: Key;
+    /** 無可用按鍵時, 用這個 */
+    const theHiddenKey = new Key();
+    // 坐標無效時, 置零
+    $: if (!selectedValid(selected, keyboard)) {
+        selected = { row: 0, col: 0 };
+    }
+    // 綁定選中按鍵
+    $: if (selectedValid(selected, keyboard)) {
+        selectedKey = keyboard.rows[selected.row].keys[selected.col];
+    } else {
+        selectedKey = theHiddenKey;
     }
 </script>
 
@@ -56,6 +92,13 @@
         <!-- 鍵盤内距編輯框 -->
         <BtnInsetsEdit bind:buttonInsets={keyboard.buttonInsets} />
     </div>
+
+    <KeyEdit
+        bind:key={selectedKey}
+        on:delkey={delButton}
+        on:moveleft={() => {}}
+        on:moveright={() => {}}
+    />
 
     <!-- 鍵盤行編輯控件 -->
     <div class="flex flex-col gap-2">
@@ -85,6 +128,7 @@
                 <Icon icon="mdi:table-row-add-after" />
                 <span> 新增一行 </span>
             </button>
+            <span> 區域寛度 </span>
             <input
                 type="number"
                 bind:value={kbdAreaWidth}
@@ -94,4 +138,9 @@
             />
         </div>
     </div>
+
+    <!-- WIP 提示 -->
+    <span class="text-center text-xs">
+        倉輸入法佈局生成器正在重製中 <br /> 當前無法使用, 歡迎 PR!
+    </span>
 </div>

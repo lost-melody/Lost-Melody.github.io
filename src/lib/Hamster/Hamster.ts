@@ -47,7 +47,7 @@ export enum ShortCmd {
 
 export class Action {
     type: string = ActionType.character;
-    text: string = "";
+    text: string = "c";
     kbd: string = KeyboardType.alphabetic;
     cmd: string = ShortCmd.clear;
 
