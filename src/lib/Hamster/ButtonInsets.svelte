@@ -1,65 +1,47 @@
 <script lang="ts">
+    import Icon from "@iconify/svelte";
     import type { ButtonInsets } from "./Hamster";
 
     export var buttonInsets: ButtonInsets;
-    $: insets = buttonInsets.insets;
 
+    const icons: [string, string, string, string] = [
+        "mdi:arrow-left",
+        "mdi:arrow-down",
+        "mdi:arrow-up",
+        "mdi:arrow-right",
+    ];
     const [min, max, step] = [0x0, 0xf, 0x1];
 </script>
 
-<!-- 内距值輸入框 -->
-<div class="grid grid-cols-3 grid-rows-3 gap-1">
+{#if buttonInsets.expr}
+    <!-- 表達式内距 -->
+    <div class="grid grid-cols-2 gap-1">
+        {#each [0, 3, 2, 1] as index}
+            <div class="input-group flex justify-center items-center">
+                <Icon height="24" icon={icons[index]} />
+                <input
+                    type="number"
+                    bind:value={buttonInsets.insets[index]}
+                    class="w-16 px-2 py-1"
+                    {min}
+                    {max}
+                    {step}
+                />
+            </div>
+        {/each}
+    </div>
+{:else}
     <!-- 數值内距 -->
-    <input
-        type="number"
-        bind:value={buttonInsets.value}
-        disabled={buttonInsets.expr}
-        class="input w-16 px-2 py-1 row-start-2 col-start-2"
-        placeholder="0"
-        {min}
-        {max}
-        {step}
-    />
-
-    <!-- 表達式内距: 左下上右 -->
-    <input
-        type="number"
-        bind:value={insets.left}
-        disabled={!buttonInsets.expr}
-        class="input w-16 px-2 py-1 row-start-2 col-start-1"
-        placeholder="L"
-        {min}
-        {max}
-        {step}
-    />
-    <input
-        type="number"
-        bind:value={insets.bottom}
-        disabled={!buttonInsets.expr}
-        class="input w-16 px-2 py-1 row-start-3 col-start-2"
-        placeholder="B"
-        {min}
-        {max}
-        {step}
-    />
-    <input
-        type="number"
-        bind:value={insets.top}
-        disabled={!buttonInsets.expr}
-        class="input w-16 px-2 py-1 row-start-1 col-start-2"
-        placeholder="T"
-        {min}
-        {max}
-        {step}
-    />
-    <input
-        type="number"
-        bind:value={insets.right}
-        disabled={!buttonInsets.expr}
-        class="input w-16 px-2 py-1 row-start-2 col-start-3"
-        placeholder="R"
-        {min}
-        {max}
-        {step}
-    />
-</div>
+    <div class="input-group flex justify-center items-center">
+        <Icon height="24" icon="mdi:arrow-left-right" />
+        <input
+            type="number"
+            bind:value={buttonInsets.value}
+            class="w-32 px-2 py-1"
+            placeholder="0"
+            {min}
+            {max}
+            {step}
+        />
+    </div>
+{/if}

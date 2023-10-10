@@ -117,9 +117,8 @@ export class KeyWidth {
 export class ButtonInsets {
     expr: boolean = false;
     value: number = 0;
-    insets: { left: number; right: number; top: number; bottom: number; } = {
-        left: 0, right: 0, top: 0, bottom: 0,
-    };
+    /** 左/下/上/右 */
+    insets: [number, number, number, number] = [0, 0, 0, 0];
 }
 
 export class Swipe {
