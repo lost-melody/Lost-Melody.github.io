@@ -76,6 +76,7 @@ export enum ShortCmd {
     trad = "繁简切换",
     eng = "中英切换",
     begin = "行首",
+    end = "行尾",
     second = "次选上屏",
     third = "三选上屏",
     schema = "上个输入方案",
@@ -235,9 +236,11 @@ export class Key {
             obj.label = this.label;
         }
         obj.swipe = [];
-        for (var swipe of this.swipe) {
-            if (swipe.action.type !== ActionType.none) {
-                obj.swipe.push(swipe.toObject());
+        for (var i = 0; i < this.swipe.length; i++) {
+            if (this.swipe[i].action.type !== ActionType.none) {
+                var swipe: any = this.swipe[i].toObject();
+                swipe.direction = Object.values(Direction)[i];
+                obj.swipe.push(swipe);
             }
         }
         return obj;

@@ -61,6 +61,31 @@
             keyboard.rows[selected.row].keys = keyboard.rows[selected.row].keys;
         }
     }
+    /** 左移按鍵 */
+    function moveBtnLeft(): void {
+        if (selected.col > 0 && selectedValid(selected, keyboard)) {
+            var [i, j] = [selected.row, selected.col];
+            [keyboard.rows[i].keys[j], keyboard.rows[i].keys[j - 1]] = [
+                keyboard.rows[i].keys[j - 1],
+                keyboard.rows[i].keys[j],
+            ];
+            selected.col--;
+        }
+    }
+    /** 右移按鍵 */
+    function moveBtnRight(): void {
+        if (
+            selectedValid(selected, keyboard) &&
+            selected.col < keyboard.rows[selected.row].keys.length - 1
+        ) {
+            var [i, j] = [selected.row, selected.col];
+            [keyboard.rows[i].keys[j], keyboard.rows[i].keys[j + 1]] = [
+                keyboard.rows[i].keys[j + 1],
+                keyboard.rows[i].keys[j],
+            ];
+            selected.col++;
+        }
+    }
 
     /** 當前選中的按鍵對象 */
     var selectedKey: Key;
@@ -114,8 +139,8 @@
     <KeyEdit
         bind:key={selectedKey}
         on:delkey={delButton}
-        on:moveleft={() => {}}
-        on:moveright={() => {}}
+        on:moveleft={moveBtnLeft}
+        on:moveright={moveBtnRight}
     />
 
     <!-- 鍵盤行編輯控件 -->

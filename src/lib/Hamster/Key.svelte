@@ -87,7 +87,6 @@
     </div>
 
     <!-- 按鍵動作按鈕 -->
-    <!--
     <div class="flex items-center gap-1">
         <div class="input-group flex px-2 items-center">
             <Icon height="20" icon="mdi:arrow-left" />
@@ -98,5 +97,4 @@
             <Icon height="20" icon="mdi:arrow-right" />
         </div>
     </div>
-    -->
 </div>
