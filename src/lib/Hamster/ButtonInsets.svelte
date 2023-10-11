@@ -11,7 +11,7 @@
         "mdi:arrow-collapse-up",
         "mdi:arrow-collapse-right",
     ];
-    const [min, max, step] = [0x0, 0xf, 0x1];
+    const [min, max] = [0x0, 0xf];
 </script>
 
 {#if buttonInsets.expr}
@@ -26,7 +26,6 @@
                     class="w-16 px-2 py-1"
                     {min}
                     {max}
-                    {step}
                 />
             </div>
         {/each}
@@ -42,7 +41,6 @@
             placeholder="0"
             {min}
             {max}
-            {step}
         />
     </div>
 {/if}

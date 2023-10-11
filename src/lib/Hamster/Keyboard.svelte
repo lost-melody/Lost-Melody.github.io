@@ -36,9 +36,8 @@
     /** 删除一行按鍵 */
     function delRow(index: number): void {
         // 從列表中移除選定的按鍵行
-        keyboard.rows = keyboard.rows
-            .slice(0, index)
-            .concat(keyboard.rows.slice(index + 1));
+        keyboard.rows.splice(index, 1);
+        keyboard.rows = keyboard.rows;
         // 列表爲空時補充一個
         if (keyboard.rows.length === 0) {
             keyboard.rows = [new Row()];
@@ -51,11 +50,8 @@
     /** 删除按鍵 */
     function delButton(): void {
         if (selectedValid(selected, keyboard)) {
-            keyboard.rows[selected.row].keys = keyboard.rows[selected.row].keys
-                .slice(0, selected.col)
-                .concat(
-                    keyboard.rows[selected.row].keys.slice(selected.col + 1)
-                );
+            keyboard.rows[selected.row].keys.splice(selected.col, 1);
+            keyboard.rows[selected.row].keys = keyboard.rows[selected.row].keys;
         }
     }
 
@@ -65,7 +61,20 @@
     const theHiddenKey = new Key();
     // 坐標無效時, 置零
     $: if (!selectedValid(selected, keyboard)) {
-        selected = { row: 0, col: 0 };
+        let found = false;
+        for (let i = 0; i < keyboard.rows.length; i++) {
+            for (let j = 0; j < keyboard.rows[i].keys.length; j++) {
+                selected = { row: i, col: j };
+                found = true;
+                break;
+            }
+            if (found) {
+                break;
+            }
+        }
+        if (!found) {
+            selected = { row: 0, col: 0 };
+        }
     }
     // 綁定選中按鍵
     $: if (selectedValid(selected, keyboard)) {

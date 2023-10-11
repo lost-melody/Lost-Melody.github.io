@@ -3,11 +3,22 @@ import {} from "yaml";
 // 一些模型定義
 // https://github.com/imfuxiao/Hamster/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%AE%E7%9B%98%E5%B8%83%E5%B1%80
 
+var id: number = Date.now();
+
+function newId(): number {
+    id++;
+    return id;
+}
+
+/** 方向枚舉 */
 export enum Direction {
-    up = "up",
+    left = "left",
     down = "down",
+    up = "up",
+    right = "right",
 };
 
+/** 動作類型枚舉 */
 export enum ActionType {
     backspace = "backspace",
     enter = "enter",
@@ -23,6 +34,23 @@ export enum ActionType {
     nextKeyboard = "nextKeyboard",
 };
 
+/** 動作類型名稱映射表 */
+export var ActionNames: { [key: string]: string } = {
+    [ActionType.backspace]: "退格",
+    [ActionType.enter]: "回車",
+    [ActionType.shift]: "大寫切換",
+    [ActionType.tab]: "縮進",
+    [ActionType.space]: "空格",
+    [ActionType.character]: "字母",
+    [ActionType.characterMargin]: "佔位字母",
+    [ActionType.keyboardType]: "切換鍵盤",
+    [ActionType.symbol]: "快捷短語",
+    [ActionType.shortCommand]: "快捷命令",
+    [ActionType.none]: "無",
+    [ActionType.nextKeyboard]: "系統輸入法",
+};
+
+/** 鍵盤類型枚舉 */
 export enum KeyboardType {
     alphabetic = "alphabetic",
     classifySymbolic = "classifySymbolic",
@@ -33,6 +61,18 @@ export enum KeyboardType {
     emojis = "emojis",
 };
 
+/** 鍵盤類型名稱映射表 */
+export var KeyboardNames: { [key: string]: string } = {
+    [KeyboardType.alphabetic]: "26鍵英文鍵盤",
+    [KeyboardType.classifySymbolic]: "分類符號鍵盤",
+    [KeyboardType.chinese]: "26鍵中文鍵盤",
+    [KeyboardType.chineseNineGrid]: "九宫中文鍵盤",
+    [KeyboardType.numericNineGrid]: "九宫數字鍵盤",
+    [KeyboardType.custom]: "自定義鍵盤",
+    [KeyboardType.emojis]: "Emoji鍵盤",
+}
+
+/** 快捷命令枚舉 */
 export enum ShortCmd {
     clear = "重输",
     trad = "繁简切换",
@@ -45,11 +85,12 @@ export enum ShortCmd {
     switcher = "RimeSwitcher",
 };
 
+/** 按鍵動作 */
 export class Action {
-    type: string = ActionType.character;
-    text: string = "c";
-    kbd: string = KeyboardType.alphabetic;
-    cmd: string = ShortCmd.clear;
+    type: ActionType = ActionType.none;
+    text: string = "";
+    kbd: KeyboardType = KeyboardType.alphabetic;
+    cmd: ShortCmd = ShortCmd.clear;
 
     display(): string {
         switch (this.type) {
@@ -60,18 +101,29 @@ export class Action {
             case ActionType.backspace:
                 return "⌫";
             case ActionType.enter:
-                return "↩";
+                return "↵";
             case ActionType.shift:
                 return "⇧";
             case ActionType.tab:
-                return "⇥";
+                return "-⇥";
             case ActionType.space:
-                return "␣";
+                return "⌞___⌟";
             case ActionType.keyboardType:
-                if (this.kbd === KeyboardType.custom) {
-                    return this.text;
-                } else {
-                    return this.kbd;
+                switch (this.kbd) {
+                    case KeyboardType.alphabetic:
+                        return "En";
+                    case KeyboardType.classifySymbolic:
+                        return "#+=";
+                    case KeyboardType.chinese:
+                        return "漢²⁶";
+                    case KeyboardType.chineseNineGrid:
+                        return "漢⁹";
+                    case KeyboardType.numericNineGrid:
+                        return "123";
+                    case KeyboardType.custom:
+                        return this.text;
+                    case KeyboardType.emojis:
+                        return "😀";
                 }
             case ActionType.shortCommand:
                 return this.cmd;
@@ -94,6 +146,7 @@ export class Action {
     }
 };
 
+/** 按鍵内距 */
 export class ButtonInsets {
     expr: boolean = false;
     value: number = 0;
@@ -101,8 +154,9 @@ export class ButtonInsets {
     insets: [number, number, number, number] = [0, 0, 0, 0];
 }
 
+/** 按鍵劃動 */
 export class Swipe {
-    id: number = Date.now();
+    id: number = newId();
     action: Action = new Action();
     label: string = "";
     display: boolean = true;
@@ -117,36 +171,47 @@ export class Swipe {
     }
 };
 
+/** 按鍵属性 */
 export class Key {
-    id: number = Date.now();
+    id: number = newId();
     action: Action = new Action();
     /** 行寛百分比, 1~100 */
     width: number = 10;
     label: string = "";
-    swipe: { up?: Swipe, down?: Swipe } = {};
+    swipe: [Swipe, Swipe, Swipe, Swipe];
+
+    constructor() {
+        this.action.type = ActionType.character;
+        this.action.text = "c";
+        this.swipe = [
+            new Swipe(),
+            new Swipe(),
+            new Swipe(),
+            new Swipe(),
+        ];
+    }
 
     clone(): Key {
         let key = new Key();
         key.action = this.action.clone();
         key.label = this.label;
-        if (this.swipe.up) {
-            key.swipe.up = this.swipe.up.clone();
-        }
-        if (this.swipe.down) {
-            key.swipe.down = this.swipe.down.clone();
+        for (var i = 0; i < this.swipe.length; i++) {
+            key.swipe[i] = this.swipe[i].clone();
         }
         return key;
     }
 };
 
+/** 按鍵行属性 */
 export class Row {
-    id: number = Date.now();
+    id: number = newId();
     keys: Key[] = [];
     rowHeight: number = 0;
 };
 
+/** 鍵盤属性 */
 export class Keyboard {
-    id: number = Date.now();
+    id: number = newId();
     name: string = "鍵盤";
     rows: Row[] = [];
     buttonInsets: ButtonInsets = new ButtonInsets();
