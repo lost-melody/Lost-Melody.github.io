@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { CodeBlock } from "@skeletonlabs/skeleton";
     import Icon from "@iconify/svelte";
     import YAML from "yaml";
     import { Keyboard } from "$lib/Hamster/Hamster";
@@ -10,12 +11,13 @@
     var keyboards: Keyboard[] = [new Keyboard()];
     /** 當前正在編輯的鍵盤, 在標簽組焦點轉移或鍵盤增删時更新 */
     $: keyboard = keyboards[selected];
-    /** 正在爲當前鍵盤重命名 */
-    var renaming: boolean = false;
-    /** 正在删除當前鍵盤 */
-    var deleting: boolean = false;
+    /** 當前操作: 重命名, 删除 */
+    var opMode: number = 0;
     /** 導出的 yaml 數據 */
     var exportData = "";
+
+    // 當前操作類型: 重命名, 删除
+    const [modeRename, modeDelete] = [1, 2];
 
     /** 導出爲 yaml 文檔 */
     function exportYaml(): void {
@@ -31,9 +33,16 @@
         // 聚焦到新增的鍵盤
         selected = keyboards.length > 0 ? keyboards.length - 1 : 0;
     }
+    /** 準備删除鍵盤 */
+    function tryDelKbd(index: number): void {
+        if (index !== selected) {
+            selected = index;
+        }
+        opMode = opMode ? 0 : modeDelete;
+    }
     /** 删除一個鍵盤 */
     function delKeyboard(index: number): void {
-        deleting = false;
+        opMode = 0;
         // 從列表中移除選定的鍵盤
         keyboards = keyboards
             .slice(0, index)
@@ -51,10 +60,11 @@
     function clickTab(index: number): void {
         if (index === selected) {
             // 點擊本頁標簽按鈕, 編輯模式
-            renaming = true;
+            opMode = modeRename;
         } else {
             // 點擊其他頁標簽按鈕, 切換到該頁面
             selected = index;
+            opMode = 0;
         }
     }
     /** 重命名自動聚焦 */
@@ -75,10 +85,10 @@
             >
                 <!-- 圖標: 删除 or 取消 -->
                 <button
-                    on:click={() => (deleting = !deleting)}
+                    on:click={() => tryDelKbd(index)}
                     class="p-1 rounded-full hover:variant-ringed"
                 >
-                    {#if index === selected && deleting}
+                    {#if index === selected && opMode === modeDelete}
                         <Icon height="20" icon="mdi:cancel" />
                     {:else}
                         <Icon height="20" icon="mdi:close" />
@@ -86,13 +96,13 @@
                 </button>
 
                 <!-- 鍵盤名 -->
-                {#if index === selected && renaming}
+                {#if index === selected && opMode === modeRename}
                     <!-- 編輯鍵盤名 -->
                     <input
                         bind:value={keyboard.name}
                         placeholder="天行鍵"
                         use:autoFocus
-                        on:blur={() => (renaming = false)}
+                        on:blur={() => (opMode = 0)}
                         class="bg-transparent h-10 p-1"
                     />
                 {:else}
@@ -103,7 +113,7 @@
                 {/if}
 
                 <!-- 圖標: 鍵盤 or 删除 -->
-                {#if index === selected && deleting}
+                {#if index === selected && opMode === modeDelete}
                     <button
                         on:click={() => delKeyboard(index)}
                         class="p-1 rounded-full hover:variant-ringed"
@@ -139,10 +149,16 @@
     <hr class="!border-t-2" />
 
     <!-- 標簽頁内容 -->
-    <div class="p-4 flex flex-col items-center">
+    <div class="p-4 gap-2 flex flex-col items-center">
         {#if selected === -1}
             <!-- 導出代碼 -->
-            <pre class="pre variant-soft">{exportData}</pre>
+            <CodeBlock
+                code={exportData}
+                language="yaml"
+                lineNumbers
+                buttonLabel="複製"
+                class="variant-ghost"
+            />
         {:else}
             <!-- 内容面板 -->
             {#if keyboard}
