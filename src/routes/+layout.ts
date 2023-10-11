@@ -5,8 +5,8 @@ export const prerender: boolean = true;
 // 導航列表
 var navigations: [string, string][] = [
 	["主頁", "/"],
-	["倉·工具", "/pages/hamster-tools"],
-	["雞蛋餅", "/pages/wafel"],
+	["倉·工具", "/hamster-tools"],
+	["雞蛋餅", "/wafel"],
 ];
 // 鳴謝列表
 var credits: [string, string][] = [

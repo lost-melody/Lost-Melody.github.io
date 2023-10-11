@@ -101,7 +101,7 @@
                     "
                     on:click={() => select(index)}
                 >
-                    {key.action.display()}
+                    {key.label ? key.label : key.action.display()}
                 </button>
             </div>
         {/each}
