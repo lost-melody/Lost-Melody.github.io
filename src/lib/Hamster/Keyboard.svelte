@@ -31,7 +31,11 @@
 
     /** 新增一行按鍵 */
     function newRow(): void {
-        keyboard.rows = [...keyboard.rows, new Row()];
+        var newRow;
+        if (selected.row < keyboard.rows.length) {
+            newRow = keyboard.rows[selected.row].clone();
+        }
+        keyboard.rows = [...keyboard.rows, newRow || new Row()];
     }
     /** 删除一行按鍵 */
     function delRow(index: number): void {
@@ -41,7 +45,14 @@
     }
     /** 新增按鍵 */
     function newButton(index: number): void {
-        keyboard.rows[index].keys = [...keyboard.rows[index].keys, new Key()];
+        var newKey;
+        if (selectedValid(selected, keyboard)) {
+            newKey = keyboard.rows[selected.row].keys[selected.col].clone();
+        }
+        keyboard.rows[index].keys = [
+            ...keyboard.rows[index].keys,
+            newKey || new Key(),
+        ];
     }
     /** 删除按鍵 */
     function delButton(): void {

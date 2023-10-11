@@ -154,7 +154,7 @@ export class Action {
                 }
                 return `${this.type}(${this.kbd})`;
             case ActionType.shortCommand:
-                return `${this.type}(${this.cmd})`;
+                return `${this.type}(#${this.cmd})`;
             default:
                 return ActionType.none;
         }
@@ -173,7 +173,7 @@ export class Action {
 /** 按鍵内距 */
 export class ButtonInsets {
     expr: boolean = false;
-    value: number = 0;
+    value: number = 2;
     /** 左/下/上/右 */
     insets: [number, number, number, number] = [0, 0, 0, 0];
 }
@@ -201,6 +201,7 @@ export class Swipe {
         let swipe = new Swipe();
         swipe.action = this.action.clone();
         swipe.label = this.label;
+        swipe.display = this.display;
         swipe.processByRIME = this.processByRIME;
         return swipe;
     }
@@ -245,10 +246,9 @@ export class Key {
     clone(): Key {
         let key = new Key();
         key.action = this.action.clone();
+        key.width = this.width;
         key.label = this.label;
-        for (var i = 0; i < this.swipe.length; i++) {
-            key.swipe[i] = this.swipe[i].clone();
-        }
+        key.swipe = this.swipe.map((swipe) => swipe.clone()) as [Swipe, Swipe, Swipe, Swipe];
         return key;
     }
 };
@@ -267,6 +267,13 @@ export class Row {
         }
         return obj;
     }
+
+    clone(): Row {
+        let row = new Row();
+        row.keys = this.keys.map((key) => key.clone());
+        row.rowHeight = this.rowHeight;
+        return row;
+    }
 };
 
 /** 鍵盤属性 */
@@ -275,6 +282,64 @@ export class Keyboard {
     name: string = "鍵盤";
     rows: Row[] = [];
     buttonInsets: ButtonInsets = new ButtonInsets();
+
+    constructor() {
+        // 暫時如此初始化默認佈局
+        // 以後實現佈局導入, 再從默認文件初始化
+        this.rows = new Array(4).fill(0).map(() => new Row());
+        this.rows[0].keys = new Array(10).fill(0).map(() => new Key());
+        this.rows[1].keys = new Array(11).fill(0).map(() => new Key());
+        this.rows[2].keys = new Array(11).fill(0).map(() => new Key());
+        this.rows[3].keys = new Array(5).fill(0).map(() => new Key());
+        for (var i = 0; i < 10; i++) {
+            this.rows[0].keys[i].action.text = "qwertyuiop"[i];
+        }
+        for (var i = 0; i < 11; i++) {
+            if (i === 0 || i === 10) {
+                this.rows[1].keys[i].width = 5;
+                this.rows[1].keys[i].action.type = ActionType.none;
+            } else {
+                this.rows[1].keys[i].action.text = "asdfghjkl"[i - 1];
+            }
+        }
+        for (var i = 0; i < 11; i++) {
+            if (i === 0) {
+                this.rows[2].keys[i].width = 13;
+                this.rows[2].keys[i].action.type = ActionType.shift;
+            } else if (i === 10) {
+                this.rows[2].keys[i].width = 13;
+                this.rows[2].keys[i].action.type = ActionType.backspace;
+            } else if (i === 1 || i === 9) {
+                this.rows[2].keys[i].width = 2;
+                this.rows[2].keys[i].action.type = ActionType.none;
+            } else {
+                this.rows[2].keys[i].action.text = "zxcvbnm"[i - 2];
+            }
+        }
+        for (var i = 0; i < 5; i++) {
+            switch (i) {
+                case 0:
+                    this.rows[3].keys[i].width = 20;
+                    this.rows[3].keys[i].action.type = ActionType.keyboardType;
+                    this.rows[3].keys[i].action.kbd = KeyboardType.numericNineGrid;
+                    break;
+                case 1:
+                    this.rows[3].keys[i].action.text = ",";
+                    break;
+                case 2:
+                    this.rows[3].keys[i].width = 40;
+                    this.rows[3].keys[i].action.type = ActionType.space;
+                    break;
+                case 3:
+                    this.rows[3].keys[i].action.text = ".";
+                    break;
+                case 4:
+                    this.rows[3].keys[i].width = 20;
+                    this.rows[3].keys[i].action.type = ActionType.enter;
+                    break;
+            }
+        }
+    }
 
     toObject(): object {
         var obj: any = {};

@@ -1,7 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
     import Icon from "@iconify/svelte";
-    import type { ButtonInsets, Row } from "./Hamster";
+    import { ActionType, ButtonInsets, Row } from "./Hamster";
 
     /** 綁定按鍵行數據 */
     export var row: Row;
@@ -23,6 +23,11 @@
         } else {
             return x;
         }
+    }
+    function bgBtnDisplay(actionType: ActionType): boolean {
+        return ![ActionType.none, ActionType.characterMargin].includes(
+            actionType
+        );
     }
 
     // 寛高样式
@@ -93,10 +98,11 @@
             >
                 <button
                     class:border={index === selected}
+                    class:bg-surface-300={bgBtnDisplay(key.action.type)}
+                    class:dark:bg-surface-700={bgBtnDisplay(key.action.type)}
                     class="
                         h-full w-full rounded-md
                         border-gray-700 dark:border-gray-300
-                        bg-surface-300 dark:bg-surface-700
                         hover:bg-surface-400 hover:dark:bg-surface-800
                     "
                     on:click={() => select(index)}
