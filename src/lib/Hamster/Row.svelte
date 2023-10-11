@@ -59,14 +59,21 @@
 
 <div class="flex gap-2">
     <!-- 行高控件 -->
-    <input
+    <div
+        class:border-t={first}
+        class:rounded-t-md={first}
+        class:rounded-b-md={last}
         style={styleHeight}
-        type="number"
-        bind:value={height}
-        class="input w-20 px-2 rounded-md"
-        min={0}
-        max={maxHeight}
-    />
+        class="flex border-x border-b border-surface-500 bg-surface-200 dark:bg-surface-800"
+    >
+        <input
+            type="number"
+            bind:value={height}
+            class="w-16 px-2 h-full rounded-md bg-transparent hover:variant-ghost"
+            min={0}
+            max={maxHeight}
+        />
+    </div>
 
     <!-- 按鍵行 -->
     <div
@@ -75,7 +82,7 @@
         class:rounded-t-md={first}
         class:border-b={last}
         class:rounded-b-md={last}
-        class="flex border-x border-surface-500"
+        class="flex border-x border-b border-surface-500"
     >
         {#each row.keys as key, index (key.id)}
             <!-- 遍歷本行所有按鍵 -->
@@ -86,7 +93,12 @@
             >
                 <button
                     class:border={index === selected}
-                    class="h-full w-full rounded-md bg-surface-300 dark:bg-surface-700"
+                    class="
+                        h-full w-full rounded-md
+                        border-gray-700 dark:border-gray-300
+                        bg-surface-300 dark:bg-surface-700
+                        hover:bg-surface-400 hover:dark:bg-surface-800
+                    "
                     on:click={() => select(index)}
                 >
                     {key.action.display()}
@@ -96,10 +108,23 @@
     </div>
 
     <!-- 新增按鍵, 删除行 -->
-    <button on:click={newButton} class="btn-icon variant-ghost rounded-md">
-        <Icon icon="mdi:plus" />
-    </button>
-    <button on:click={delRow} class="btn-icon variant-ghost rounded-md">
-        <Icon color="red" icon="mdi:close" />
-    </button>
+    <div
+        class:border-t={first}
+        class:rounded-t-md={first}
+        class:rounded-b-md={last}
+        class="flex items-center border-x border-b border-surface-500 bg-surface-200 dark:bg-surface-800"
+    >
+        <button
+            on:click={newButton}
+            class="px-2 h-full rounded-md bg-transparent hover:variant-ghost"
+        >
+            <Icon icon="mdi:plus" />
+        </button>
+        <button
+            on:click={delRow}
+            class="px-2 h-full rounded-md bg-transparent hover:variant-ghost"
+        >
+            <Icon color="red" icon="mdi:close" />
+        </button>
+    </div>
 </div>

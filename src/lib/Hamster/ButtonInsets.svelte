@@ -16,8 +16,8 @@
 
 {#if buttonInsets.expr}
     <!-- 表達式内距 -->
-    <div class="grid grid-cols-2 gap-1">
-        {#each [0, 3, 2, 1] as index}
+    <div class="flex gap-1">
+        {#each [0, 1, 2, 3] as index}
             <div class="input-group flex px-2 justify-center items-center">
                 <Icon height="20" icon={icons[index]} />
                 <input

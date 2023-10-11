@@ -38,10 +38,6 @@
         // 從列表中移除選定的按鍵行
         keyboard.rows.splice(index, 1);
         keyboard.rows = keyboard.rows;
-        // 列表爲空時補充一個
-        if (keyboard.rows.length === 0) {
-            keyboard.rows = [new Row()];
-        }
     }
     /** 新增按鍵 */
     function newButton(index: number): void {
@@ -91,10 +87,12 @@
         <div class="btn-group variant-ringed h-8">
             <button
                 on:click={() => (keyboard.buttonInsets.expr = false)}
+                class:variant-ghost={!keyboard.buttonInsets.expr}
                 class="w-20">統一内距</button
             >
             <button
                 on:click={() => (keyboard.buttonInsets.expr = true)}
+                class:variant-ghost={keyboard.buttonInsets.expr}
                 class="w-24">自定義内距</button
             >
         </div>
@@ -147,9 +145,4 @@
             />
         </div>
     </div>
-
-    <!-- WIP 提示 -->
-    <span class="text-center text-xs">
-        倉輸入法佈局生成器正在重製中 <br /> 當前無法使用, 歡迎 PR!
-    </span>
 </div>

@@ -1,5 +1,6 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
+    import YAML from "yaml";
     import { Keyboard } from "$lib/Hamster/Hamster";
     import KbdEdit from "$lib/Hamster/Keyboard.svelte";
 
@@ -10,7 +11,16 @@
     /** 當前正在編輯的鍵盤, 在標簽組焦點轉移或鍵盤增删時更新 */
     $: keyboard = keyboards[selected];
     var renaming: boolean = false;
+    /** 導出的 yaml 數據 */
+    var exportData = "";
 
+    /** 導出爲 yaml 文檔 */
+    function exportYaml(): void {
+        exportData = YAML.stringify({
+            keyboards: keyboards.map((keyboard) => keyboard.toObject()),
+        });
+        selected = -1;
+    }
     /** 新增鍵盤 */
     function newKeyboard(): void {
         // 在列表末位追加
@@ -95,15 +105,37 @@
         >
             <Icon height="24" icon="mdi:plus" />
         </button>
+
+        <!-- 「導出」按鈕 -->
+        <button
+            on:click={exportYaml}
+            class:border-b-2={selected === -1}
+            class="rounded-t-lg p-2 variant-ringed hover:variant-ghost"
+        >
+            <Icon height="24" icon="mdi:export-variant" />
+        </button>
     </div>
 
     <hr class="!border-t-2" />
 
-    <div class="p-4">
-        <!-- 内容面板 -->
-        {#if keyboard}
-            <!-- 編輯當前鍵盤 -->
-            <KbdEdit bind:keyboard />
+    <!-- 標簽頁内容 -->
+    <div class="p-4 flex flex-col items-center">
+        {#if selected === -1}
+            <!-- 導出代碼 -->
+            <pre class="pre variant-soft">{exportData}</pre>
+        {:else}
+            <!-- 内容面板 -->
+            {#if keyboard}
+                <!-- 編輯當前鍵盤 -->
+                <KbdEdit bind:keyboard />
+            {/if}
         {/if}
+    </div>
+
+    <!-- WIP 提示 -->
+    <div class="p-4 flex flex-col items-center">
+        <span class="text-center text-xs">
+            倉輸入法佈局生成器當前功能尚不完善, 歡迎 PR!
+        </span>
     </div>
 </div>

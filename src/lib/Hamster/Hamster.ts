@@ -1,5 +1,3 @@
-import {} from "yaml";
-
 // 一些模型定義
 // https://github.com/imfuxiao/Hamster/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%AE%E7%9B%98%E5%B8%83%E5%B1%80
 
@@ -38,16 +36,16 @@ export enum ActionType {
 export var ActionNames: { [key: string]: string } = {
     [ActionType.backspace]: "退格",
     [ActionType.enter]: "回車",
-    [ActionType.shift]: "大寫切換",
+    [ActionType.shift]: "Shift",
     [ActionType.tab]: "縮進",
     [ActionType.space]: "空格",
-    [ActionType.character]: "字母",
-    [ActionType.characterMargin]: "佔位字母",
-    [ActionType.keyboardType]: "切換鍵盤",
-    [ActionType.symbol]: "快捷短語",
-    [ActionType.shortCommand]: "快捷命令",
+    [ActionType.character]: "字符",
+    [ActionType.characterMargin]: "佔位符",
+    [ActionType.keyboardType]: "鍵盤",
+    [ActionType.symbol]: "短語",
+    [ActionType.shortCommand]: "命令",
     [ActionType.none]: "無",
-    [ActionType.nextKeyboard]: "系統輸入法",
+    [ActionType.nextKeyboard]: "地球",
 };
 
 /** 鍵盤類型枚舉 */
@@ -63,13 +61,13 @@ export enum KeyboardType {
 
 /** 鍵盤類型名稱映射表 */
 export var KeyboardNames: { [key: string]: string } = {
-    [KeyboardType.alphabetic]: "26鍵英文鍵盤",
-    [KeyboardType.classifySymbolic]: "分類符號鍵盤",
-    [KeyboardType.chinese]: "26鍵中文鍵盤",
-    [KeyboardType.chineseNineGrid]: "九宫中文鍵盤",
-    [KeyboardType.numericNineGrid]: "九宫數字鍵盤",
-    [KeyboardType.custom]: "自定義鍵盤",
-    [KeyboardType.emojis]: "Emoji鍵盤",
+    [KeyboardType.alphabetic]: "英文26鍵",
+    [KeyboardType.classifySymbolic]: "分類符號",
+    [KeyboardType.chinese]: "中文26鍵",
+    [KeyboardType.chineseNineGrid]: "中文九宫",
+    [KeyboardType.numericNineGrid]: "數字九宫",
+    [KeyboardType.custom]: "自定義",
+    [KeyboardType.emojis]: "Emoji",
 }
 
 /** 快捷命令枚舉 */
@@ -136,6 +134,32 @@ export class Action {
         }
     }
 
+    toObject(): string {
+        switch (this.type) {
+            case ActionType.backspace:
+            case ActionType.enter:
+            case ActionType.shift:
+            case ActionType.tab:
+            case ActionType.space:
+            case ActionType.nextKeyboard:
+            case ActionType.none:
+                return this.type;
+            case ActionType.character:
+            case ActionType.characterMargin:
+            case ActionType.symbol:
+                return `${this.type}(${this.text})`;
+            case ActionType.keyboardType:
+                if (this.kbd === KeyboardType.custom) {
+                    return `${this.type}(${this.kbd}(${this.text}))`;
+                }
+                return `${this.type}(${this.kbd})`;
+            case ActionType.shortCommand:
+                return `${this.type}(${this.cmd})`;
+            default:
+                return ActionType.none;
+        }
+    }
+
     clone(): Action {
         let action = new Action();
         action.type = this.type;
@@ -161,6 +185,17 @@ export class Swipe {
     label: string = "";
     display: boolean = true;
     processByRIME: boolean = true;
+
+    toObject(): object {
+        var obj: any = {};
+        obj.action = this.action.toObject();
+        if (this.label) {
+            obj.label = this.label;
+        }
+        obj.display = this.display;
+        obj.processByRIME = this.processByRIME;
+        return obj;
+    }
 
     clone(): Swipe {
         let swipe = new Swipe();
@@ -191,6 +226,22 @@ export class Key {
         ];
     }
 
+    toObject(): object {
+        var obj: any = {};
+        obj.action = this.action.toObject();
+        obj.width = `percentage(${this.width / 100})`;
+        if (this.label) {
+            obj.label = this.label;
+        }
+        obj.swipe = [];
+        for (var swipe of this.swipe) {
+            if (swipe.action.type !== ActionType.none) {
+                obj.swipe.push(swipe.toObject());
+            }
+        }
+        return obj;
+    }
+
     clone(): Key {
         let key = new Key();
         key.action = this.action.clone();
@@ -207,6 +258,15 @@ export class Row {
     id: number = newId();
     keys: Key[] = [];
     rowHeight: number = 0;
+
+    toObject(): object {
+        var obj: any = {};
+        obj.keys = this.keys.map((key) => key.toObject());
+        if (this.rowHeight > 0) {
+            obj.rowHeight = this.rowHeight;
+        }
+        return obj;
+    }
 };
 
 /** 鍵盤属性 */
@@ -215,4 +275,15 @@ export class Keyboard {
     name: string = "鍵盤";
     rows: Row[] = [];
     buttonInsets: ButtonInsets = new ButtonInsets();
+
+    toObject(): object {
+        var obj: any = {};
+        obj.name = this.name;
+        obj.rows = this.rows.map((row) => row.toObject());
+        var [l, b, t, r] = this.buttonInsets.insets;
+        obj.buttonInsets = this.buttonInsets.expr
+            ? `left(${l}),bottom(${b}),top(${t}),right(${r})`
+            : `${this.buttonInsets.value}`;
+        return obj;
+    }
 };

@@ -43,14 +43,19 @@
         <span class="text-lg badge variant-ghost h-10 w-16">
             {key.action.display()}
         </span>
+        <input
+            bind:value={key.label}
+            placeholder="標簽"
+            class="rounded-md variant-ghost w-20 p-2"
+        />
     </div>
 
     <!-- 鍵寛和鍵值編輯區 -->
     <div class="flex items-center gap-1">
-        <span class="p-2"> 鍵寛 </span>
         <input
             type="number"
             bind:value={key.width}
+            placeholder="鍵寛"
             min={1}
             max={100}
             class="rounded-md variant-ghost w-20 p-2"
@@ -82,6 +87,7 @@
     </div>
 
     <!-- 按鍵動作按鈕 -->
+    <!--
     <div class="flex items-center gap-1">
         <div class="input-group flex px-2 items-center">
             <Icon height="20" icon="mdi:arrow-left" />
@@ -92,4 +98,5 @@
             <Icon height="20" icon="mdi:arrow-right" />
         </div>
     </div>
+    -->
 </div>
