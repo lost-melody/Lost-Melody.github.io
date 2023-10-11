@@ -10,7 +10,10 @@
     var keyboards: Keyboard[] = [new Keyboard()];
     /** 當前正在編輯的鍵盤, 在標簽組焦點轉移或鍵盤增删時更新 */
     $: keyboard = keyboards[selected];
+    /** 正在爲當前鍵盤重命名 */
     var renaming: boolean = false;
+    /** 正在删除當前鍵盤 */
+    var deleting: boolean = false;
     /** 導出的 yaml 數據 */
     var exportData = "";
 
@@ -30,6 +33,7 @@
     }
     /** 删除一個鍵盤 */
     function delKeyboard(index: number): void {
+        deleting = false;
         // 從列表中移除選定的鍵盤
         keyboards = keyboards
             .slice(0, index)
@@ -69,13 +73,18 @@
                 class:border-b-2={index === selected}
                 class="rounded-t-lg variant-ringed hover:variant-ghost flex px-1 justify-center items-center"
             >
-                <!-- 「x」圖標 -->
+                <!-- 圖標: 删除 or 取消 -->
                 <button
-                    on:click={() => delKeyboard(index)}
+                    on:click={() => (deleting = !deleting)}
                     class="p-1 rounded-full hover:variant-ringed"
                 >
-                    <Icon height="20" icon="mdi:close" />
+                    {#if index === selected && deleting}
+                        <Icon height="20" icon="mdi:cancel" />
+                    {:else}
+                        <Icon height="20" icon="mdi:close" />
+                    {/if}
                 </button>
+
                 <!-- 鍵盤名 -->
                 {#if index === selected && renaming}
                     <!-- 編輯鍵盤名 -->
@@ -84,16 +93,27 @@
                         placeholder="天行鍵"
                         use:autoFocus
                         on:blur={() => (renaming = false)}
-                        class="bg-transparent w-16 h-10 p-1"
+                        class="bg-transparent h-10 p-1"
                     />
                 {:else}
                     <!-- 鍵盤名導航鍵 -->
-                    <button
-                        on:click={() => clickTab(index)}
-                        class="w-16 h-10 p-1"
-                    >
+                    <button on:click={() => clickTab(index)} class="h-10 p-1">
                         {keyboard.name}
                     </button>
+                {/if}
+
+                <!-- 圖標: 鍵盤 or 删除 -->
+                {#if index === selected && deleting}
+                    <button
+                        on:click={() => delKeyboard(index)}
+                        class="p-1 rounded-full hover:variant-ringed"
+                    >
+                        <Icon color="red" height="20" icon="mdi:delete" />
+                    </button>
+                {:else}
+                    <div class="p-1">
+                        <Icon height="20" icon="mdi:keyboard" />
+                    </div>
                 {/if}
             </div>
         {/each}
