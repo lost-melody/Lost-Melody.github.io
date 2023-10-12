@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { CodeBlock } from "@skeletonlabs/skeleton";
     import Icon from "@iconify/svelte";
     import YAML from "yaml";
     import { Keyboard } from "$lib/Hamster/Hamster";
@@ -16,6 +15,10 @@
     /** 導出的 yaml 數據 */
     var exportData = "";
 
+    // 已複製, 已下載 狀態記录
+    var copiedState = false;
+    var downloadedState = false;
+
     // 當前操作類型: 重命名, 删除
     const [modeRename, modeDelete] = [1, 2];
 
@@ -25,6 +28,27 @@
             keyboards: keyboards.map((keyboard) => keyboard.toObject()),
         });
         selected = -1;
+    }
+    /** 複製内容到剪貼板 */
+    function copyYaml(): void {
+        copiedState = true;
+        setTimeout(() => (copiedState = false), 3000);
+        navigator.clipboard.writeText(exportData);
+    }
+    /** 下載導出的 yaml 數據 */
+    function downloadYaml(): void {
+        downloadedState = true;
+        setTimeout(() => (downloadedState = false), 3000);
+        var link = document.createElement("a");
+        var blob = new Blob([exportData], {
+            type: "application/yaml; charset=utf-8",
+        });
+        var url = window.URL.createObjectURL(blob);
+        link.href = url;
+        link.download = `keyboards-${Date.now()}.yaml`;
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(url);
     }
     /** 新增鍵盤 */
     function newKeyboard(): void {
@@ -151,14 +175,30 @@
     <!-- 標簽頁内容 -->
     <div class="p-4 gap-2 flex flex-col items-center">
         {#if selected === -1}
-            <!-- 導出代碼 -->
-            <CodeBlock
-                code={exportData}
-                language="yaml"
-                lineNumbers
-                buttonLabel="複製"
-                class="variant-ghost"
-            />
+            <!-- 複製和導出代碼 -->
+            <div class="btn-group variant-ghost">
+                <button
+                    disabled={copiedState}
+                    on:click={copyYaml}
+                    class="flex items-center gap-1"
+                >
+                    <Icon icon={copiedState ? "mdi:check" : "mdi:clipboard"} />
+                    複制代碼
+                </button>
+                <button
+                    disabled={downloadedState}
+                    on:click={downloadYaml}
+                    class="flex items-center gap-1"
+                >
+                    <Icon
+                        icon={downloadedState
+                            ? "mdi:check"
+                            : "mdi:export-variant"}
+                    />
+                    導出文件
+                </button>
+            </div>
+            <pre class="pre variant-ghost">{exportData}</pre>
         {:else}
             <!-- 内容面板 -->
             {#if keyboard}

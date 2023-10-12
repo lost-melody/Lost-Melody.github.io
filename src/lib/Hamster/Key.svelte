@@ -81,6 +81,34 @@
                     </button>
                 {:else}
                     <ActionEdit bind:action={key.swipe[index].action} />
+                    <!-- 顯示劃動 -->
+                    <button
+                        on:click={() =>
+                            (key.swipe[index].display =
+                                !key.swipe[index].display)}
+                        class="rounded-full p-1 hover:variant-soft"
+                    >
+                        <Icon
+                            height="20"
+                            icon={key.swipe[index].display
+                                ? "mdi:eye"
+                                : "mdi:eye-off"}
+                        />
+                    </button>
+                    <!-- 經由 rime 處理 -->
+                    <button
+                        on:click={() =>
+                            (key.swipe[index].processByRIME =
+                                !key.swipe[index].processByRIME)}
+                        class="rounded-full p-1 hover:variant-soft"
+                    >
+                        <Icon
+                            height="20"
+                            icon={key.swipe[index].processByRIME
+                                ? "mdi:web"
+                                : "mdi:web-off"}
+                        />
+                    </button>
                 {/if}
             </div>
         {/each}

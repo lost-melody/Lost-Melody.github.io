@@ -173,10 +173,10 @@ export class Action {
 
 /** 按鍵内距 */
 export class ButtonInsets {
-    expr: boolean = false;
-    value: number = 2;
+    expr: boolean = true;
+    value: number = 3;
     /** 左/下/上/右 */
-    insets: [number, number, number, number] = [0, 0, 0, 0];
+    insets: [number, number, number, number] = [2, 4, 4, 2];
 }
 
 /** 按鍵劃動 */
