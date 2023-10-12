@@ -1,7 +1,6 @@
 import type { LayoutLoad } from "./$types";
 
 export const prerender: boolean = true;
-export const ssr: boolean = false;
 
 // 導航列表
 var navigations: [string, string][] = [

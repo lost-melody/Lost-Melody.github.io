@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { browser } from "$app/environment";
     import type { PageData } from "./$types";
     import Icon from "@iconify/svelte";
     import YAML from "yaml";
@@ -29,6 +30,11 @@
     }
     /** 自定義鍵盤存儲位 */
     var customKeyboards: object[] = new Array(3).fill(0).map((_, index) => {
+        if (!browser) {
+            // server 端渲染, 没有 localStorage 接口
+            return { name: "空" };
+        }
+
         var keyboardData = localStorage.getItem(customKeyboardKey(index));
         if (keyboardData) {
             try {
