@@ -16,24 +16,22 @@
 
 {#if buttonInsets.expr}
     <!-- 表達式内距 -->
-    <div class="flex gap-1">
-        {#each [0, 1, 2, 3] as index}
-            <div class="input-group flex px-2 justify-center items-center">
-                <Icon height="20" icon={icons[index]} />
-                <input
-                    type="number"
-                    bind:value={buttonInsets.insets[index]}
-                    class="w-16 px-2 py-1"
-                    {min}
-                    {max}
-                />
-            </div>
-        {/each}
-    </div>
+    {#each [0, 1, 2, 3] as index}
+        <div class="input-group flex h-10 px-2 justify-center items-center">
+            <Icon height="20" icon={icons[index]} />
+            <input
+                type="number"
+                bind:value={buttonInsets.insets[index]}
+                class="w-32 px-2 py-1"
+                {min}
+                {max}
+            />
+        </div>
+    {/each}
 {:else}
     <!-- 數值内距 -->
-    <div class="input-group flex justify-center items-center">
-        <Icon height="24" icon="mdi:arrow-collapse" />
+    <div class="input-group flex h-10 justify-center items-center">
+        <Icon height="20" icon="mdi:arrow-collapse" />
         <input
             type="number"
             bind:value={buttonInsets.value}

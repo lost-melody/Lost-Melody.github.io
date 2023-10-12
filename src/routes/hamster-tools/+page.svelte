@@ -20,9 +20,12 @@
     /** 導出的 yaml 數據 */
     var exportData = "";
 
+    const nameEmpty = "空的";
+    const delay = 2000;
     // 已複製, 已下載 狀態記录
     var copiedState = false;
     var downloadedState = false;
+    var timeout: NodeJS.Timeout;
 
     /** LocalStorage 自定義鍵檔案鍵名 */
     function customKeyboardKey(index: number): string {
@@ -32,7 +35,7 @@
     var customKeyboards: object[] = new Array(3).fill(0).map((_, index) => {
         if (!browser) {
             // server 端渲染, 没有 localStorage 接口
-            return { name: "空" };
+            return { name: nameEmpty };
         }
 
         var keyboardData = localStorage.getItem(customKeyboardKey(index));
@@ -47,7 +50,7 @@
                 );
             }
         }
-        return { name: "空" };
+        return { name: nameEmpty };
     });
 
     // 當前操作類型: 重命名, 删除
@@ -72,7 +75,7 @@
     /** 删除自定義鍵盤檔案 */
     function removeCustom(index: number): void {
         localStorage.removeItem(customKeyboardKey(index));
-        customKeyboards[index] = { name: "空" };
+        customKeyboards[index] = { name: nameEmpty };
     }
     /** 覆蓋自定義鍵盤檔案 */
     function overrideCustom(index: number): void {
@@ -100,13 +103,13 @@
     /** 複製内容到剪貼板 */
     function copyYaml(): void {
         copiedState = true;
-        setTimeout(() => (copiedState = false), 3000);
+        setTimeout(() => (copiedState = false), delay);
         navigator.clipboard.writeText(exportData);
     }
     /** 下載導出的 yaml 數據 */
     function downloadYaml(): void {
         downloadedState = true;
-        setTimeout(() => (downloadedState = false), 3000);
+        setTimeout(() => (downloadedState = false), delay);
         var link = document.createElement("a");
         var blob = new Blob([exportData], {
             type: "application/yaml; charset=utf-8",
@@ -130,7 +133,17 @@
         if (index !== selected) {
             selected = index;
         }
-        opMode = opMode ? 0 : modeDelete;
+        if (opMode) {
+            opMode = 0;
+        } else {
+            opMode = modeDelete;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                if (opMode === modeDelete) {
+                    opMode = 0;
+                }
+            }, delay);
+        }
     }
     /** 删除一個鍵盤 */
     function delKeyboard(index: number): void {
@@ -180,11 +193,12 @@
                     on:click={() => tryDelKbd(index)}
                     class="p-1 rounded-full hover:variant-ringed"
                 >
-                    {#if index === selected && opMode === modeDelete}
-                        <Icon height="20" icon="mdi:cancel" />
-                    {:else}
-                        <Icon height="20" icon="mdi:close" />
-                    {/if}
+                    <Icon
+                        height="20"
+                        icon={index === selected && opMode === modeDelete
+                            ? "mdi:cancel"
+                            : "mdi:close"}
+                    />
                 </button>
 
                 <!-- 鍵盤名 -->

@@ -32,8 +32,8 @@
 
     // 寛高样式
     const [maxWidth, maxHeight] = [4096, 256];
-    $: _width = (width && between(width, 64, maxWidth)) || 512;
-    $: _height = (height && between(height, 16, maxHeight)) || 48;
+    $: _width = (width && between(width, 64, maxWidth)) || 416;
+    $: _height = (height && between(height, 16, maxHeight)) || 56;
     $: styleHeight = `height: ${_height}px`;
     $: style = `width:${_width}px;height:${_height}px;`;
 

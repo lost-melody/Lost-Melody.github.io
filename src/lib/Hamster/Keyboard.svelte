@@ -7,7 +7,7 @@
     import KeyEdit from "./Key.svelte";
 
     /** 按鍵區域寛度 */
-    var kbdAreaWidth: number = 512;
+    var kbdAreaWidth: number = 416;
 
     /** 當前正在編輯的鍵盤 */
     export var keyboard: Keyboard;
@@ -117,31 +117,35 @@
 </script>
 
 <div class="flex flex-col gap-2 justify-center items-center">
-    <!-- 鍵盤基本控件 -->
-    <div class="card p-2 gap-2 flex flex-col justify-center items-center">
-        <!-- 内距「數值·表達式」切換開關 -->
-        <div class="btn-group variant-ringed h-8">
-            <button
-                on:click={() => (keyboard.buttonInsets.expr = false)}
-                class:variant-ghost={!keyboard.buttonInsets.expr}
-                class="w-20">統一内距</button
-            >
-            <button
-                on:click={() => (keyboard.buttonInsets.expr = true)}
-                class:variant-ghost={keyboard.buttonInsets.expr}
-                class="w-24">自定義内距</button
-            >
+    <div class="flex gap-2">
+        <!-- 鍵盤基本控件 -->
+        <div
+            class="p-2 gap-1 flex flex-col items-center rounded-md variant-ghost"
+        >
+            <!-- 内距「數值·表達式」切換開關 -->
+            <div class="h-10 btn-group flex items-center variant-ringed">
+                <button
+                    on:click={() => (keyboard.buttonInsets.expr = false)}
+                    class:variant-ghost={!keyboard.buttonInsets.expr}
+                    class="w-20">統一内距</button
+                >
+                <button
+                    on:click={() => (keyboard.buttonInsets.expr = true)}
+                    class:variant-ghost={keyboard.buttonInsets.expr}
+                    class="w-24">自定義内距</button
+                >
+            </div>
+            <!-- 鍵盤内距編輯框 -->
+            <BtnInsetsEdit bind:buttonInsets={keyboard.buttonInsets} />
         </div>
-        <!-- 鍵盤内距編輯框 -->
-        <BtnInsetsEdit bind:buttonInsets={keyboard.buttonInsets} />
-    </div>
 
-    <KeyEdit
-        bind:key={selectedKey}
-        on:delkey={delButton}
-        on:moveleft={moveBtnLeft}
-        on:moveright={moveBtnRight}
-    />
+        <KeyEdit
+            bind:key={selectedKey}
+            on:delkey={delButton}
+            on:moveleft={moveBtnLeft}
+            on:moveright={moveBtnRight}
+        />
+    </div>
 
     <!-- 鍵盤行編輯控件 -->
     <div class="flex flex-col gap-2">

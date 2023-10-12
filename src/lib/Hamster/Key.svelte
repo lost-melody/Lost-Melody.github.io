@@ -8,10 +8,10 @@
     export var key: Key;
 
     const icons: [string, string, string, string] = [
-        "mdi:arrow-collapse-left",
-        "mdi:arrow-collapse-down",
-        "mdi:arrow-collapse-up",
-        "mdi:arrow-collapse-right",
+        "mdi:gesture-swipe-left",
+        "mdi:gesture-swipe-down",
+        "mdi:gesture-swipe-up",
+        "mdi:gesture-swipe-right",
     ];
 
     function activateSwipe(index: number): void {
@@ -35,40 +35,21 @@
 
 <!-- 按鍵編輯面板 -->
 <div class="flex flex-col items-center p-2 gap-2 rounded-md variant-ghost">
-    <!-- 按鍵内容展示和删除按鈕 -->
-    <div class="flex items-center gap-2">
-        <button on:click={delKey} class="btn-icon variant-ringed">
-            <Icon height="20" color="red" icon="mdi:delete" />
-        </button>
-        <span class="text-lg badge variant-ghost h-10 w-16">
-            {key.action.display()}
-        </span>
-        <input
-            bind:value={key.label}
-            placeholder="標簽"
-            class="rounded-md variant-ghost w-20 p-2"
-        />
-    </div>
-
-    <!-- 鍵寛和鍵值編輯區 -->
-    <div class="flex items-center gap-1">
-        <input
-            type="number"
-            bind:value={key.width}
-            placeholder="鍵寛"
-            min={1}
-            max={100}
-            class="rounded-md variant-ghost w-20 p-2"
-        />
-        <div class="flex p-2 rounded-md variant-ghost items-center">
-            <ActionEdit bind:action={key.action} />
-        </div>
-    </div>
-
     <!-- 劃動配置 -->
-    <div class="grid grid-cols-2 gap-1">
-        {#each [0, 3, 2, 1] as index (key.swipe[index].id)}
-            <div class="flex p-2 gap-1 rounded-md variant-ghost items-center">
+    <div class="flex flex-col gap-1">
+        <!-- 鍵寛和鍵值編輯區 -->
+        <div class="flex h-10 p-2 gap-1 rounded-md variant-ghost items-center">
+            <Icon height="20" icon="mdi:gesture-touch" />
+            <ActionEdit bind:action={key.action} />
+            <input
+                bind:value={key.label}
+                placeholder="標簽"
+                class="px-2 w-16 rounded-md bg-transparent hover:variant-soft"
+            />
+        </div>
+
+        {#each [0, 1, 2, 3] as index (key.swipe[index].id)}
+            <div class="flex h-10 p-2 gap-1 rounded-md variant-ghost items-center">
                 <Icon height="20" icon={icons[index]} />
                 {#if key.swipe[index].action.type === ActionType.none}
                     <button
@@ -115,14 +96,34 @@
     </div>
 
     <!-- 按鍵動作按鈕 -->
-    <div class="flex items-center gap-1">
-        <div class="input-group flex px-2 items-center">
+    <div class="flex gap-1">
+        <button
+            on:click={delKey}
+            class="gap-1 p-2 flex items-center rounded-md variant-ghost"
+        >
+            <Icon height="20" icon="mdi:close" />
+        </button>
+        <button
+            on:click={moveLeft}
+            class="gap-1 p-2 flex items-center rounded-md variant-ghost"
+        >
             <Icon height="20" icon="mdi:arrow-left" />
-            <button on:click={moveLeft} class="w-16 px-2 py-1"> 左移 </button>
-        </div>
-        <div class="input-group flex px-2 items-center">
-            <button on:click={moveRight} class="w-16 px-2 py-1"> 右移 </button>
+            左移
+        </button>
+        <input
+            type="number"
+            bind:value={key.width}
+            placeholder="鍵寛"
+            min={1}
+            max={100}
+            class="w-16 gap-1 p-2 rounded-md variant-ghost"
+        />
+        <button
+            on:click={moveRight}
+            class="gap-1 p-2 flex items-center rounded-md variant-ghost"
+        >
+            右移
             <Icon height="20" icon="mdi:arrow-right" />
-        </div>
+        </button>
     </div>
 </div>

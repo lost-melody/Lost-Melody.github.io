@@ -20,7 +20,7 @@ keyboards:
           - action: character(3)
             width: percentage(0.22)
             swipe: []
-          - action: backspace
+          - action: character(:)
             width: percentage(0.17)
             swipe: []
       - keys:
@@ -52,14 +52,14 @@ keyboards:
           - action: character(9)
             width: percentage(0.22)
             swipe: []
-          - action: character(:)
+          - action: backspace
             width: percentage(0.17)
             swipe: []
       - keys:
-          - action: keyboardType(chinese)
+          - action: character(/)
             width: percentage(0.17)
             swipe: []
-          - action: keyboardType(classifySymbolic)
+          - action: keyboardType(chinese)
             width: percentage(0.22)
             swipe: []
           - action: character(0)
