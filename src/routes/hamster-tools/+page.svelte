@@ -56,15 +56,17 @@
     /** 加載預置鍵盤檔案 */
     function loadPredefined(index: number): void {
         if (keyboard) {
+            var initName = keyboard.name;
             keyboard.fromObject(data.keyboards[index]);
-            keyboard = keyboard;
+            keyboard.name = initName;
         }
     }
     /** 加載自定義鍵盤檔案 */
     function loadCustom(index: number): void {
         if (keyboard && customKeyboards[index]) {
+            var initName = keyboard.name;
             keyboard.fromObject(customKeyboards[index]);
-            keyboard = keyboard;
+            keyboard.name = initName;
         }
     }
     /** 删除自定義鍵盤檔案 */
