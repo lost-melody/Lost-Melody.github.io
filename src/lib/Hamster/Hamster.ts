@@ -8,6 +8,20 @@ function newId(): number {
     return id;
 }
 
+/**
+解析函數表達式
+```
+extractFunc("") => null
+extractFunc("input") => { func: "input", args: "" }
+extractFunc("percentage(0.1)") => { func: "percentage", args: "0.1" }
+```
+*/
+function extractFunc(src: string): { func: string, args: string } | null {
+    var r = new RegExp(/^([a-zA-Z]+)(\((.+)\))?$/);
+    var res = r.exec(src);
+    return res && { func: res[1], args: res[3] || "" };
+}
+
 /** 方向枚舉 */
 export enum Direction {
     left = "left",
@@ -135,6 +149,50 @@ export class Action {
         }
     }
 
+    fromObject(obj: any) {
+        if (typeof obj === "string") {
+            var res = extractFunc(obj);
+            if (res) {
+                switch (res.func) {
+                    case ActionType.backspace:
+                    case ActionType.enter:
+                    case ActionType.shift:
+                    case ActionType.tab:
+                    case ActionType.space:
+                    case ActionType.nextKeyboard:
+                    case ActionType.none:
+                        this.type = res.func;
+                        return;
+                    case ActionType.character:
+                    case ActionType.characterMargin:
+                    case ActionType.symbol:
+                        this.type = res.func;
+                        this.text = res.args;
+                        return;
+                    case ActionType.keyboardType:
+                        let kbd = extractFunc(res.args);
+                        if (kbd && (Object.values(KeyboardType) as string[]).includes(kbd.func)) {
+                            this.type = res.func;
+                            this.kbd = kbd.func as KeyboardType;
+                            if (this.kbd === KeyboardType.custom) {
+                                this.text = kbd.args;
+                            }
+                            return;
+                        }
+                    case ActionType.shortCommand:
+                        let cmd = res.args.replace(/^#/, "");
+                        if ((Object.values(ShortCmd) as string[]).includes(cmd)) {
+                            this.type = res.func;
+                            this.cmd = cmd as ShortCmd;
+                            return;
+                        }
+                    default:
+                }
+            }
+        }
+        this.type = ActionType.none;
+    }
+
     toObject(): string {
         switch (this.type) {
             case ActionType.backspace:
@@ -177,6 +235,55 @@ export class ButtonInsets {
     value: number = 3;
     /** 左/下/上/右 */
     insets: [number, number, number, number] = [2, 4, 4, 2];
+
+    fromObject(insets: any) {
+        if (typeof insets === "number") {
+            // 3
+            this.expr = false;
+            this.value = insets;
+        } else if (typeof insets === "string") {
+            if (insets.includes("(")) {
+                // "left(2),right(2)"
+                this.expr = true;
+                this.insets = [0, 0, 0, 0];
+                for (let expr of insets.split(",")) {
+                    let res = extractFunc(expr);
+                    if (res) {
+                        switch (res.func) {
+                            case "left":
+                                this.insets[0] = Number(res.args);
+                                break;
+                            case "bottom":
+                                this.insets[1] = Number(res.args);
+                                break;
+                            case "top":
+                                this.insets[2] = Number(res.args);
+                                break;
+                            case "right":
+                                this.insets[3] = Number(res.args);
+                                break;
+                            default:
+                        }
+                    }
+                }
+            } else {
+                // "3"
+                this.expr = false;
+                this.value = Number(insets);
+            }
+        } else {
+            // invalid
+            this.expr = true;
+            this.insets = [2, 4, 4, 2];
+        }
+    }
+
+    toObject(): string {
+        var [l, b, t, r] = this.insets;
+        return this.expr
+            ? `left(${l}),bottom(${b}),top(${t}),right(${r})`
+            : `${this.value}`;
+    }
 }
 
 /** 按鍵劃動 */
@@ -186,6 +293,15 @@ export class Swipe {
     label: string = "";
     display: boolean = true;
     processByRIME: boolean = true;
+
+    fromObject(obj: any) {
+        if (typeof obj === "object") {
+            this.action.fromObject(obj.action);
+            this.label = typeof obj.label === "string" ? obj.label : "";
+            this.display = obj.display ? true : false;
+            this.processByRIME = obj.processByRIME ? true : false;
+        }
+    }
 
     toObject(): object {
         var obj: any = {};
@@ -228,6 +344,36 @@ export class Key {
         ];
     }
 
+    fromObject(obj: any) {
+        if (typeof obj === "object") {
+            this.action.fromObject(obj.action);
+            this.label = typeof obj.label === "string" ? obj.label : "";
+            if (typeof obj.width === "string") {
+                let res = extractFunc(obj.width);
+                this.width = (res && res.func === "percentage") ? Number(res.args) * 100 : 10;
+            } else if (typeof obj.width === "object" && typeof obj.width.portrait === "string") {
+                let res = extractFunc(obj.width.portrait);
+                this.width = (res && res.func === "percentage") ? Number(res.args) * 100 : 10;
+            } else {
+                this.width = 10;
+            }
+            for (let swipe of this.swipe) {
+                swipe.action.type = ActionType.none;
+            }
+            if (typeof obj.swipe === "object" && obj.swipe.length > 0) {
+                for (let theSwipe of obj.swipe) {
+                    let index = -1;
+                    if (typeof theSwipe === "object") {
+                        index = Object.values(Direction).findIndex((dir) => theSwipe.direction === dir);
+                    }
+                    if (index >= 0) {
+                        this.swipe[index].fromObject(theSwipe);
+                    }
+                }
+            }
+        }
+    }
+
     toObject(): object {
         var obj: any = {};
         obj.action = this.action.toObject();
@@ -236,9 +382,9 @@ export class Key {
             obj.label = this.label;
         }
         obj.swipe = [];
-        for (var i = 0; i < this.swipe.length; i++) {
+        for (let i = 0; i < this.swipe.length; i++) {
             if (this.swipe[i].action.type !== ActionType.none) {
-                var swipe: any = this.swipe[i].toObject();
+                let swipe: any = this.swipe[i].toObject();
                 swipe.direction = Object.values(Direction)[i];
                 obj.swipe.push(swipe);
             }
@@ -261,6 +407,20 @@ export class Row {
     id: number = newId();
     keys: Key[] = [];
     rowHeight: number = 0;
+
+    fromObject(obj: any) {
+        this.keys = [];
+        if (typeof obj === "object") {
+            this.rowHeight = Number(obj.rowHeight || "");
+            if (typeof obj.keys === "object" && obj.keys.length > 0) {
+                this.keys = obj.keys.map((theKey: any) => {
+                    let key = new Key();
+                    key.fromObject(theKey);
+                    return key;
+                });
+            }
+        }
+    }
 
     toObject(): object {
         var obj: any = {};
@@ -286,60 +446,19 @@ export class Keyboard {
     rows: Row[] = [];
     buttonInsets: ButtonInsets = new ButtonInsets();
 
-    constructor() {
-        // 暫時如此初始化默認佈局
-        // 以後實現佈局導入, 再從默認文件初始化
-        this.rows = new Array(4).fill(0).map(() => new Row());
-        this.rows[0].keys = new Array(10).fill(0).map(() => new Key());
-        this.rows[1].keys = new Array(11).fill(0).map(() => new Key());
-        this.rows[2].keys = new Array(11).fill(0).map(() => new Key());
-        this.rows[3].keys = new Array(5).fill(0).map(() => new Key());
-        for (var i = 0; i < 10; i++) {
-            this.rows[0].keys[i].action.text = "qwertyuiop"[i];
-        }
-        for (var i = 0; i < 11; i++) {
-            if (i === 0 || i === 10) {
-                this.rows[1].keys[i].width = 5;
-                this.rows[1].keys[i].action.type = ActionType.none;
-            } else {
-                this.rows[1].keys[i].action.text = "asdfghjkl"[i - 1];
-            }
-        }
-        for (var i = 0; i < 11; i++) {
-            if (i === 0) {
-                this.rows[2].keys[i].width = 13;
-                this.rows[2].keys[i].action.type = ActionType.shift;
-            } else if (i === 10) {
-                this.rows[2].keys[i].width = 13;
-                this.rows[2].keys[i].action.type = ActionType.backspace;
-            } else if (i === 1 || i === 9) {
-                this.rows[2].keys[i].width = 2;
-                this.rows[2].keys[i].action.type = ActionType.none;
-            } else {
-                this.rows[2].keys[i].action.text = "zxcvbnm"[i - 2];
-            }
-        }
-        for (var i = 0; i < 5; i++) {
-            switch (i) {
-                case 0:
-                    this.rows[3].keys[i].width = 20;
-                    this.rows[3].keys[i].action.type = ActionType.keyboardType;
-                    this.rows[3].keys[i].action.kbd = KeyboardType.numericNineGrid;
-                    break;
-                case 1:
-                    this.rows[3].keys[i].action.text = ",";
-                    break;
-                case 2:
-                    this.rows[3].keys[i].width = 40;
-                    this.rows[3].keys[i].action.type = ActionType.space;
-                    break;
-                case 3:
-                    this.rows[3].keys[i].action.text = ".";
-                    break;
-                case 4:
-                    this.rows[3].keys[i].width = 20;
-                    this.rows[3].keys[i].action.type = ActionType.enter;
-                    break;
+    fromObject(obj: any) {
+        if (typeof obj === "object") {
+            this.name = typeof obj.name === "string" ? this.name = obj.name : "鍵盤";
+            this.buttonInsets.fromObject(obj.buttonInsets);
+            this.rows = [];
+            if (typeof obj.rows === "object") {
+                if (obj.rows.length > 0) {
+                    this.rows = obj.rows.map((theRow: any) => {
+                        let row = new Row();
+                        row.fromObject(theRow);
+                        return row;
+                    });
+                }
             }
         }
     }
@@ -348,10 +467,7 @@ export class Keyboard {
         var obj: any = {};
         obj.name = this.name;
         obj.rows = this.rows.map((row) => row.toObject());
-        var [l, b, t, r] = this.buttonInsets.insets;
-        obj.buttonInsets = this.buttonInsets.expr
-            ? `left(${l}),bottom(${b}),top(${t}),right(${r})`
-            : `${this.buttonInsets.value}`;
+        obj.buttonInsets = this.buttonInsets.toObject();
         return obj;
     }
 };

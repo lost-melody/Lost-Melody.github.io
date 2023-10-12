@@ -1,8 +1,12 @@
 <script lang="ts">
+    import type { PageData } from "./$types";
     import Icon from "@iconify/svelte";
     import YAML from "yaml";
     import { Keyboard } from "$lib/Hamster/Hamster";
     import KbdEdit from "$lib/Hamster/Keyboard.svelte";
+    import KbdLoad from "$lib/Hamster/KeyboardLoad.svelte";
+
+    export var data: PageData;
 
     /** 標簽組活動編號 */
     var selected: number = 0;
@@ -19,9 +23,65 @@
     var copiedState = false;
     var downloadedState = false;
 
+    /** LocalStorage 自定義鍵檔案鍵名 */
+    function customKeyboardKey(index: number): string {
+        return `customKeyboard${index}`;
+    }
+    /** 自定義鍵盤存儲位 */
+    var customKeyboards: object[] = new Array(3).fill(0).map((_, index) => {
+        var keyboardData = localStorage.getItem(customKeyboardKey(index));
+        if (keyboardData) {
+            try {
+                var obj = YAML.parse(keyboardData);
+                return obj;
+            } catch (err) {
+                console.error(
+                    "parse custom keyboard failed:",
+                    (err as Error).message
+                );
+            }
+        }
+        return { name: "空" };
+    });
+
     // 當前操作類型: 重命名, 删除
     const [modeRename, modeDelete] = [1, 2];
 
+    /** 加載預置鍵盤檔案 */
+    function loadPredefined(index: number): void {
+        if (keyboard) {
+            keyboard.fromObject(data.keyboards[index]);
+            keyboard = keyboard;
+        }
+    }
+    /** 加載自定義鍵盤檔案 */
+    function loadCustom(index: number): void {
+        if (keyboard && customKeyboards[index]) {
+            keyboard.fromObject(customKeyboards[index]);
+            keyboard = keyboard;
+        }
+    }
+    /** 删除自定義鍵盤檔案 */
+    function removeCustom(index: number): void {
+        localStorage.removeItem(customKeyboardKey(index));
+        customKeyboards[index] = { name: "空" };
+    }
+    /** 覆蓋自定義鍵盤檔案 */
+    function overrideCustom(index: number): void {
+        if (keyboard) {
+            var obj = keyboard.toObject();
+            var keyboardData = YAML.stringify(obj);
+            try {
+                localStorage.setItem(customKeyboardKey(index), keyboardData);
+                customKeyboards[index] = obj;
+            } catch (err) {
+                console.error(
+                    "save to local storage failed:",
+                    (err as Error).message
+                );
+            }
+        }
+    }
     /** 導出爲 yaml 文檔 */
     function exportYaml(): void {
         exportData = YAML.stringify({
@@ -200,6 +260,23 @@
             </div>
             <pre class="pre variant-ghost">{exportData}</pre>
         {:else}
+            <!-- 預置鍵盤模板與自定義檔案 -->
+            <div class="gap-1 flex items-center">
+                {#each data.keyboards as keyboard, index}
+                    <KbdLoad on:load={() => loadPredefined(index)} {keyboard} />
+                {/each}
+                {#each customKeyboards as keyboard, index}
+                    <KbdLoad
+                        on:load={() => loadCustom(index)}
+                        on:remove={() => removeCustom(index)}
+                        on:override={() => overrideCustom(index)}
+                        remove
+                        override
+                        {keyboard}
+                    />
+                {/each}
+            </div>
+
             <!-- 内容面板 -->
             {#if keyboard}
                 <!-- 編輯當前鍵盤 -->
