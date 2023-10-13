@@ -121,6 +121,37 @@
         link.remove();
         window.URL.revokeObjectURL(url);
     }
+    /** 從 exportData 導入數據 */
+    function importYaml(): void {
+        try {
+            let obj = YAML.parse(exportData);
+            if (obj && obj.keyboards && obj.keyboards.length >= 0) {
+                keyboards = (obj.keyboards as object[]).map((o) => {
+                    var kbd = new Keyboard();
+                    kbd.fromObject(o);
+                    return kbd;
+                });
+            }
+        } catch (err) {
+            console.error("import file failed:", (err as Error).message);
+        }
+    }
+    /** 選擇導入文件時 */
+    function onImportYaml(
+        event: Event & { currentTarget: EventTarget & HTMLInputElement }
+    ): void {
+        var input = event.currentTarget;
+        if (input.files && input.files.length > 0) {
+            for (let file of input.files) {
+                let reader = new FileReader();
+                reader.onload = (_) => {
+                    exportData = reader.result as string;
+                    importYaml();
+                };
+                reader.readAsText(file);
+            }
+        }
+    }
     /** 新增鍵盤 */
     function newKeyboard(): void {
         // 在列表末位追加
@@ -278,6 +309,16 @@
                             : "mdi:export-variant"}
                     />
                     導出文件
+                </button>
+                <button disabled class="flex items-center gap-1">
+                    <Icon icon="mdi:import" />
+                    導入文件
+                    <input
+                        type="file"
+                        accept=".yaml,.yml"
+                        on:change={onImportYaml}
+                        class="rounded-full hover:variant-soft"
+                    />
                 </button>
             </div>
             <pre class="pre variant-ghost">{exportData}</pre>
