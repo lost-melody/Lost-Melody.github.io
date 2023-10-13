@@ -38,7 +38,7 @@
 
     <!-- 輸入: 動作内容文本 -->
     {#if text.includes(action.type)}
-        <input bind:value={action.text} class={"w-16 " + innerClasses} />
+        <input bind:value={action.text} class={"w-20 " + innerClasses} />
     {/if}
 
     <!-- 單選: 切換鍵盤類型 -->
@@ -54,7 +54,7 @@
 
     <!-- 輸入: 自定義鍵盤名稱 -->
     {#if action.type === ActionType.keyboardType && action.kbd === KeyboardType.custom}
-        <input bind:value={action.text} class={"w-16 " + innerClasses} />
+        <input bind:value={action.text} class={"w-20 " + innerClasses} />
     {/if}
 
     <!-- 單選: 快捷命令類型 -->

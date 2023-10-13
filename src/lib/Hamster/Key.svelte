@@ -44,12 +44,14 @@
             <input
                 bind:value={key.label}
                 placeholder="標簽"
-                class="px-2 w-16 rounded-md bg-transparent hover:variant-soft"
+                class="px-2 w-20 rounded-md bg-transparent hover:variant-soft"
             />
         </div>
 
         {#each [0, 1, 2, 3] as index (key.swipe[index].id)}
-            <div class="flex h-10 p-2 gap-1 rounded-md variant-ghost items-center">
+            <div
+                class="flex h-10 p-2 gap-1 rounded-md variant-ghost items-center"
+            >
                 <Icon height="20" icon={icons[index]} />
                 {#if key.swipe[index].action.type === ActionType.none}
                     <button
@@ -62,6 +64,11 @@
                     </button>
                 {:else}
                     <ActionEdit bind:action={key.swipe[index].action} />
+                    <input
+                        bind:value={key.label}
+                        placeholder="標簽"
+                        class="px-2 w-20 rounded-md bg-transparent hover:variant-soft"
+                    />
                     <!-- 顯示劃動 -->
                     <button
                         on:click={() =>
