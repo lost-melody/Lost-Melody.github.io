@@ -32,7 +32,7 @@
         return `customKeyboard${index}`;
     }
     /** 自定義鍵盤存儲位 */
-    var customKeyboards: object[] = new Array(5).fill(0).map((_, index) => {
+    var customKeyboards: object[] = new Array(15).fill(0).map((_, index) => {
         if (!browser) {
             // server 端渲染, 没有 localStorage 接口
             return { name: nameEmpty };
@@ -331,8 +331,10 @@
 
             <!-- 預置鍵盤模板與自定義檔案 -->
             <div class="flex flex-wrap gap-2 p-2 justify-center">
-                <div class="p-2 flex gap-2 flex-col rounded-md variant-ghost">
-                    <span> 導入默認佈局 </span>
+                <div
+                    class="p-2 grid grid-rows-6 gap-2 rounded-md variant-ghost"
+                >
+                    <span class="text-center"> 導入默認佈局 </span>
                     {#each data.keyboards as keyboard, index}
                         <KbdLoad
                             on:load={() => loadPredefined(index)}
@@ -340,8 +342,10 @@
                         />
                     {/each}
                 </div>
-                <div class="p-2 flex gap-2 flex-col rounded-md variant-ghost">
-                    <span> 導入自定義檔案 </span>
+                <div
+                    class="p-2 grid grid-flow-col grid-rows-6 gap-2 rounded-md variant-ghost"
+                >
+                    <span class="col-span-3 text-center"> 導入自定義檔案 </span>
                     {#each customKeyboards as keyboard, index}
                         <KbdLoad
                             on:load={() => loadCustom(index)}

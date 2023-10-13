@@ -65,7 +65,7 @@
                 {:else}
                     <ActionEdit bind:action={key.swipe[index].action} />
                     <input
-                        bind:value={key.label}
+                        bind:value={key.swipe[index].label}
                         placeholder="標簽"
                         class="px-2 w-20 rounded-md bg-transparent hover:variant-soft"
                     />
