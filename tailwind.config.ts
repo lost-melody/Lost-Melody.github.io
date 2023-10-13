@@ -21,7 +21,18 @@ const config = {
   plugins: [
     // 4. Append the Skeleton plugin (after other plugins)
     skeleton({
-      themes: { preset: ["skeleton"] }
+      themes: { preset: [
+        "skeleton",
+        "wintry",
+        "modern",
+        "rocket",
+        "seafoam",
+        "vintage",
+        "sahara",
+        "hamlindigo",
+        "gold-nouveau",
+        "crimson",
+      ] }
     })
   ]
 } satisfies Config;

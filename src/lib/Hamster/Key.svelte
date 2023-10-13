@@ -48,7 +48,7 @@
             />
         </div>
 
-        {#each [0, 1, 2, 3] as index (key.swipe[index].id)}
+        {#each [2, 1, 0, 3] as index (key.swipe[index].id)}
             <div
                 class="flex h-10 p-2 gap-1 rounded-md variant-ghost items-center"
             >

@@ -16,7 +16,7 @@
 
 {#if buttonInsets.expr}
     <!-- 表達式内距 -->
-    {#each [0, 1, 2, 3] as index}
+    {#each [2, 1, 0, 3] as index}
         <div class="input-group flex h-10 px-2 justify-center items-center">
             <Icon height="20" icon={icons[index]} />
             <input

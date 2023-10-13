@@ -234,7 +234,7 @@ export class ButtonInsets {
     expr: boolean = true;
     value: number = 3;
     /** 左/下/上/右 */
-    insets: [number, number, number, number] = [2, 4, 4, 2];
+    insets: [number, number, number, number] = [3, 4, 8, 3];
 
     fromObject(insets: any) {
         if (typeof insets === "number") {
@@ -274,7 +274,7 @@ export class ButtonInsets {
         } else {
             // invalid
             this.expr = true;
-            this.insets = [2, 4, 4, 2];
+            this.insets = [3, 4, 8, 3];
         }
     }
 

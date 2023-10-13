@@ -85,7 +85,7 @@
     }
 </script>
 
-<div class="px-2 py-1 gap-1 rounded-full variant-ghost flex items-center">
+<div class="px-2 py-1 h-8 gap-1 rounded-full variant-ghost flex items-center">
     <!-- 删除檔案 -->
     {#if remove}
         <button
@@ -98,7 +98,7 @@
     <!-- 加載檔案 -->
     <button
         on:click={tryLoad}
-        class="p-1 rounded-md hover:variant-soft flex items-center"
+        class="p-1 w-full justify-center rounded-md hover:variant-soft flex items-center"
     >
         {display}
     </button>

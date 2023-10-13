@@ -32,7 +32,7 @@
         return `customKeyboard${index}`;
     }
     /** 自定義鍵盤存儲位 */
-    var customKeyboards: object[] = new Array(3).fill(0).map((_, index) => {
+    var customKeyboards: object[] = new Array(5).fill(0).map((_, index) => {
         if (!browser) {
             // server 端渲染, 没有 localStorage 接口
             return { name: nameEmpty };
@@ -282,28 +282,37 @@
             </div>
             <pre class="pre variant-ghost">{exportData}</pre>
         {:else}
-            <!-- 預置鍵盤模板與自定義檔案 -->
-            <div class="gap-1 flex items-center">
-                {#each data.keyboards as keyboard, index}
-                    <KbdLoad on:load={() => loadPredefined(index)} {keyboard} />
-                {/each}
-                {#each customKeyboards as keyboard, index}
-                    <KbdLoad
-                        on:load={() => loadCustom(index)}
-                        on:remove={() => removeCustom(index)}
-                        on:override={() => overrideCustom(index)}
-                        remove
-                        override
-                        {keyboard}
-                    />
-                {/each}
-            </div>
-
             <!-- 内容面板 -->
             {#if keyboard}
                 <!-- 編輯當前鍵盤 -->
                 <KbdEdit bind:keyboard />
             {/if}
+
+            <!-- 預置鍵盤模板與自定義檔案 -->
+            <div class="flex flex-wrap gap-2 p-2 justify-center">
+                <div class="p-2 flex gap-2 flex-col rounded-md variant-ghost">
+                    <span> 導入默認佈局 </span>
+                    {#each data.keyboards as keyboard, index}
+                        <KbdLoad
+                            on:load={() => loadPredefined(index)}
+                            {keyboard}
+                        />
+                    {/each}
+                </div>
+                <div class="p-2 flex gap-2 flex-col rounded-md variant-ghost">
+                    <span> 導入自定義檔案 </span>
+                    {#each customKeyboards as keyboard, index}
+                        <KbdLoad
+                            on:load={() => loadCustom(index)}
+                            on:remove={() => removeCustom(index)}
+                            on:override={() => overrideCustom(index)}
+                            remove
+                            override
+                            {keyboard}
+                        />
+                    {/each}
+                </div>
+            </div>
         {/if}
     </div>
 

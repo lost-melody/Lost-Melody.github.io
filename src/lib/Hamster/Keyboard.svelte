@@ -29,6 +29,38 @@
         );
     }
 
+    var [allSwipeUp, allSwipeDown] = [true, true];
+    function toggleSwipeUp(): void {
+        allSwipeUp = !allSwipeUp;
+        var flagged = false;
+        for (let row of keyboard.rows) {
+            for (let key of row.keys) {
+                if (key.swipe[2].display !== allSwipeUp) {
+                    key.swipe[2].display = allSwipeUp;
+                    flagged = true;
+                }
+            }
+        }
+        if (flagged) {
+            keyboard.rows = keyboard.rows;
+        }
+    }
+    function toggleSwipeDown(): void {
+        allSwipeDown = !allSwipeDown;
+        var flagged = false;
+        for (let row of keyboard.rows) {
+            for (let key of row.keys) {
+                if (key.swipe[1].display !== allSwipeDown) {
+                    key.swipe[1].display = allSwipeDown;
+                    flagged = true;
+                }
+            }
+        }
+        if (flagged) {
+            keyboard.rows = keyboard.rows;
+        }
+    }
+
     /** 新增一行按鍵 */
     function newRow(): void {
         var newRow;
@@ -117,8 +149,8 @@
 </script>
 
 <div class="flex flex-col gap-2 justify-center items-center">
-    <div class="flex gap-2">
-        <!-- 鍵盤基本控件 -->
+    <div class="flex flex-wrap justify-center gap-2">
+        <!-- 鍵盤属性調整 -->
         <div
             class="p-2 gap-1 flex flex-col items-center rounded-md variant-ghost"
         >
@@ -137,8 +169,20 @@
             </div>
             <!-- 鍵盤内距編輯框 -->
             <BtnInsetsEdit bind:buttonInsets={keyboard.buttonInsets} />
+            <!-- 所有上劃下劃顯示切换 -->
+            <div class="h-10 btn-group flex items-center variant-ringed">
+                <button on:click={toggleSwipeUp} class="gap-2">
+                    <Icon icon={allSwipeUp ? "mdi:eye" : "mdi:eye-off"} />
+                    所有上劃
+                </button>
+                <button on:click={toggleSwipeDown} class="gap-2">
+                    <Icon icon={allSwipeDown ? "mdi:eye" : "mdi:eye-off"} />
+                    所有下劃
+                </button>
+            </div>
         </div>
 
+        <!-- 按鍵調整 -->
         <KeyEdit
             bind:key={selectedKey}
             on:delkey={delButton}
