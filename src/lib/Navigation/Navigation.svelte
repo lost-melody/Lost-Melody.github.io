@@ -1,5 +1,6 @@
 <script lang="ts">
     import { getDrawerStore } from "@skeletonlabs/skeleton";
+    import Icon from "@iconify/svelte";
 
     /** 導航列表 */
     export let navigations: [string, string][] = [];
@@ -34,7 +35,15 @@
     }
 </script>
 
-<nav class="flex flex-col list-nav p-2 gap-2">
+<nav class="flex flex-col list-nav h-full p-2 gap-2">
+    <!-- 導航列表 -->
+    {#each navigations as navigation}
+        <a class="variant-ghost" on:click={drawerClose} href={navigation[1]}>
+            <Icon height="20" icon="mdi:menu-right" />
+            {navigation[0]}
+        </a>
+    {/each}
+    <div class="grow" />
     <!-- 主題切換 -->
     <select on:change={onThemeChange} class="select p-2 rounded-full">
         {#each Object.keys(themes) as theme}
@@ -43,10 +52,4 @@
             </option>
         {/each}
     </select>
-    <!-- 導航列表 -->
-    {#each navigations as navigation}
-        <a class="variant-ghost" on:click={drawerClose} href={navigation[1]}>
-            {navigation[0]}
-        </a>
-    {/each}
 </nav>

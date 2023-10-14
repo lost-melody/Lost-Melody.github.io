@@ -209,7 +209,7 @@
     }
 </script>
 
-<div class="p-2 g-2">
+<div class="h-full flex flex-col p-2 g-2">
     <div class="flex justify-center">
         <!-- 標簽欄 -->
         {#each keyboards as keyboard, index (keyboard.id)}
@@ -360,6 +360,8 @@
             </div>
         {/if}
     </div>
+
+    <div class="grow" />
 
     <!-- WIP 提示 -->
     <div class="p-4 flex flex-col items-center">

@@ -60,6 +60,14 @@
     function delRow(): void {
         dispatch("delrow");
     }
+    /** 發送上移事件 */
+    function moveUp(): void {
+        dispatch("moveup");
+    }
+    /** 發送下移事件 */
+    function moveDown(): void {
+        dispatch("movedown");
+    }
 </script>
 
 <div class="flex gap-2">
@@ -125,6 +133,18 @@
             class="px-2 h-full rounded-md bg-transparent hover:variant-ghost"
         >
             <Icon icon="mdi:plus" />
+        </button>
+        <button
+            on:click={moveUp}
+            class="px-2 h-full rounded-md bg-transparent hover:variant-ghost"
+        >
+            <Icon icon="mdi:arrow-up" />
+        </button>
+        <button
+            on:click={moveDown}
+            class="px-2 h-full rounded-md bg-transparent hover:variant-ghost"
+        >
+            <Icon icon="mdi:arrow-down" />
         </button>
         <button
             on:click={delRow}

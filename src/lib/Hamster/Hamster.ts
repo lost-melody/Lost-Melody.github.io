@@ -306,7 +306,9 @@ export class Swipe {
     toObject(): object {
         var obj: any = {};
         obj.action = this.action.toObject();
-        obj.label = this.label || "";
+        if (obj.label) {
+            obj.label = this.label;
+        }
         obj.display = this.display;
         obj.processByRIME = this.processByRIME;
         return obj;
@@ -376,14 +378,19 @@ export class Key {
         var obj: any = {};
         obj.action = this.action.toObject();
         obj.width = `percentage(${this.width / 100})`;
-        obj.label = this.label || "";
-        obj.swipe = [];
+        if (obj.label) {
+            obj.label = this.label;
+        }
+        var swipes: object[] = [];
         for (let i = 0; i < this.swipe.length; i++) {
             if (this.swipe[i].action.type !== ActionType.none) {
                 let swipe: any = this.swipe[i].toObject();
                 swipe.direction = Object.values(Direction)[i];
-                obj.swipe.push(swipe);
+                swipes.push(swipe);
             }
+        }
+        if (swipes.length > 0) {
+            obj.swipe = swipes;
         }
         return obj;
     }

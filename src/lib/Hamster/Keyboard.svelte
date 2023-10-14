@@ -93,6 +93,34 @@
             keyboard.rows[selected.row].keys = keyboard.rows[selected.row].keys;
         }
     }
+    /** 上移一行按鍵 */
+    function moveRowUp(index: number): void {
+        if (index > 0 && index < keyboard.rows.length) {
+            [keyboard.rows[index], keyboard.rows[index - 1]] = [
+                keyboard.rows[index - 1],
+                keyboard.rows[index],
+            ];
+            if (index === selected.row) {
+                selected.row--;
+            } else if (index - 1 === selected.row) {
+                selected.row++;
+            }
+        }
+    }
+    /** 下移一行按鍵 */
+    function moveRowDown(index: number): void {
+        if (index < keyboard.rows.length - 1) {
+            [keyboard.rows[index], keyboard.rows[index + 1]] = [
+                keyboard.rows[index + 1],
+                keyboard.rows[index],
+            ];
+            if (index === selected.row) {
+                selected.row++;
+            } else if (index + 1 === selected.row) {
+                selected.row--;
+            }
+        }
+    }
     /** 左移按鍵 */
     function moveBtnLeft(): void {
         if (selected.col > 0 && selectedValid(selected, keyboard)) {
@@ -209,6 +237,8 @@
                     }}
                     on:newbtn={() => newButton(index)}
                     on:delrow={() => delRow(index)}
+                    on:moveup={() => moveRowUp(index)}
+                    on:movedown={() => moveRowDown(index)}
                 />
             {/each}
         </div>
