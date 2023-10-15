@@ -306,7 +306,7 @@ export class Swipe {
     toObject(): object {
         var obj: any = {};
         obj.action = this.action.toObject();
-        if (obj.label) {
+        if (this.label) {
             obj.label = this.label;
         }
         obj.display = this.display;
@@ -378,7 +378,7 @@ export class Key {
         var obj: any = {};
         obj.action = this.action.toObject();
         obj.width = `percentage(${this.width / 100})`;
-        if (obj.label) {
+        if (this.label) {
             obj.label = this.label;
         }
         var swipes: object[] = [];
