@@ -332,9 +332,9 @@
             <!-- 預置鍵盤模板與自定義檔案 -->
             <div class="flex flex-wrap gap-2 p-2 justify-center">
                 <div
-                    class="p-2 grid grid-rows-6 gap-2 rounded-md variant-ghost"
+                    class="p-2 grid grid-flow-col grid-rows-6 gap-2 rounded-md variant-ghost"
                 >
-                    <span class="text-center"> 導入默認佈局 </span>
+                    <span class="col-span-3 text-center"> 導入默認佈局 </span>
                     {#each data.keyboards as keyboard, index}
                         <KbdLoad
                             on:load={() => loadPredefined(index)}

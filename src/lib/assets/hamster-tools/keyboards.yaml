@@ -131,6 +131,302 @@ keyboards:
             width: percentage(0.1)
           - action: enter
             width: percentage(0.2)
+  - name: 德沃夏克
+    rows:
+      - keys:
+          - action: none
+            width: percentage(0.0475)
+          - action: character(,)
+            width: percentage(0.095)
+          - action: character(.)
+            width: percentage(0.095)
+          - action: character(p)
+            width: percentage(0.095)
+          - action: character(y)
+            width: percentage(0.095)
+          - action: character(f)
+            width: percentage(0.095)
+          - action: character(g)
+            width: percentage(0.095)
+          - action: character(c)
+            width: percentage(0.095)
+          - action: character(r)
+            width: percentage(0.095)
+          - action: character(l)
+            width: percentage(0.095)
+          - action: backspace
+            width: percentage(0.0975)
+      - keys:
+          - action: character(a)
+            width: percentage(0.095)
+          - action: character(o)
+            width: percentage(0.095)
+          - action: character(e)
+            width: percentage(0.095)
+          - action: character(u)
+            width: percentage(0.095)
+          - action: character(i)
+            width: percentage(0.095)
+          - action: character(d)
+            width: percentage(0.095)
+          - action: character(h)
+            width: percentage(0.095)
+          - action: character(t)
+            width: percentage(0.095)
+          - action: character(n)
+            width: percentage(0.095)
+          - action: character(s)
+            width: percentage(0.095)
+          - action: none
+            width: percentage(0.05)
+      - keys:
+          - action: shift
+            width: percentage(0.145)
+          - action: character(q)
+            width: percentage(0.095)
+          - action: character(j)
+            width: percentage(0.095)
+          - action: character(k)
+            width: percentage(0.095)
+          - action: character(x)
+            width: percentage(0.095)
+          - action: character(b)
+            width: percentage(0.095)
+          - action: character(m)
+            width: percentage(0.095)
+          - action: character(w)
+            width: percentage(0.095)
+          - action: character(v)
+            width: percentage(0.095)
+          - action: character(z)
+            width: percentage(0.095)
+      - keys:
+          - action: keyboardType(numericNineGrid)
+            width: percentage(0.19)
+          - action: character(,)
+            width: percentage(0.095)
+          - action: space
+            width: percentage(0.43)
+          - action: character(.)
+            width: percentage(0.095)
+          - action: enter
+            width: percentage(0.19)
+  - name: Colemak
+    rows:
+      - keys:
+          - action: character(q)
+            width: percentage(0.095)
+          - action: character(w)
+            width: percentage(0.095)
+          - action: character(f)
+            width: percentage(0.095)
+          - action: character(p)
+            width: percentage(0.095)
+          - action: character(g)
+            width: percentage(0.095)
+          - action: character(j)
+            width: percentage(0.095)
+          - action: character(l)
+            width: percentage(0.095)
+          - action: character(u)
+            width: percentage(0.095)
+          - action: character(y)
+            width: percentage(0.095)
+          - action: character(;)
+            width: percentage(0.095)
+      - keys:
+          - action: none
+            width: percentage(0.05)
+          - action: character(a)
+            width: percentage(0.095)
+          - action: character(r)
+            width: percentage(0.095)
+          - action: character(s)
+            width: percentage(0.095)
+          - action: character(t)
+            width: percentage(0.095)
+          - action: character(d)
+            width: percentage(0.095)
+          - action: character(h)
+            width: percentage(0.095)
+          - action: character(n)
+            width: percentage(0.095)
+          - action: character(e)
+            width: percentage(0.095)
+          - action: character(i)
+            width: percentage(0.095)
+          - action: character(o)
+            width: percentage(0.095)
+      - keys:
+          - action: shift
+            width: percentage(0.095)
+          - action: character(z)
+            width: percentage(0.095)
+          - action: character(x)
+            width: percentage(0.095)
+          - action: character(c)
+            width: percentage(0.095)
+          - action: character(v)
+            width: percentage(0.095)
+          - action: character(b)
+            width: percentage(0.095)
+          - action: character(k)
+            width: percentage(0.095)
+          - action: character(m)
+            width: percentage(0.095)
+          - action: backspace
+            width: percentage(0.24)
+      - keys:
+          - action: keyboardType(numericNineGrid)
+            width: percentage(0.19)
+          - action: character(,)
+            width: percentage(0.095)
+          - action: space
+            width: percentage(0.43)
+          - action: character(.)
+            width: percentage(0.095)
+          - action: enter
+            width: percentage(0.19)
+  - name: 双鍵14
+    rows:
+      - keys:
+          - action: character(q)
+            width: percentage(0.2)
+            label: QW
+          - action: character(e)
+            width: percentage(0.2)
+            label: ER
+          - action: character(t)
+            width: percentage(0.2)
+            label: TY
+          - action: character(u)
+            width: percentage(0.2)
+            label: UI
+          - action: character(o)
+            width: percentage(0.2)
+            label: OP
+      - keys:
+          - action: character(a)
+            width: percentage(0.2)
+            label: AS
+          - action: character(d)
+            width: percentage(0.2)
+            label: DF
+          - action: character(g)
+            width: percentage(0.2)
+            label: GH
+          - action: character(j)
+            width: percentage(0.2)
+            label: JK
+          - action: character(l)
+            width: percentage(0.2)
+            label: L
+      - keys:
+          - action: shift
+            width: percentage(0.1)
+          - action: character(z)
+            width: percentage(0.2)
+            label: ZX
+          - action: character(c)
+            width: percentage(0.2)
+            label: CV
+          - action: character(b)
+            width: percentage(0.2)
+            label: BN
+          - action: character(m)
+            width: percentage(0.15)
+            label: M
+          - action: backspace
+            width: percentage(0.15)
+      - keys:
+          - action: keyboardType(numericNineGrid)
+            width: percentage(0.2)
+          - action: character(,)
+            width: percentage(0.1)
+          - action: space
+            width: percentage(0.4)
+          - action: character(.)
+            width: percentage(0.1)
+          - action: enter
+            width: percentage(0.2)
+  - name: 双鍵18
+    rows:
+      - keys:
+          - action: character(q)
+            width: percentage(0.14)
+            label: Q
+          - action: character(w)
+            width: percentage(0.14)
+            label: WE
+          - action: character(r)
+            width: percentage(0.15)
+            label: RT
+          - action: character(y)
+            width: percentage(0.14)
+            label: Y
+          - action: character(u)
+            width: percentage(0.14)
+            label: U
+          - action: character(i)
+            width: percentage(0.15)
+            label: IO
+          - action: character(p)
+            width: percentage(0.14)
+            label: P
+      - keys:
+          - action: none
+            width: percentage(0.07)
+          - action: character(a)
+            width: percentage(0.14)
+            label: A
+          - action: character(s)
+            width: percentage(0.15)
+            label: SD
+          - action: character(f)
+            width: percentage(0.14)
+            label: FG
+          - action: character(h)
+            width: percentage(0.14)
+            label: H
+          - action: character(j)
+            width: percentage(0.15)
+            label: JK
+          - action: character(l)
+            width: percentage(0.14)
+            label: L
+          - action: none
+            width: percentage(0.07)
+      - keys:
+          - action: shift
+            width: percentage(0.14)
+          - action: character(z)
+            width: percentage(0.14)
+            label: Z
+          - action: character(x)
+            width: percentage(0.15)
+            label: XC
+          - action: character(v)
+            width: percentage(0.14)
+            label: V
+          - action: character(b)
+            width: percentage(0.14)
+            label: BN
+          - action: character(m)
+            width: percentage(0.15)
+            label: M
+          - action: backspace
+            width: percentage(0.14)
+      - keys:
+          - action: shift
+            width: percentage(0.14)
+          - action: character(,)
+            width: percentage(0.14)
+          - action: space
+            width: percentage(0.43)
+          - action: character(.)
+            width: percentage(0.15)
+          - action: enter
+            width: percentage(0.14)
   - name: 九宫計算器
     rows:
       - keys:
