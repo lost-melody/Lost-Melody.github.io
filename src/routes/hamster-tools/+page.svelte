@@ -286,10 +286,10 @@
     <hr class="!border-t-2" />
 
     <!-- 標簽頁内容 -->
-    <div class="p-4 gap-2 flex flex-col items-center">
+    <div class="p-4 gap-2 flex flex-wrap">
         {#if selected === -1}
             <!-- 複製和導出代碼 -->
-            <div class="btn-group variant-ghost">
+            <div class="mx-auto overflow-auto btn-group variant-ghost">
                 <button
                     disabled={copiedState}
                     on:click={copyYaml}
