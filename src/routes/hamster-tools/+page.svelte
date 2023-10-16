@@ -321,7 +321,7 @@
                     />
                 </button>
             </div>
-            <pre class="pre variant-ghost">{exportData}</pre>
+            <pre class="pre mx-auto variant-ghost">{exportData}</pre>
         {:else}
             <!-- 内容面板 -->
             {#if keyboard}
