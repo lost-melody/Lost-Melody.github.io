@@ -221,6 +221,9 @@
             >
                 <!-- 圖標: 删除 or 取消 -->
                 <button
+                    title={index === selected && opMode === modeDelete
+                        ? "取消"
+                        : "删除鍵盤"}
                     on:click={() => tryDelKbd(index)}
                     class="p-1 rounded-full hover:variant-ringed"
                 >
@@ -244,7 +247,11 @@
                     />
                 {:else}
                     <!-- 鍵盤名導航鍵 -->
-                    <button on:click={() => clickTab(index)} class="h-10 p-1">
+                    <button
+                        title="點擊重命名"
+                        on:click={() => clickTab(index)}
+                        class="h-10 p-1"
+                    >
                         {keyboard.name}
                     </button>
                 {/if}
@@ -252,6 +259,7 @@
                 <!-- 圖標: 鍵盤 or 删除 -->
                 {#if index === selected && opMode === modeDelete}
                     <button
+                        title="删除"
                         on:click={() => delKeyboard(index)}
                         class="p-1 rounded-full hover:variant-ringed"
                     >
@@ -267,6 +275,7 @@
 
         <!-- 「新增」按鈕 -->
         <button
+            title="新增鍵盤"
             on:click={newKeyboard}
             class="rounded-t-lg p-2 variant-ringed hover:variant-ghost"
         >
@@ -275,6 +284,7 @@
 
         <!-- 「導出」按鈕 -->
         <button
+            title="導入或導出爲YAML文檔"
             on:click={exportYaml}
             class:border-b-2={selected === -1}
             class="rounded-t-lg p-2 variant-ringed hover:variant-ghost"
@@ -289,39 +299,44 @@
     <div class="p-4 gap-2 flex flex-wrap">
         {#if selected === -1}
             <!-- 複製和導出代碼 -->
-            <div class="mx-auto overflow-auto btn-group variant-ghost">
-                <button
-                    disabled={copiedState}
-                    on:click={copyYaml}
-                    class="flex items-center gap-1"
-                >
-                    <Icon icon={copiedState ? "mdi:check" : "mdi:clipboard"} />
-                    複制代碼
-                </button>
-                <button
-                    disabled={downloadedState}
-                    on:click={downloadYaml}
-                    class="flex items-center gap-1"
-                >
-                    <Icon
-                        icon={downloadedState
-                            ? "mdi:check"
-                            : "mdi:export-variant"}
-                    />
-                    導出文件
-                </button>
-                <button disabled class="flex items-center gap-1">
-                    <Icon icon="mdi:import" />
-                    導入文件
-                    <input
-                        type="file"
-                        accept=".yaml,.yml"
-                        on:change={onImportYaml}
-                        class="rounded-full hover:variant-soft"
-                    />
-                </button>
+            <div class="w-full flex">
+                <div class="mx-auto overflow-auto btn-group variant-ghost">
+                    <button
+                        disabled={copiedState}
+                        on:click={copyYaml}
+                        class="flex items-center gap-1"
+                    >
+                        <Icon
+                            icon={copiedState ? "mdi:check" : "mdi:clipboard"}
+                        />
+                        複制代碼
+                    </button>
+                    <button
+                        disabled={downloadedState}
+                        on:click={downloadYaml}
+                        class="flex items-center gap-1"
+                    >
+                        <Icon
+                            icon={downloadedState
+                                ? "mdi:check"
+                                : "mdi:export-variant"}
+                        />
+                        導出文件
+                    </button>
+                    <button disabled class="flex items-center gap-1">
+                        <Icon icon="mdi:import" />
+                        導入文件
+                        <input
+                            type="file"
+                            accept=".yaml,.yml"
+                            on:change={onImportYaml}
+                            class="rounded-full hover:variant-soft"
+                        />
+                    </button>
+                </div>
             </div>
-            <pre class="pre mx-auto variant-ghost">{exportData}</pre>
+            <pre
+                class="pre mx-auto variant-ghost whitespace-pre"> {exportData} </pre>
         {:else}
             <!-- 内容面板 -->
             {#if keyboard}
