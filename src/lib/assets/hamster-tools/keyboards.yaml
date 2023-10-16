@@ -131,6 +131,76 @@ keyboards:
             width: percentage(0.1)
           - action: enter
             width: percentage(0.2)
+  - name: 數字符號
+    rows:
+      - keys:
+          - action: character(1)
+            width: percentage(0.1)
+          - action: character(2)
+            width: percentage(0.1)
+          - action: character(3)
+            width: percentage(0.1)
+          - action: character(4)
+            width: percentage(0.1)
+          - action: character(5)
+            width: percentage(0.1)
+          - action: character(6)
+            width: percentage(0.1)
+          - action: character(7)
+            width: percentage(0.1)
+          - action: character(8)
+            width: percentage(0.1)
+          - action: character(9)
+            width: percentage(0.1)
+          - action: character(0)
+            width: percentage(0.1)
+      - keys:
+          - action: character(-)
+            width: percentage(0.1)
+          - action: character(/)
+            width: percentage(0.1)
+          - action: character(:)
+            width: percentage(0.1)
+          - action: character(;)
+            width: percentage(0.1)
+          - action: character(()
+            width: percentage(0.1)
+          - action: character())
+            width: percentage(0.1)
+          - action: character($)
+            width: percentage(0.1)
+          - action: character(&)
+            width: percentage(0.1)
+          - action: character(@)
+            width: percentage(0.1)
+          - action: character(")
+            width: percentage(0.1)
+      - keys:
+          - action: keyboardType(classifySymbolic)
+            width: percentage(0.13)
+          - action: none
+            width: percentage(0.02)
+          - action: character(.)
+            width: percentage(0.14)
+          - action: character(,)
+            width: percentage(0.14)
+          - action: character(?)
+            width: percentage(0.14)
+          - action: character(!)
+            width: percentage(0.14)
+          - action: character(')
+            width: percentage(0.14)
+          - action: none
+            width: percentage(0.02)
+          - action: backspace
+            width: percentage(0.13)
+      - keys:
+          - action: keyboardType(chinese)
+            width: percentage(0.25)
+          - action: space
+            width: percentage(0.5)
+          - action: enter
+            width: percentage(0.25)
   - name: 德沃夏克
     rows:
       - keys:

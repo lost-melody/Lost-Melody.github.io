@@ -32,7 +32,7 @@
 
     // 寛高样式
     const [maxWidth, maxHeight] = [4096, 256];
-    $: _width = (width && between(width, 64, maxWidth)) || 416;
+    $: _width = (width && between(width, 64, maxWidth)) || 400;
     $: _height = (height && between(height, 16, maxHeight)) || 56;
     $: styleHeight = `height: ${_height}px`;
     $: style = `width:${_width}px;height:${_height}px;`;
@@ -102,7 +102,7 @@
             <div
                 style={styleInsets +
                     `width: ${key.width}%; height: ${_height}px;`}
-                class=""
+                class="shrink-0"
             >
                 <button
                     class:border={index === selected}
@@ -126,7 +126,7 @@
         class:border-t={first}
         class:rounded-t-md={first}
         class:rounded-b-md={last}
-        class="flex items-center border-x border-b border-surface-500 bg-surface-200 dark:bg-surface-800"
+        class="flex items-center border-x border-b border-surface-500 bg-transparent"
     >
         <button
             on:click={newButton}

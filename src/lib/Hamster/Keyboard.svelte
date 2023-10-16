@@ -7,7 +7,7 @@
     import KeyEdit from "./Key.svelte";
 
     /** 按鍵區域寛度 */
-    var kbdAreaWidth: number = 416;
+    var kbdAreaWidth: number = 400;
 
     /** 當前正在編輯的鍵盤 */
     export var keyboard: Keyboard;
@@ -176,7 +176,7 @@
     }
 </script>
 
-<div class="flex flex-col gap-2 justify-center items-center">
+<div class="flex flex-col gap-2 w-full">
     <div class="flex flex-wrap justify-center gap-2">
         <!-- 鍵盤属性調整 -->
         <div
@@ -220,8 +220,8 @@
     </div>
 
     <!-- 鍵盤行編輯控件 -->
-    <div class="flex flex-col gap-2">
-        <div class="flex flex-col">
+    <div class="flex flex-col gap-2 w-full overflow-x-auto">
+        <div class="flex flex-col mx-auto">
             {#each keyboard.rows as row, index (row.id)}
                 <!-- 一行按鍵 -->
                 <RowEdit
@@ -242,21 +242,21 @@
                 />
             {/each}
         </div>
+    </div>
 
-        <!-- 新增行, 屏幕寛度調整 -->
-        <div class="flex gap-2 justify-center items-center">
-            <button on:click={newRow} class="btn variant-ringed self-center">
-                <Icon icon="mdi:table-row-add-after" />
-                <span> 新增一行 </span>
-            </button>
-            <span> 區域寛度 </span>
-            <input
-                type="number"
-                bind:value={kbdAreaWidth}
-                class="input rounded-md w-32 p-2"
-                min={64}
-                max={4096}
-            />
-        </div>
+    <!-- 新增行, 屏幕寛度調整 -->
+    <div class="flex gap-2 justify-center items-center">
+        <button on:click={newRow} class="btn variant-ringed self-center">
+            <Icon icon="mdi:table-row-add-after" />
+            <span> 新增一行 </span>
+        </button>
+        <span> 區域寛度 </span>
+        <input
+            type="number"
+            bind:value={kbdAreaWidth}
+            class="input rounded-md w-32 p-2"
+            min={64}
+            max={4096}
+        />
     </div>
 </div>

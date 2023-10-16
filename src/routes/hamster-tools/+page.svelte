@@ -330,7 +330,7 @@
             {/if}
 
             <!-- 預置鍵盤模板與自定義檔案 -->
-            <div class="flex flex-wrap gap-2 p-2 justify-center">
+            <div class="flex flex-wrap gap-2 w-full justify-center">
                 <div
                     class="p-2 grid grid-flow-col grid-rows-6 gap-2 rounded-md variant-ghost"
                 >
