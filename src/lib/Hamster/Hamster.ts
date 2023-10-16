@@ -361,7 +361,6 @@ export class Key {
                     this.loading = obj.label.loadingText;
                 }
             }
-            this.autoWidth = false;
             if (typeof obj.width === "string") {
                 if (obj.width === "available") {
                     this.width = 10;
@@ -369,12 +368,20 @@ export class Key {
                 } else {
                     let res = extractFunc(obj.width);
                     this.width = (res && res.func === "percentage") ? Number(res.args) * 100 : 10;
+                    this.autoWidth = false;
                 }
             } else if (typeof obj.width === "object" && typeof obj.width.portrait === "string") {
-                let res = extractFunc(obj.width.portrait);
-                this.width = (res && res.func === "percentage") ? Number(res.args) * 100 : 10;
+                if (obj.width.portrait === "available") {
+                    this.width = 10;
+                    this.autoWidth = true;
+                } else {
+                    let res = extractFunc(obj.width.portrait);
+                    this.width = (res && res.func === "percentage") ? Number(res.args) * 100 : 10;
+                    this.autoWidth = false;
+                }
             } else {
                 this.width = 10;
+                this.autoWidth = true;
             }
             for (let swipe of this.swipe) {
                 swipe.action.type = ActionType.none;
