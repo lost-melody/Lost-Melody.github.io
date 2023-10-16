@@ -297,7 +297,11 @@ export class Swipe {
     fromObject(obj: any) {
         if (typeof obj === "object") {
             this.action.fromObject(obj.action);
-            this.label = typeof obj.label === "string" ? obj.label : "";
+            if (typeof obj.label === "string") {
+                this.label = obj.label;
+            } else if (typeof obj.label === "object" && typeof obj.label.text === "string") {
+                this.label = obj.label.text;
+            }
             this.display = obj.display ? true : false;
             this.processByRIME = obj.processByRIME ? true : false;
         }
@@ -347,7 +351,11 @@ export class Key {
     fromObject(obj: any) {
         if (typeof obj === "object") {
             this.action.fromObject(obj.action);
-            this.label = typeof obj.label === "string" ? obj.label : "";
+            if (typeof obj.label === "string") {
+                this.label = obj.label;
+            } else if (typeof obj.label === "object" && typeof obj.label.text === "string") {
+                this.label = obj.label.text;
+            }
             if (typeof obj.width === "string") {
                 let res = extractFunc(obj.width);
                 this.width = (res && res.func === "percentage") ? Number(res.args) * 100 : 10;
@@ -382,7 +390,7 @@ export class Key {
             obj.label = this.label;
         }
         var swipes: object[] = [];
-        for (let i = 0; i < this.swipe.length; i++) {
+        for (let i of [2, 1, 0, 3]) {
             if (this.swipe[i].action.type !== ActionType.none) {
                 let swipe: any = this.swipe[i].toObject();
                 swipe.direction = Object.values(Direction)[i];

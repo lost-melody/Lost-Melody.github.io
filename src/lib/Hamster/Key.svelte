@@ -42,6 +42,7 @@
             <Icon height="20" icon="mdi:gesture-touch" />
             <ActionEdit bind:action={key.action} />
             <input
+                title="調整按鍵顯示標簽"
                 bind:value={key.label}
                 placeholder="標簽"
                 class="px-2 w-20 rounded-md bg-transparent hover:variant-soft"
@@ -55,6 +56,7 @@
                 <Icon height="20" icon={icons[index]} />
                 {#if key.swipe[index].action.type === ActionType.none}
                     <button
+                        title="添加劃動配置"
                         on:click={() => {
                             activateSwipe(index);
                         }}
@@ -65,12 +67,14 @@
                 {:else}
                     <ActionEdit bind:action={key.swipe[index].action} />
                     <input
+                        title="調整劃動顯示標簽"
                         bind:value={key.swipe[index].label}
                         placeholder="標簽"
                         class="px-2 w-20 rounded-md bg-transparent hover:variant-soft"
                     />
                     <!-- 顯示劃動 -->
                     <button
+                        title="是否顯示此劃動"
                         on:click={() =>
                             (key.swipe[index].display =
                                 !key.swipe[index].display)}
@@ -85,6 +89,7 @@
                     </button>
                     <!-- 經由 rime 處理 -->
                     <button
+                        title="劃動是否經由 Rime 處理"
                         on:click={() =>
                             (key.swipe[index].processByRIME =
                                 !key.swipe[index].processByRIME)}
@@ -105,12 +110,14 @@
     <!-- 按鍵動作按鈕 -->
     <div class="flex gap-1">
         <button
+            title="在鍵盤中删除此按鍵"
             on:click={delKey}
             class="gap-1 p-2 flex items-center rounded-md variant-ghost"
         >
             <Icon height="20" icon="mdi:close" />
         </button>
         <button
+            title="將此按鍵左移一位"
             on:click={moveLeft}
             class="gap-1 p-2 flex items-center rounded-md variant-ghost"
         >
@@ -118,6 +125,7 @@
             左移
         </button>
         <input
+            title="調整按鍵寛度"
             type="number"
             bind:value={key.width}
             placeholder="鍵寛"
@@ -126,6 +134,7 @@
             class="w-16 gap-1 p-2 rounded-md variant-ghost"
         />
         <button
+            title="將此按鍵右移一位"
             on:click={moveRight}
             class="gap-1 p-2 flex items-center rounded-md variant-ghost"
         >

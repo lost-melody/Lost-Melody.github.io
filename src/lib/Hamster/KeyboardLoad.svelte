@@ -89,6 +89,7 @@
     <!-- 删除檔案 -->
     {#if remove}
         <button
+            title="删除此檔案數據"
             on:click={tryRemove}
             class="p-1 rounded-full hover:variant-ringed flex items-center"
         >
@@ -97,6 +98,7 @@
     {/if}
     <!-- 加載檔案 -->
     <button
+        title="點擊以此檔案數據覆蓋當前編輯配置"
         on:click={tryLoad}
         class="p-1 w-full justify-center rounded-md hover:variant-soft flex items-center"
     >
@@ -105,6 +107,7 @@
     <!-- 覆蓋檔案 -->
     {#if override}
         <button
+            title="將當前編輯配置覆蓋到此存檔上"
             on:click={tryOverride}
             class="p-1 rounded-full hover:variant-ringed flex items-center"
         >

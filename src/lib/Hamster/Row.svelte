@@ -80,6 +80,7 @@
         class="flex border-x border-b border-surface-500 bg-surface-200 dark:bg-surface-800"
     >
         <input
+            title="行高, 默認56"
             type="number"
             bind:value={height}
             class="w-16 px-2 h-full rounded-md bg-transparent hover:variant-ghost"
@@ -129,24 +130,28 @@
         class="flex items-center border-x border-b border-surface-500 bg-transparent"
     >
         <button
+            title="追加按鍵, 從當前選中按鍵複製"
             on:click={newButton}
             class="px-2 h-full rounded-md bg-transparent hover:variant-ghost"
         >
             <Icon icon="mdi:plus" />
         </button>
         <button
+            title="整行上移"
             on:click={moveUp}
             class="px-2 h-full rounded-md bg-transparent hover:variant-ghost"
         >
             <Icon icon="mdi:arrow-up" />
         </button>
         <button
+            title="整行下移"
             on:click={moveDown}
             class="px-2 h-full rounded-md bg-transparent hover:variant-ghost"
         >
             <Icon icon="mdi:arrow-down" />
         </button>
         <button
+            title="删除整行"
             on:click={delRow}
             class="px-2 h-full rounded-md bg-transparent hover:variant-ghost"
         >

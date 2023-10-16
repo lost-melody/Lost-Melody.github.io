@@ -199,13 +199,21 @@
             <BtnInsetsEdit bind:buttonInsets={keyboard.buttonInsets} />
             <!-- 所有上劃下劃顯示切换 -->
             <div class="h-10 btn-group flex items-center variant-ringed">
-                <button on:click={toggleSwipeUp} class="gap-2">
+                <button
+                    title="顯示或隐藏所有上劃文本"
+                    on:click={toggleSwipeUp}
+                    class="gap-2"
+                >
                     <Icon icon={allSwipeUp ? "mdi:eye" : "mdi:eye-off"} />
-                    所有上劃
+                    上劃
                 </button>
-                <button on:click={toggleSwipeDown} class="gap-2">
+                <button
+                    title="顯示或隐藏所有下劃文本"
+                    on:click={toggleSwipeDown}
+                    class="gap-2"
+                >
                     <Icon icon={allSwipeDown ? "mdi:eye" : "mdi:eye-off"} />
-                    所有下劃
+                    下劃
                 </button>
             </div>
         </div>
@@ -231,7 +239,7 @@
                     last={index + 1 === keyboard.rows.length}
                     buttonInsets={keyboard.buttonInsets}
                     width={kbdAreaWidth}
-                    height={0}
+                    bind:height={row.rowHeight}
                     on:select={(event) => {
                         select(index, event.detail.index);
                     }}
@@ -246,12 +254,17 @@
 
     <!-- 新增行, 屏幕寛度調整 -->
     <div class="flex gap-2 justify-center items-center">
-        <button on:click={newRow} class="btn variant-ringed self-center">
+        <button
+            title="追加一個按鍵行, 從當前選中行複製"
+            on:click={newRow}
+            class="btn variant-ringed self-center"
+        >
             <Icon icon="mdi:table-row-add-after" />
             <span> 新增一行 </span>
         </button>
         <span> 區域寛度 </span>
         <input
+            title="鍵盤區域寛度, 只影響頁面顯示效果"
             type="number"
             bind:value={kbdAreaWidth}
             class="input rounded-md w-32 p-2"
