@@ -364,7 +364,10 @@
     <div class="text-xs p-2 rounded-md mx-auto variant-ghost">
         <p class="text-center">不太詳細的使用説明</p>
         <ol class="list-inside list-decimal">
-            <li>建議在手機 <i>Safari</i> 上打開此頁面</li>
+            <li>
+                如果要對現有佈局進行調整, 建議在手機 <i>Safari</i> 上打開此頁面;
+                若要從零開始構建全新的佈局, 建議使用 <i>PC</i> 操作
+            </li>
             <li>
                 從文件導入佈局
                 <ol class="indent-4 list-inside list-decimal">

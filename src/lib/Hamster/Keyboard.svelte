@@ -150,7 +150,22 @@
     /** 當前選中的按鍵對象 */
     var selectedKey: Key;
     /** 無可用按鍵時, 用這個 */
-    const theHiddenKey = new Key();
+    var theHiddenKey = new Key();
+    /** 複製按鍵配置 */
+    function copyKey(): void {
+        if (selectedValid(selected, keyboard)) {
+            var [i, j] = [selected.row, selected.col];
+            theHiddenKey = keyboard.rows[i].keys[j].clone();
+        }
+    }
+    /** 粘貼按鍵配置 */
+    function pasteKey(): void {
+        if (selectedValid(selected, keyboard)) {
+            var [i, j] = [selected.row, selected.col];
+            keyboard.rows[i].keys[j] = theHiddenKey.clone();
+        }
+    }
+
     // 坐標無效時, 置零
     $: if (!selectedValid(selected, keyboard)) {
         let found = false;
@@ -224,6 +239,8 @@
             on:delkey={delButton}
             on:moveleft={moveBtnLeft}
             on:moveright={moveBtnRight}
+            on:copykey={copyKey}
+            on:pastekey={pasteKey}
         />
     </div>
 

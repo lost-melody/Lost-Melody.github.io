@@ -334,7 +334,9 @@ export class Key {
     action: Action = new Action();
     /** 行寛百分比, 1~100 */
     width: number = 10;
+    autoWidth: boolean = false;
     label: string = "";
+    loading: string = "";
     swipe: [Swipe, Swipe, Swipe, Swipe];
 
     constructor() {
@@ -355,10 +357,19 @@ export class Key {
                 this.label = obj.label;
             } else if (typeof obj.label === "object" && typeof obj.label.text === "string") {
                 this.label = obj.label.text;
+                if (this.action.type === ActionType.space && typeof obj.label.loadingText === "string") {
+                    this.loading = obj.label.loadingText;
+                }
             }
+            this.autoWidth = false;
             if (typeof obj.width === "string") {
-                let res = extractFunc(obj.width);
-                this.width = (res && res.func === "percentage") ? Number(res.args) * 100 : 10;
+                if (obj.width === "available") {
+                    this.width = 10;
+                    this.autoWidth = true;
+                } else {
+                    let res = extractFunc(obj.width);
+                    this.width = (res && res.func === "percentage") ? Number(res.args) * 100 : 10;
+                }
             } else if (typeof obj.width === "object" && typeof obj.width.portrait === "string") {
                 let res = extractFunc(obj.width.portrait);
                 this.width = (res && res.func === "percentage") ? Number(res.args) * 100 : 10;
@@ -385,9 +396,20 @@ export class Key {
     toObject(): object {
         var obj: any = {};
         obj.action = this.action.toObject();
-        obj.width = `percentage(${this.width / 100})`;
+        if (this.autoWidth) {
+            obj.width = "available";
+        } else {
+            obj.width = `percentage(${this.width / 100})`;
+        }
         if (this.label) {
-            obj.label = this.label;
+            if (this.loading && this.action.type === ActionType.space) {
+                obj.label = {
+                    text: this.label,
+                    loadingText: this.loading,
+                }
+            } else {
+                obj.label = this.label;
+            }
         }
         var swipes: object[] = [];
         for (let i of [2, 1, 0, 3]) {

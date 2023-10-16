@@ -102,8 +102,12 @@
             <!-- 遍歷本行所有按鍵 -->
             <div
                 style={styleInsets +
-                    `width: ${key.width}%; height: ${_height}px;`}
-                class="shrink-0"
+                    (key.autoWidth
+                        ? `width: 10%; height: ${_height}px;`
+                        : `width: ${key.width}%; height: ${_height}px;`)}
+                class:grow={key.autoWidth}
+                class:shrink={key.autoWidth}
+                class:shrink-0={!key.autoWidth}
             >
                 <button
                     class:border={index === selected}

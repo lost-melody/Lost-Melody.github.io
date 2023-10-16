@@ -31,6 +31,14 @@
     function moveRight(): void {
         dispatch("moveright");
     }
+    /** 發送複製事件 */
+    function copyKey(): void {
+        dispatch("copykey");
+    }
+    /** 發送粘貼事件 */
+    function pasteKey(): void {
+        dispatch("pastekey");
+    }
 </script>
 
 <!-- 按鍵編輯面板 -->
@@ -47,6 +55,14 @@
                 placeholder="標簽"
                 class="px-2 w-20 rounded-md bg-transparent hover:variant-soft"
             />
+            {#if key.action.type === ActionType.space}
+                <input
+                    title="調整空格鍵的加載時標簽"
+                    bind:value={key.loading}
+                    placeholder="加載標簽"
+                    class="px-2 w-20 rounded-md bg-transparent hover:variant-soft"
+                />
+            {/if}
         </div>
 
         {#each [2, 1, 0, 3] as index (key.swipe[index].id)}
@@ -122,7 +138,18 @@
             class="gap-1 p-2 flex items-center rounded-md variant-ghost"
         >
             <Icon height="20" icon="mdi:arrow-left" />
-            左移
+        </button>
+        <button
+            title="自動鍵寛"
+            on:click={() => (key.autoWidth = !key.autoWidth)}
+            class="gap-1 p-2 flex items-center rounded-md variant-ghost"
+        >
+            <Icon
+                height="20"
+                icon={key.autoWidth
+                    ? "mdi:table-sync"
+                    : "mdi:table-remove"}
+            />
         </button>
         <input
             title="調整按鍵寛度"
@@ -134,11 +161,24 @@
             class="w-16 gap-1 p-2 rounded-md variant-ghost"
         />
         <button
+            title="複製按鍵配置"
+            on:click={copyKey}
+            class="gap-1 p-2 flex items-center rounded-md variant-ghost"
+        >
+            <Icon height="20" icon="mdi:content-copy" />
+        </button>
+        <button
+            title="粘貼按鍵配置"
+            on:click={pasteKey}
+            class="gap-1 p-2 flex items-center rounded-md variant-ghost"
+        >
+            <Icon height="20" icon="mdi:content-paste" />
+        </button>
+        <button
             title="將此按鍵右移一位"
             on:click={moveRight}
             class="gap-1 p-2 flex items-center rounded-md variant-ghost"
         >
-            右移
             <Icon height="20" icon="mdi:arrow-right" />
         </button>
     </div>
