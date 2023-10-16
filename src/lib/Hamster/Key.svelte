@@ -50,16 +50,16 @@
             <Icon height="20" icon="mdi:gesture-touch" />
             <ActionEdit bind:action={key.action} />
             <input
-                title="調整按鍵顯示標簽"
+                title="調整按鍵顯示標籤"
                 bind:value={key.label}
-                placeholder="標簽"
+                placeholder="標籤"
                 class="px-2 w-20 rounded-md bg-transparent hover:variant-soft"
             />
             {#if key.action.type === ActionType.space}
                 <input
-                    title="調整空格鍵的加載時標簽"
+                    title="調整空格鍵的加載時標籤"
                     bind:value={key.loading}
-                    placeholder="加載標簽"
+                    placeholder="加載標籤"
                     class="px-2 w-20 rounded-md bg-transparent hover:variant-soft"
                 />
             {/if}
@@ -83,9 +83,9 @@
                 {:else}
                     <ActionEdit bind:action={key.swipe[index].action} />
                     <input
-                        title="調整劃動顯示標簽"
+                        title="調整劃動顯示標籤"
                         bind:value={key.swipe[index].label}
-                        placeholder="標簽"
+                        placeholder="標籤"
                         class="px-2 w-20 rounded-md bg-transparent hover:variant-soft"
                     />
                     <!-- 顯示劃動 -->

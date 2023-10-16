@@ -76,7 +76,7 @@ keyboards:
             width: percentage(0.1)
       - keys:
           - action: none
-            width: percentage(0.05)
+            width: available
           - action: character(a)
             width: percentage(0.1)
           - action: character(s)
@@ -96,12 +96,12 @@ keyboards:
           - action: character(l)
             width: percentage(0.1)
           - action: none
-            width: percentage(0.05)
+            width: available
       - keys:
           - action: shift
             width: percentage(0.13)
           - action: none
-            width: percentage(0.02)
+            width: available
           - action: character(z)
             width: percentage(0.1)
           - action: character(x)
@@ -117,7 +117,7 @@ keyboards:
           - action: character(m)
             width: percentage(0.1)
           - action: none
-            width: percentage(0.02)
+            width: available
           - action: backspace
             width: percentage(0.13)
       - keys:
@@ -179,7 +179,7 @@ keyboards:
           - action: keyboardType(classifySymbolic)
             width: percentage(0.13)
           - action: none
-            width: percentage(0.02)
+            width: available
           - action: character(.)
             width: percentage(0.14)
           - action: character(,)
@@ -191,7 +191,7 @@ keyboards:
           - action: character(')
             width: percentage(0.14)
           - action: none
-            width: percentage(0.02)
+            width: available
           - action: backspace
             width: percentage(0.13)
       - keys:
@@ -205,7 +205,7 @@ keyboards:
     rows:
       - keys:
           - action: none
-            width: percentage(0.0475)
+            width: available
           - action: character(,)
             width: percentage(0.095)
           - action: character(.)
@@ -248,7 +248,7 @@ keyboards:
           - action: character(s)
             width: percentage(0.095)
           - action: none
-            width: percentage(0.05)
+            width: available
       - keys:
           - action: shift
             width: percentage(0.145)
@@ -306,7 +306,7 @@ keyboards:
             width: percentage(0.095)
       - keys:
           - action: none
-            width: percentage(0.05)
+            width: available
           - action: character(a)
             width: percentage(0.095)
           - action: character(r)
@@ -445,7 +445,7 @@ keyboards:
             label: P
       - keys:
           - action: none
-            width: percentage(0.07)
+            width: available
           - action: character(a)
             width: percentage(0.14)
             label: A
@@ -465,7 +465,7 @@ keyboards:
             width: percentage(0.14)
             label: L
           - action: none
-            width: percentage(0.07)
+            width: available
       - keys:
           - action: shift
             width: percentage(0.14)

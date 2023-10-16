@@ -9,11 +9,11 @@
 
     export var data: PageData;
 
-    /** 標簽組活動編號 */
+    /** 標籤組活動編號 */
     var selected: number = 0;
     /** 已添加的鍵盤列表 */
     var keyboards: Keyboard[] = [new Keyboard()];
-    /** 當前正在編輯的鍵盤, 在標簽組焦點轉移或鍵盤增删時更新 */
+    /** 當前正在編輯的鍵盤, 在標籤組焦點轉移或鍵盤增删時更新 */
     $: keyboard = keyboards[selected];
     /** 當前操作: 重命名, 删除 */
     var opMode: number = 0;
@@ -192,13 +192,13 @@
             selected = keyboards.length - 1;
         }
     }
-    /** 點擊標簽按鈕時, 切換焦點到該標簽頁, 或編輯本頁鍵盤名 */
+    /** 點擊標籤按鈕時, 切換焦點到該標籤頁, 或編輯本頁鍵盤名 */
     function clickTab(index: number): void {
         if (index === selected) {
-            // 點擊本頁標簽按鈕, 編輯模式
+            // 點擊本頁標籤按鈕, 編輯模式
             opMode = modeRename;
         } else {
-            // 點擊其他頁標簽按鈕, 切換到該頁面
+            // 點擊其他頁標籤按鈕, 切換到該頁面
             selected = index;
             opMode = 0;
         }
@@ -211,9 +211,9 @@
 
 <div class="h-full flex flex-col p-2 g-2">
     <div class="flex justify-center">
-        <!-- 標簽欄 -->
+        <!-- 標籤欄 -->
         {#each keyboards as keyboard, index (keyboard.id)}
-            <!-- 單個標簽 -->
+            <!-- 單個標籤 -->
             <div
                 class:variant-ghost={index === selected}
                 class:border-b-2={index === selected}
@@ -285,7 +285,7 @@
 
     <hr class="!border-t-2" />
 
-    <!-- 標簽頁内容 -->
+    <!-- 標籤頁内容 -->
     <div class="p-4 gap-2 flex flex-wrap">
         {#if selected === -1}
             <!-- 複製和導出代碼 -->
@@ -371,7 +371,7 @@
             <li>
                 從文件導入佈局
                 <ol class="indent-4 list-inside list-decimal">
-                    <li>在最右側「導出」標簽頁内點擊導入文件按鈕</li>
+                    <li>在最右側「導出」標籤頁内點擊導入文件按鈕</li>
                     <li>
                         在文件導入彈窗中, 選擇主配置文件 <code class="code">
                             Hamster/Rime/hamster.yaml
@@ -383,7 +383,7 @@
                 將佈局導出到文件
                 <ol class="indent-4 list-inside list-decimal">
                     <li>
-                        編輯完成後, 在最右側「導出」標簽頁内點擊導出文件按鈕
+                        編輯完成後, 在最右側「導出」標籤頁内點擊導出文件按鈕
                     </li>
                     <li>
                         文件一般會下載到 <code class="code">
@@ -409,11 +409,11 @@
                         </code> 卽可
                     </li>
                     <li>
-                        點擊標簽頁標題一次, 切換到該鍵盤頁; 再次點擊可編輯鍵盤名
+                        點擊標籤頁標題一次, 切換到該鍵盤頁; 再次點擊可編輯鍵盤名
                     </li>
                     <li>
-                        點擊標簽欄「+」圖標新增一個鍵盤;
-                        點擊標簽頁左側的「X」標記, 再次點擊删除圖標可删除鍵盤;
+                        點擊標籤欄「+」圖標新增一個鍵盤;
+                        點擊標籤頁左側的「X」標記, 再次點擊删除圖標可删除鍵盤;
                         點擊取消或無操作三秒後取消本次删除
                     </li>
                     <li>
@@ -432,7 +432,7 @@
                     </li>
                     <li>
                         檔案導入導出是鍵盤級别的操作,
-                        卽只會對當前鍵盤標簽頁生效;
+                        卽只會對當前鍵盤標籤頁生效;
                         文件導入導出則是對當前編輯的所有鍵盤的操作
                     </li>
                     <li>
