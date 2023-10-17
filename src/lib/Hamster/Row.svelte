@@ -120,6 +120,23 @@
                     "
                     on:click={() => select(index)}
                 >
+                    <div
+                        class="h-0 w-full text-[8px]/[0px] flex justify-around"
+                    >
+                        <!-- 顯示上下劃動符號 -->
+                        {#if !key.autoWidth}
+                            {#each [key.swipe[2], key.swipe[1]] as swipe}
+                                {#if swipe.action.type !== ActionType.none && swipe.display}
+                                    <span>
+                                        {(swipe.label
+                                            ? swipe.label
+                                            : swipe.action.display()
+                                        ).slice(0, 2)}
+                                    </span>
+                                {/if}
+                            {/each}
+                        {/if}
+                    </div>
                     {key.label ? key.label : key.action.display()}
                 </button>
             </div>
