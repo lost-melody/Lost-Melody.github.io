@@ -96,6 +96,8 @@ export enum ShortCmd {
     schema = "上个输入方案",
     return = "换行",
     switcher = "RimeSwitcher",
+    left = "左移",
+    right = "右移",
 };
 
 /** 按鍵動作 */
@@ -118,9 +120,9 @@ export class Action {
             case ActionType.shift:
                 return "⇧";
             case ActionType.tab:
-                return "-⇥";
+                return "⇥";
             case ActionType.space:
-                return "⌞___⌟";
+                return "____";
             case ActionType.keyboardType:
                 switch (this.kbd) {
                     case KeyboardType.alphabetic:
@@ -137,9 +139,38 @@ export class Action {
                         return this.text;
                     case KeyboardType.emojis:
                         return "😀";
+                    default:
+                        return this.kbd;
                 }
             case ActionType.shortCommand:
-                return this.cmd;
+                switch (this.cmd) {
+                    case ShortCmd.clear:
+                        return "清空";
+                    case ShortCmd.trad:
+                        return "繁簡";
+                    case ShortCmd.eng:
+                        return "中英";
+                    case ShortCmd.begin:
+                        return "行首";
+                    case ShortCmd.end:
+                        return "行尾";
+                    case ShortCmd.second:
+                        return "次選";
+                    case ShortCmd.third:
+                        return "三選";
+                    case ShortCmd.schema:
+                        return "方案";
+                    case ShortCmd.return:
+                        return "換行";
+                    case ShortCmd.switcher:
+                        return "開關";
+                    case ShortCmd.left:
+                        return "左移";
+                    case ShortCmd.right:
+                        return "右移";
+                    default:
+                        return this.cmd;
+                }
             case ActionType.none:
                 return "";
             case ActionType.nextKeyboard:
