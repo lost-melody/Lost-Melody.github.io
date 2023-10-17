@@ -295,11 +295,11 @@ export class Swipe {
     processByRIME: boolean = true;
 
     fromObject(obj: any) {
-        if (typeof obj === "object") {
+        if (obj && typeof obj === "object") {
             this.action.fromObject(obj.action);
             if (typeof obj.label === "string") {
                 this.label = obj.label;
-            } else if (typeof obj.label === "object" && typeof obj.label.text === "string") {
+            } else if (obj.label && typeof obj.label === "object" && typeof obj.label.text === "string") {
                 this.label = obj.label.text;
             }
             this.display = obj.display ? true : false;
@@ -351,11 +351,11 @@ export class Key {
     }
 
     fromObject(obj: any) {
-        if (typeof obj === "object") {
+        if (obj && typeof obj === "object") {
             this.action.fromObject(obj.action);
             if (typeof obj.label === "string") {
                 this.label = obj.label;
-            } else if (typeof obj.label === "object" && typeof obj.label.text === "string") {
+            } else if (obj.label && typeof obj.label === "object" && typeof obj.label.text === "string") {
                 this.label = obj.label.text;
                 if (this.action.type === ActionType.space && typeof obj.label.loadingText === "string") {
                     this.loading = obj.label.loadingText;
@@ -370,7 +370,7 @@ export class Key {
                     this.width = (res && res.func === "percentage") ? Number(res.args) * 100 : 10;
                     this.autoWidth = false;
                 }
-            } else if (typeof obj.width === "object" && typeof obj.width.portrait === "string") {
+            } else if (obj.width && typeof obj.width === "object" && typeof obj.width.portrait === "string") {
                 if (obj.width.portrait === "available") {
                     this.width = 10;
                     this.autoWidth = true;
@@ -386,10 +386,10 @@ export class Key {
             for (let swipe of this.swipe) {
                 swipe.action.type = ActionType.none;
             }
-            if (typeof obj.swipe === "object" && obj.swipe.length > 0) {
+            if (obj.swipe && typeof obj.swipe === "object" && obj.swipe.length > 0) {
                 for (let theSwipe of obj.swipe) {
                     let index = -1;
-                    if (typeof theSwipe === "object") {
+                    if (theSwipe && typeof theSwipe === "object") {
                         index = Object.values(Direction).findIndex((dir) => theSwipe.direction === dir);
                     }
                     if (index >= 0) {
@@ -450,9 +450,9 @@ export class Row {
 
     fromObject(obj: any) {
         this.keys = [];
-        if (typeof obj === "object") {
+        if (obj && typeof obj === "object") {
             this.rowHeight = Number(obj.rowHeight || "");
-            if (typeof obj.keys === "object" && obj.keys.length > 0) {
+            if (obj.keys && typeof obj.keys === "object" && obj.keys.length > 0) {
                 this.keys = obj.keys.map((theKey: any) => {
                     let key = new Key();
                     key.fromObject(theKey);
@@ -487,11 +487,11 @@ export class Keyboard {
     buttonInsets: ButtonInsets = new ButtonInsets();
 
     fromObject(obj: any) {
-        if (typeof obj === "object") {
+        if (obj && typeof obj === "object") {
             this.name = typeof obj.name === "string" ? this.name = obj.name : "鍵盤";
             this.buttonInsets.fromObject(obj.buttonInsets);
             this.rows = [];
-            if (typeof obj.rows === "object") {
+            if (obj.rows && typeof obj.rows === "object") {
                 if (obj.rows.length > 0) {
                     this.rows = obj.rows.map((theRow: any) => {
                         let row = new Row();
