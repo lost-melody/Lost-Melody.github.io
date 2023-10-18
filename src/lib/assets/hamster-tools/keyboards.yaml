@@ -201,7 +201,6 @@ keyboards:
             width: percentage(0.5)
           - action: enter
             width: percentage(0.25)
-keyboards:
   - name: GBoard
     rows:
       - keys:
