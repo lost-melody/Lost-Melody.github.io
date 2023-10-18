@@ -201,6 +201,94 @@ keyboards:
             width: percentage(0.5)
           - action: enter
             width: percentage(0.25)
+keyboards:
+  - name: GBoard
+    rows:
+      - keys:
+          - action: character(q)
+            width: percentage(0.091)
+          - action: character(w)
+            width: percentage(0.091)
+          - action: character(e)
+            width: percentage(0.091)
+          - action: character(r)
+            width: percentage(0.091)
+          - action: character(t)
+            width: percentage(0.091)
+          - action: character(y)
+            width: percentage(0.091)
+          - action: character(u)
+            width: percentage(0.091)
+          - action: character(i)
+            width: percentage(0.091)
+          - action: character(o)
+            width: percentage(0.091)
+          - action: character(p)
+            width: percentage(0.091)
+          - action: backspace
+            width: percentage(0.09)
+      - keys:
+          - action: none
+            width: available
+          - action: character(a)
+            width: percentage(0.091)
+          - action: character(s)
+            width: percentage(0.091)
+          - action: character(d)
+            width: percentage(0.091)
+          - action: character(f)
+            width: percentage(0.091)
+          - action: character(g)
+            width: percentage(0.091)
+          - action: character(h)
+            width: percentage(0.091)
+          - action: character(j)
+            width: percentage(0.091)
+          - action: character(k)
+            width: percentage(0.091)
+          - action: character(l)
+            width: percentage(0.091)
+          - action: enter
+            width: percentage(0.14)
+      - keys:
+          - action: shift
+            width: percentage(0.091)
+          - action: character(z)
+            width: percentage(0.091)
+          - action: character(x)
+            width: percentage(0.091)
+          - action: character(c)
+            width: percentage(0.091)
+          - action: character(v)
+            width: percentage(0.091)
+          - action: character(b)
+            width: percentage(0.091)
+          - action: character(n)
+            width: percentage(0.091)
+          - action: character(m)
+            width: percentage(0.091)
+          - action: character(!)
+            width: percentage(0.091)
+          - action: character(?)
+            width: percentage(0.091)
+          - action: shift
+            width: percentage(0.09)
+      - keys:
+          - action: keyboardType(numericNineGrid)
+            width: percentage(0.091)
+          - action: character(,)
+            width: percentage(0.091)
+          - action: nextKeyboard
+            width: percentage(0.091)
+          - action: space
+            width: percentage(0.454)
+          - action: keyboardType(emojis)
+            width: percentage(0.091)
+          - action: character(.)
+            width: percentage(0.091)
+          - action: keyboardType(classifySymbolic)
+            width: percentage(0.091)
+    buttonInsets: left(3),bottom(4),top(8),right(3)
   - name: 德沃夏克
     rows:
       - keys:

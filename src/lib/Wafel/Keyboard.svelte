@@ -2,37 +2,42 @@
     import Key from "./Key.svelte";
     import mappings from "$lib/assets/wafel/smyh_map.txt?raw";
 
-    var compMap: { [key: string]: [string, string][] } = {};
+    /** `{ "K": { "a": [ "上", "丄", ... ], ... }, ... }` */
+    var compMap: {
+        [key: string]: {
+            [key: string]: string[];
+        };
+    } = {};
+    // 讀取字根鍵位映射文件
     for (let line of mappings.split("\n")) {
         if (line && !line.startsWith("#")) {
+            // ["Ka", "上"]
             let [code, comp] = line.split("\t");
-            let key = code.slice(0, 1).toUpperCase();
-            if (!compMap[key]) {
-                compMap[key] = [];
+            /** 大碼 */
+            let primary = code.slice(0, 1).toUpperCase();
+            /** 小碼 */
+            let secondary = code.slice(1, 2).toLowerCase();
+            if (!compMap[primary]) {
+                compMap[primary] = {};
             }
-            compMap[key].push([comp, code]);
+            if (!compMap[primary][secondary]) {
+                compMap[primary][secondary] = [];
+            }
+            // 注入當前讀取的字根
+            compMap[primary][secondary].push(comp);
         }
     }
 </script>
 
-<div class="gap-1 p-2 flex flex-col w-full overflow-auto">
-    <div class="flex m-auto gap-1">
-        {#each "QWERTYUIOP" as key}
-            <Key {key} comps={compMap[key] || []} />
-        {/each}
-    </div>
-    <div class="flex m-auto gap-1">
-        <div class="w-16" />
-        {#each "ASDFGHJKL" as key}
-            <Key {key} comps={compMap[key] || []} />
-        {/each}
-        <div class="w-16" />
-    </div>
-    <div class="flex m-auto gap-1">
-        <div class="w-32" />
-        {#each "ZXCVBNM," as key}
-            <Key {key} comps={compMap[key] || []} />
-        {/each}
-        <div class="w-32" />
-    </div>
+<div class="gap-1 p-2 m-auto flex flex-col">
+    {#each ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM,"] as line}
+        <!-- 逐行繪製字根圖 -->
+        <div class="flex gap-1">
+            <div class="grow" />
+            {#each line as key}
+                <Key {key} comps={compMap[key] || {}} />
+            {/each}
+            <div class="grow" />
+        </div>
+    {/each}
 </div>

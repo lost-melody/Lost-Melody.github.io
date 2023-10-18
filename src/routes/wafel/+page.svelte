@@ -5,7 +5,9 @@
 
 <div class="flex flex-col gap-2 p-2">
     <span class="p-1 m-auto rounded-md variant-soft"> 一張字根圖 </span>
-    <Keyboard />
+    <div class="flex w-full overflow-auto">
+        <Keyboard />
+    </div>
 
     <span class="p-1 m-auto rounded-md variant-soft"> 一個下載頁 </span>
     <div class="btn-group variant-ghost m-auto">
@@ -27,5 +29,5 @@
         </a>
     </div>
 
-    <span class="p-1 m-auto rounded-md variant-soft"> 余下的, 都是留白 </span>
+    <span class="p-1 m-auto rounded-md variant-soft"> 餘下的, 需要時間來慢慢長大... </span>
 </div>
