@@ -5,7 +5,7 @@
 
 <div class="flex flex-col gap-2 p-2">
     <span class="p-1 m-auto rounded-md variant-soft"> 一張字根圖 </span>
-    <div class="flex w-full overflow-auto">
+    <div class="flex overflow-auto">
         <Keyboard />
     </div>
 

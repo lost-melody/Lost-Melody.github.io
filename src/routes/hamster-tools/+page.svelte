@@ -4,8 +4,10 @@
     import Icon from "@iconify/svelte";
     import YAML from "yaml";
     import { Keyboard } from "$lib/Hamster/Hamster";
+    import Tab from "$lib/Hamster/Tab.svelte";
     import KbdEdit from "$lib/Hamster/Keyboard.svelte";
     import KbdLoad from "$lib/Hamster/KeyboardLoad.svelte";
+    import Manual from "$lib/Hamster/Manual.svelte";
 
     export var data: PageData;
 
@@ -52,9 +54,6 @@
         }
         return { name: nameEmpty };
     });
-
-    // 當前操作類型: 重命名, 删除
-    const [modeRename, modeDelete] = [1, 2];
 
     /** 加載預置鍵盤檔案 */
     function loadPredefined(index: number): void {
@@ -159,23 +158,6 @@
         // 聚焦到新增的鍵盤
         selected = keyboards.length > 0 ? keyboards.length - 1 : 0;
     }
-    /** 準備删除鍵盤 */
-    function tryDelKbd(index: number): void {
-        if (index !== selected) {
-            selected = index;
-        }
-        if (opMode) {
-            opMode = 0;
-        } else {
-            opMode = modeDelete;
-            clearTimeout(timeout);
-            timeout = setTimeout(() => {
-                if (opMode === modeDelete) {
-                    opMode = 0;
-                }
-            }, delay);
-        }
-    }
     /** 删除一個鍵盤 */
     function delKeyboard(index: number): void {
         opMode = 0;
@@ -192,88 +174,28 @@
             selected = keyboards.length - 1;
         }
     }
-    /** 點擊標籤按鈕時, 切換焦點到該標籤頁, 或編輯本頁鍵盤名 */
-    function clickTab(index: number): void {
-        if (index === selected) {
-            // 點擊本頁標籤按鈕, 編輯模式
-            opMode = modeRename;
-        } else {
-            // 點擊其他頁標籤按鈕, 切換到該頁面
-            selected = index;
-            opMode = 0;
-        }
-    }
-    /** 重命名自動聚焦 */
-    function autoFocus(input: HTMLInputElement): void {
-        input.focus();
-    }
 </script>
 
 <div class="h-full flex flex-col p-2 g-2">
-    <div class="flex justify-center">
-        <!-- 標籤欄 -->
-        {#each keyboards as keyboard, index (keyboard.id)}
-            <!-- 單個標籤 -->
-            <div
-                class:variant-ghost={index === selected}
-                class:border-b-2={index === selected}
-                class="rounded-t-lg variant-ringed hover:variant-ghost flex px-1 justify-center items-center"
-            >
-                <!-- 圖標: 删除 or 取消 -->
-                <button
-                    title={index === selected && opMode === modeDelete
-                        ? "取消"
-                        : "删除鍵盤"}
-                    on:click={() => tryDelKbd(index)}
-                    class="p-1 rounded-full hover:variant-ringed"
-                >
-                    <Icon
-                        height="20"
-                        icon={index === selected && opMode === modeDelete
-                            ? "mdi:cancel"
-                            : "mdi:close"}
-                    />
-                </button>
+    <div class="flex">
+        <div class="grow shrink" />
 
-                <!-- 鍵盤名 -->
-                {#if index === selected && opMode === modeRename}
-                    <!-- 編輯鍵盤名 -->
-                    <input
-                        bind:value={keyboard.name}
-                        placeholder="天行鍵"
-                        use:autoFocus
-                        on:blur={() => (opMode = 0)}
-                        class="bg-transparent h-10 p-1"
-                    />
-                {:else}
-                    <!-- 鍵盤名導航鍵 -->
-                    <button
-                        title="點擊重命名"
-                        on:click={() => clickTab(index)}
-                        class="h-10 p-1"
-                    >
-                        {keyboard.name}
-                    </button>
-                {/if}
+        <div class="flex overflow-auto">
+            <!-- 標籤欄 -->
+            {#each keyboards as keyboard, index (keyboard.id)}
+                <!-- 單個標籤 -->
+                <Tab
+                    {index}
+                    bind:selected
+                    bind:timeout
+                    bind:keyboardName={keyboard.name}
+                    bind:opMode
+                    on:delkbd={() => delKeyboard(index)}
+                />
+            {/each}
+        </div>
 
-                <!-- 圖標: 鍵盤 or 删除 -->
-                {#if index === selected && opMode === modeDelete}
-                    <button
-                        title="删除"
-                        on:click={() => delKeyboard(index)}
-                        class="p-1 rounded-full hover:variant-ringed"
-                    >
-                        <Icon color="red" height="20" icon="mdi:delete" />
-                    </button>
-                {:else}
-                    <div class="p-1">
-                        <Icon height="20" icon="mdi:keyboard" />
-                    </div>
-                {/if}
-            </div>
-        {/each}
-
-        <!-- 「新增」按鈕 -->
+        <!-- 「新增」標籤按鈕 -->
         <button
             title="新增鍵盤"
             on:click={newKeyboard}
@@ -282,7 +204,7 @@
             <Icon height="24" icon="mdi:plus" />
         </button>
 
-        <!-- 「導出」按鈕 -->
+        <!-- 「導出」標籤按鈕 -->
         <button
             title="導入或導出爲YAML文檔"
             on:click={exportYaml}
@@ -291,15 +213,17 @@
         >
             <Icon height="24" icon="mdi:export-variant" />
         </button>
+
+        <div class="grow shrink" />
     </div>
 
     <hr class="!border-t-2" />
 
     <!-- 標籤頁内容 -->
-    <div class="p-4 gap-2 flex flex-wrap">
+    <div class="p-4 gap-2 flex flex-col">
         {#if selected === -1}
-            <!-- 複製和導出代碼 -->
-            <div class="w-full flex">
+            <div class="flex flex-col gap-1">
+                <!-- 複製和導出 -->
                 <div class="mx-auto overflow-auto btn-group variant-ghost">
                     <button
                         disabled={copiedState}
@@ -323,16 +247,19 @@
                         />
                         導出文件
                     </button>
-                    <button disabled class="flex items-center gap-1">
-                        <Icon icon="mdi:import" />
-                        導入文件
-                        <input
-                            type="file"
-                            accept=".yaml,.yml"
-                            on:change={onImportYaml}
-                            class="rounded-full hover:variant-soft"
-                        />
-                    </button>
+                </div>
+                <!-- 導入 -->
+                <div
+                    class="mx-auto rounded-full p-1 variant-ghost flex justify-center items-center gap-1"
+                >
+                    <Icon icon="mdi:import" />
+                    導入文件
+                    <input
+                        type="file"
+                        accept=".yaml,.yml"
+                        on:change={onImportYaml}
+                        class="px-2 py-1 w-[60%] rounded-full variant-soft"
+                    />
                 </div>
             </div>
             <pre
@@ -376,88 +303,8 @@
         {/if}
     </div>
 
-    <div class="text-xs p-2 rounded-md mx-auto variant-ghost">
-        <p class="text-center">不太詳細的使用説明</p>
-        <ol class="list-inside list-decimal">
-            <li>
-                如果要對現有佈局進行調整, 建議在手機 <i>Safari</i> 上打開此頁面;
-                若要從零開始構建全新的佈局, 建議使用 <i>PC</i> 操作
-            </li>
-            <li>
-                從文件導入佈局
-                <ol class="indent-4 list-inside list-decimal">
-                    <li>在最右側「導出」標籤頁内點擊導入文件按鈕</li>
-                    <li>
-                        在文件導入彈窗中, 選擇主配置文件 <code class="code">
-                            Hamster/Rime/hamster.yaml
-                        </code> 或其他鍵盤配置文件
-                    </li>
-                </ol>
-            </li>
-            <li>
-                將佈局導出到文件
-                <ol class="indent-4 list-inside list-decimal">
-                    <li>
-                        編輯完成後, 在最右側「導出」標籤頁内點擊導出文件按鈕
-                    </li>
-                    <li>
-                        文件一般會下載到 <code class="code">
-                            iPhone/下載/
-                        </code> 目録下
-                    </li>
-                    <li>
-                        在 <i>iOS</i> 系統的 <i>文件 App</i>
-                        中將導出的文件移動到
-                        <code class="code"> Hamster/Rime/hamster.yaml </code> 目録下
-                    </li>
-                    <li>
-                        打開 <i>倉輸入法 App</i>, 在「鍵盤佈局」中選擇導入此文件
-                    </li>
-                </ol>
-            </li>
-            <li>
-                佈局編輯指南
-                <ol class="indent-4 list-inside list-decimal">
-                    <li>
-                        内距一般無須修改, 保持默認 <code class="code">
-                            L(3),B(4),T(8),R(3)
-                        </code> 卽可
-                    </li>
-                    <li>
-                        點擊標籤頁標題一次, 切換到該鍵盤頁; 再次點擊可編輯鍵盤名
-                    </li>
-                    <li>
-                        點擊標籤欄「+」圖標新增一個鍵盤;
-                        點擊標籤頁左側的「X」標記, 再次點擊删除圖標可删除鍵盤;
-                        點擊取消或無操作三秒後取消本次删除
-                    </li>
-                    <li>
-                        點擊鍵盤區域中的按鍵後, 聚焦該鍵盤,
-                        此時可在上方的按鍵編輯區更改此按鍵的配置
-                    </li>
-                    <li>
-                        劃動動作編輯欄中顯示 <i>眼睛</i> 圖標,
-                        表明此時該劃動動作會顯示在鍵盤上; 顯示爲 <i>斜線</i> 時表明不展示
-                    </li>
-                    <li>
-                        劃動動作編輯欄中顯示 <i>地球</i> 圖標,
-                        表明此時該劃動動作會經由 <i>Rime</i> 引擎處理; 顯示爲
-                        <i>斜線</i>
-                        時表明不經 <i>Rime</i> 處理
-                    </li>
-                    <li>
-                        檔案導入導出是鍵盤級别的操作,
-                        卽只會對當前鍵盤標籤頁生效;
-                        文件導入導出則是對當前編輯的所有鍵盤的操作
-                    </li>
-                    <li>
-                        檔案導入和導出按鈕提供三秒延遲確認,
-                        存入/讀取/清空均可在三秒内再次點擊以取消操作
-                    </li>
-                </ol>
-            </li>
-        </ol>
-    </div>
+    <!-- 使用説明 -->
+    <Manual />
 
     <div class="grow" />
 
