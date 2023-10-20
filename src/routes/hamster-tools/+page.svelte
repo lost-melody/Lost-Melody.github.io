@@ -222,48 +222,47 @@
     <!-- 標籤頁内容 -->
     <div class="p-4 gap-2 flex flex-col">
         {#if selected === -1}
-            <div class="flex flex-col gap-1">
-                <!-- 複製和導出 -->
-                <div class="mx-auto overflow-auto btn-group variant-ghost">
-                    <button
-                        disabled={copiedState}
-                        on:click={copyYaml}
-                        class="flex items-center gap-1"
-                    >
-                        <Icon
-                            icon={copiedState ? "mdi:check" : "mdi:clipboard"}
-                        />
-                        複制代碼
-                    </button>
-                    <button
-                        disabled={downloadedState}
-                        on:click={downloadYaml}
-                        class="flex items-center gap-1"
-                    >
-                        <Icon
-                            icon={downloadedState
-                                ? "mdi:check"
-                                : "mdi:export-variant"}
-                        />
-                        導出文件
-                    </button>
-                </div>
-                <!-- 導入 -->
-                <div
-                    class="mx-auto rounded-full p-1 variant-ghost flex justify-center items-center gap-1"
+            <!-- 複製和導出 -->
+            <div class="mx-auto btn-group variant-ghost">
+                <button
+                    disabled={copiedState}
+                    on:click={copyYaml}
+                    class="flex items-center gap-1"
                 >
-                    <Icon icon="mdi:import" />
-                    導入文件
-                    <input
-                        type="file"
-                        accept=".yaml,.yml"
-                        on:change={onImportYaml}
-                        class="px-2 py-1 w-[60%] rounded-full variant-soft"
+                    <Icon icon={copiedState ? "mdi:check" : "mdi:clipboard"} />
+                    複制代碼
+                </button>
+                <button
+                    disabled={downloadedState}
+                    on:click={downloadYaml}
+                    class="flex items-center gap-1"
+                >
+                    <Icon
+                        icon={downloadedState
+                            ? "mdi:check"
+                            : "mdi:export-variant"}
                     />
-                </div>
+                    導出文件
+                </button>
             </div>
-            <pre
-                class="pre mx-auto variant-ghost whitespace-pre"> {exportData} </pre>
+            <!-- 導入 -->
+            <div
+                class="mx-auto rounded-full p-1 variant-ghost flex justify-center items-center gap-1"
+            >
+                <Icon icon="mdi:import" />
+                導入文件
+                <input
+                    type="file"
+                    accept=".yaml,.yml"
+                    on:change={onImportYaml}
+                    class="px-2 py-1 w-[60%] rounded-full variant-soft"
+                />
+            </div>
+            <!-- 導出代碼區域 -->
+            <div class="flex overflow-auto">
+                <pre
+                    class="pre mx-auto variant-ghost whitespace-pre"> {exportData} </pre>
+            </div>
         {:else}
             <!-- 内容面板 -->
             {#if keyboard}

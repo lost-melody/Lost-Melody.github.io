@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { localStorageStore } from "@skeletonlabs/skeleton";
     import Icon from "@iconify/svelte";
     import type { Keyboard } from "./Hamster";
     import { Key, Row } from "./Hamster";
@@ -189,7 +190,89 @@
     } else {
         selectedKey = theHiddenKey;
     }
+
+    // 切换選中按鍵
+    function selectPrev(): void {
+        if (selected.col > 0) {
+            selected.col--;
+        }
+    }
+    function selectNext(): void {
+        if (selected.col < keyboard.rows[selected.row].keys.length - 1) {
+            selected.col++;
+        }
+    }
+    function selectPrevRow(): void {
+        if (selected.row > 0) {
+            selected.row--;
+            if (selected.col >= keyboard.rows[selected.row].keys.length) {
+                if (keyboard.rows[selected.row].keys.length === 0) {
+                    keyboard.rows[selected.row].keys = [new Key()];
+                }
+                selected.col = keyboard.rows[selected.row].keys.length - 1;
+            }
+        }
+    }
+    function selectNextRow(): void {
+        if (selected.row < keyboard.rows.length - 1) {
+            selected.row++;
+            if (selected.col >= keyboard.rows[selected.row].keys.length) {
+                if (keyboard.rows[selected.row].keys.length === 0) {
+                    keyboard.rows[selected.row].keys = [new Key()];
+                }
+                selected.col = keyboard.rows[selected.row].keys.length - 1;
+            }
+        }
+    }
+    /** 是否啓用快捷鍵 */
+    var enableAccelKeys = localStorageStore("enableAccelKeys", true);
+    /** 快捷鍵處理器 */
+    function handleAccelKey(
+        event: KeyboardEvent & { currentTarget: EventTarget & Window }
+    ): void {
+        if (!$enableAccelKeys || !event.ctrlKey) {
+            return;
+        }
+        if (!event.shiftKey) {
+            switch (event.key.toLowerCase()) {
+                case "h":
+                    selectPrev();
+                    break;
+                case "j":
+                    selectNextRow();
+                    break;
+                case "k":
+                    selectPrevRow();
+                    break;
+                case "l":
+                    selectNext();
+                    break;
+                default:
+                    return;
+            }
+        } else {
+            switch (event.key.toLowerCase()) {
+                case "h":
+                    moveBtnLeft();
+                    break;
+                case "j":
+                    moveRowDown(selected.row);
+                    break;
+                case "k":
+                    moveRowUp(selected.row);
+                    break;
+                case "l":
+                    moveBtnRight();
+                    break;
+                default:
+                    return;
+            }
+        }
+        event.preventDefault();
+    }
 </script>
+
+<svelte:window on:keydown={handleAccelKey} />
 
 <div class="flex flex-col gap-2 w-full">
     <div class="flex flex-wrap justify-center gap-2">
@@ -271,6 +354,20 @@
 
     <!-- 新增行, 屏幕寛度調整 -->
     <div class="flex gap-2 justify-center items-center">
+        <button
+            title={"頁面快捷鍵: " +
+                ($enableAccelKeys ? "啓用" : "停用") +
+                "\n<ctrl - h/j/k/l> 切換聚焦按鍵" +
+                "\n<ctrl - shift - h/j/k/l> 移動按鍵、行"}
+            on:click={() => {
+                $enableAccelKeys = !$enableAccelKeys;
+            }}
+            class="btn-icon variant-ringed"
+        >
+            <Icon
+                icon={$enableAccelKeys ? "mdi:keyboard" : "mdi:keyboard-off"}
+            />
+        </button>
         <button
             title="追加一個按鍵行, 從當前選中行複製"
             on:click={newRow}
