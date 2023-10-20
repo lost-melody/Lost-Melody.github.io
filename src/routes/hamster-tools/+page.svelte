@@ -22,12 +22,13 @@
     var opMode: number = 0;
     /** 導出的 yaml 數據 */
     var exportData = "";
+    /** 導入文件選擇組件 */
+    var importFileInput: HTMLInputElement | undefined;
 
     const nameEmpty = "空的";
     const delay = 2000;
     // 已複製, 已下載 狀態記录
     var copiedState = false;
-    var downloadedState = false;
     var timeout: NodeJS.Timeout;
 
     /** LocalStorage 自定義鍵檔案鍵名 */
@@ -108,8 +109,6 @@
     }
     /** 下載導出的 yaml 數據 */
     function downloadYaml(): void {
-        downloadedState = true;
-        setTimeout(() => (downloadedState = false), delay);
         var link = document.createElement("a");
         var blob = new Blob([exportData], {
             type: "application/yaml; charset=utf-8",
@@ -150,6 +149,14 @@
                 };
                 reader.readAsText(file);
             }
+        }
+    }
+    /** 點擊導入按鈕 */
+    function onClickImport(
+        event: Event & { currentTarget: EventTarget & HTMLButtonElement }
+    ): void {
+        if (importFileInput) {
+            importFileInput.click();
         }
     }
     /** 新增鍵盤 */
@@ -254,46 +261,46 @@
     <!-- 標籤頁内容 -->
     <div class="p-4 gap-2 flex flex-col">
         {#if selected === -1}
-            <!-- 複製和導出 -->
-            <div class="mx-auto btn-group variant-ghost">
+            <div
+                class="mx-auto max-w-full overflow-auto btn-group variant-ghost"
+            >
+                <!-- 複製 -->
                 <button
                     disabled={copiedState}
                     on:click={copyYaml}
                     class="flex items-center gap-1"
                 >
                     <Icon icon={copiedState ? "mdi:check" : "mdi:clipboard"} />
-                    複制代碼
+                    複制
                 </button>
+                <!-- 導出 -->
+                <button on:click={downloadYaml} class="flex items-center gap-1">
+                    <Icon icon="mdi:export" />
+                    導出
+                </button>
+                <!-- 導入 -->
                 <button
-                    disabled={downloadedState}
-                    on:click={downloadYaml}
+                    on:click={onClickImport}
                     class="flex items-center gap-1"
                 >
-                    <Icon
-                        icon={downloadedState
-                            ? "mdi:check"
-                            : "mdi:export-variant"}
-                    />
-                    導出文件
+                    <Icon icon="mdi:import" />
+                    導入
+                    <div class="w-0 h-0 overflow-hidden">
+                        <input
+                            type="file"
+                            name="import_file"
+                            bind:this={importFileInput}
+                            accept=".yaml,.yml"
+                            on:change={onImportYaml}
+                            class="px-2 py-1 w-[60%] rounded-full variant-soft"
+                        />
+                    </div>
                 </button>
             </div>
-            <!-- 導入 -->
-            <div
-                class="mx-auto rounded-full p-1 variant-ghost flex justify-center items-center gap-1"
-            >
-                <Icon icon="mdi:import" />
-                導入文件
-                <input
-                    type="file"
-                    accept=".yaml,.yml"
-                    on:change={onImportYaml}
-                    class="px-2 py-1 w-[60%] rounded-full variant-soft"
-                />
-            </div>
             <!-- 導出代碼區域 -->
-            <div class="flex overflow-auto">
+            <div class="flex mx-auto max-w-full overflow-auto">
                 <pre
-                    class="pre mx-auto variant-ghost whitespace-pre"> {exportData} </pre>
+                    class="pre variant-ghost whitespace-pre"> {exportData} </pre>
             </div>
         {:else}
             <!-- 内容面板 -->
