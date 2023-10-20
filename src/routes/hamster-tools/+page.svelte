@@ -1,5 +1,6 @@
 <script lang="ts">
     import { browser } from "$app/environment";
+    import { onNavigate } from "$app/navigation";
     import type { PageData } from "./$types";
     import Icon from "@iconify/svelte";
     import YAML from "yaml";
@@ -174,7 +175,38 @@
             selected = keyboards.length - 1;
         }
     }
+
+    // 加載頁面恢復數據
+    const recoveryDataKey = "recoveryKeyboards";
+    var recoveryData = browser && localStorage.getItem(recoveryDataKey);
+    if (recoveryData) {
+        try {
+            let objList = YAML.parse(recoveryData);
+            keyboards = (objList as object[]).map((obj) => {
+                var kbd = new Keyboard();
+                kbd.fromObject(obj);
+                return kbd;
+            });
+        } catch (err) {
+            console.error(
+                "failed to load recovery data:",
+                (err as Error).message
+            );
+        }
+    }
+    /** 保存頁面恢復數據 */
+    function saveCurrentKeyboards(): void {
+        localStorage.setItem(
+            recoveryDataKey,
+            YAML.stringify(keyboards.map((kbd) => kbd.toObject()))
+        );
+    }
+    // 頁面路由前, 保存恢復數據
+    onNavigate(saveCurrentKeyboards);
 </script>
+
+<!-- 頁面關閉前, 保存恢復數據 -->
+<svelte:window on:beforeunload={saveCurrentKeyboards} />
 
 <div class="h-full flex flex-col p-2 g-2">
     <div class="flex">
