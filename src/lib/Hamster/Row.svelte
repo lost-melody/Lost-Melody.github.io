@@ -114,14 +114,14 @@
                     class:bg-surface-300={bgBtnDisplay(key.action.type)}
                     class:dark:bg-surface-700={bgBtnDisplay(key.action.type)}
                     class="
-                        h-full w-full rounded-md
+                        h-full w-full rounded-md relative
                         border-gray-700 dark:border-gray-300
                         hover:bg-surface-400 hover:dark:bg-surface-800
                     "
                     on:click={() => select(index)}
                 >
                     <div
-                        class="h-0 w-full text-[8px]/[0px] flex justify-around"
+                        class="w-full h-[20%] absolute top-0 text-xs flex justify-around"
                     >
                         <!-- 顯示上下劃動符號 -->
                         {#if !key.autoWidth}
@@ -137,7 +137,9 @@
                             {/each}
                         {/if}
                     </div>
-                    {key.label ? key.label : key.action.display()}
+                    <div class="w-full h-[80%] absolute top-[20%] text-2xl text-center">
+                        {key.label ? key.label : key.action.display()}
+                    </div>
                 </button>
             </div>
         {/each}

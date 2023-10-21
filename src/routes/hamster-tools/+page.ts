@@ -15,7 +15,7 @@ try {
 
 export const load: PageLoad = (_) => {
     return {
-        title: "倉·工具",
+        title: "倉·佈局",
         keyboards,
     };
 };

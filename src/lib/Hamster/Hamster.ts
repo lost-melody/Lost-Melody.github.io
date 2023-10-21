@@ -98,6 +98,9 @@ export enum ShortCmd {
     switcher = "RimeSwitcher",
     left = "左移",
     right = "右移",
+    cut = "剪切",
+    copy = "复制",
+    paste = "粘贴",
 };
 
 /** 按鍵動作 */
