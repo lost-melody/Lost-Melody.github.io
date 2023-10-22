@@ -7,7 +7,7 @@
 
 <div
     style={`background-color: ${schema.back_color.rgba()};`}
-    class="w-full max-w-[400px] mx-auto rounded-md"
+    class="w-full max-w-[400px] mx-auto rounded-md backdrop-blur"
 >
     <!-- 一排預編輯欄 -->
     <div class="w-full px-2">

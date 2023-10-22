@@ -13,9 +13,7 @@
     var desc = profile.desc;
 </script>
 
-<div
-    class="card card-hover p-4 gap-2 flex flex-col justify-center items-center"
->
+<div class="card card-hover p-4 gap-2 flex flex-col items-center">
     <!-- 頭像, 名稱及主頁鏈接 -->
     <a
         {target}
