@@ -158,7 +158,7 @@
                 <span
                     style={`color: ${schema.hilited_candidate_text_color.rgba()};` +
                         `background-color: ${schema.hilited_candidate_back_color.rgba()};`}
-                    class="p-2 rounded-md border"
+                    class="p-1 rounded-md border text-sm"
                 >
                     {schema.name}
                 </span>

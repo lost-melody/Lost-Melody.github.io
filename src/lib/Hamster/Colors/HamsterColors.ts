@@ -5,12 +5,16 @@ function newId(): number {
     return id;
 }
 
-function asString(obj: any): string {
-    return typeof obj === "string" ? obj : "";
+function asString(obj: any, defaultValue?: string): string {
+    if (typeof obj === "number") {
+        // 數字轉字符串: 0xabcdef => "0xabcdef"
+        obj = "0x" + obj.toString(16);
+    }
+    return typeof obj === "string" ? obj : (defaultValue || "");
 }
 
-function asNumber(obj: any, defaultValue: number): number {
-    return typeof obj === "number" ? obj : defaultValue;
+function asNumber(obj: any, defaultValue?: number): number {
+    return typeof obj === "number" ? obj : (defaultValue || 0);
 }
 
 export class Color {
@@ -48,7 +52,7 @@ export class Color {
     }
 
     fromAbgr(abgr: string): void {
-        const matcher = /^0x([0-9A-F]{2})?([0-9A-F]{6})$/;
+        const matcher = /^0x([0-9a-fA-F]{2})?([0-9a-fA-F]{6})$/;
         var res = matcher.exec(abgr);
         this.alpha = parseInt(res && res[1] || "FF", 16) / 0xff;
         var bgr = res && res[2] || "000000";
@@ -68,9 +72,9 @@ export class ColorSchema {
     /** 鍵盤背景 */
     back_color: Color = new Color("#ffffff");
     /** 按鍵背景 */
-    button_back_color: Color = new Color("#cfcfcf");
+    button_back_color: Color = new Color("#ffffff");
     /** 按鍵按下背景 */
-    button_pressed_back_color: Color = new Color("#9f9f9f");
+    button_pressed_back_color: Color = new Color("#d0d0d0");
     /** 按鍵文本 */
     button_front_color: Color = new Color("#000000");
     /** 按鍵按下文本 */
@@ -88,11 +92,11 @@ export class ColorSchema {
     /** 首選文本 */
     hilited_candidate_text_color: Color = new Color("#000000");
     /** 首選註釋文本 */
-    hilited_comment_text_color: Color = new Color("#303030");
+    hilited_comment_text_color: Color = new Color("#000000");
     /** 候選文本 */
     candidate_text_color: Color = new Color("#000000");
     /** 注釋文本 */
-    comment_text_color: Color = new Color("#303030");
+    comment_text_color: Color = new Color("#000000");
 
     toObject(): object {
         var obj: any = {
@@ -119,23 +123,23 @@ export class ColorSchema {
 
     fromObject(obj: any): void {
         if (obj && typeof obj === "object") {
-            this.schemaName = asString(obj.schemaName);
-            this.name = asString(obj.name);
-            this.author = asString(obj.author);
-            this.back_color.fromAbgr(asString(obj.back_color));
-            this.button_back_color.fromAbgr(asString(obj.button_back_color));
-            this.button_pressed_back_color.fromAbgr(asString(obj.button_pressed_back_color));
-            this.button_front_color.fromAbgr(asString(obj.button_front_color));
-            this.button_pressed_front_color.fromAbgr(asString(obj.button_pressed_front_color));
-            this.button_swipe_front_color.fromAbgr(asString(obj.button_swipe_front_color));
+            this.schemaName = asString(obj.schemaName, "schema");
+            this.name = asString(obj.name, "配色方案");
+            this.author = asString(obj.author, "佚名");
+            this.back_color.fromAbgr(asString(obj.back_color, "0xffffff"));
+            this.button_back_color.fromAbgr(asString(obj.button_back_color, "0xffffff"));
+            this.button_pressed_back_color.fromAbgr(asString(obj.button_pressed_back_color, "0xD0D0D0"));
+            this.button_front_color.fromAbgr(asString(obj.button_front_color, "0x000000"));
+            this.button_pressed_front_color.fromAbgr(asString(obj.button_pressed_front_color, "0x000000"));
+            this.button_swipe_front_color.fromAbgr(asString(obj.button_swipe_front_color, "0x000000"));
             this.corner_radius = asNumber(obj.corner_radius, 5);
-            this.border_color.fromAbgr(asString(obj.border_color));
-            this.text_color.fromAbgr(asString(obj.text_color));
-            this.hilited_candidate_back_color.fromAbgr(asString(obj.hilited_candidate_back_color));
-            this.hilited_candidate_text_color.fromAbgr(asString(obj.hilited_candidate_text_color));
-            this.hilited_comment_text_color.fromAbgr(asString(obj.hilited_comment_text_color));
-            this.candidate_text_color.fromAbgr(asString(obj.candidate_text_color));
-            this.comment_text_color.fromAbgr(asString(obj.comment_text_color));
+            this.border_color.fromAbgr(asString(obj.border_color, "0x000000"));
+            this.text_color.fromAbgr(asString(obj.text_color, "0x000000"));
+            this.hilited_candidate_back_color.fromAbgr(asString(obj.hilited_candidate_back_color, "0xffffff"));
+            this.hilited_candidate_text_color.fromAbgr(asString(obj.hilited_candidate_text_color, "0x000000"));
+            this.hilited_comment_text_color.fromAbgr(asString(obj.hilited_comment_text_color, "0x000000"));
+            this.candidate_text_color.fromAbgr(asString(obj.candidate_text_color, "0x000000"));
+            this.comment_text_color.fromAbgr(asString(obj.comment_text_color, "0x000000"));
         }
     }
 
