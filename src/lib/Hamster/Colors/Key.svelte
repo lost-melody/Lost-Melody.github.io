@@ -24,7 +24,7 @@
             border-radius: ${schema.corner_radius}px;
             border-color: ${schema.border_color.rgba()};
         `}
-        class="w-full h-full border relative"
+        class="w-full h-full border shadow-gray-500 shadow-sm relative"
     >
         <div
             style={`
