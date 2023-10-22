@@ -5,6 +5,14 @@ function newId(): number {
     return id;
 }
 
+function asString(obj: any): string {
+    return typeof obj === "string" ? obj : "";
+}
+
+function asNumber(obj: any, defaultValue: number): number {
+    return typeof obj === "number" ? obj : defaultValue;
+}
+
 export class Color {
     color: string;
     alpha: number;
@@ -37,6 +45,14 @@ export class Color {
         color.color = this.color;
         color.alpha = this.alpha;
         return color;
+    }
+
+    fromAbgr(abgr: string): void {
+        const matcher = /^0x([0-9A-F]{2})?([0-9A-F]{6})$/;
+        var res = matcher.exec(abgr);
+        this.alpha = parseInt(res && res[1] || "FF", 16) / 0xff;
+        var bgr = res && res[2] || "000000";
+        this.color = "#" + bgr.slice(4, 6) + bgr.slice(2, 4) + bgr.slice(0, 2);
     }
 }
 
@@ -99,6 +115,28 @@ export class ColorSchema {
             comment_text_color: this.comment_text_color.abgr(),
         };
         return obj;
+    }
+
+    fromObject(obj: any): void {
+        if (obj && typeof obj === "object") {
+            this.schemaName = asString(obj.schemaName);
+            this.name = asString(obj.name);
+            this.author = asString(obj.author);
+            this.back_color.fromAbgr(asString(obj.back_color));
+            this.button_back_color.fromAbgr(asString(obj.button_back_color));
+            this.button_pressed_back_color.fromAbgr(asString(obj.button_pressed_back_color));
+            this.button_front_color.fromAbgr(asString(obj.button_front_color));
+            this.button_pressed_front_color.fromAbgr(asString(obj.button_pressed_front_color));
+            this.button_swipe_front_color.fromAbgr(asString(obj.button_swipe_front_color));
+            this.corner_radius = asNumber(obj.corner_radius, 5);
+            this.border_color.fromAbgr(asString(obj.border_color));
+            this.text_color.fromAbgr(asString(obj.text_color));
+            this.hilited_candidate_back_color.fromAbgr(asString(obj.hilited_candidate_back_color));
+            this.hilited_candidate_text_color.fromAbgr(asString(obj.hilited_candidate_text_color));
+            this.hilited_comment_text_color.fromAbgr(asString(obj.hilited_comment_text_color));
+            this.candidate_text_color.fromAbgr(asString(obj.candidate_text_color));
+            this.comment_text_color.fromAbgr(asString(obj.comment_text_color));
+        }
     }
 
     clone(): ColorSchema {
