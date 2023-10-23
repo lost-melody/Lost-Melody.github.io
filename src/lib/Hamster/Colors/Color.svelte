@@ -5,11 +5,39 @@
     export var title: string = "顔色";
 
     const [min, max, step] = [0, 0xff, 0x05];
+
+    var typing = false;
+    var before = "";
+    const autoFocus = (input: HTMLInputElement) => {
+        input.focus();
+    };
+    const onTyping = () => {
+        typing = true;
+        before = color.color;
+    };
+    const postTyping = () => {
+        typing = false;
+        if (!/^#[0-9a-fA-F]{6}$/.test(color.color)) {
+            color.color = before;
+        }
+    };
 </script>
 
 <div class="w-full gap-2 flex items-center">
     <input type="color" bind:value={color.color} class="w-10 h-10 input" />
-    <span class="w-18 code"> {color.color.slice(1)} </span>
+    {#if typing}
+        <input
+            type="text"
+            bind:value={color.color}
+            use:autoFocus
+            on:blur={postTyping}
+            class="w-16 code"
+        />
+    {:else}
+        <button on:click={onTyping} class="w-12 code">
+            {color.color.slice(1).toUpperCase()}
+        </button>
+    {/if}
     <span class="grow shrink"> {title} </span>
     <input
         type="range"

@@ -96,9 +96,7 @@
             }
         }
     }
-    function onClickImport(
-        event: Event & { currentTarget: EventTarget & HTMLButtonElement }
-    ): void {
+    function onClickImport(): void {
         if (importFileInput) {
             importFileInput.click();
         }
@@ -136,7 +134,7 @@
 <!-- 頁面關閉前, 保存恢復數據 -->
 <svelte:window on:beforeunload={saveCurrentSchemas} />
 
-<div class="flex flex-col p-2 gap-2">
+<div class="flex flex-col py-2 gap-2">
     <!-- 配色列表 -->
     <div class="flex max-w-full gap-2 mx-auto overflow-auto">
         {#each schemas as schema, index (schema.id)}

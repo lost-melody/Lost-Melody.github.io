@@ -152,9 +152,7 @@
         }
     }
     /** 點擊導入按鈕 */
-    function onClickImport(
-        event: Event & { currentTarget: EventTarget & HTMLButtonElement }
-    ): void {
+    function onClickImport(): void {
         if (importFileInput) {
             importFileInput.click();
         }
