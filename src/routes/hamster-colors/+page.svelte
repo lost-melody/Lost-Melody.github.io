@@ -136,9 +136,9 @@
 <!-- 頁面關閉前, 保存恢復數據 -->
 <svelte:window on:beforeunload={saveCurrentSchemas} />
 
-<div class="flex flex-col gap-2">
+<div class="flex flex-col p-2 gap-2">
     <!-- 配色列表 -->
-    <div class="flex max-w-full p-2 gap-2 mx-auto overflow-auto">
+    <div class="flex max-w-full gap-2 mx-auto overflow-auto">
         {#each schemas as schema, index (schema.id)}
             <button
                 on:click={() => selectSchema(index)}
@@ -172,43 +172,7 @@
         </button>
     </div>
 
-    <hr class="!border-t-2" />
-
-    <!-- 配色預覽區 -->
-    <div class="sticky top-0">
-        <Preview {schema} />
-    </div>
-
-    <div class="flex">
-        <div class="mx-auto">
-            <button
-                title="删除配色"
-                on:click={delSchema}
-                class="btn-icon variant-soft"
-            >
-                <Icon color="red" icon="mdi:close" />
-            </button>
-            <button
-                title="複製配色"
-                on:click={copySchema}
-                class="btn-icon variant-soft"
-            >
-                <Icon icon="mdi:content-copy" />
-            </button>
-            <button
-                title="粘貼配色"
-                on:click={pasteSchema}
-                class="btn-icon variant-soft"
-            >
-                <Icon icon="mdi:content-paste" />
-            </button>
-        </div>
-    </div>
-
-    <!-- 配色調整區 -->
-    <div class="py-2">
-        <Editor bind:schema />
-    </div>
+    <hr />
 
     <!-- 複製和導出 -->
     <div class="mx-auto max-w-full overflow-auto btn-group variant-ghost">
@@ -238,5 +202,42 @@
                 />
             </div>
         </button>
+    </div>
+
+    <!-- 配色預覽區 -->
+    <div class="sticky top-0">
+        <Preview {schema} />
+    </div>
+
+    <!-- 動作按鈕 -->
+    <div class="flex">
+        <div class="mx-auto">
+            <button
+                title="删除配色"
+                on:click={delSchema}
+                class="btn-icon variant-soft"
+            >
+                <Icon color="red" icon="mdi:close" />
+            </button>
+            <button
+                title="複製配色"
+                on:click={copySchema}
+                class="btn-icon variant-soft"
+            >
+                <Icon icon="mdi:content-copy" />
+            </button>
+            <button
+                title="粘貼配色"
+                on:click={pasteSchema}
+                class="btn-icon variant-soft"
+            >
+                <Icon icon="mdi:content-paste" />
+            </button>
+        </div>
+    </div>
+
+    <!-- 配色調整區 -->
+    <div class="py-2">
+        <Editor bind:schema />
     </div>
 </div>

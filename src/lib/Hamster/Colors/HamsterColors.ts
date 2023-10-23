@@ -23,22 +23,22 @@ export class Color {
 
     constructor(color?: string, alpha?: number) {
         this.color = color || "#000000";
-        this.alpha = alpha && alpha >= 0 && alpha <= 1 ? alpha : 1;
+        this.alpha = typeof alpha === "number" && alpha >= 0 && alpha <= 0xff ? alpha : 0xff;
     }
 
     rgba(): string {
         var r = parseInt(this.color.slice(1, 3), 16);
         var g = parseInt(this.color.slice(3, 5), 16);
         var b = parseInt(this.color.slice(5, 7), 16);
-        return `rgba(${r},${g},${b},${this.alpha})`;
+        return `rgba(${r},${g},${b},${this.alpha / 256})`;
     }
 
     abgr(): string {
         var r = this.color.slice(1, 3);
         var g = this.color.slice(3, 5);
         var b = this.color.slice(5, 7);
-        var a = Math.floor(this.alpha * 0xff).toString(16);
-        if (a.length < 2) {
+        var a = this.alpha === 0xff ? "" : this.alpha.toString(16);
+        if (a.length === 1) {
             a = "0" + a;
         }
         return "0x" + `${a}${b}${g}${r}`.toUpperCase();
@@ -54,7 +54,7 @@ export class Color {
     fromAbgr(abgr: string): void {
         const matcher = /^0x([0-9a-fA-F]{2})?([0-9a-fA-F]{6})$/;
         var res = matcher.exec(abgr);
-        this.alpha = parseInt(res && res[1] || "FF", 16) / 0xff;
+        this.alpha = parseInt(res && res[1] || "FF", 16);
         var bgr = res && res[2] || "000000";
         this.color = "#" + bgr.slice(4, 6) + bgr.slice(2, 4) + bgr.slice(0, 2);
     }

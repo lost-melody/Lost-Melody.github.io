@@ -10,13 +10,13 @@
 >
     <div class="w-full gap-2 flex items-center">
         <span class="w-10 h-10" />
-        <span class="grow shrink"> 方案唯一名稱代碼 </span>
+        <span class="grow shrink"> 方案名稱代碼 </span>
         <input
             type="text"
             bind:value={schema.schemaName}
             class="input rounded-md bg-transparent w-[30%]"
         />
-        <span class="w-8" />
+        <span class="w-6" />
     </div>
     <div class="w-full gap-2 flex items-center">
         <span class="w-10 h-10" />
@@ -26,7 +26,7 @@
             bind:value={schema.name}
             class="input rounded-md bg-transparent w-[30%]"
         />
-        <span class="w-8" />
+        <span class="w-6" />
     </div>
     <div class="w-full gap-2 flex items-center">
         <span class="w-10 h-10" />
@@ -36,7 +36,7 @@
             bind:value={schema.author}
             class="input rounded-md bg-transparent w-[30%]"
         />
-        <span class="w-8" />
+        <span class="w-6" />
     </div>
     <div class="w-full gap-2 flex items-center">
         <span class="w-10 h-10" />
@@ -48,7 +48,7 @@
             bind:value={schema.corner_radius}
             class="w-[30%]"
         />
-        <span class="w-8"> {schema.corner_radius} </span>
+        <span class="w-6 code"> {schema.corner_radius} </span>
     </div>
     <Color title="鍵盤背景" bind:color={schema.back_color} />
     <Color title="按鍵背景" bind:color={schema.button_back_color} />
