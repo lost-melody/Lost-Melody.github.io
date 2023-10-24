@@ -8,9 +8,6 @@
 
     var typing = false;
     var before = "";
-    const autoFocus = (input: HTMLInputElement) => {
-        input.focus();
-    };
     const onTyping = () => {
         typing = true;
         before = color.color;
@@ -26,10 +23,11 @@
 <div class="w-full gap-2 flex items-center">
     <input type="color" bind:value={color.color} class="w-10 h-10 input" />
     {#if typing}
+        <!-- svelte-ignore a11y-autofocus -->
         <input
             type="text"
             bind:value={color.color}
-            use:autoFocus
+            autofocus
             on:blur={postTyping}
             class="w-16 code"
         />

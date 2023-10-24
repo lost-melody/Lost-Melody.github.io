@@ -45,10 +45,6 @@
             opMode = 0;
         }
     }
-    /** 重命名自動聚焦 */
-    function autoFocus(input: HTMLInputElement): void {
-        input.focus();
-    }
 
     var dispatch = createEventDispatcher();
     /** 發送鍵盤删除事件 */
@@ -81,10 +77,11 @@
     <!-- 鍵盤名 -->
     {#if index === selected && opMode === modeRename}
         <!-- 編輯鍵盤名 -->
+        <!-- svelte-ignore a11y-autofocus -->
         <input
             bind:value={keyboardName}
             placeholder="天行鍵"
-            use:autoFocus
+            autofocus
             on:blur={() => (opMode = 0)}
             class="bg-transparent h-10 p-1"
         />

@@ -203,7 +203,7 @@
     </div>
 
     <!-- 配色預覽區 -->
-    <div class="sticky top-0">
+    <div class="sticky top-12">
         <Preview {schema} />
     </div>
 

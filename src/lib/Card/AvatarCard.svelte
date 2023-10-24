@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { Avatar } from "@skeletonlabs/skeleton";
     import type { Profile } from "./AvatarCard";
 
     export var profile: Profile;
@@ -20,7 +19,7 @@
         {href}
         class="flex gap-2 p-1 flex-row hover:variant-soft rounded-full justify-center items-center"
     >
-        <Avatar {src} initials={labels.length !== 0 ? labels[0] : "X"} />
+        <img {src} alt="頭像" class="w-12 h-12 rounded-full" />
         <div>
             {#each labels as label}
                 <p>{label}</p>
