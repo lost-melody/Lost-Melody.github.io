@@ -181,6 +181,11 @@
         }
     }
 
+    var showManual = false;
+    function toggleManual() {
+        showManual = !showManual;
+    }
+
     // 加載頁面恢復數據
     const recoveryDataKey = "recoveryKeyboards";
     var recoveryData = browser && localStorage.getItem(recoveryDataKey);
@@ -340,7 +345,14 @@
     </div>
 
     <!-- 使用説明 -->
-    <Manual />
+    <div class="p-2 mx-auto">
+        <button on:click={toggleManual} class="btn variant-ghost">
+            {showManual ? "隱藏指南" : "顯示指南"}
+        </button>
+    </div>
+    {#if showManual}
+        <Manual />
+    {/if}
 
     <div class="grow" />
 

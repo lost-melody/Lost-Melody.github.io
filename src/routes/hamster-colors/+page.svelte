@@ -7,6 +7,7 @@
     import { ColorSchema } from "$lib/Hamster/Colors/HamsterColors";
     import Preview from "$lib/Hamster/Colors/Preview.svelte";
     import Editor from "$lib/Hamster/Colors/Editor.svelte";
+    import Manual from "$lib/Hamster/Colors/Manual.svelte";
 
     var schemas: ColorSchema[] = [new ColorSchema()];
 
@@ -100,6 +101,11 @@
         if (importFileInput) {
             importFileInput.click();
         }
+    }
+
+    var showManual = false;
+    function toggleManual(): void {
+        showManual = !showManual;
     }
 
     // 加載頁面恢復數據
@@ -238,4 +244,13 @@
     <div class="py-2">
         <Editor bind:schema />
     </div>
+
+    <div class="mx-auto">
+        <button on:click={toggleManual} class="btn variant-ghost">
+            {showManual ? "隱藏指南" : "顯示指南"}
+        </button>
+    </div>
+    {#if showManual}
+        <Manual />
+    {/if}
 </div>

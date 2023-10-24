@@ -1,4 +1,8 @@
-<div class="text-xs p-2 rounded-md mx-auto variant-ghost">
+<script lang="ts">
+    import { fade } from "svelte/transition";
+</script>
+
+<div transition:fade class="text-xs p-2 rounded-md mx-auto variant-ghost">
     <p class="text-center">不太詳細的使用説明</p>
     <ol class="list-inside list-decimal">
         <li>
