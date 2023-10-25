@@ -353,13 +353,4 @@
     {#if showManual}
         <Manual />
     {/if}
-
-    <div class="grow" />
-
-    <!-- WIP 提示 -->
-    <div class="p-4 flex flex-col items-center">
-        <span class="text-center text-xs">
-            倉輸入法佈局生成器當前功能尚不完善, 歡迎 PR!
-        </span>
-    </div>
 </div>
