@@ -37,7 +37,7 @@ export class Color {
         var r = this.color.slice(1, 3);
         var g = this.color.slice(3, 5);
         var b = this.color.slice(5, 7);
-        var a = this.alpha === 0xff ? "" : this.alpha.toString(16);
+        var a = this.alpha === 0xff ? "" : (this.alpha || 1).toString(16);
         if (a.length === 1) {
             a = "0" + a;
         }
