@@ -50,7 +50,7 @@
     const generateYaml: () => string = () => {
         var objList = schemas.map((schema) => schema.toObject());
         return YAML.stringify({
-            Keyboard: {
+            keyboard: {
                 colorSchemas: objList,
             },
         });
@@ -77,8 +77,14 @@
     const importYaml = (data: string) => {
         try {
             let obj = YAML.parse(data);
-            if (obj && obj.Keyboard && obj.Keyboard.colorSchemas) {
-                schemas = (obj.Keyboard.colorSchemas as object[]).map((o) => {
+            let colorSchemas
+            if (obj && obj.keyboard) {
+                colorSchemas = obj.keyboard.colorSchemas;
+            } else if (obj && obj.Keyboard) {
+                colorSchemas = obj.Keyboard.colorSchemas;
+            }
+            if (colorSchemas) {
+                schemas = (colorSchemas as object[]).map((o) => {
                     var sch = new ColorSchema();
                     sch.fromObject(o);
                     return sch;
