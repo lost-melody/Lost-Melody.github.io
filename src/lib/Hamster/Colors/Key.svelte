@@ -5,6 +5,7 @@
     export var swipe: string = " ";
     export var width: number = 10;
     export var schema: ColorSchema;
+    export var upper: boolean;
 
     var pressed = false;
     const onClick = () => {
@@ -30,9 +31,9 @@
             style={`
                 color: ${schema.button_swipe_front_color.rgba()};
             `}
-            class="w-full h-[20%] absolute top-0 align-center text-center text-xs"
+            class="w-full h-[20%] absolute -top-2 text-[50%] flex justify-around"
         >
-            {swipe}
+            <span> {swipe} </span>
         </div>
         <div
             style={`
@@ -42,9 +43,9 @@
                         : schema.button_front_color.rgba()
                 };
             `}
-            class="w-full h-[80%] absolute top-[20%] text-center text-2xl"
+            class="w-full h-[80%] absolute top-[20%] text-center"
         >
-            {key.toUpperCase()}
+            {upper ? key.toUpperCase() : key.toLowerCase()}
         </div>
     </button>
 </div>

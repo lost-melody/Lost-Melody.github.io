@@ -3,6 +3,7 @@
     import Key from "./Key.svelte";
 
     export var schema: ColorSchema;
+    export var upper: boolean = false;
 </script>
 
 <div
@@ -50,17 +51,17 @@
     <!-- 四排按鍵 -->
     <div class="flex justify-center">
         {#each "qwertyuiop" as key, index}
-            <Key {key} {schema} swipe={"1234567890"[index]} />
+            <Key {key} {schema} {upper} swipe={"1234567890"[index]} />
         {/each}
     </div>
     <div class="flex justify-center">
         {#each "asdfghjkl" as key, index}
-            <Key {key} {schema} swipe={"!@#$%^&*("[index]} />
+            <Key {key} {schema} {upper} swipe={"!@#$%^&*("[index]} />
         {/each}
     </div>
     <div class="flex justify-center">
         {#each "zxcvbnm⌫" as key, index}
-            <Key {key} {schema} swipe={"`([{/\\;'"[index]} />
+            <Key {key} {schema} {upper} swipe={"`([{/\\;'"[index]} />
         {/each}
     </div>
     <div class="flex justify-center">
@@ -68,6 +69,7 @@
             <Key
                 {key}
                 {schema}
+                {upper}
                 swipe={"英< >⌘"[index]}
                 width={index === 2 ? 40 : index === 0 || index === 4 ? 20 : 10}
             />

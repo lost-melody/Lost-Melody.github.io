@@ -121,7 +121,7 @@
                     on:click={() => select(index)}
                 >
                     <div
-                        class="w-full h-[20%] absolute top-0 text-xs flex justify-around"
+                        class="w-full h-[20%] absolute -top-2 text-[50%] flex justify-around"
                     >
                         <!-- 顯示上下劃動符號 -->
                         {#if !key.autoWidth}
@@ -137,7 +137,7 @@
                             {/each}
                         {/if}
                     </div>
-                    <div class="w-full h-[80%] absolute top-[20%] text-2xl text-center">
+                    <div class="w-full h-[80%] absolute top-[20%] text-center">
                         {key.label ? key.label : key.action.display()}
                     </div>
                 </button>

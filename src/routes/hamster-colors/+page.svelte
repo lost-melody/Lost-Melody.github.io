@@ -10,6 +10,7 @@
     import Manual from "$lib/Hamster/Colors/Manual.svelte";
 
     var schemas: ColorSchema[] = [new ColorSchema()];
+    var upper = false;
 
     var selected = 0;
     var theHiddenSchema = new ColorSchema();
@@ -40,6 +41,10 @@
     };
     const selectSchema = (index: number) => {
         selected = index;
+    };
+
+    const toggleUpperCase = () => {
+        upper = !upper;
     };
 
     const generateYaml: () => string = () => {
@@ -210,7 +215,7 @@
 
     <!-- 配色預覽區 -->
     <div class="sticky top-12">
-        <Preview {schema} />
+        <Preview {schema} {upper} />
     </div>
 
     <!-- 動作按鈕 -->
@@ -222,6 +227,17 @@
                 class="btn-icon variant-soft"
             >
                 <Icon color="red" icon="mdi:close" />
+            </button>
+            <button
+                title={upper ? "大寫字母" : "小寫字母"}
+                on:click={toggleUpperCase}
+                class="btn-icon variant-soft"
+            >
+                <Icon
+                    icon={upper
+                        ? "mdi:format-letter-case-upper"
+                        : "mdi:format-letter-case-lower"}
+                />
             </button>
             <button
                 title="複製配色"
