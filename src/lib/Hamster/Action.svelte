@@ -6,7 +6,7 @@
         KeyboardNames,
         KeyboardType,
         ShortCmd,
-    } from "./Hamster";
+    } from "./model/keyboardLayout";
 
     /** 綁定的按鍵動作對象 */
     export var action: Action;

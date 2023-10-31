@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Color } from "$lib/Hamster/Colors/HamsterColors";
+    import type { Color } from "./model/colorSchema";
 
     export var color: Color;
     export var title: string = "顔色";

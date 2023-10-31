@@ -109,7 +109,7 @@
         <!-- 底部鏈接欄 -->
         <div class="flex flex-col justify-center items-center">
             <p>Powered by</p>
-            <div class="btn-group variant-ringed">
+            <div class="btn-group rounded-md variant-soft">
                 {#each credits as credit}
                     <a target="_blank" href={credit[1]}>{credit[0]}</a>
                 {/each}

@@ -85,7 +85,7 @@
     }
 </script>
 
-<div class="px-2 py-1 h-8 gap-1 rounded-full variant-ghost flex items-center">
+<div class="px-2 py-1 h-8 gap-1 rounded-md variant-ghost flex items-center">
     <!-- 删除檔案 -->
     {#if remove}
         <button

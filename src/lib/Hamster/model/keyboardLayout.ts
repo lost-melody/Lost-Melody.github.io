@@ -318,6 +318,14 @@ export class ButtonInsets {
             ? `left(${l}),bottom(${b}),top(${t}),right(${r})`
             : `${this.value}`;
     }
+
+    clone(): ButtonInsets {
+        var insets = new ButtonInsets();
+        insets.expr = this.expr;
+        insets.value = this.value;
+        insets.insets = this.insets.map((value) => value) as [number, number, number, number];
+        return insets;
+    }
 }
 
 /** 按鍵劃動 */
@@ -543,5 +551,13 @@ export class Keyboard {
         obj.rows = this.rows.map((row) => row.toObject());
         obj.buttonInsets = this.buttonInsets.toObject();
         return obj;
+    }
+
+    clone(): Keyboard {
+        let keyboard = new Keyboard();
+        keyboard.name = this.name;
+        keyboard.rows = this.rows.map((row) => row.clone());
+        keyboard.buttonInsets = this.buttonInsets.clone();
+        return keyboard;
     }
 };
