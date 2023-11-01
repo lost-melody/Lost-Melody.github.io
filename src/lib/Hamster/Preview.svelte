@@ -1,9 +1,11 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
+    import Icon from "@iconify/svelte";
     import type { ColorSchema } from "./model/colorSchema";
     import type { Keyboard } from "./model/keyboardLayout";
     import KeyPreview from "./KeyPreview.svelte";
 
+    export var sticky: boolean = true;
     export var schema: ColorSchema;
     export var keyboard: Keyboard;
 
@@ -48,6 +50,21 @@
                 </span>
             </span>
         {/each}
+        <span class="grow" />
+        <button
+            title={sticky ? "取消置頂" : "置頂預覽"}
+            on:click={() => {
+                sticky = !sticky;
+            }}
+            style:color={schema.comment_text_color.rgba()}
+        >
+            <Icon
+                height="20"
+                icon={sticky
+                    ? "mdi:arrow-down-drop-circle"
+                    : "mdi:arrow-left-drop-circle"}
+            />
+        </button>
     </div>
     <!-- keyboard layout -->
     {#each keyboard.rows as row, indexRow (row.id)}

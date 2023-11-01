@@ -30,6 +30,8 @@
         selectedKey = { row, col };
     };
 
+    var stickyPreview = true;
+
     const [tabColorSchema, tabKeyboardLayout] = [1, 2];
     var editorTab = tabColorSchema;
 
@@ -59,6 +61,14 @@
 <svelte:window on:beforeunload={saveLocalData} />
 
 <div class="flex flex-col py-2 gap-2">
+    <!-- Action Buttons -->
+    <details
+        class="p-2 w-full max-w-[400px] mx-auto rounded-md hover:variant-ghost"
+    >
+        <summary class="p-2">導入導出</summary>
+        <ExportBar bind:colorSchemas bind:keyboardLayouts />
+    </details>
+
     <!-- Color Schemas Gallery -->
     <div class="flex max-w-full mx-auto overflow-auto">
         <SchemaGallery bind:colorSchemas bind:indexSchema {currentSchema} />
@@ -76,10 +86,12 @@
 
     <!-- Preview Keyboard -->
     <div
-        class="sticky top-12 w-full max-w-[400px] mx-auto max-h-[50vh] overflow-auto"
+        class:sticky={stickyPreview}
+        class="top-12 w-full max-w-[400px] mx-auto max-h-[50vh] overflow-auto"
     >
         <!-- color schema and keyboard layout preview -->
         <Preview
+            bind:sticky={stickyPreview}
             schema={currentSchema}
             keyboard={currentLayout}
             selected={selectedKey}
@@ -89,37 +101,26 @@
         />
     </div>
 
-    <div
-        class="h-10 max-w-[400px] p-2 gap-2 mx-auto flex rounded-md variant-ghost"
-    >
+    <div class="h-10 w-full max-w-[400px] gap-2 mx-auto flex">
         <IconButton
             disabled={editorTab === tabColorSchema}
             on:click={() => {
                 editorTab = tabColorSchema;
             }}
             icon="mdi:palette"
-            class="flex p-1 gap-1 rounded-md items-center disabled:variant-soft"
+            class="flex p-1 gap-1 grow rounded-md justify-center items-center disabled:variant-soft"
             >編輯配色</IconButton
         >
-        <span class="divider-vertical" />
         <IconButton
             disabled={editorTab === tabKeyboardLayout}
             on:click={() => {
                 editorTab = tabKeyboardLayout;
             }}
             icon="mdi:keyboard"
-            class="flex p-1 gap-1 rounded-md items-center disabled:variant-soft"
+            class="flex p-1 gap-1 grow rounded-md justify-center items-center disabled:variant-soft"
             >編輯佈局</IconButton
         >
     </div>
-
-    <!-- Action Buttons -->
-    <details
-        class="p-2 w-full max-w-[400px] mx-auto rounded-md variant-soft hover:variant-ghost"
-    >
-        <summary class="p-2">導入導出</summary>
-        <ExportBar bind:colorSchemas bind:keyboardLayouts />
-    </details>
 
     <!-- Color Schema Editor -->
     {#if editorTab === tabColorSchema}

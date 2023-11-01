@@ -21,7 +21,13 @@
 </script>
 
 <div class="w-full gap-2 flex items-center">
-    <input type="color" bind:value={color.color} class="w-10 h-10 input" />
+    <span class="px-2 py-1 flex items-center">
+        <input
+            type="color"
+            bind:value={color.color}
+            class="input !w-6 !h-6 !rounded-sm"
+        />
+    </span>
     {#if typing}
         <!-- svelte-ignore a11y-autofocus -->
         <input

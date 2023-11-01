@@ -107,11 +107,13 @@
 
     <div>
         <!-- 底部鏈接欄 -->
-        <div class="flex flex-col justify-center items-center">
+        <div class="py-2 gap-2 flex flex-col justify-center items-center">
             <p>Powered by</p>
-            <div class="btn-group rounded-md variant-soft">
+            <div class="w-full max-w-[400px] btn-group rounded-md variant-soft">
                 {#each credits as credit}
-                    <a target="_blank" href={credit[1]}>{credit[0]}</a>
+                    <a target="_blank" href={credit[1]} class="grow shrink">
+                        {credit[0]}
+                    </a>
                 {/each}
             </div>
         </div>

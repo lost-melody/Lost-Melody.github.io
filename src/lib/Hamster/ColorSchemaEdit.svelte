@@ -28,7 +28,7 @@
         <span class="w-6" />
     </div>
     <div class="w-full gap-2 flex items-center">
-        <Icon icon="mdi:account-circle" class="p-2 w-10 h-10" />
+        <Icon icon="mdi:account-box" class="p-2 w-10 h-10" />
         <span class="grow shrink"> 方案作者信息 </span>
         <input
             type="text"
