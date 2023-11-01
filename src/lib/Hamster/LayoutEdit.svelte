@@ -265,6 +265,7 @@
 
     <!-- 編輯按鍵分佈 -->
     <details
+        open
         class="p-2 w-full max-w-[400px] mx-auto rounded-md hover:variant-ghost"
     >
         <summary class="p-2">編輯按鍵分佈</summary>
@@ -321,6 +322,7 @@
 
     <!-- 全局劃動修改 -->
     <details
+        open
         class="p-2 w-full max-w-[400px] mx-auto rounded-md hover:variant-ghost"
     >
         <summary class="p-2">劃動顯示/隱藏</summary>
@@ -364,6 +366,7 @@
 
     <!-- 内距編輯器 -->
     <details
+        open
         class="p-2 w-full max-w-[400px] mx-auto rounded-md hover:variant-ghost"
     >
         <summary class="p-2">編輯内距</summary>
@@ -385,6 +388,7 @@
 
     <!-- 預置模板 -->
     <details
+        open
         class="p-2 w-full max-w-[400px] mx-auto rounded-md hover:variant-ghost"
     >
         <summary class="p-2">預置模板</summary>
@@ -400,6 +404,7 @@
 
     <!-- 自定義檔案 -->
     <details
+        open
         class="p-2 w-full max-w-[400px] mx-auto rounded-md hover:variant-ghost"
     >
         <summary class="p-2">自定義檔案</summary>

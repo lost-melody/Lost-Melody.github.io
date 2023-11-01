@@ -45,16 +45,16 @@
 <div class="flex flex-col gap-1">
     <!-- 鍵寛和鍵值編輯區 -->
     <div
-        class="flex h-10 p-2 gap-1 rounded-md hover:variant-ghost items-center"
+        class="flex flex-wrap p-2 gap-1 rounded-md hover:variant-ghost items-center"
     >
         <Icon height="20" icon="mdi:gesture-touch" />
-        <ActionEdit bind:action={key.action} />
         <input
             title="調整按鍵顯示標籤"
             bind:value={key.label}
             placeholder="標籤"
             class="px-2 w-20 rounded-md bg-transparent hover:variant-soft"
         />
+        <ActionEdit bind:action={key.action} />
         {#if key.action.type === ActionType.space}
             <input
                 title="調整空格鍵的加載時標籤"
@@ -67,7 +67,7 @@
 
     {#each [2, 1, 0, 3] as index (key.swipe[index].id)}
         <div
-            class="flex h-10 p-2 gap-1 rounded-md hover:variant-ghost items-center"
+            class="flex flex-wrap p-2 gap-1 rounded-md hover:variant-ghost items-center"
         >
             <Icon height="20" icon={icons[index]} />
             {#if key.swipe[index].action.type === ActionType.none}
@@ -76,12 +76,11 @@
                     on:click={() => {
                         activateSwipe(index);
                     }}
-                    class="rounded-md w-full px-2 py-1 flex justify-center items-center hover:variant-soft"
+                    class="rounded-md grow px-2 py-1 flex justify-center items-center hover:variant-soft"
                 >
                     <Icon height="20" icon="mdi:plus" />
                 </button>
             {:else}
-                <ActionEdit bind:action={key.swipe[index].action} />
                 <input
                     title="調整劃動顯示標籤"
                     bind:value={key.swipe[index].label}
@@ -117,13 +116,14 @@
                             : "mdi:web-off"}
                     />
                 </button>
+                <ActionEdit bind:action={key.swipe[index].action} />
             {/if}
         </div>
     {/each}
 
     <!-- 按鍵動作按鈕 -->
     <div
-        class="p-1 gap-1 flex mx-auto overflow-auto rounded-md hover:variant-ghost"
+        class="max-w-full p-1 gap-1 flex mx-auto overflow-auto rounded-md hover:variant-ghost"
     >
         <button
             title="在鍵盤中删除此按鍵"
@@ -156,7 +156,7 @@
             placeholder="鍵寛"
             min={1}
             max={100}
-            class="w-24 gap-1 p-2 rounded-md variant-ghost"
+            class="min-w-0 grow shrink gap-1 p-2 rounded-md variant-ghost"
         />
         <button
             title="複製按鍵配置"

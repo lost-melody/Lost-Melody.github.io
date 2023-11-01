@@ -22,13 +22,14 @@
         ActionType.characterMargin,
         ActionType.symbol,
     ];
-
-    const innerClasses = "rounded-md px-2 bg-transparent hover:variant-soft";
 </script>
 
 <div class="flex px-1 gap-1 items-center">
     <!-- 單選: 動作類型 -->
-    <select bind:value={action.type} class={innerClasses}>
+    <select
+        bind:value={action.type}
+        class="w-16 rounded-md px-1 bg-transparent hover:variant-soft"
+    >
         {#each actionTypes as typ}
             <option value={typ}>
                 {ActionNames[typ] ? ActionNames[typ] : typ}
@@ -38,12 +39,18 @@
 
     <!-- 輸入: 動作内容文本 -->
     {#if text.includes(action.type)}
-        <input bind:value={action.text} class={"w-20 " + innerClasses} />
+        <input
+            bind:value={action.text}
+            class="w-20 rounded-md px-1 bg-transparent hover:variant-soft"
+        />
     {/if}
 
     <!-- 單選: 切換鍵盤類型 -->
     {#if action.type === ActionType.keyboardType}
-        <select bind:value={action.kbd} class={innerClasses}>
+        <select
+            bind:value={action.kbd}
+            class="w-20 rounded-md px-1 bg-transparent hover:variant-soft"
+        >
             {#each keyboardTypes as typ}
                 <option value={typ}>
                     {KeyboardNames[typ] ? KeyboardNames[typ] : typ}
@@ -54,12 +61,18 @@
 
     <!-- 輸入: 自定義鍵盤名稱 -->
     {#if action.type === ActionType.keyboardType && action.kbd === KeyboardType.custom}
-        <input bind:value={action.text} class={"w-20 " + innerClasses} />
+        <input
+            bind:value={action.text}
+            class="w-20 rounded-md px-1 bg-transparent hover:variant-soft"
+        />
     {/if}
 
     <!-- 單選: 快捷命令類型 -->
     {#if action.type === ActionType.shortCommand}
-        <select bind:value={action.cmd} class={innerClasses}>
+        <select
+            bind:value={action.cmd}
+            class="rounded-md px-1 bg-transparent hover:variant-soft"
+        >
             {#each shortCmdTypes as typ}
                 <option value={typ}>
                     {typ}
