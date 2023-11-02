@@ -31,6 +31,7 @@
     };
 
     var stickyPreview = true;
+    var landscapePreview = false;
 
     const [tabColorSchema, tabKeyboardLayout] = [1, 2];
     var editorTab = tabColorSchema;
@@ -87,11 +88,15 @@
     <!-- Preview Keyboard -->
     <div
         class:sticky={stickyPreview}
-        class="top-12 w-full max-w-[400px] mx-auto max-h-[50vh] overflow-auto"
+        class:max-w-[400px]={!landscapePreview}
+        class:max-w-[800px]={landscapePreview}
+        class:max-h-[50vh]={stickyPreview}
+        class="top-0 w-full max-w-[400px] mx-auto overflow-auto"
     >
         <!-- color schema and keyboard layout preview -->
         <Preview
             bind:sticky={stickyPreview}
+            bind:landscape={landscapePreview}
             schema={currentSchema}
             keyboard={currentLayout}
             selected={selectedKey}
@@ -135,6 +140,7 @@
             <LayoutEdit
                 bind:layout={currentLayout}
                 bind:selected={selectedKey}
+                landscape={landscapePreview}
             />
         </div>
     {/if}

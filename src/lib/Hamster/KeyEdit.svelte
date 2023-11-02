@@ -4,6 +4,7 @@
     import { ActionType, Key } from "./model/keyboardLayout";
     import ActionEdit from "./Action.svelte";
 
+    export var landscape: boolean = false;
     /** 綁定的按鍵對象 */
     export var key: Key;
 
@@ -141,23 +142,43 @@
         </button>
         <button
             title="自動鍵寛"
-            on:click={() => (key.autoWidth = !key.autoWidth)}
+            on:click={() => {
+                if (landscape) {
+                    key.autoLandscape = !key.autoLandscape;
+                } else {
+                    key.autoWidth = !key.autoWidth;
+                }
+            }}
             class="gap-1 p-2 flex items-center rounded-md variant-ghost"
         >
             <Icon
                 height="20"
-                icon={key.autoWidth ? "mdi:table-sync" : "mdi:table-remove"}
+                icon={(landscape ? key.autoLandscape : key.autoWidth)
+                    ? "mdi:table-sync"
+                    : "mdi:table-remove"}
             />
         </button>
-        <input
-            title="調整按鍵寛度"
-            type="number"
-            bind:value={key.width}
-            placeholder="鍵寛"
-            min={1}
-            max={100}
-            class="min-w-0 grow shrink gap-1 p-2 rounded-md variant-ghost"
-        />
+        {#if landscape}
+            <input
+                title="調整按鍵寛度"
+                type="number"
+                bind:value={key.landscape}
+                placeholder="鍵寛"
+                min={1}
+                max={100}
+                class="min-w-0 grow shrink gap-1 p-2 rounded-md variant-ghost"
+            />
+        {:else}
+            <input
+                title="調整按鍵寛度"
+                type="number"
+                bind:value={key.width}
+                placeholder="鍵寛"
+                min={1}
+                max={100}
+                class="min-w-0 grow shrink gap-1 p-2 rounded-md variant-ghost"
+            />
+        {/if}
         <button
             title="複製按鍵配置"
             on:click={copyKey}

@@ -6,6 +6,7 @@
     import KeyPreview from "./KeyPreview.svelte";
 
     export var sticky: boolean = true;
+    export var landscape: boolean = false;
     export var schema: ColorSchema;
     export var keyboard: Keyboard;
 
@@ -52,28 +53,39 @@
         {/each}
         <span class="grow" />
         <button
-            title={sticky ? "取消置頂" : "置頂預覽"}
+            title={(landscape ? "預覽: 横屏" : "預覽: 竪屏") +
+                "\n注: 行高和鍵寛的配置值在横竪屏模式下是各自獨立的"}
             on:click={() => {
-                sticky = !sticky;
+                landscape = !landscape;
             }}
             style:color={schema.comment_text_color.rgba()}
         >
             <Icon
                 height="20"
-                icon={sticky
-                    ? "mdi:arrow-down-drop-circle"
-                    : "mdi:arrow-left-drop-circle"}
+                icon={landscape ? "mdi:crop-landscape" : "mdi:crop-portrait"}
             />
+        </button>
+        <button
+            title={sticky ? "已置頂" : "未置頂"}
+            on:click={() => {
+                sticky = !sticky;
+            }}
+            style:color={schema.comment_text_color.rgba()}
+        >
+            <Icon height="20" icon={sticky ? "mdi:pin" : "mdi:pin-off"} />
         </button>
     </div>
     <!-- keyboard layout -->
     {#each keyboard.rows as row, indexRow (row.id)}
         <div
-            style:height={`${row.rowHeight >= 16 ? row.rowHeight : 56}px`}
+            style:height={`${
+                landscape ? row.landscapeHeight || 56 : row.rowHeight || 56
+            }px`}
             class="w-full flex"
         >
             {#each row.keys as key, indexKey (key.id)}
                 <KeyPreview
+                    {landscape}
                     {schema}
                     {row}
                     {key}

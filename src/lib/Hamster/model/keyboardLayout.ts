@@ -376,7 +376,9 @@ export class Key {
     action: Action = new Action();
     /** 行寛百分比, 1~100 */
     width: number = 10;
+    landscape: number = 10;
     autoWidth: boolean = false;
+    autoLandscape: boolean = false;
     label: string = "";
     loading: string = "";
     swipe: [Swipe, Swipe, Swipe, Swipe];
@@ -412,7 +414,9 @@ export class Key {
                     this.width = (res && res.func === "percentage") ? Number(res.args) * 100 : 10;
                     this.autoWidth = false;
                 }
-            } else if (obj.width && typeof obj.width === "object" && typeof obj.width.portrait === "string") {
+                this.landscape = this.width;
+                this.autoLandscape = this.autoWidth;
+            } else if (obj.width && typeof obj.width === "object" && typeof obj.width.portrait === "string" && typeof obj.width.landscape === "string") {
                 if (obj.width.portrait === "available") {
                     this.width = 10;
                     this.autoWidth = true;
@@ -421,9 +425,19 @@ export class Key {
                     this.width = (res && res.func === "percentage") ? Number(res.args) * 100 : 10;
                     this.autoWidth = false;
                 }
+                if (obj.width.landscape === "available") {
+                    this.landscape = 10;
+                    this.autoLandscape = true;
+                } else {
+                    let res = extractFunc(obj.width.landscape);
+                    this.landscape = (res && res.func === "percentage") ? Number(res.args) * 100 : 10;
+                    this.autoLandscape = false;
+                }
             } else {
                 this.width = 10;
+                this.landscape = 10;
                 this.autoWidth = true;
+                this.autoLandscape = true;
             }
             for (let swipe of this.swipe) {
                 swipe.action.type = ActionType.none;
@@ -445,10 +459,13 @@ export class Key {
     toObject(): object {
         var obj: any = {};
         obj.action = this.action.toObject();
-        if (this.autoWidth) {
-            obj.width = "available";
+        if (this.width === this.landscape && this.autoWidth === this.autoLandscape) {
+            obj.width = this.autoWidth ? "available" : `percentage(${this.width / 100})`;
         } else {
-            obj.width = `percentage(${this.width / 100})`;
+            obj.width = {
+                portrait: this.autoWidth ? "available" : `percentage(${this.width / 100})`,
+                landscape: this.autoLandscape ? "available" : `percentage(${this.landscape / 100})`,
+            };
         }
         if (this.label) {
             if (this.loading && this.action.type === ActionType.space) {
@@ -478,6 +495,9 @@ export class Key {
         let key = new Key();
         key.action = this.action.clone();
         key.width = this.width;
+        key.autoWidth = this.autoWidth;
+        key.landscape = this.landscape;
+        key.autoLandscape = this.autoLandscape;
         key.label = this.label;
         key.swipe = this.swipe.map((swipe) => swipe.clone()) as [Swipe, Swipe, Swipe, Swipe];
         return key;
@@ -489,11 +509,18 @@ export class Row {
     id: number = newId();
     keys: Key[] = [];
     rowHeight: number = 0;
+    landscapeHeight: number = 0;
 
     fromObject(obj: any) {
         this.keys = [];
         if (obj && typeof obj === "object") {
-            this.rowHeight = Number(obj.rowHeight || "");
+            if (typeof obj.rowHeight === "number" || typeof obj.rowHeight === "string") {
+                this.rowHeight = Number(obj.rowHeight) || 0;
+                this.landscapeHeight = this.rowHeight;
+            } else if (obj.rowHeight && typeof obj.rowHeight === "object") {
+                this.rowHeight = Number(obj.rowHeight.portrait) || 0;
+                this.landscapeHeight = Number(obj.rowHeight.landscape) || 0;
+            }
             if (obj.keys && typeof obj.keys === "object" && obj.keys.length > 0) {
                 this.keys = obj.keys.map((theKey: any) => {
                     let key = new Key();
@@ -507,7 +534,12 @@ export class Row {
     toObject(): object {
         var obj: any = {};
         obj.keys = this.keys.map((key) => key.toObject());
-        if (this.rowHeight > 0) {
+        if (this.landscapeHeight > 0) {
+            obj.rowHeight = {
+                portrait: this.rowHeight,
+                landscape: this.landscapeHeight,
+            }
+        } else if (this.rowHeight > 0) {
             obj.rowHeight = this.rowHeight;
         }
         return obj;
@@ -517,6 +549,7 @@ export class Row {
         let row = new Row();
         row.keys = this.keys.map((key) => key.clone());
         row.rowHeight = this.rowHeight;
+        row.landscapeHeight = this.landscapeHeight;
         return row;
     }
 };

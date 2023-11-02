@@ -64,9 +64,7 @@
 
 <div class="flex flex-col min-h-[100vh]">
     <!-- 頂部標題欄 -->
-    <div
-        class="h-12 flex p-2 gap-2 variant-soft backdrop-blur sticky top-0 z-30"
-    >
+    <div class="h-12 flex p-2 gap-2 variant-soft backdrop-blur z-30">
         <!-- 左側動作按鈕 -->
         <div class="flex gap-1 justify-center items-center">
             <button

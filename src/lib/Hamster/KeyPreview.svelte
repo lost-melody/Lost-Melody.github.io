@@ -3,6 +3,7 @@
     import type { ColorSchema } from "./model/colorSchema";
     import { ActionType, ButtonInsets, Key, Row } from "./model/keyboardLayout";
 
+    export var landscape: boolean;
     export var schema: ColorSchema;
     export var row: Row;
     export var key: Key;
@@ -32,13 +33,23 @@
 <!-- key outer border -->
 <div
     style:padding={`${pt}px ${pr}px ${pb}px ${pl}px`}
-    style:width={`${key.autoWidth ? 10 : key.width}%`}
-    style:height={`${row.rowHeight >= 16 ? row.rowHeight : 56}px`}
+    style:width={`${
+        landscape
+            ? key.autoLandscape
+                ? 10
+                : key.landscape
+            : key.autoWidth
+            ? 10
+            : key.width
+    }%`}
+    style:height={`${
+        landscape ? row.landscapeHeight || 56 : row.rowHeight || 56
+    }px`}
     class:border={selected}
     style:border-color={`${schema.border_color.rgba()}`}
-    class:grow={key.autoWidth}
-    class:shrink={key.autoWidth}
-    class:shrink-0={!key.autoWidth}
+    class:grow={landscape ? key.autoLandscape : key.autoWidth}
+    class:shrink={landscape ? key.autoLandscape : key.autoWidth}
+    class:shrink-0={landscape ? !key.autoLandscape : !key.autoWidth}
 >
     <!-- key -->
     <button

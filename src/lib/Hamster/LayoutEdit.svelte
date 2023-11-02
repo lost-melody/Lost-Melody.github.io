@@ -10,6 +10,7 @@
     import KeyEdit from "./KeyEdit.svelte";
     import KeyboardLoad from "./KeyboardLoad.svelte";
 
+    export var landscape: boolean = false;
     export var layout: Keyboard;
     export var selected: { row: number; col: number };
 
@@ -255,6 +256,7 @@
     >
         <KeyEdit
             bind:key={selectedKey}
+            {landscape}
             on:delkey={delButton}
             on:moveleft={moveBtnLeft}
             on:moveright={moveBtnRight}
@@ -287,7 +289,7 @@
                     onRowKeysChange(event, index);
                 }}
                 min="0"
-                max="15"
+                max="24"
                 class="p-2 gap-1 flex items-center rounded-md hover:variant-ghost"
             >
                 <span class="grow shrink">{`第 ${index + 1} 行`}</span>
@@ -307,15 +309,27 @@
                     }}
                     class="p-2 rounded-md hover:variant-ghost"
                 />
-                <input
-                    title="行高, 默認56"
-                    placeholder="行高"
-                    type="number"
-                    bind:value={row.rowHeight}
-                    class="w-12 p-1 rounded-md bg-transparent hover:variant-ghost"
-                    min="0"
-                    max="128"
-                />
+                {#if landscape}
+                    <input
+                        title="行高, 默認56"
+                        placeholder="行高"
+                        type="number"
+                        bind:value={row.landscapeHeight}
+                        class="w-12 p-1 rounded-md bg-transparent hover:variant-ghost"
+                        min="0"
+                        max="128"
+                    />
+                {:else}
+                    <input
+                        title="行高, 默認56"
+                        placeholder="行高"
+                        type="number"
+                        bind:value={row.rowHeight}
+                        class="w-12 p-1 rounded-md bg-transparent hover:variant-ghost"
+                        min="0"
+                        max="128"
+                    />
+                {/if}
             </IconRange>
         {/each}
     </details>
