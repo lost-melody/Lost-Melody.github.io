@@ -234,10 +234,10 @@
     }
 </script>
 
-<div class="w-full p-2 flex flex-col rounded-md variant-soft">
+<div class="w-full p-2 gap-2 flex flex-col rounded-md variant-soft">
     <!-- 佈局名稱 -->
     <div
-        class="w-full px-4 gap-2 mx-auto flex items-center rounded-md hover:variant-ghost"
+        class="w-full px-4 py-2 gap-2 flex items-center rounded-md hover:variant-ghost"
     >
         <Icon icon="mdi:rename-box" />
         <span class="grow shrink"> 佈局名稱 </span>
@@ -251,7 +251,7 @@
     </div>
 
     <!-- 按鍵編輯器 -->
-    <div class="p-2 w-full mx-auto rounded-md hover:variant-ghost">
+    <div class="p-2 w-full rounded-md hover:variant-ghost">
         <KeyEdit
             bind:key={selectedKey}
             {landscape}
@@ -264,7 +264,7 @@
     </div>
 
     <!-- 編輯按鍵分佈 -->
-    <details open class="p-2 w-full mx-auto rounded-md hover:variant-ghost">
+    <details open class="p-2 w-full rounded-md hover:variant-ghost">
         <summary class="p-2">編輯按鍵分佈</summary>
         <IconRange
             icon="mdi:table-cog"
@@ -330,7 +330,7 @@
     </details>
 
     <!-- 全局劃動修改 -->
-    <details open class="p-2 w-full mx-auto rounded-md hover:variant-ghost">
+    <details open class="p-2 w-full rounded-md hover:variant-ghost">
         <summary class="p-2">劃動顯示/隱藏</summary>
         <IconButton
             icon="mdi:eye"
@@ -371,7 +371,7 @@
     </details>
 
     <!-- 内距編輯器 -->
-    <details open class="p-2 w-full mx-auto rounded-md hover:variant-ghost">
+    <details open class="p-2 w-full rounded-md hover:variant-ghost">
         <summary class="p-2">編輯内距</summary>
         <IconButton
             icon={layout.buttonInsets.expr
@@ -390,7 +390,7 @@
     </details>
 
     <!-- 預置模板 -->
-    <details open class="p-2 w-full mx-auto rounded-md hover:variant-ghost">
+    <details open class="p-2 w-full rounded-md hover:variant-ghost">
         <summary class="p-2">預置模板</summary>
         <div class="gap-2 grid grid-cols-2">
             {#each predefinedKeyboards as keyboard, index}
@@ -403,7 +403,7 @@
     </details>
 
     <!-- 自定義檔案 -->
-    <details open class="p-2 w-full mx-auto rounded-md hover:variant-ghost">
+    <details open class="p-2 w-full rounded-md hover:variant-ghost">
         <summary class="p-2">自定義檔案</summary>
         <div class="gap-2 grid grid-cols-2">
             {#each customKeyboards as keyboard, index}

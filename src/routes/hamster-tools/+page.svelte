@@ -128,11 +128,11 @@
         >
     </div>
 
-    <div class="mx-auto grid">
+    <div class="mx-auto grid grid-cols-1 grid-rows-1">
         <!-- Color Schema Editor -->
         {#if editorTab === tabColorSchema}
             <div
-                transition:fly={{ x: -64 }}
+                transition:fly={{ y: -64 }}
                 class="w-full max-w-[400px] row-start-1 col-start-1"
             >
                 <ColorsEditor bind:schema={currentSchema} />
@@ -142,7 +142,7 @@
         <!-- Layout Editor -->
         {#if editorTab === tabKeyboardLayout}
             <div
-                transition:fly={{ x: 64 }}
+                transition:fly={{ y: -64 }}
                 class="w-full max-w-[400px] row-start-1 col-start-1"
             >
                 <LayoutEdit
