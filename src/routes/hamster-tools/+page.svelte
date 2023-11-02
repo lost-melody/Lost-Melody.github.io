@@ -1,6 +1,7 @@
 <script lang="ts">
     import { browser } from "$app/environment";
     import { onNavigate } from "$app/navigation";
+    import { fly } from "svelte/transition";
 
     import IconButton from "$lib/Component/IconButton.svelte";
     import { ColorSchema } from "$lib/Hamster/model/colorSchema";
@@ -127,21 +128,29 @@
         >
     </div>
 
-    <!-- Color Schema Editor -->
-    {#if editorTab === tabColorSchema}
-        <div class="w-full max-w-[400px] mx-auto">
-            <ColorsEditor bind:schema={currentSchema} />
-        </div>
-    {/if}
+    <div class="mx-auto grid">
+        <!-- Color Schema Editor -->
+        {#if editorTab === tabColorSchema}
+            <div
+                transition:fly={{ x: -64 }}
+                class="w-full max-w-[400px] row-start-1 col-start-1"
+            >
+                <ColorsEditor bind:schema={currentSchema} />
+            </div>
+        {/if}
 
-    <!-- Layout Editor -->
-    {#if editorTab === tabKeyboardLayout}
-        <div class="w-full max-w-[400px] mx-auto">
-            <LayoutEdit
-                bind:layout={currentLayout}
-                bind:selected={selectedKey}
-                landscape={landscapePreview}
-            />
-        </div>
-    {/if}
+        <!-- Layout Editor -->
+        {#if editorTab === tabKeyboardLayout}
+            <div
+                transition:fly={{ x: 64 }}
+                class="w-full max-w-[400px] row-start-1 col-start-1"
+            >
+                <LayoutEdit
+                    bind:layout={currentLayout}
+                    bind:selected={selectedKey}
+                    landscape={landscapePreview}
+                />
+            </div>
+        {/if}
+    </div>
 </div>

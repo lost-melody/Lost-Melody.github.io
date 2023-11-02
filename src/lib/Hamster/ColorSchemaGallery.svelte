@@ -1,5 +1,6 @@
 <script lang="ts">
     import { scale } from "svelte/transition";
+    import { flip } from "svelte/animate";
     import Icon from "@iconify/svelte";
     import IconButton from "$lib/Component/IconButton.svelte";
 
@@ -38,7 +39,7 @@
 
 <div class="flex gap-2 px-8">
     {#each colorSchemas as schema, index (schema.id)}
-        <div transition:scale class="relative">
+        <div animate:flip transition:scale class="relative">
             <button
                 on:click={() => selectSchema(index)}
                 style:background-color={schema.back_color.rgba()}
