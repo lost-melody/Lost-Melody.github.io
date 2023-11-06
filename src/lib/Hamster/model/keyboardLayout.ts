@@ -459,7 +459,9 @@ export class Key {
     toObject(): object {
         var obj: any = {};
         obj.action = this.action.toObject();
-        if (this.width === this.landscape && this.autoWidth === this.autoLandscape) {
+        if (!this.autoLandscape && this.landscape === 0
+            || this.autoWidth && this.autoLandscape
+            || !this.autoWidth && !this.autoLandscape && this.width === this.landscape) {
             obj.width = this.autoWidth ? "available" : `percentage(${this.width / 100})`;
         } else {
             obj.width = {
@@ -534,7 +536,7 @@ export class Row {
     toObject(): object {
         var obj: any = {};
         obj.keys = this.keys.map((key) => key.toObject());
-        if (this.landscapeHeight > 0) {
+        if (this.landscapeHeight > 0 && this.landscapeHeight !== this.rowHeight) {
             obj.rowHeight = {
                 portrait: this.rowHeight,
                 landscape: this.landscapeHeight,
