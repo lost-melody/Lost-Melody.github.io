@@ -32,7 +32,7 @@
     >
         {#each actionTypes as typ}
             <option value={typ}>
-                {ActionNames[typ] ? ActionNames[typ] : typ}
+                {ActionNames[typ] ? ActionNames[typ] : typ} ({typ})
             </option>
         {/each}
     </select>
@@ -53,7 +53,7 @@
         >
             {#each keyboardTypes as typ}
                 <option value={typ}>
-                    {KeyboardNames[typ] ? KeyboardNames[typ] : typ}
+                    {KeyboardNames[typ] ? KeyboardNames[typ] : typ} ({typ})
                 </option>
             {/each}
         </select>
