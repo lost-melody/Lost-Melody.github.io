@@ -374,6 +374,7 @@ export class Swipe {
 export class Key {
     id: number = newId();
     action: Action = new Action();
+    processByRIME: boolean = true;
     /** 行寛百分比, 1~100 */
     width: number = 10;
     landscape: number = 10;
@@ -405,6 +406,7 @@ export class Key {
                     this.loading = obj.label.loadingText;
                 }
             }
+            this.processByRIME = obj.processByRIME !== false;
             if (typeof obj.width === "string") {
                 if (obj.width === "available") {
                     this.width = 10;
@@ -459,6 +461,8 @@ export class Key {
     toObject(): object {
         var obj: any = {};
         obj.action = this.action.toObject();
+        if (!this.processByRIME)
+            obj.processByRIME = this.processByRIME;
         if (!this.autoLandscape && this.landscape === 0
             || this.autoWidth && this.autoLandscape
             || !this.autoWidth && !this.autoLandscape && this.width === this.landscape) {
@@ -496,6 +500,7 @@ export class Key {
     clone(): Key {
         let key = new Key();
         key.action = this.action.clone();
+        key.processByRIME = this.processByRIME;
         key.width = this.width;
         key.autoWidth = this.autoWidth;
         key.landscape = this.landscape;

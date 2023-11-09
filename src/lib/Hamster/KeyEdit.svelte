@@ -55,6 +55,16 @@
             placeholder="標籤"
             class="px-2 w-20 rounded-md bg-transparent hover:variant-soft"
         />
+        <button
+            title="是否經由 Rime 處理"
+            on:click={() => (key.processByRIME = !key.processByRIME)}
+            class="rounded-full p-1 hover:variant-soft"
+        >
+            <Icon
+                height="20"
+                icon={key.processByRIME ? "mdi:web" : "mdi:web-off"}
+            />
+        </button>
         <ActionEdit bind:action={key.action} />
         {#if key.action.type === ActionType.space}
             <input
@@ -88,20 +98,6 @@
                     placeholder="標籤"
                     class="px-2 w-20 rounded-md bg-transparent hover:variant-soft"
                 />
-                <!-- 顯示劃動 -->
-                <button
-                    title="是否顯示此劃動"
-                    on:click={() =>
-                        (key.swipe[index].display = !key.swipe[index].display)}
-                    class="rounded-full p-1 hover:variant-soft"
-                >
-                    <Icon
-                        height="20"
-                        icon={key.swipe[index].display
-                            ? "mdi:eye"
-                            : "mdi:eye-off"}
-                    />
-                </button>
                 <!-- 經由 rime 處理 -->
                 <button
                     title="劃動是否經由 Rime 處理"
@@ -115,6 +111,20 @@
                         icon={key.swipe[index].processByRIME
                             ? "mdi:web"
                             : "mdi:web-off"}
+                    />
+                </button>
+                <!-- 顯示劃動 -->
+                <button
+                    title="是否顯示此劃動"
+                    on:click={() =>
+                        (key.swipe[index].display = !key.swipe[index].display)}
+                    class="rounded-full p-1 hover:variant-soft"
+                >
+                    <Icon
+                        height="20"
+                        icon={key.swipe[index].display
+                            ? "mdi:eye"
+                            : "mdi:eye-off"}
                     />
                 </button>
                 <ActionEdit bind:action={key.swipe[index].action} />
