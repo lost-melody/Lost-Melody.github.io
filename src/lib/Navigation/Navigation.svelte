@@ -1,39 +1,11 @@
 <script lang="ts">
-    import { browser } from "$app/environment";
     import { createEventDispatcher } from "svelte";
-    import { localStorageStore } from "@skeletonlabs/skeleton";
     import Icon from "@iconify/svelte";
 
     /** 導航列表 */
     export let navigations: [string, string][] = [];
-
-    /** 主題列表及其顯示名稱 */
-    const themes: { [key: string]: string } = {
-        skeleton: "Skeleton",
-        wintry: "Wintry",
-        modern: "Modern",
-        rocket: "Rocket",
-        seafoam: "Seaform",
-        vintage: "Vintage",
-        sahara: "Sahara",
-        hamlindigo: "Hamlindigo",
-        "gold-nouveau": "Gold Nouveau",
-        crimson: "Crimson",
-    };
-
-    var serializer = {
-        parse: (text: string) => text,
-        stringify: (text: string) => text,
-    };
-    /** 主題選擇控件綁定值 */
-    var theme = localStorageStore("theme", "skeleton", { serializer });
-    // 設置頁面主題
-    $: if (browser) {
-        let attr = document.body.attributes.getNamedItem("data-theme");
-        if (attr && themes[$theme]) {
-            attr.value = $theme;
-        }
-    }
+    export let themes: { [key: string]: string } = {};
+    export let theme: string;
 
     const dispatch = createEventDispatcher();
     function onNavigate(): void {
@@ -50,7 +22,7 @@
         </a>
     {/each}
     <!-- 主題切換 -->
-    <select bind:value={$theme} class="select rounded-full">
+    <select bind:value={theme} class="select rounded-full">
         {#each Object.keys(themes) as theme}
             <option value={theme}>
                 主題: {themes[theme]}

@@ -1,5 +1,7 @@
 <script lang="ts">
     import type { LayoutData } from "./$types";
+    import { browser } from "$app/environment";
+    import { localStorageStore } from "@skeletonlabs/skeleton";
     import "../app.postcss";
     import { page } from "$app/stores";
     import { fade, fly } from "svelte/transition";
@@ -13,6 +15,34 @@
     var navigations: [string, string][] = data.navigations;
     // 鳴謝列表
     var credits: [string, string][] = data.credits;
+
+    /** 主題列表及其顯示名稱 */
+    const themes: { [key: string]: string } = {
+        skeleton: "Skeleton",
+        wintry: "Wintry",
+        modern: "Modern",
+        rocket: "Rocket",
+        seafoam: "Seaform",
+        vintage: "Vintage",
+        sahara: "Sahara",
+        hamlindigo: "Hamlindigo",
+        "gold-nouveau": "Gold Nouveau",
+        crimson: "Crimson",
+    };
+
+    var serializer = {
+        parse: (text: string) => text,
+        stringify: (text: string) => text,
+    };
+    /** 主題選擇控件綁定值 */
+    var theme = localStorageStore("theme", "skeleton", { serializer });
+    // 設置頁面主題
+    $: if (browser) {
+        let attr = document.body.attributes.getNamedItem("data-theme");
+        if (attr && themes[$theme]) {
+            attr.value = $theme;
+        }
+    }
 
     var showNavigator = false;
     var navigatorBackground: HTMLDivElement;
@@ -57,7 +87,12 @@
             transition:fly={{ y: -32 }}
             class="fixed top-14 left-2 p-4 rounded-md variant-ghost backdrop-blur"
         >
-            <Navigation {navigations} on:navigate={closeNavigator} />
+            <Navigation
+                bind:theme={$theme}
+                {navigations}
+                {themes}
+                on:navigate={closeNavigator}
+            />
         </div>
     </div>
 {/if}
