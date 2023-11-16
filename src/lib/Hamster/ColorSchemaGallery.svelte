@@ -67,17 +67,17 @@
                     icon="mdi:close"
                     color="red"
                     on:click={delSchema}
-                    class="absolute top-0 left-0 p-1 active:scale-[90%] rounded-full variant-filled hover:variant-ghost"
+                    class="absolute top-0 left-0 p-1 active:scale-90 rounded-full variant-filled hover:variant-ghost"
                 />
                 <IconButton
                     icon="mdi:content-copy"
                     on:click={copySchema}
-                    class="absolute top-0 right-6 p-1 active:scale-[90%] rounded-full variant-filled hover:variant-ghost"
+                    class="absolute top-0 right-6 p-1 active:scale-90 rounded-full variant-filled hover:variant-ghost"
                 />
                 <IconButton
                     icon="mdi:content-paste"
                     on:click={pasteSchema}
-                    class="absolute top-0 right-0 p-1 active:scale-[90%] rounded-full variant-filled hover:variant-ghost"
+                    class="absolute top-0 right-0 p-1 active:scale-90 rounded-full variant-filled hover:variant-ghost"
                 />
             {/if}
         </div>

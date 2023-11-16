@@ -12,6 +12,11 @@
     import LayoutGallery from "$lib/Hamster/LayoutGallery.svelte";
     import Preview from "$lib/Hamster/Preview.svelte";
     import ExportBar from "$lib/Hamster/ExportBar.svelte";
+    import BatchKeyEdit from "$lib/Hamster/BatchKeyEdit.svelte";
+    import PredefinedLayout from "$lib/Hamster/PredefinedLayout.svelte";
+    import CustomLayout from "$lib/Hamster/CustomLayout.svelte";
+    import ButtonInsets from "$lib/Hamster/ButtonInsets.svelte";
+    import KeyEdit from "$lib/Hamster/KeyEditor.svelte";
 
     import { loadSchemas, saveSchemas } from "$lib/Hamster/utils/colorschemas";
     import {
@@ -26,6 +31,44 @@
     $: currentSchema = colorSchemas[indexSchema];
     $: currentLayout = keyboardLayouts[indexLayout];
 
+    var actionTab = 0;
+    const [actExport, actBatch, actTemp, actSave] = [1, 2, 3, 4];
+    const actNames = {
+        [actExport]: "導出",
+        [actBatch]: "操作",
+        [actTemp]: "模板",
+        [actSave]: "檔案",
+    };
+    const selectActTab = (tab: number) => {
+        if (actionTab === tab) {
+            actionTab = 0;
+        } else {
+            actionTab = tab;
+        }
+    };
+
+    var galleryTab = 0;
+    const [galColor, galLayout] = [0, 1];
+    const galNames = {
+        [galColor]: "配色方案",
+        [galLayout]: "鍵盤佈局",
+    };
+    const selectGalTab = (tab: number) => {
+        galleryTab = tab;
+    };
+
+    var editorTab = 0;
+    const [editColor, editLayout, editKey, editInset] = [0, 1, 2, 3];
+    const editNames = {
+        [editColor]: "配色",
+        [editLayout]: "佈局",
+        [editKey]: "按鍵",
+        [editInset]: "内距",
+    };
+    const selectEditTab = (tab: number) => {
+        editorTab = tab;
+    };
+
     var selectedKey: { row: number; col: number } = { row: 0, col: 0 };
     const selectKey = (row: number, col: number) => {
         selectedKey = { row, col };
@@ -33,9 +76,6 @@
 
     var stickyPreview = true;
     var landscapePreview = false;
-
-    const [tabColorSchema, tabKeyboardLayout] = [1, 2];
-    var editorTab = tabColorSchema;
 
     const colorSchemasKey = "recoveryColors";
     const keyboardLayoutsKey = "recoveryKeyboards";
@@ -63,27 +103,94 @@
 <svelte:window on:beforeunload={saveLocalData} />
 
 <div class="flex flex-col py-2 gap-2">
-    <!-- Action Buttons -->
-    <details
-        class="p-2 w-full max-w-[400px] mx-auto rounded-md hover:variant-ghost"
-    >
-        <summary class="p-2">導入導出</summary>
-        <ExportBar bind:colorSchemas bind:keyboardLayouts />
-    </details>
-
-    <!-- Color Schemas Gallery -->
-    <div class="flex max-w-full mx-auto overflow-auto">
-        <SchemaGallery bind:colorSchemas bind:indexSchema {currentSchema} />
+    <!-- Action Tab Bar -->
+    <div class="h-8 w-full max-w-[400px] mx-auto flex gap-2">
+        {#each [actExport, actBatch, actTemp, actSave] as tab}
+            <button
+                on:click={() => {
+                    selectActTab(tab);
+                }}
+                class:variant-soft={actionTab === tab}
+                class="p-2 gap-2 grow shrink flex items-center justify-center rounded-md hover:variant-ghost"
+            >
+                {actNames[tab]}
+            </button>
+        {/each}
+    </div>
+    <div class="w-full max-w-[400px] mx-auto grid grid-cols-1 grid-rows-1">
+        {#if actionTab === actExport}
+            <div
+                transition:fly={{ y: -32 }}
+                class="p-2 w-full rounded-md variant-ghost row-start-1 col-start-1"
+            >
+                <ExportBar bind:colorSchemas bind:keyboardLayouts />
+            </div>
+        {:else if actionTab === actBatch}
+            <div
+                transition:fly={{ y: -32 }}
+                class="p-2 w-full rounded-md variant-ghost row-start-1 col-start-1"
+            >
+                <BatchKeyEdit bind:layout={currentLayout} />
+            </div>
+        {:else if actionTab === actTemp}
+            <div
+                transition:fly={{ y: -32 }}
+                class="p-2 w-full rounded-md variant-ghost flex flex-col gap-1 row-start-1 col-start-1"
+            >
+                <PredefinedLayout bind:layout={currentLayout} />
+            </div>
+        {:else if actionTab === actSave}
+            <div
+                transition:fly={{ y: -32 }}
+                class="p-2 w-full rounded-md variant-ghost flex flex-col gap-1 row-start-1 col-start-1"
+            >
+                <CustomLayout bind:layout={currentLayout} />
+            </div>
+        {/if}
     </div>
 
-    <!-- Layouts Gallery -->
-    <div class="flex max-w-full mx-auto overflow-auto">
-        <LayoutGallery
-            bind:keyboardLayouts
-            bind:indexLayout
-            {currentLayout}
-            {currentSchema}
-        />
+    <!-- Gallery Tab Bar -->
+    <div class="h-8 w-full max-w-[400px] mx-auto flex gap-2">
+        {#each [galColor, galLayout] as tab}
+            <button
+                disabled={galleryTab === tab}
+                on:click={() => {
+                    selectGalTab(tab);
+                }}
+                class:variant-soft={galleryTab === tab}
+                class="p-2 gap-2 grow shrink flex items-center justify-center rounded-md hover:variant-ghost"
+            >
+                {galNames[tab]}
+            </button>
+        {/each}
+    </div>
+    <div class="w-full grid grid-cols-1 grid-rows-1">
+        {#if galleryTab === galColor}
+            <!-- Color Schemas Gallery -->
+            <div
+                transition:fly={{ y: -32 }}
+                class="flex max-w-full mx-auto overflow-auto row-start-1 col-start-1"
+            >
+                <SchemaGallery
+                    bind:colorSchemas
+                    bind:indexSchema
+                    {currentSchema}
+                />
+            </div>
+        {:else if galleryTab === galLayout}
+            <!-- Layouts Gallery -->
+            <div
+                transition:fly={{ y: -32 }}
+                class="flex max-w-full mx-auto overflow-auto row-start-1 col-start-1"
+            >
+                <LayoutGallery
+                    bind:keyboardLayouts
+                    bind:indexLayout
+                    {currentLayout}
+                    {currentSchema}
+                />
+            </div>
+        {/if}
     </div>
 
     <!-- Preview Keyboard -->
@@ -107,49 +214,79 @@
         />
     </div>
 
-    <div class="h-10 w-full max-w-[400px] gap-2 mx-auto flex">
-        <IconButton
-            disabled={editorTab === tabColorSchema}
-            on:click={() => {
-                editorTab = tabColorSchema;
-            }}
-            icon="mdi:palette"
-            class="flex p-1 gap-1 grow rounded-md justify-center items-center disabled:variant-soft"
-            >編輯配色</IconButton
-        >
-        <IconButton
-            disabled={editorTab === tabKeyboardLayout}
-            on:click={() => {
-                editorTab = tabKeyboardLayout;
-            }}
-            icon="mdi:keyboard"
-            class="flex p-1 gap-1 grow rounded-md justify-center items-center disabled:variant-soft"
-            >編輯佈局</IconButton
-        >
+    <!-- Editor Tab Bar -->
+    <div class="h-8 w-full max-w-[400px] mx-auto flex gap-2">
+        {#each [editColor, editLayout, editKey, editInset] as tab}
+            <button
+                disabled={editorTab === tab}
+                on:click={() => {
+                    selectEditTab(tab);
+                }}
+                class:variant-soft={editorTab === tab}
+                class="p-2 gap-2 grow shrink flex items-center justify-center rounded-md hover:variant-ghost"
+            >
+                {editNames[tab]}
+            </button>
+        {/each}
     </div>
 
-    <div class="mx-auto grid grid-cols-1 grid-rows-1">
-        <!-- Color Schema Editor -->
-        {#if editorTab === tabColorSchema}
+    <div class="w-full max-w-[400px] mx-auto grid grid-cols-1 grid-rows-1">
+        {#if editorTab === editColor}
+            <!-- Color Schema Editor -->
             <div
                 transition:fly={{ y: -64 }}
-                class="w-full max-w-[400px] row-start-1 col-start-1"
+                class="w-full row-start-1 col-start-1"
             >
                 <ColorsEditor bind:schema={currentSchema} />
             </div>
-        {/if}
-
-        <!-- Layout Editor -->
-        {#if editorTab === tabKeyboardLayout}
+        {:else if editorTab === editLayout}
+            <!-- Layout Editor -->
             <div
                 transition:fly={{ y: -64 }}
-                class="w-full max-w-[400px] row-start-1 col-start-1"
+                class="w-full row-start-1 col-start-1"
             >
                 <LayoutEdit
+                    bind:layout={currentLayout}
+                    landscape={landscapePreview}
+                />
+            </div>
+        {:else if editorTab === editKey}
+            <!-- Key Editor -->
+            <div
+                transition:fly={{ y: -64 }}
+                class="w-full row-start-1 col-start-1"
+            >
+                <KeyEdit
                     bind:layout={currentLayout}
                     bind:selected={selectedKey}
                     landscape={landscapePreview}
                 />
+            </div>
+        {:else if editorTab === editInset}
+            <!-- Button Insets Editor -->
+            <div
+                transition:fly={{ y: -64 }}
+                class="w-full row-start-1 col-start-1"
+            >
+                <div class="p-2 rounded-md variant-soft">
+                    <IconButton
+                        icon={currentLayout.buttonInsets.expr
+                            ? "mdi:checkbox-blank-outline"
+                            : "mdi:checkbox-marked-outline"}
+                        height="20"
+                        on:click={() => {
+                            currentLayout.buttonInsets.expr =
+                                !currentLayout.buttonInsets.expr;
+                        }}
+                        class="p-2 gap-2 w-full flex items-center rounded-md hover:variant-ghost"
+                    >
+                        <span class="grow text-left">使用統一内距</span>
+                    </IconButton>
+
+                    <ButtonInsets
+                        bind:buttonInsets={currentLayout.buttonInsets}
+                    />
+                </div>
             </div>
         {/if}
     </div>

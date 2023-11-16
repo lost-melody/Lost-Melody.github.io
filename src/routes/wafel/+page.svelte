@@ -5,8 +5,8 @@
     import into_mappings from "$lib/assets/wafel/into_map.txt?raw";
 
     const mappingsList: [string, string][] = [
-        ["標凖版·Wafel", wafel_mappings],
         ["半音托版·Into", into_mappings],
+        ["純亂序版·Wafel", wafel_mappings],
     ];
     var selected: number = 0;
 </script>

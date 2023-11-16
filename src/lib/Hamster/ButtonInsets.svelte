@@ -31,7 +31,7 @@
             <input
                 type="range"
                 bind:value={buttonInsets.insets[index]}
-                class="w-32 px-2 py-1 w-[50%]"
+                class="px-2 py-1 w-[50%]"
                 {min}
                 {max}
             />
@@ -48,7 +48,7 @@
         <input
             type="range"
             bind:value={buttonInsets.value}
-            class="w-32 px-2 py-1 w-[50%]"
+            class="px-2 py-1 w-[50%]"
             {min}
             {max}
         />

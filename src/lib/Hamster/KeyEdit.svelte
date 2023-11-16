@@ -139,14 +139,14 @@
         <button
             title="在鍵盤中删除此按鍵"
             on:click={delKey}
-            class="gap-1 p-2 flex items-center rounded-md variant-ghost"
+            class="gap-1 p-2 flex items-center rounded-md variant-ghost active:scale-90"
         >
             <Icon height="20" icon="mdi:close" />
         </button>
         <button
             title="將此按鍵左移一位"
             on:click={moveLeft}
-            class="gap-1 p-2 flex items-center rounded-md variant-ghost"
+            class="gap-1 p-2 flex items-center rounded-md variant-ghost active:scale-90"
         >
             <Icon height="20" icon="mdi:arrow-left" />
         </button>
@@ -159,7 +159,7 @@
                     key.autoWidth = !key.autoWidth;
                 }
             }}
-            class="gap-1 p-2 flex items-center rounded-md variant-ghost"
+            class="gap-1 p-2 flex items-center rounded-md variant-ghost active:scale-90"
         >
             <Icon
                 height="20"
@@ -192,21 +192,21 @@
         <button
             title="複製按鍵配置"
             on:click={copyKey}
-            class="gap-1 p-2 flex items-center rounded-md variant-ghost"
+            class="gap-1 p-2 flex items-center rounded-md variant-ghost active:scale-90"
         >
             <Icon height="20" icon="mdi:content-copy" />
         </button>
         <button
             title="粘貼按鍵配置"
             on:click={pasteKey}
-            class="gap-1 p-2 flex items-center rounded-md variant-ghost"
+            class="gap-1 p-2 flex items-center rounded-md variant-ghost active:scale-90"
         >
             <Icon height="20" icon="mdi:content-paste" />
         </button>
         <button
             title="將此按鍵右移一位"
             on:click={moveRight}
-            class="gap-1 p-2 flex items-center rounded-md variant-ghost"
+            class="gap-1 p-2 flex items-center rounded-md variant-ghost active:scale-90"
         >
             <Icon height="20" icon="mdi:arrow-right" />
         </button>
