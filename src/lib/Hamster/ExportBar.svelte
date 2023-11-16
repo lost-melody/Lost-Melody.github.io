@@ -71,10 +71,10 @@
     };
 
     const classNames =
-        "w-full p-2 gap-2 flex items-center rounded-md hover:variant-ghost";
+        "h-8 w-full p-2 gap-2 flex items-center rounded-md hover:variant-ghost";
 </script>
 
-<div class="w-full gap-1 flex flex-col">
+<div class="w-full gap-2 flex flex-col">
     <!-- copy -->
     <IconButton
         title="複製配色代碼"

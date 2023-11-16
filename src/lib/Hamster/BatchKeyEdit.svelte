@@ -95,15 +95,18 @@
             layout.rows = layout.rows;
         }
     }
+
+    const classNames =
+        "p-2 gap-2 h-8 w-full flex items-center rounded-md hover:variant-ghost";
 </script>
 
-<div>
+<div class="flex flex-col gap-1">
     <IconButton
         icon="mdi:eye"
         on:click={() => {
             allSwipeUp(true);
         }}
-        class="p-2 gap-2 w-full flex items-center rounded-md hover:variant-ghost"
+        class={classNames}
     >
         <span>顯示所有上劃字符</span>
     </IconButton>
@@ -112,7 +115,7 @@
         on:click={() => {
             allSwipeUp(false);
         }}
-        class="p-2 gap-2 w-full flex items-center rounded-md hover:variant-ghost"
+        class={classNames}
     >
         <span>隱藏所有上劃字符</span>
     </IconButton>
@@ -121,7 +124,7 @@
         on:click={() => {
             allSwipeDown(true);
         }}
-        class="p-2 gap-2 w-full flex items-center rounded-md hover:variant-ghost"
+        class={classNames}
     >
         <span>顯示所有下劃字符</span>
     </IconButton>
@@ -130,7 +133,7 @@
         on:click={() => {
             allSwipeDown(false);
         }}
-        class="p-2 gap-2 w-full flex items-center rounded-md hover:variant-ghost"
+        class={classNames}
     >
         <span>隱藏所有下劃字符</span>
     </IconButton>
@@ -139,7 +142,7 @@
         on:click={() => {
             allSwipeUpByRime(true);
         }}
-        class="p-2 gap-2 w-full flex items-center rounded-md hover:variant-ghost"
+        class={classNames}
     >
         <span>所有上劃字符經由 Rime 處理</span>
     </IconButton>
@@ -148,7 +151,7 @@
         on:click={() => {
             allSwipeUpByRime(false);
         }}
-        class="p-2 gap-2 w-full flex items-center rounded-md hover:variant-ghost"
+        class={classNames}
     >
         <span>所有上劃字符不經由 Rime 處理</span>
     </IconButton>
@@ -157,7 +160,7 @@
         on:click={() => {
             allSwipeDownByRime(true);
         }}
-        class="p-2 gap-2 w-full flex items-center rounded-md hover:variant-ghost"
+        class={classNames}
     >
         <span>所有下劃字符經由 Rime 處理</span>
     </IconButton>
@@ -166,7 +169,7 @@
         on:click={() => {
             allSwipeDownByRime(false);
         }}
-        class="p-2 gap-2 w-full flex items-center rounded-md hover:variant-ghost"
+        class={classNames}
     >
         <span>所有下劃字符不經由 Rime 處理</span>
     </IconButton>
@@ -175,7 +178,7 @@
         on:click={() => {
             allKeyByRime(true);
         }}
-        class="p-2 gap-2 w-full flex items-center rounded-md hover:variant-ghost"
+        class={classNames}
     >
         <span>所有按下字符經由 Rime 處理</span>
     </IconButton>
@@ -184,7 +187,7 @@
         on:click={() => {
             allKeyByRime(false);
         }}
-        class="p-2 gap-2 w-full flex items-center rounded-md hover:variant-ghost"
+        class={classNames}
     >
         <span>所有按下字符不經由 Rime 處理</span>
     </IconButton>
@@ -193,7 +196,7 @@
         on:click={() => {
             syncPortraitKeyWidthToLandscape();
         }}
-        class="p-2 gap-2 w-full flex items-center rounded-md hover:variant-ghost"
+        class={classNames}
     >
         <span>將豎屏鍵寛同步到横屏</span>
     </IconButton>

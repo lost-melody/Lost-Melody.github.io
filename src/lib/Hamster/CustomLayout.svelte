@@ -12,7 +12,7 @@
         return `customKeyboard${index}`;
     }
     /** 自定義鍵盤存儲位 */
-    var customKeyboards: object[] = new Array(15).fill(0).map((_, index) => {
+    var customKeyboards: object[] = new Array(10).fill(0).map((_, index) => {
         if (!browser) {
             // server 端渲染, 没有 localStorage 接口
             return { name: nameEmpty };

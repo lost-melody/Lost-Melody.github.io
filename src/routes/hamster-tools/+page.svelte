@@ -32,12 +32,12 @@
     $: currentLayout = keyboardLayouts[indexLayout];
 
     var actionTab = 0;
-    const [actExport, actBatch, actTemp, actSave] = [1, 2, 3, 4];
+    const [actExport, actTemp, actSave, actBatch] = [1, 2, 3, 4];
     const actNames = {
         [actExport]: "導出",
-        [actBatch]: "操作",
         [actTemp]: "模板",
         [actSave]: "檔案",
+        [actBatch]: "操作",
     };
     const selectActTab = (tab: number) => {
         if (actionTab === tab) {
@@ -105,7 +105,7 @@
 <div class="flex flex-col py-2 gap-2">
     <!-- Action Tab Bar -->
     <div class="h-8 w-full max-w-[400px] mx-auto flex gap-2">
-        {#each [actExport, actBatch, actTemp, actSave] as tab}
+        {#each [actExport, actTemp, actSave, actBatch] as tab}
             <button
                 on:click={() => {
                     selectActTab(tab);
@@ -125,13 +125,6 @@
             >
                 <ExportBar bind:colorSchemas bind:keyboardLayouts />
             </div>
-        {:else if actionTab === actBatch}
-            <div
-                transition:fly={{ y: -32 }}
-                class="p-2 w-full rounded-md variant-ghost row-start-1 col-start-1"
-            >
-                <BatchKeyEdit bind:layout={currentLayout} />
-            </div>
         {:else if actionTab === actTemp}
             <div
                 transition:fly={{ y: -32 }}
@@ -145,6 +138,13 @@
                 class="p-2 w-full rounded-md variant-ghost flex flex-col gap-1 row-start-1 col-start-1"
             >
                 <CustomLayout bind:layout={currentLayout} />
+            </div>
+        {:else if actionTab === actBatch}
+            <div
+                transition:fly={{ y: -32 }}
+                class="p-2 w-full rounded-md variant-ghost row-start-1 col-start-1"
+            >
+                <BatchKeyEdit bind:layout={currentLayout} />
             </div>
         {/if}
     </div>
