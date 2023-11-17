@@ -17,7 +17,7 @@ extractFunc("percentage(0.1)") => { func: "percentage", args: "0.1" }
 ```
 */
 function extractFunc(src: string): { func: string, args: string } | null {
-    var r = new RegExp(/^([a-zA-Z]+)(\((.+)\))?$/);
+    var r = new RegExp(/^([^()]+)(\((.+)\))?$/);
     var res = r.exec(src);
     return res && { func: res[1], args: res[3] || "" };
 }
