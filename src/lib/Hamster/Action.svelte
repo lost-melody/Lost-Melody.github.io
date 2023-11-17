@@ -80,4 +80,12 @@
             {/each}
         </select>
     {/if}
+
+    <!-- 輸入: 快捷命令·快捷键 -->
+    {#if action.type === ActionType.shortCommand && action.cmd === ShortCmd.sendkeys}
+        <input
+            bind:value={action.text}
+            class="w-20 rounded-md px-1 bg-transparent hover:variant-soft"
+        />
+    {/if}
 </div>

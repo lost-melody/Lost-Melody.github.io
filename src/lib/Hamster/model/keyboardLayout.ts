@@ -101,6 +101,7 @@ export enum ShortCmd {
     cut = "剪切",
     copy = "复制",
     paste = "粘贴",
+    sendkeys = "sendKeys",
 };
 
 /** 按鍵動作 */
@@ -171,6 +172,14 @@ export class Action {
                         return "左移";
                     case ShortCmd.right:
                         return "右移";
+                    case ShortCmd.cut:
+                        return "剪切";
+                    case ShortCmd.copy:
+                        return "复制";
+                    case ShortCmd.paste:
+                        return "粘贴";
+                    case ShortCmd.sendkeys:
+                        return "⚑";
                     default:
                         return this.cmd;
                 }
@@ -214,10 +223,13 @@ export class Action {
                             return;
                         }
                     case ActionType.shortCommand:
-                        let cmd = res.args.replace(/^#/, "");
-                        if ((Object.values(ShortCmd) as string[]).includes(cmd)) {
+                        let cmd = extractFunc(res.args.replace(/^#/, ""));
+                        if (cmd && (Object.values(ShortCmd) as string[]).includes(cmd.func)) {
                             this.type = res.func;
-                            this.cmd = cmd as ShortCmd;
+                            this.cmd = cmd.func as ShortCmd;
+                            if (this.cmd === ShortCmd.sendkeys) {
+                                this.text = cmd.args;
+                            }
                             return;
                         }
                     default:
@@ -247,6 +259,9 @@ export class Action {
                 }
                 return `${this.type}(${this.kbd})`;
             case ActionType.shortCommand:
+                if (this.cmd === ShortCmd.sendkeys) {
+                    return `${this.type}(${this.cmd}(${this.text}))`;
+                }
                 return `${this.type}(#${this.cmd})`;
             default:
                 return ActionType.none;
