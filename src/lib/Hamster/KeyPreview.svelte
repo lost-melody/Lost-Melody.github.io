@@ -72,10 +72,7 @@
             {#each [key.swipe[2], key.swipe[1]] as swipe}
                 {#if swipe.action.type !== ActionType.none && swipe.display}
                     <span>
-                        {(swipe.label
-                            ? swipe.label
-                            : swipe.action.display()
-                        ).slice(0, 2)}
+                        {swipe.label ? swipe.label : swipe.action.display()}
                     </span>
                 {/if}
             {/each}

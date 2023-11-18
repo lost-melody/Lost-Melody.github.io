@@ -102,6 +102,7 @@ export enum ShortCmd {
     copy = "复制",
     paste = "粘贴",
     sendkeys = "sendKeys",
+    close = "关闭键盘",
 };
 
 /** 按鍵動作 */
@@ -179,7 +180,9 @@ export class Action {
                     case ShortCmd.paste:
                         return "粘贴";
                     case ShortCmd.sendkeys:
-                        return "⚑";
+                        return this.text.split("+").map((str) => str.slice(0, 1)).join("-");
+                    case ShortCmd.close:
+                        return "關閉";
                     default:
                         return this.cmd;
                 }

@@ -28,7 +28,7 @@
     <!-- 單選: 動作類型 -->
     <select
         bind:value={action.type}
-        class="w-16 rounded-md px-1 bg-transparent hover:variant-soft"
+        class="w-24 rounded-md px-1 bg-transparent hover:variant-soft"
     >
         {#each actionTypes as typ}
             <option value={typ}>
@@ -41,7 +41,7 @@
     {#if text.includes(action.type)}
         <input
             bind:value={action.text}
-            class="w-20 rounded-md px-1 bg-transparent hover:variant-soft"
+            class="w-32 rounded-md px-1 bg-transparent hover:variant-soft"
         />
     {/if}
 
@@ -49,7 +49,7 @@
     {#if action.type === ActionType.keyboardType}
         <select
             bind:value={action.kbd}
-            class="w-20 rounded-md px-1 bg-transparent hover:variant-soft"
+            class="w-32 rounded-md px-1 bg-transparent hover:variant-soft"
         >
             {#each keyboardTypes as typ}
                 <option value={typ}>
@@ -63,7 +63,7 @@
     {#if action.type === ActionType.keyboardType && action.kbd === KeyboardType.custom}
         <input
             bind:value={action.text}
-            class="w-20 rounded-md px-1 bg-transparent hover:variant-soft"
+            class="w-32 rounded-md px-1 bg-transparent hover:variant-soft"
         />
     {/if}
 
@@ -71,7 +71,7 @@
     {#if action.type === ActionType.shortCommand}
         <select
             bind:value={action.cmd}
-            class="rounded-md px-1 bg-transparent hover:variant-soft"
+            class="w-32 rounded-md px-1 bg-transparent hover:variant-soft"
         >
             {#each shortCmdTypes as typ}
                 <option value={typ}>
@@ -85,7 +85,7 @@
     {#if action.type === ActionType.shortCommand && action.cmd === ShortCmd.sendkeys}
         <input
             bind:value={action.text}
-            class="w-20 rounded-md px-1 bg-transparent hover:variant-soft"
+            class="w-32 rounded-md px-1 bg-transparent hover:variant-soft"
         />
     {/if}
 </div>
