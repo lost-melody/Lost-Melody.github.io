@@ -4,11 +4,14 @@
     import Icon from "@iconify/svelte";
     import IconButton from "$lib/Component/IconButton.svelte";
 
+    import type { Keyboard } from "./model/keyboardLayout";
     import { ColorSchema } from "./model/colorSchema";
+    import Thumbnail from "./Thumbnail.svelte";
 
     export var colorSchemas: ColorSchema[];
     export var indexSchema: number;
     export var currentSchema: ColorSchema;
+    export var currentLayout: Keyboard;
 
     var clipSchema = new ColorSchema();
     const copySchema = () => {
@@ -46,22 +49,24 @@
                 style:border-color={schema.border_color.rgba()}
                 class:border-2={index === indexSchema}
                 class:border-dashed={index === indexSchema}
-                class="w-32 h-24 p-2 shrink-0 flex flex-col btn rounded-md border"
+                class="w-32 h-24 p-2 shrink-0 flex flex-col rounded-md border active:scale-95"
             >
-                <span
-                    style={`color: ${schema.text_color.rgba()};`}
-                    class="text-xs"
-                >
-                    {schema.schemaName}
-                </span>
-                <span
-                    style:color={schema.hilited_candidate_text_color.rgba()}
-                    style:background-color={schema.hilited_candidate_back_color.rgba()}
-                    class="p-1 rounded-md border text-sm"
-                >
-                    {schema.name}
-                </span>
+                <Thumbnail layout={currentLayout} {schema} />
             </button>
+            <span
+                style={`color: ${schema.text_color.rgba()};`}
+                style:background-color={schema.hilited_candidate_back_color.rgba()}
+                class="absolute right-0.5 bottom-6 p-0.5 rounded-md border text-xs"
+            >
+                {schema.schemaName}
+            </span>
+            <span
+                style:color={schema.hilited_candidate_text_color.rgba()}
+                style:background-color={schema.hilited_candidate_back_color.rgba()}
+                class="absolute right-0.5 bottom-0.5 p-0.5 rounded-md border text-sm"
+            >
+                {schema.name}
+            </span>
             {#if index === indexSchema}
                 <IconButton
                     icon="mdi:close"

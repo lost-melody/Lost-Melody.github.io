@@ -6,6 +6,7 @@
 
     import type { ColorSchema } from "./model/colorSchema";
     import { Keyboard } from "./model/keyboardLayout";
+    import Thumbnail from "./Thumbnail.svelte";
 
     export var currentSchema: ColorSchema;
     export var keyboardLayouts: Keyboard[];
@@ -48,16 +49,17 @@
                 style:border-color={currentSchema.border_color.rgba()}
                 class:border-2={index === indexLayout}
                 class:border-dashed={index === indexLayout}
-                class="w-32 h-24 p-2 shrink-0 flex flex-col btn rounded-md border"
+                class="w-32 h-24 p-2 shrink-0 flex flex-col rounded-md border active:scale-95"
             >
-                <span
-                    style:color={currentSchema.hilited_candidate_text_color.rgba()}
-                    style:background-color={currentSchema.hilited_candidate_back_color.rgba()}
-                    class="p-1 rounded-md border text-sm"
-                >
-                    {layout.name}
-                </span>
+                <Thumbnail {layout} schema={currentSchema} />
             </button>
+            <span
+                style:color={currentSchema.hilited_candidate_text_color.rgba()}
+                style:background-color={currentSchema.hilited_candidate_back_color.rgba()}
+                class="absolute right-0.5 bottom-0.5 p-0.5 rounded-md border text-sm"
+            >
+                {layout.name}
+            </span>
             {#if index === indexLayout}
                 <IconButton
                     icon="mdi:close"

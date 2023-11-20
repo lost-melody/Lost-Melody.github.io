@@ -174,6 +174,7 @@
                 <SchemaGallery
                     bind:colorSchemas
                     bind:indexSchema
+                    {currentLayout}
                     {currentSchema}
                 />
             </div>

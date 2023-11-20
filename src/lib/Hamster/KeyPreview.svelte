@@ -45,7 +45,6 @@
     style:height={`${
         landscape ? row.landscapeHeight || 56 : row.rowHeight || 56
     }px`}
-    class:border={selected}
     style:border-color={`${schema.border_color.rgba()}`}
     class:grow={landscape ? key.autoLandscape : key.autoWidth}
     class:shrink={landscape ? key.autoLandscape : key.autoWidth}
