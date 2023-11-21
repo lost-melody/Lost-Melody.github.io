@@ -8,6 +8,7 @@
     import { exportFile } from "./utils/common";
     import { exportSchemas, importSchemas } from "./utils/colorschemas";
     import { exportKeyboards, importKeyboards } from "./utils/keyboardlayouts";
+    import { getDateTimeString } from "./utils/format";
 
     export var colorSchemas: ColorSchema[];
     export var keyboardLayouts: Keyboard[];
@@ -29,11 +30,11 @@
     // export code
     const exportColorSchemas = () => {
         const data = exportSchemas(colorSchemas);
-        exportFile(data, `colorSchemas-${Date.now()}.yaml`);
+        exportFile(data, `colorSchemas-${getDateTimeString()}.yaml`);
     };
     const exportKeyboardLayouts = () => {
         const data = exportKeyboards(keyboardLayouts);
-        exportFile(data, `keyboards-${Date.now()}.yaml`);
+        exportFile(data, `keyboards-${getDateTimeString()}.yaml`);
     };
     // import code
     var importFileInput: HTMLInputElement;

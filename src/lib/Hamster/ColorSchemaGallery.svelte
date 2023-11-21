@@ -54,7 +54,7 @@
                 <Thumbnail layout={currentLayout} {schema} />
             </button>
             <span
-                style={`color: ${schema.text_color.rgba()};`}
+                style={`color: ${schema.hilited_candidate_text_color.rgba()};`}
                 style:background-color={schema.hilited_candidate_back_color.rgba()}
                 class="absolute right-0.5 bottom-6 p-0.5 rounded-md border text-xs"
             >
@@ -63,7 +63,7 @@
             <span
                 style:color={schema.hilited_candidate_text_color.rgba()}
                 style:background-color={schema.hilited_candidate_back_color.rgba()}
-                class="absolute right-0.5 bottom-0.5 p-0.5 rounded-md border text-sm"
+                class="absolute right-0.5 bottom-0.5 p-0.5 rounded-md border text-xs"
             >
                 {schema.name}
             </span>

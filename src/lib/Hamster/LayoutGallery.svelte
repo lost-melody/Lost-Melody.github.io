@@ -56,7 +56,7 @@
             <span
                 style:color={currentSchema.hilited_candidate_text_color.rgba()}
                 style:background-color={currentSchema.hilited_candidate_back_color.rgba()}
-                class="absolute right-0.5 bottom-0.5 p-0.5 rounded-md border text-sm"
+                class="absolute right-0.5 bottom-0.5 p-0.5 rounded-md border text-xs"
             >
                 {layout.name}
             </span>
