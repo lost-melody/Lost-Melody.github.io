@@ -4,9 +4,9 @@ export const prerender: boolean = true;
 
 // 導航列表
 var navigations: [string, string][] = [
-	["主頁", "/"],
-	["倉·工具", "/hamster-tools"],
-	["雞蛋餅", "/wafel"],
+	["首頁·友鏈列表", "/"],
+	["倉輸入法·工具", "/hamster-tools"],
+	["雞蛋餅·主頁", "/wafel"],
 ];
 // 鳴謝列表
 var credits: [string, string][] = [
