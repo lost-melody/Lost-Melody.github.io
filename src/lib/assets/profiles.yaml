@@ -38,3 +38,16 @@ profiles:
     links:
       - label: Loora1N's Blog
         address: https://loora1n.github.io
+  - github: Ephemeral1y
+    avatar: https://ephemerally.top/icon/icon.jpg
+    labels: [ Ephemeral1y, 時光旅人 ]
+    badges: [ CTF, DLUT, Scr1w前隊長 ]
+    desc:
+      - Web🖐️ of Scr1w
+      - Computer Architecture Security
+      - Bug bounty hunter
+    links:
+      - label: Ephemeral1yのBlog
+        address: https://ephemerally.top/
+      - label: Github
+        address: https://github.com/Ephemeral1y

@@ -12,17 +12,13 @@
     var desc = profile.desc;
 </script>
 
-<div class="card card-hover p-4 gap-2 flex flex-col items-center">
+<div class="w-64 card card-hover p-4 gap-2 flex flex-col items-center">
     <!-- 頭像, 名稱及主頁鏈接 -->
-    <a
-        {target}
-        {href}
-        class="flex gap-2 p-1 flex-row hover:variant-soft rounded-full justify-center items-center"
-    >
+    <a {target} {href} class="flex gap-2 p-1 hover:variant-soft rounded-full">
         <img {src} alt="頭像" class="w-12 h-12 rounded-full" />
-        <div>
+        <div class="flex flex-col justify-around">
             {#each labels as label}
-                <p>{label}</p>
+                <p class="text-sm">{label}</p>
             {/each}
         </div>
     </a>
@@ -50,6 +46,6 @@
     {/if}
     <!-- 個人信息 -->
     {#each desc as desc}
-        <p class="text-center">{desc}</p>
+        <p class="text-center text-sm">{desc}</p>
     {/each}
 </div>
