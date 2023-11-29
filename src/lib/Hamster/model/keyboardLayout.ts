@@ -583,12 +583,14 @@ export class Row {
 export class Keyboard {
     id: number = newId();
     name: string = "鍵盤";
+    primary: boolean = false;
     rows: Row[] = [];
     buttonInsets: ButtonInsets = new ButtonInsets();
 
     fromObject(obj: any) {
         if (obj && typeof obj === "object") {
             this.name = typeof obj.name === "string" ? this.name = obj.name : "鍵盤";
+            this.primary = obj.isPrimary ? true : false;
             this.buttonInsets.fromObject(obj.buttonInsets);
             this.rows = [];
             if (obj.rows && typeof obj.rows === "object") {
@@ -606,6 +608,7 @@ export class Keyboard {
     toObject(): object {
         var obj: any = {};
         obj.name = this.name;
+        obj.isPrimary = this.primary;
         obj.rows = this.rows.map((row) => row.toObject());
         obj.buttonInsets = this.buttonInsets.toObject();
         return obj;
@@ -614,6 +617,7 @@ export class Keyboard {
     clone(): Keyboard {
         let keyboard = new Keyboard();
         keyboard.name = this.name;
+        keyboard.primary = this.primary;
         keyboard.rows = this.rows.map((row) => row.clone());
         keyboard.buttonInsets = this.buttonInsets.clone();
         return keyboard;

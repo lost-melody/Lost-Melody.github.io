@@ -46,7 +46,7 @@
         if (length > count) {
             layout.rows[indexRow].keys = layout.rows[indexRow].keys.slice(
                 0,
-                count
+                count,
             );
         } else if (length < count) {
             layout.rows[indexRow].keys = [
@@ -59,20 +59,32 @@
     }
 </script>
 
-<div class="w-full p-2 gap-2 flex flex-col rounded-md variant-soft">
+<div class="w-full p-2 flex flex-col rounded-md variant-soft">
     <!-- 佈局名稱 -->
-    <div
-        class="w-full px-4 py-2 gap-2 flex items-center rounded-md hover:variant-ghost"
-    >
-        <Icon icon="mdi:rename-box" />
-        <span class="grow shrink"> 佈局名稱 </span>
-        <input
-            title="鍵盤名稱"
-            type="text"
-            bind:value={layout.name}
-            placeholder="天行鍵"
-            class="w-[50%] p-2 bg-transparent rounded-md hover:variant-ghost"
-        />
+    <div class="w-full p-2 rounded-md hover:variant-ghost">
+        <div
+            class="w-full p-2 gap-2 flex items-center rounded-md hover:variant-ghost"
+        >
+            <Icon icon="mdi:rename-box" />
+            <span class="grow shrink"> 佈局名稱 </span>
+            <input
+                title="鍵盤名稱"
+                type="text"
+                bind:value={layout.name}
+                placeholder="天行鍵"
+                class="w-[50%] px-2 bg-transparent rounded-md hover:variant-ghost"
+            />
+        </div>
+        <IconButton
+            icon={layout.primary
+                ? "mdi:checkbox-marked-outline"
+                : "mdi:checkbox-blank-outline"}
+            on:click={() => {
+                layout.primary = !layout.primary;
+            }}
+            class="w-full p-2 gap-2 flex items-center rounded-md hover:variant-ghost active:scale-95"
+            >{layout.primary ? "主鍵盤" : "非主鍵盤"}</IconButton
+        >
     </div>
 
     <!-- 編輯按鍵分佈 -->
