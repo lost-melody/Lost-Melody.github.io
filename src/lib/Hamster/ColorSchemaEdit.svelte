@@ -78,6 +78,11 @@
         title="首選背景"
         bind:color={schema.hilited_candidate_back_color}
     />
+    <ColorSelector
+        title="首選序號"
+        bind:color={schema.hilited_candidate_label_color}
+    />
     <ColorSelector title="次選文字" bind:color={schema.candidate_text_color} />
     <ColorSelector title="次選註釋" bind:color={schema.comment_text_color} />
+    <ColorSelector title="次選序號" bind:color={schema.label_color} />
 </div>

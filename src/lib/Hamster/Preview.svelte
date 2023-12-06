@@ -40,6 +40,13 @@
                     : undefined}
                 class="px-1 rounded-md text-lg"
             >
+                <span
+                    style:color={index == 0
+                        ? schema.hilited_candidate_label_color.rgba()
+                        : schema.label_color.rgba()}
+                >
+                    {index + 1}.
+                </span>
                 {cand}
                 <span
                     style:color={index === 0

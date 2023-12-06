@@ -93,10 +93,14 @@ export class ColorSchema {
     hilited_candidate_text_color: Color = new Color("#000000");
     /** 首選註釋文本 */
     hilited_comment_text_color: Color = new Color("#000000");
+    /** 候選欄首選序號 */
+    hilited_candidate_label_color: Color = new Color("#000000");
     /** 候選文本 */
     candidate_text_color: Color = new Color("#000000");
     /** 注釋文本 */
     comment_text_color: Color = new Color("#000000");
+    /** 候選欄次選序號 */
+    label_color: Color = new Color("#000000");
 
     toObject(): object {
         var obj: any = {
@@ -106,17 +110,19 @@ export class ColorSchema {
             back_color: this.back_color.abgr(),
             button_back_color: this.button_back_color.abgr(),
             button_pressed_back_color: this.button_pressed_back_color.abgr(),
-            button_front_color: this.button_front_color.abgr(),
-            button_pressed_front_color: this.button_pressed_front_color.abgr(),
-            button_swipe_front_color: this.button_swipe_front_color.abgr(),
+            button_foreground_color: this.button_front_color.abgr(),
+            button_pressed_foreground_color: this.button_pressed_front_color.abgr(),
+            button_swipe_foreground_color: this.button_swipe_front_color.abgr(),
             corner_radius: this.corner_radius,
             border_color: this.border_color.abgr(),
             text_color: this.text_color.abgr(),
             hilited_candidate_back_color: this.hilited_candidate_back_color.abgr(),
             hilited_candidate_text_color: this.hilited_candidate_text_color.abgr(),
+            hilited_candidate_label_color: this.hilited_candidate_label_color.abgr(),
             hilited_comment_text_color: this.hilited_comment_text_color.abgr(),
             candidate_text_color: this.candidate_text_color.abgr(),
             comment_text_color: this.comment_text_color.abgr(),
+            label_color: this.label_color.abgr(),
         };
         return obj;
     }
@@ -129,17 +135,25 @@ export class ColorSchema {
             this.back_color.fromAbgr(asString(obj.back_color, "0xffffff"));
             this.button_back_color.fromAbgr(asString(obj.button_back_color, "0xffffff"));
             this.button_pressed_back_color.fromAbgr(asString(obj.button_pressed_back_color, "0xD0D0D0"));
-            this.button_front_color.fromAbgr(asString(obj.button_front_color, "0x000000"));
-            this.button_pressed_front_color.fromAbgr(asString(obj.button_pressed_front_color, "0x000000"));
-            this.button_swipe_front_color.fromAbgr(asString(obj.button_swipe_front_color, "0x000000"));
+            if (obj.button_foreground_color || obj.button_pressed_foreground_color || obj.button_swipe_foreground_color) {
+                this.button_front_color.fromAbgr(asString(obj.button_foreground_color, "0x000000"));
+                this.button_pressed_front_color.fromAbgr(asString(obj.button_pressed_foreground_color, "0x000000"));
+                this.button_swipe_front_color.fromAbgr(asString(obj.button_swipe_foreground_color, "0x000000"));
+            } else {
+                this.button_front_color.fromAbgr(asString(obj.button_front_color, "0x000000"));
+                this.button_pressed_front_color.fromAbgr(asString(obj.button_pressed_front_color, "0x000000"));
+                this.button_swipe_front_color.fromAbgr(asString(obj.button_swipe_front_color, "0x000000"));
+            }
             this.corner_radius = asNumber(obj.corner_radius, 5);
             this.border_color.fromAbgr(asString(obj.border_color, "0x000000"));
             this.text_color.fromAbgr(asString(obj.text_color, "0x000000"));
             this.hilited_candidate_back_color.fromAbgr(asString(obj.hilited_candidate_back_color, "0xffffff"));
             this.hilited_candidate_text_color.fromAbgr(asString(obj.hilited_candidate_text_color, "0x000000"));
+            this.hilited_candidate_label_color.fromAbgr(asString(obj.hilited_candidate_label_color, "0x000000"));
             this.hilited_comment_text_color.fromAbgr(asString(obj.hilited_comment_text_color, "0x000000"));
             this.candidate_text_color.fromAbgr(asString(obj.candidate_text_color, "0x000000"));
             this.comment_text_color.fromAbgr(asString(obj.comment_text_color, "0x000000"));
+            this.label_color.fromAbgr(asString(obj.label_color, "0x000000"));
         }
     }
 
@@ -159,9 +173,11 @@ export class ColorSchema {
         schema.text_color = this.text_color.clone();
         schema.hilited_candidate_back_color = this.hilited_candidate_back_color.clone();
         schema.hilited_candidate_text_color = this.hilited_candidate_text_color.clone();
+        schema.hilited_candidate_label_color = this.hilited_candidate_label_color.clone();
         schema.hilited_comment_text_color = this.hilited_comment_text_color.clone();
         schema.candidate_text_color = this.candidate_text_color.clone();
         schema.comment_text_color = this.comment_text_color.clone();
+        schema.label_color = this.label_color.clone();
         return schema;
     }
 }
