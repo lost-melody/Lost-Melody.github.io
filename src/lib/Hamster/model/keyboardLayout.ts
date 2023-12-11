@@ -250,8 +250,8 @@ export class Action {
             // { keyboardType: "emojis" }
             if (typeof obj[ActionType.keyboardType] === "string") {
                 let kbd = obj[ActionType.keyboardType]
-                if (kbd in [KeyboardType.alphabetic, KeyboardType.chinese, KeyboardType.chineseNineGrid,
-                    KeyboardType.classifySymbolic, KeyboardType.emojis, KeyboardType.numericNineGrid]) {
+                if ([KeyboardType.alphabetic, KeyboardType.chinese, KeyboardType.chineseNineGrid, KeyboardType.classifySymbolic,
+                    KeyboardType.emojis, KeyboardType.numericNineGrid].includes(kbd as KeyboardType)) {
                     this.type = ActionType.keyboardType;
                     this.kbd = kbd as KeyboardType;
                 } else {
@@ -264,11 +264,11 @@ export class Action {
             // { shortcutCommand: "#重输" }
             if (typeof obj.shortcutCommand === "string") {
                 this.type = ActionType.shortCommand;
-                this.cmd = obj.shortcutCommand;
+                this.cmd = (obj.shortcutCommand as string).replace(/^#/, "") as ShortCmd;
                 return;
             }
             // { shortcutCommand: { sendKeys: { keys: "Control+k" } } }
-            if (obj.shortcutCommand && obj.shortcutCommand === "object") {
+            if (obj.shortcutCommand && typeof obj.shortcutCommand === "object") {
                 let sc = obj.shortcutCommand;
                 if (sc.sendKeys && typeof sc.sendKeys === "object" && typeof sc.sendKeys.keys === "string") {
                     this.type = ActionType.shortCommand;
@@ -333,7 +333,7 @@ export class Action {
                 if (this.cmd === ShortCmd.sendkeys) {
                     return { shortcutCommand: { [this.cmd]: { keys: this.text } } };
                 }
-                return { [this.type]: this.cmd };
+                return { shortcutCommand: "#" + this.cmd };
             default:
                 return ActionType.none;
         }
