@@ -7,7 +7,7 @@
 
     import { exportFile } from "./utils/common";
     import { exportSchemas, importSchemas } from "./utils/colorschemas";
-    import { exportKeyboards, importKeyboards } from "./utils/keyboardlayouts";
+    import { exportKeyboards, exportKeyboardsV2, importKeyboards } from "./utils/keyboardlayouts";
     import { getDateTimeString } from "./utils/format";
 
     export var colorSchemas: ColorSchema[];
@@ -27,6 +27,11 @@
         setTimeout(() => (keyboardLayoutsCopied = false), timeoutDelay);
         navigator.clipboard.writeText(exportKeyboards(keyboardLayouts));
     };
+    const copyKeyboardLayoutsV2 = () => {
+        keyboardLayoutsCopied = true;
+        setTimeout(() => (keyboardLayoutsCopied = false), timeoutDelay);
+        navigator.clipboard.writeText(exportKeyboardsV2(keyboardLayouts));
+    };
     // export code
     const exportColorSchemas = () => {
         const data = exportSchemas(colorSchemas);
@@ -35,6 +40,10 @@
     const exportKeyboardLayouts = () => {
         const data = exportKeyboards(keyboardLayouts);
         exportFile(data, `keyboards-${getDateTimeString()}.yaml`);
+    };
+    const exportKeyboardLayoutsV2 = () => {
+        const data = exportKeyboardsV2(keyboardLayouts);
+        exportFile(data, `keyboards-v2-${getDateTimeString()}.yaml`);
     };
     // import code
     var importFileInput: HTMLInputElement;
@@ -91,6 +100,13 @@
         on:click={copyKeyboardLayouts}
         class={classNames}>複製佈局代碼</IconButton
     >
+    <IconButton
+        title="複製佈局代碼·V2"
+        disabled={keyboardLayoutsCopied}
+        icon={keyboardLayoutsCopied ? "mdi:check" : "mdi:clipboard"}
+        on:click={copyKeyboardLayoutsV2}
+        class={classNames}>複製佈局代碼·V2</IconButton
+    >
     <!-- export -->
     <IconButton
         title="導出配色文件"
@@ -103,6 +119,12 @@
         icon="mdi:export"
         on:click={exportKeyboardLayouts}
         class={classNames}>導出佈局文件</IconButton
+    >
+    <IconButton
+        title="導出佈局文件·V2"
+        icon="mdi:export"
+        on:click={exportKeyboardLayoutsV2}
+        class={classNames}>導出佈局文件·V2</IconButton
     >
     <!-- import -->
     <IconButton

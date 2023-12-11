@@ -238,6 +238,45 @@ export class Action {
                     default:
                 }
             }
+        } else if (obj && typeof obj === "object") {
+            // { character: { char: "c" } }
+            for (let key of [ActionType.character, ActionType.characterMargin, ActionType.symbol]) {
+                if (obj[key] && typeof obj[key] === "object") {
+                    this.type = key;
+                    this.text = obj[key].char || "";
+                    return;
+                }
+            }
+            // { keyboardType: "emojis" }
+            if (typeof obj[ActionType.keyboardType] === "string") {
+                let kbd = obj[ActionType.keyboardType]
+                if (kbd in [KeyboardType.alphabetic, KeyboardType.chinese, KeyboardType.chineseNineGrid,
+                    KeyboardType.classifySymbolic, KeyboardType.emojis, KeyboardType.numericNineGrid]) {
+                    this.type = ActionType.keyboardType;
+                    this.kbd = kbd as KeyboardType;
+                } else {
+                    this.type = ActionType.keyboardType;
+                    this.kbd = KeyboardType.custom;
+                    this.text = kbd;
+                }
+                return;
+            }
+            // { shortcutCommand: "#重输" }
+            if (typeof obj.shortcutCommand === "string") {
+                this.type = ActionType.shortCommand;
+                this.cmd = obj.shortcutCommand;
+                return;
+            }
+            // { shortcutCommand: { sendKeys: { keys: "Control+k" } } }
+            if (obj.shortcutCommand && obj.shortcutCommand === "object") {
+                let sc = obj.shortcutCommand;
+                if (sc.sendKeys && typeof sc.sendKeys === "object" && typeof sc.sendKeys.keys === "string") {
+                    this.type = ActionType.shortCommand;
+                    this.cmd = ShortCmd.sendkeys;
+                    this.text = sc.sendKeys.keys;
+                    return;
+                }
+            }
         }
         this.type = ActionType.none;
     }
@@ -266,6 +305,35 @@ export class Action {
                     return `${this.type}(${this.cmd}(${this.text}))`;
                 }
                 return `${this.type}(#${this.cmd})`;
+            default:
+                return ActionType.none;
+        }
+    }
+
+    toObjectV2(): any {
+        switch (this.type) {
+            case ActionType.backspace:
+            case ActionType.enter:
+            case ActionType.shift:
+            case ActionType.tab:
+            case ActionType.space:
+            case ActionType.nextKeyboard:
+            case ActionType.none:
+                return this.type;
+            case ActionType.character:
+            case ActionType.characterMargin:
+            case ActionType.symbol:
+                return { [this.type]: { char: this.text} };
+            case ActionType.keyboardType:
+                if (this.kbd === KeyboardType.custom) {
+                    return { [this.type]: this.text };
+                }
+                return { [this.type]: this.kbd };
+            case ActionType.shortCommand:
+                if (this.cmd === ShortCmd.sendkeys) {
+                    return { shortcutCommand: { [this.cmd]: { keys: this.text } } };
+                }
+                return { [this.type]: this.cmd };
             default:
                 return ActionType.none;
         }
@@ -323,6 +391,9 @@ export class ButtonInsets {
                 this.expr = false;
                 this.value = Number(insets);
             }
+        } else if (insets && typeof insets === "object") {
+            this.expr = true;
+            this.insets = [Number(insets.left), Number(insets.bottom), Number(insets.top), Number(insets.right)];
         } else {
             // invalid
             this.expr = true;
@@ -335,6 +406,13 @@ export class ButtonInsets {
         return this.expr
             ? `left(${l}),bottom(${b}),top(${t}),right(${r})`
             : `${this.value}`;
+    }
+
+    toObjectV2(): any {
+        var [l, b, t, r] = this.insets;
+        return this.expr
+            ? { left: l, bottom: b, top: t, right: r }
+            : this.value;
     }
 
     clone(): ButtonInsets {
@@ -376,6 +454,17 @@ export class Swipe {
         obj.display = this.display;
         obj.processByRIME = this.processByRIME;
         return obj;
+    }
+
+    toObjectV2(): object {
+        var obj: any = {};
+        obj.action = this.action.toObjectV2();
+        if (this.label) {
+            obj.label = this.label;
+        }
+        obj.display = this.display;
+        obj.processByRIME = this.processByRIME;
+        return obj
     }
 
     clone(): Swipe {
@@ -436,21 +525,33 @@ export class Key {
                 }
                 this.landscape = this.width;
                 this.autoLandscape = this.autoWidth;
-            } else if (obj.width && typeof obj.width === "object" && typeof obj.width.portrait === "string" && typeof obj.width.landscape === "string") {
+            } else if (obj.width && typeof obj.width === "object") {
+                if (typeof obj.width.percentage === "number") {
+                    this.width = obj.width.percentage * 100;
+                    this.autoWidth = false;
+                    this.landscape = this.width;
+                    this.autoLandscape = this.autoWidth;
+                }
                 if (obj.width.portrait === "available") {
                     this.width = 10;
                     this.autoWidth = true;
-                } else {
+                } else if (typeof obj.width.portrait === "string") {
                     let res = extractFunc(obj.width.portrait);
                     this.width = (res && res.func === "percentage") ? Number(res.args) * 100 : 10;
+                    this.autoWidth = false;
+                } else if (obj.width.portrait && typeof obj.width.portrait === "object") {
+                    this.width = Number(obj.width.portrait.percentage);
                     this.autoWidth = false;
                 }
                 if (obj.width.landscape === "available") {
                     this.landscape = 10;
                     this.autoLandscape = true;
-                } else {
+                } else if(typeof obj.width.landscape === "string") {
                     let res = extractFunc(obj.width.landscape);
                     this.landscape = (res && res.func === "percentage") ? Number(res.args) * 100 : 10;
+                    this.autoLandscape = false;
+                } else if (obj.width.landscape && typeof obj.width.landscape === "object") {
+                    this.landscape = Number(obj.width.landscape.percentage);
                     this.autoLandscape = false;
                 }
             } else {
@@ -515,6 +616,45 @@ export class Key {
         return obj;
     }
 
+    toObjectV2(): object {
+        var obj: any = {}
+        obj.action = this.action.toObjectV2()
+        if (!this.processByRIME)
+            obj.processByRIME = this.processByRIME;
+        if (!this.autoLandscape && this.landscape === 0
+            || this.autoWidth && this.autoLandscape
+            || !this.autoWidth && !this.autoLandscape && this.width === this.landscape) {
+            obj.width = this.autoWidth ? "available" : { percentage: this.width / 100 };
+        } else {
+            obj.width = {
+                portrait: this.autoWidth ? "available" : { percentage: this.width / 100 },
+                landscape: this.autoLandscape ? "available" : { percentage: this.landscape / 100 },
+            };
+        }
+        if (this.label) {
+            if (this.loading && this.action.type === ActionType.space) {
+                obj.label = {
+                    text: this.label,
+                    loadingText: this.loading,
+                };
+            } else {
+                obj.label = this.label;
+            }
+        }
+        var swipes: object[] = [];
+        for (let i of [2, 1, 0, 3]) {
+            if (this.swipe[i].action.type !== ActionType.none) {
+                let swipe: any = this.swipe[i].toObjectV2();
+                swipe.direction = Object.values(Direction)[i];
+                swipes.push(swipe);
+            }
+        }
+        if (swipes.length > 0) {
+            obj.swipe = swipes;
+        }
+        return obj
+    }
+
     clone(): Key {
         let key = new Key();
         key.action = this.action.clone();
@@ -570,6 +710,20 @@ export class Row {
         return obj;
     }
 
+    toObjectV2(): object {
+        var obj: any = {}
+        obj.keys = this.keys.map((key) => key.toObjectV2());
+        if (this.landscapeHeight > 0 && this.landscapeHeight !== this.rowHeight) {
+            obj.rowHeight = {
+                portrait: this.rowHeight,
+                landscape: this.landscapeHeight,
+            };
+        } else if (this.rowHeight > 0) {
+            obj.rowHeight = this.rowHeight;
+        }
+        return obj
+    }
+
     clone(): Row {
         let row = new Row();
         row.keys = this.keys.map((key) => key.clone());
@@ -612,6 +766,15 @@ export class Keyboard {
         obj.rows = this.rows.map((row) => row.toObject());
         obj.buttonInsets = this.buttonInsets.toObject();
         return obj;
+    }
+
+    toObjectV2(): object {
+        var obj: any = {}
+        obj.name = this.name;
+        obj.isPrimary = this.primary;
+        obj.rows = this.rows.map((row) => row.toObjectV2());
+        obj.buttonInsets = this.buttonInsets.toObjectV2();
+        return obj
     }
 
     clone(): Keyboard {

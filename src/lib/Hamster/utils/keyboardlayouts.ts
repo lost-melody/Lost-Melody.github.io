@@ -9,6 +9,13 @@ export function exportKeyboards(layouts: Keyboard[]): string {
     });
 }
 
+export function exportKeyboardsV2(layouts: Keyboard[]): string {
+    var objList = layouts.map((schema) => schema.toObjectV2());
+    return YAML.stringify({
+        keyboards: objList,
+    });
+}
+
 export function importKeyboards(obj: any): Keyboard[] | null {
     var keyboardLayouts: Keyboard[] | null = null;
     try {
