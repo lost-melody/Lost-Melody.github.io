@@ -96,7 +96,7 @@
             value={layout.rows.length}
             on:change={onRowCountChange}
             min="0"
-            max="7"
+            max="8"
             class="p-2 gap-1 flex items-center rounded-md hover:variant-ghost"
         />
         {#each layout.rows as row, index (row.id)}

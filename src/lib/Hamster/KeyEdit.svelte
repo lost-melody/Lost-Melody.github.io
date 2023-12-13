@@ -1,8 +1,9 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
     import Icon from "@iconify/svelte";
-    import { ActionType, Key } from "./model/keyboardLayout";
+    import { ActionType, Callout, Key } from "./model/keyboardLayout";
     import ActionEdit from "./Action.svelte";
+    import IconRange from "$lib/Component/IconRange.svelte";
 
     export var landscape: boolean = false;
     /** 綁定的按鍵對象 */
@@ -39,6 +40,20 @@
     /** 發送粘貼事件 */
     function pasteKey(): void {
         dispatch("pastekey");
+    }
+
+    function onCalloutCountChange(event: Event) {
+        const count = Number((event.currentTarget as HTMLInputElement).value);
+        if (count < key.callout.length) {
+            key.callout = key.callout.slice(0, count);
+        } else if (count > key.callout.length) {
+            key.callout = [
+                ...key.callout,
+                ...Array(count - key.callout.length)
+                    .fill(0)
+                    .map(() => new Callout()),
+            ];
+        }
     }
 </script>
 
@@ -131,6 +146,34 @@
             {/if}
         </div>
     {/each}
+
+    <!-- 長按動作 -->
+    <details class="p-2 w-full rounded-md hover:variant-ghost">
+        <summary class="p-2">長按動作配置</summary>
+        <IconRange
+            icon="mdi:table-cog"
+            title="長按動作數量"
+            value={key.callout.length}
+            on:change={onCalloutCountChange}
+            min="0"
+            max="12"
+            class="p-2 gap-1 flex items-center rounded-md hover:variant-ghost"
+        />
+        {#each key.callout as callout (callout.id)}
+            <div
+                class="flex flex-wrap p-2 gap-1 rounded-md hover:variant-ghost items-center"
+            >
+                <Icon height="20" icon="mdi:message-outline" />
+                <input
+                    title="調整長按動作標籤"
+                    bind:value={callout.label}
+                    placeholder="標籤"
+                    class="px-2 w-20 rounded-md bg-transparent hover:variant-soft"
+                />
+                <ActionEdit bind:action={callout.action} />
+            </div>
+        {/each}
+    </details>
 
     <!-- 按鍵動作按鈕 -->
     <div

@@ -98,6 +98,8 @@ export enum ShortCmd {
     switcher = "RimeSwitcher",
     left = "左移",
     right = "右移",
+    lefthand = "左手模式",
+    righthand = "右手模式",
     cut = "剪切",
     copy = "复制",
     paste = "粘贴",
@@ -477,6 +479,34 @@ export class Swipe {
     }
 };
 
+export class Callout {
+    id: number = newId();
+    action: Action = new Action();
+    label: string = "";
+
+    fromObject(obj: any) {
+        this.action.fromObject(obj.action);
+        if (typeof obj.label === "string")
+            this.label = obj.label;
+    }
+
+    toObjectV2(): object {
+        var obj: any = {}
+        obj.action = this.action.toObjectV2();
+        if (this.label) {
+            obj.label = this.label;
+        }
+        return obj;
+    }
+
+    clone(): Callout {
+        let callout = new Callout();
+        callout.action = this.action.clone();
+        callout.label = this.label;
+        return callout;
+    }
+};
+
 /** 按鍵属性 */
 export class Key {
     id: number = newId();
@@ -490,6 +520,7 @@ export class Key {
     label: string = "";
     loading: string = "";
     swipe: [Swipe, Swipe, Swipe, Swipe];
+    callout: Callout[] = [];
 
     constructor() {
         this.action.type = ActionType.character;
@@ -574,6 +605,15 @@ export class Key {
                     }
                 }
             }
+            if (obj.callout && typeof obj.callout === "object" && obj.callout.length > 0) {
+                for (let theCallout of obj.callout) {
+                    let callout = new Callout();
+                    if (theCallout && typeof theCallout === "object") {
+                        callout.fromObject(theCallout);
+                    }
+                    this.callout.push(callout);
+                }
+            }
         }
     }
 
@@ -618,7 +658,7 @@ export class Key {
 
     toObjectV2(): object {
         var obj: any = {}
-        obj.action = this.action.toObjectV2()
+        obj.action = this.action.toObjectV2();
         if (!this.processByRIME)
             obj.processByRIME = this.processByRIME;
         if (!this.autoLandscape && this.landscape === 0
@@ -651,6 +691,9 @@ export class Key {
         }
         if (swipes.length > 0) {
             obj.swipe = swipes;
+        }
+        if (this.callout.length > 0) {
+            obj.callout = this.callout.map((callout) => callout.toObjectV2());
         }
         return obj
     }
