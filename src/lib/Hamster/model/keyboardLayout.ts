@@ -267,6 +267,9 @@ export class Action {
             if (typeof obj.shortcutCommand === "string") {
                 this.type = ActionType.shortCommand;
                 this.cmd = (obj.shortcutCommand as string).replace(/^#/, "") as ShortCmd;
+                if (this.cmd as string === "简繁切换") {
+                    this.cmd = ShortCmd.trad;
+                }
                 return;
             }
             // { shortcutCommand: { sendKeys: { keys: "Control+k" } } }
@@ -334,6 +337,8 @@ export class Action {
             case ActionType.shortCommand:
                 if (this.cmd === ShortCmd.sendkeys) {
                     return { shortcutCommand: { [this.cmd]: { keys: this.text } } };
+                } else if (this.cmd === ShortCmd.trad) {
+                    return { shortcutCommand: "#简繁切换" };
                 }
                 return { shortcutCommand: "#" + this.cmd };
             default:
