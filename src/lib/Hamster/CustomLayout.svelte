@@ -48,7 +48,7 @@
     /** 覆蓋自定義鍵盤檔案 */
     function overrideCustom(index: number): void {
         if (layout) {
-            var obj = layout.toObject();
+            var obj = layout.toObjectV2();
             var keyboardData = YAML.stringify(obj);
             try {
                 localStorage.setItem(customKeyboardKey(index), keyboardData);

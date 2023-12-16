@@ -55,6 +55,6 @@ export function loadKeyboards(key: string): Keyboard[] | null {
 }
 
 export function saveKeyboards(key: string, layouts: Keyboard[]) {
-    const objList = layouts.map((scheme) => scheme.toObject());
+    const objList = layouts.map((scheme) => scheme.toObjectV2());
     localStorage.setItem(key, YAML.stringify(objList));
 }
