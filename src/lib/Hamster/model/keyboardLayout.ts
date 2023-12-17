@@ -576,7 +576,7 @@ export class Key {
                     this.width = (res && res.func === "percentage") ? Number(res.args) * 100 : 10;
                     this.autoWidth = false;
                 } else if (obj.width.portrait && typeof obj.width.portrait === "object") {
-                    this.width = Number(obj.width.portrait.percentage);
+                    this.width = Number(obj.width.portrait.percentage) * 100 || 10;
                     this.autoWidth = false;
                 }
                 if (obj.width.landscape === "available") {
@@ -587,7 +587,7 @@ export class Key {
                     this.landscape = (res && res.func === "percentage") ? Number(res.args) * 100 : 10;
                     this.autoLandscape = false;
                 } else if (obj.width.landscape && typeof obj.width.landscape === "object") {
-                    this.landscape = Number(obj.width.landscape.percentage);
+                    this.landscape = Number(obj.width.landscape.percentage) * 100 || 10;
                     this.autoLandscape = false;
                 }
             } else {
