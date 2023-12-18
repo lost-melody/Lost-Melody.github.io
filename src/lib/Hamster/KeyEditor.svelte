@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Key, Keyboard } from "./model/keyboardLayout";
+    import { Action, Key, Keyboard } from "./model/keyboardLayout";
     import KeyEdit from "./KeyEdit.svelte";
 
     export var landscape: boolean = false;
@@ -7,6 +7,7 @@
     export var selected: { row: number; col: number };
 
     var clipKey: Key;
+    var clipAction: Action;
     var selectedKey: Key = new Key();
     $: if (selectedValid(selected, layout))
         selectedKey = layout.rows[selected.row].keys[selected.col] || new Key();
@@ -74,6 +75,7 @@
 <div class="p-2 w-full rounded-md variant-soft">
     <KeyEdit
         bind:key={selectedKey}
+        bind:clipAction
         {landscape}
         on:delkey={delButton}
         on:moveleft={moveBtnLeft}

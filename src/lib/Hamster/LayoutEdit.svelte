@@ -19,7 +19,7 @@
     }
     /** 下移按鍵行 */
     function moveRowDown(index: number): void {
-        if (index < layout.rows.length) {
+        if (index + 1 < layout.rows.length) {
             [layout.rows[index], layout.rows[index + 1]] = [
                 layout.rows[index + 1],
                 layout.rows[index],

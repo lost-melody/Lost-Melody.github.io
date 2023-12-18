@@ -1,13 +1,15 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
     import Icon from "@iconify/svelte";
-    import { ActionType, Callout, Key } from "./model/keyboardLayout";
+    import { Action, ActionType, Callout, Key } from "./model/keyboardLayout";
     import ActionEdit from "./Action.svelte";
     import IconRange from "$lib/Component/IconRange.svelte";
+    import IconButton from "$lib/Component/IconButton.svelte";
 
     export var landscape: boolean = false;
     /** 綁定的按鍵對象 */
     export var key: Key;
+    export var clipAction: Action;
 
     const icons: [string, string, string, string] = [
         "mdi:gesture-swipe-left",
@@ -55,32 +57,52 @@
             ];
         }
     }
+    /** 上移長按動作 */
+    function moveCalloutUp(index: number): void {
+        if (index > 0) {
+            [key.callout[index], key.callout[index - 1]] = [
+                key.callout[index - 1],
+                key.callout[index],
+            ];
+        }
+    }
+    /** 下移長按動作 */
+    function moveCalloutDown(index: number): void {
+        if (index + 1 < key.callout.length) {
+            [key.callout[index], key.callout[index + 1]] = [
+                key.callout[index + 1],
+                key.callout[index],
+            ];
+        }
+    }
 </script>
 
 <!-- 劃動配置 -->
 <div class="flex flex-col gap-1">
     <!-- 鍵寛和鍵值編輯區 -->
     <div
-        class="flex flex-wrap p-2 gap-1 rounded-md hover:variant-ghost items-center"
+        class="flex flex-col p-2 gap-1 rounded-md hover:variant-ghost items-center"
     >
-        <Icon height="20" icon="mdi:gesture-touch" />
-        <input
-            title="調整按鍵顯示標籤"
-            bind:value={key.label}
-            placeholder="標籤"
-            class="px-2 w-20 rounded-md bg-transparent hover:variant-soft"
-        />
-        <button
-            title="是否經由 Rime 處理"
-            on:click={() => (key.processByRIME = !key.processByRIME)}
-            class="rounded-full p-1 hover:variant-soft"
-        >
-            <Icon
-                height="20"
-                icon={key.processByRIME ? "mdi:web" : "mdi:web-off"}
+        <div class="flex w-full p-1 gap-1">
+            <Icon height="20" icon="mdi:gesture-touch" />
+            <input
+                title="調整按鍵顯示標籤"
+                bind:value={key.label}
+                placeholder="標籤"
+                class="px-2 grow rounded-md bg-transparent hover:variant-soft"
             />
-        </button>
-        <ActionEdit bind:action={key.action} />
+            <button
+                title="是否經由 Rime 處理"
+                on:click={() => (key.processByRIME = !key.processByRIME)}
+                class="rounded-full p-1 hover:variant-soft"
+            >
+                <Icon
+                    height="20"
+                    icon={key.processByRIME ? "mdi:web" : "mdi:web-off"}
+                />
+            </button>
+        </div>
+        <ActionEdit bind:action={key.action} bind:clipAction />
         {#if key.action.type === ActionType.space}
             <input
                 title="調整空格鍵的加載時標籤"
@@ -93,56 +115,65 @@
 
     {#each [2, 1, 0, 3] as index (key.swipe[index].id)}
         <div
-            class="flex flex-wrap p-2 gap-1 rounded-md hover:variant-ghost items-center"
+            class="flex flex-col p-2 gap-1 rounded-md hover:variant-ghost items-center"
         >
-            <Icon height="20" icon={icons[index]} />
             {#if key.swipe[index].action.type === ActionType.none}
-                <button
-                    title="添加劃動配置"
-                    on:click={() => {
-                        activateSwipe(index);
-                    }}
-                    class="rounded-md grow px-2 py-1 flex justify-center items-center hover:variant-soft"
-                >
-                    <Icon height="20" icon="mdi:plus" />
-                </button>
+                <div class="flex w-full p-1 gap-1">
+                    <Icon height="20" icon={icons[index]} />
+                    <button
+                        title="添加劃動配置"
+                        on:click={() => {
+                            activateSwipe(index);
+                        }}
+                        class="rounded-md grow px-2 py-1 flex justify-center items-center hover:variant-soft"
+                    >
+                        <Icon height="20" icon="mdi:plus" />
+                    </button>
+                </div>
             {:else}
-                <input
-                    title="調整劃動顯示標籤"
-                    bind:value={key.swipe[index].label}
-                    placeholder="標籤"
-                    class="px-2 w-20 rounded-md bg-transparent hover:variant-soft"
+                <div class="flex w-full p-1 gap-1">
+                    <Icon height="20" icon={icons[index]} />
+                    <input
+                        title="調整劃動顯示標籤"
+                        bind:value={key.swipe[index].label}
+                        placeholder="標籤"
+                        class="px-2 grow rounded-md bg-transparent hover:variant-soft"
+                    />
+                    <!-- 經由 rime 處理 -->
+                    <button
+                        title="劃動是否經由 Rime 處理"
+                        on:click={() =>
+                            (key.swipe[index].processByRIME =
+                                !key.swipe[index].processByRIME)}
+                        class="rounded-full p-1 hover:variant-soft"
+                    >
+                        <Icon
+                            height="20"
+                            icon={key.swipe[index].processByRIME
+                                ? "mdi:web"
+                                : "mdi:web-off"}
+                        />
+                    </button>
+                    <!-- 顯示劃動 -->
+                    <button
+                        title="是否顯示此劃動"
+                        on:click={() =>
+                            (key.swipe[index].display =
+                                !key.swipe[index].display)}
+                        class="rounded-full p-1 hover:variant-soft"
+                    >
+                        <Icon
+                            height="20"
+                            icon={key.swipe[index].display
+                                ? "mdi:eye"
+                                : "mdi:eye-off"}
+                        />
+                    </button>
+                </div>
+                <ActionEdit
+                    bind:action={key.swipe[index].action}
+                    bind:clipAction
                 />
-                <!-- 經由 rime 處理 -->
-                <button
-                    title="劃動是否經由 Rime 處理"
-                    on:click={() =>
-                        (key.swipe[index].processByRIME =
-                            !key.swipe[index].processByRIME)}
-                    class="rounded-full p-1 hover:variant-soft"
-                >
-                    <Icon
-                        height="20"
-                        icon={key.swipe[index].processByRIME
-                            ? "mdi:web"
-                            : "mdi:web-off"}
-                    />
-                </button>
-                <!-- 顯示劃動 -->
-                <button
-                    title="是否顯示此劃動"
-                    on:click={() =>
-                        (key.swipe[index].display = !key.swipe[index].display)}
-                    class="rounded-full p-1 hover:variant-soft"
-                >
-                    <Icon
-                        height="20"
-                        icon={key.swipe[index].display
-                            ? "mdi:eye"
-                            : "mdi:eye-off"}
-                    />
-                </button>
-                <ActionEdit bind:action={key.swipe[index].action} />
             {/if}
         </div>
     {/each}
@@ -159,18 +190,36 @@
             max="12"
             class="p-2 gap-1 flex items-center rounded-md hover:variant-ghost"
         />
-        {#each key.callout as callout (callout.id)}
+        {#each key.callout as callout, index (callout.id)}
             <div
-                class="flex flex-wrap p-2 gap-1 rounded-md hover:variant-ghost items-center"
+                class="flex flex-col p-2 gap-1 rounded-md hover:variant-ghost items-center"
             >
-                <Icon height="20" icon="mdi:message-outline" />
-                <input
-                    title="調整長按動作標籤"
-                    bind:value={callout.label}
-                    placeholder="標籤"
-                    class="px-2 w-20 rounded-md bg-transparent hover:variant-soft"
-                />
-                <ActionEdit bind:action={callout.action} />
+                <div class="flex w-full p-1 gap-1">
+                    <Icon height="20" icon="mdi:message-outline" />
+                    <input
+                        title="調整長按動作標籤"
+                        bind:value={callout.label}
+                        placeholder="標籤"
+                        class="px-2 grow rounded-md bg-transparent hover:variant-soft"
+                    />
+                    <IconButton
+                        icon="mdi:arrow-up"
+                        title="整行按鍵上移"
+                        on:click={() => {
+                            moveCalloutUp(index);
+                        }}
+                        class="p-2 rounded-md hover:variant-ghost"
+                    />
+                    <IconButton
+                        icon="mdi:arrow-down"
+                        title="整行按鍵下移"
+                        on:click={() => {
+                            moveCalloutDown(index);
+                        }}
+                        class="p-2 rounded-md hover:variant-ghost"
+                    />
+                </div>
+                <ActionEdit bind:action={callout.action} bind:clipAction />
             </div>
         {/each}
     </details>
