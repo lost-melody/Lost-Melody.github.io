@@ -67,6 +67,7 @@
         <input
             bind:value={action.text}
             class="w-full rounded-md px-1 bg-transparent hover:variant-soft"
+            placeholder="按鍵字符内容"
         />
     {/if}
 
@@ -89,6 +90,7 @@
         <input
             bind:value={action.text}
             class="w-full rounded-md px-1 bg-transparent hover:variant-soft"
+            placeholder="自定義鍵盤名"
         />
     {/if}
 
@@ -111,6 +113,7 @@
         <input
             bind:value={action.text}
             class="w-full rounded-md px-1 bg-transparent hover:variant-soft"
+            placeholder="快捷鍵内容"
         />
     {/if}
 </div>
