@@ -51,3 +51,13 @@ profiles:
         address: https://ephemerally.top/
       - label: Github
         address: https://github.com/Ephemeral1y
+  - github: sch01ar
+    avatar: https://sch01ar.github.io/img/yy.jpg
+    labels: [ ROOK1EY, yy ]
+    badges: [ CTF, DLUT ]
+    desc:
+      - Amateur CTF player in Scr1w
+      - Focus on Crypto
+    links:
+      - label: Y’s blog
+        address: https://sch01ar.github.io
