@@ -21,7 +21,7 @@
 
     const bgBtnDisplay = (actionType: ActionType): boolean => {
         return ![ActionType.none, ActionType.characterMargin].includes(
-            actionType
+            actionType,
         );
     };
     const dispatch = createEventDispatcher();
@@ -39,8 +39,8 @@
                 ? 10
                 : key.landscape
             : key.autoWidth
-            ? 10
-            : key.width
+              ? 10
+              : key.width
     }%`}
     style:height={`${
         landscape ? row.landscapeHeight || 56 : row.rowHeight || 56
@@ -66,7 +66,8 @@
         <!-- swipe up and down -->
         <div
             style:color={schema.button_swipe_front_color.rgba()}
-            class="w-full h-[20%] absolute -top-2 text-[50%] flex justify-around"
+            style:font-size={`${schema.swipe_font_size || 8}px`}
+            class="w-full h-[20%] absolute -top-2 flex justify-around"
         >
             {#each [key.swipe[2], key.swipe[1]] as swipe}
                 {#if swipe.action.type !== ActionType.none && swipe.display}
@@ -81,6 +82,7 @@
             style:color={selected
                 ? schema.button_pressed_front_color.rgba()
                 : schema.button_front_color.rgba()}
+            style:font-size={`${schema.font_size || 16}px`}
             class="w-full h-[80%] absolute top-[20%] text-center"
         >
             {key.label ? key.label : key.action.display()}
