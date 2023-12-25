@@ -19,10 +19,7 @@
     import KeyEdit from "$lib/Hamster/KeyEditor.svelte";
 
     import { loadSchemas, saveSchemas } from "$lib/Hamster/utils/colorschemas";
-    import {
-        loadKeyboards,
-        saveKeyboards,
-    } from "$lib/Hamster/utils/keyboardlayouts";
+    import { loadKeyboards, saveKeyboards } from "$lib/Hamster/utils/keyboardlayouts";
 
     var colorSchemas: ColorSchema[] = [new ColorSchema()];
     var keyboardLayouts: Keyboard[] = [new Keyboard()];
@@ -82,11 +79,9 @@
     /** load color schemas and keyboard layouts from local storage */
     const loadLocalData = () => {
         const savedSchemas = loadSchemas(colorSchemasKey);
-        if (savedSchemas && savedSchemas.length > 0)
-            colorSchemas = savedSchemas;
+        if (savedSchemas && savedSchemas.length > 0) colorSchemas = savedSchemas;
         const savedLayouts = loadKeyboards(keyboardLayoutsKey);
-        if (savedLayouts && savedLayouts.length > 0)
-            keyboardLayouts = savedLayouts;
+        if (savedLayouts && savedLayouts.length > 0) keyboardLayouts = savedLayouts;
     };
     /** save color schemas and keyboard layouts to local storage */
     const saveLocalData = () => {
@@ -119,10 +114,7 @@
     </div>
     <div class="w-full max-w-[400px] mx-auto grid grid-cols-1 grid-rows-1">
         {#if actionTab === actExport}
-            <div
-                transition:fly={{ y: -32 }}
-                class="p-2 w-full rounded-md variant-ghost row-start-1 col-start-1"
-            >
+            <div transition:fly={{ y: -32 }} class="p-2 w-full rounded-md variant-ghost row-start-1 col-start-1">
                 <ExportBar bind:colorSchemas bind:keyboardLayouts />
             </div>
         {:else if actionTab === actTemp}
@@ -140,10 +132,7 @@
                 <CustomLayout bind:layout={currentLayout} />
             </div>
         {:else if actionTab === actBatch}
-            <div
-                transition:fly={{ y: -32 }}
-                class="p-2 w-full rounded-md variant-ghost row-start-1 col-start-1"
-            >
+            <div transition:fly={{ y: -32 }} class="p-2 w-full rounded-md variant-ghost row-start-1 col-start-1">
                 <BatchKeyEdit bind:layout={currentLayout} />
             </div>
         {/if}
@@ -167,29 +156,13 @@
     <div class="w-full grid grid-cols-1 grid-rows-1">
         {#if galleryTab === galColor}
             <!-- Color Schemas Gallery -->
-            <div
-                transition:fly={{ y: -32 }}
-                class="flex max-w-full mx-auto overflow-auto row-start-1 col-start-1"
-            >
-                <SchemaGallery
-                    bind:colorSchemas
-                    bind:indexSchema
-                    {currentLayout}
-                    {currentSchema}
-                />
+            <div transition:fly={{ y: -32 }} class="flex max-w-full mx-auto overflow-auto row-start-1 col-start-1">
+                <SchemaGallery bind:colorSchemas bind:indexSchema {currentLayout} {currentSchema} />
             </div>
         {:else if galleryTab === galLayout}
             <!-- Layouts Gallery -->
-            <div
-                transition:fly={{ y: -32 }}
-                class="flex max-w-full mx-auto overflow-auto row-start-1 col-start-1"
-            >
-                <LayoutGallery
-                    bind:keyboardLayouts
-                    bind:indexLayout
-                    {currentLayout}
-                    {currentSchema}
-                />
+            <div transition:fly={{ y: -32 }} class="flex max-w-full mx-auto overflow-auto row-start-1 col-start-1">
+                <LayoutGallery bind:keyboardLayouts bind:indexLayout {currentLayout} {currentSchema} />
             </div>
         {/if}
     </div>
@@ -234,41 +207,22 @@
     <div class="w-full max-w-[400px] mx-auto grid grid-cols-1 grid-rows-1">
         {#if editorTab === editColor}
             <!-- Color Schema Editor -->
-            <div
-                transition:fly={{ y: -64 }}
-                class="w-full row-start-1 col-start-1"
-            >
+            <div transition:fly={{ y: -64 }} class="w-full row-start-1 col-start-1">
                 <ColorsEditor bind:schema={currentSchema} />
             </div>
         {:else if editorTab === editLayout}
             <!-- Layout Editor -->
-            <div
-                transition:fly={{ y: -64 }}
-                class="w-full row-start-1 col-start-1"
-            >
-                <LayoutEdit
-                    bind:layout={currentLayout}
-                    landscape={landscapePreview}
-                />
+            <div transition:fly={{ y: -64 }} class="w-full row-start-1 col-start-1">
+                <LayoutEdit bind:layout={currentLayout} landscape={landscapePreview} />
             </div>
         {:else if editorTab === editKey}
             <!-- Key Editor -->
-            <div
-                transition:fly={{ y: -64 }}
-                class="w-full row-start-1 col-start-1"
-            >
-                <KeyEdit
-                    bind:layout={currentLayout}
-                    bind:selected={selectedKey}
-                    landscape={landscapePreview}
-                />
+            <div transition:fly={{ y: -64 }} class="w-full row-start-1 col-start-1">
+                <KeyEdit bind:layout={currentLayout} bind:selected={selectedKey} landscape={landscapePreview} />
             </div>
         {:else if editorTab === editInset}
             <!-- Button Insets Editor -->
-            <div
-                transition:fly={{ y: -64 }}
-                class="w-full row-start-1 col-start-1"
-            >
+            <div transition:fly={{ y: -64 }} class="w-full row-start-1 col-start-1">
                 <div class="p-2 rounded-md variant-soft">
                     <IconButton
                         icon={currentLayout.buttonInsets.expr
@@ -276,17 +230,14 @@
                             : "mdi:checkbox-marked-outline"}
                         height="20"
                         on:click={() => {
-                            currentLayout.buttonInsets.expr =
-                                !currentLayout.buttonInsets.expr;
+                            currentLayout.buttonInsets.expr = !currentLayout.buttonInsets.expr;
                         }}
                         class="p-2 gap-2 w-full flex items-center rounded-md hover:variant-ghost"
                     >
                         <span class="grow text-left">使用統一内距</span>
                     </IconButton>
 
-                    <ButtonInsets
-                        bind:buttonInsets={currentLayout.buttonInsets}
-                    />
+                    <ButtonInsets bind:buttonInsets={currentLayout.buttonInsets} />
                 </div>
             </div>
         {/if}

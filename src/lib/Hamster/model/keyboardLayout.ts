@@ -16,7 +16,7 @@ extractFunc("input") => { func: "input", args: "" }
 extractFunc("percentage(0.1)") => { func: "percentage", args: "0.1" }
 ```
 */
-function extractFunc(src: string): { func: string, args: string } | null {
+function extractFunc(src: string): { func: string; args: string } | null {
     var r = new RegExp(/^([^()]+)(\((.+)\))?$/);
     var res = r.exec(src);
     return res && { func: res[1], args: res[3] || "" };
@@ -28,7 +28,7 @@ export enum Direction {
     down = "down",
     up = "up",
     right = "right",
-};
+}
 
 /** 動作類型枚舉 */
 export enum ActionType {
@@ -44,7 +44,7 @@ export enum ActionType {
     shortCommand = "shortCommand",
     none = "none",
     nextKeyboard = "nextKeyboard",
-};
+}
 
 /** 動作類型名稱映射表 */
 export var ActionNames: { [key: string]: string } = {
@@ -71,7 +71,7 @@ export enum KeyboardType {
     numericNineGrid = "numericNineGrid",
     custom = "custom",
     emojis = "emojis",
-};
+}
 
 /** 鍵盤類型名稱映射表 */
 export var KeyboardNames: { [key: string]: string } = {
@@ -82,7 +82,7 @@ export var KeyboardNames: { [key: string]: string } = {
     [KeyboardType.numericNineGrid]: "數字九宫",
     [KeyboardType.custom]: "自定義",
     [KeyboardType.emojis]: "Emoji",
-}
+};
 
 /** 快捷命令枚舉 */
 export enum ShortCmd {
@@ -105,7 +105,7 @@ export enum ShortCmd {
     paste = "粘贴",
     sendkeys = "sendKeys",
     close = "关闭键盘",
-};
+}
 
 /** 按鍵動作 */
 export class Action {
@@ -182,7 +182,10 @@ export class Action {
                     case ShortCmd.paste:
                         return "粘贴";
                     case ShortCmd.sendkeys:
-                        return this.text.split("+").map((str) => str.slice(0, 1)).join("-");
+                        return this.text
+                            .split("+")
+                            .map((str) => str.slice(0, 1))
+                            .join("-");
                     case ShortCmd.close:
                         return "關閉";
                     default:
@@ -251,9 +254,17 @@ export class Action {
             }
             // { keyboardType: "emojis" }
             if (typeof obj[ActionType.keyboardType] === "string") {
-                let kbd = obj[ActionType.keyboardType]
-                if ([KeyboardType.alphabetic, KeyboardType.chinese, KeyboardType.chineseNineGrid, KeyboardType.classifySymbolic,
-                    KeyboardType.emojis, KeyboardType.numericNineGrid].includes(kbd as KeyboardType)) {
+                let kbd = obj[ActionType.keyboardType];
+                if (
+                    [
+                        KeyboardType.alphabetic,
+                        KeyboardType.chinese,
+                        KeyboardType.chineseNineGrid,
+                        KeyboardType.classifySymbolic,
+                        KeyboardType.emojis,
+                        KeyboardType.numericNineGrid,
+                    ].includes(kbd as KeyboardType)
+                ) {
                     this.type = ActionType.keyboardType;
                     this.kbd = kbd as KeyboardType;
                 } else {
@@ -267,7 +278,7 @@ export class Action {
             if (typeof obj.shortcutCommand === "string") {
                 this.type = ActionType.shortCommand;
                 this.cmd = (obj.shortcutCommand as string).replace(/^#/, "") as ShortCmd;
-                if (this.cmd as string === "简繁切换") {
+                if ((this.cmd as string) === "简繁切换") {
                     this.cmd = ShortCmd.trad;
                 }
                 return;
@@ -328,7 +339,7 @@ export class Action {
             case ActionType.character:
             case ActionType.characterMargin:
             case ActionType.symbol:
-                return { [this.type]: { char: this.text} };
+                return { [this.type]: { char: this.text } };
             case ActionType.keyboardType:
                 if (this.kbd === KeyboardType.custom) {
                     return { [this.type]: this.text };
@@ -354,7 +365,7 @@ export class Action {
         action.cmd = this.cmd;
         return action;
     }
-};
+}
 
 /** 按鍵内距 */
 export class ButtonInsets {
@@ -410,16 +421,12 @@ export class ButtonInsets {
 
     toObject(): string {
         var [l, b, t, r] = this.insets;
-        return this.expr
-            ? `left(${l}),bottom(${b}),top(${t}),right(${r})`
-            : `${this.value}`;
+        return this.expr ? `left(${l}),bottom(${b}),top(${t}),right(${r})` : `${this.value}`;
     }
 
     toObjectV2(): any {
         var [l, b, t, r] = this.insets;
-        return this.expr
-            ? { left: l, bottom: b, top: t, right: r }
-            : this.value;
+        return this.expr ? { left: l, bottom: b, top: t, right: r } : this.value;
     }
 
     clone(): ButtonInsets {
@@ -471,7 +478,7 @@ export class Swipe {
         }
         obj.display = this.display;
         obj.processByRIME = this.processByRIME;
-        return obj
+        return obj;
     }
 
     clone(): Swipe {
@@ -482,7 +489,7 @@ export class Swipe {
         swipe.processByRIME = this.processByRIME;
         return swipe;
     }
-};
+}
 
 export class Callout {
     id: number = newId();
@@ -491,12 +498,11 @@ export class Callout {
 
     fromObject(obj: any) {
         this.action.fromObject(obj.action);
-        if (typeof obj.label === "string")
-            this.label = obj.label;
+        if (typeof obj.label === "string") this.label = obj.label;
     }
 
     toObjectV2(): object {
-        var obj: any = {}
+        var obj: any = {};
         obj.action = this.action.toObjectV2();
         if (this.label) {
             obj.label = this.label;
@@ -510,7 +516,7 @@ export class Callout {
         callout.label = this.label;
         return callout;
     }
-};
+}
 
 /** 按鍵属性 */
 export class Key {
@@ -530,12 +536,7 @@ export class Key {
     constructor() {
         this.action.type = ActionType.character;
         this.action.text = "c";
-        this.swipe = [
-            new Swipe(),
-            new Swipe(),
-            new Swipe(),
-            new Swipe(),
-        ];
+        this.swipe = [new Swipe(), new Swipe(), new Swipe(), new Swipe()];
     }
 
     fromObject(obj: any) {
@@ -556,7 +557,7 @@ export class Key {
                     this.autoWidth = true;
                 } else {
                     let res = extractFunc(obj.width);
-                    this.width = (res && res.func === "percentage") ? Number(res.args) * 100 : 10;
+                    this.width = res && res.func === "percentage" ? Number(res.args) * 100 : 10;
                     this.autoWidth = false;
                 }
                 this.landscape = this.width;
@@ -573,7 +574,7 @@ export class Key {
                     this.autoWidth = true;
                 } else if (typeof obj.width.portrait === "string") {
                     let res = extractFunc(obj.width.portrait);
-                    this.width = (res && res.func === "percentage") ? Number(res.args) * 100 : 10;
+                    this.width = res && res.func === "percentage" ? Number(res.args) * 100 : 10;
                     this.autoWidth = false;
                 } else if (obj.width.portrait && typeof obj.width.portrait === "object") {
                     this.width = Number(obj.width.portrait.percentage) * 100 || 10;
@@ -582,9 +583,9 @@ export class Key {
                 if (obj.width.landscape === "available") {
                     this.landscape = 10;
                     this.autoLandscape = true;
-                } else if(typeof obj.width.landscape === "string") {
+                } else if (typeof obj.width.landscape === "string") {
                     let res = extractFunc(obj.width.landscape);
-                    this.landscape = (res && res.func === "percentage") ? Number(res.args) * 100 : 10;
+                    this.landscape = res && res.func === "percentage" ? Number(res.args) * 100 : 10;
                     this.autoLandscape = false;
                 } else if (obj.width.landscape && typeof obj.width.landscape === "object") {
                     this.landscape = Number(obj.width.landscape.percentage) * 100 || 10;
@@ -625,11 +626,12 @@ export class Key {
     toObject(): object {
         var obj: any = {};
         obj.action = this.action.toObject();
-        if (!this.processByRIME)
-            obj.processByRIME = this.processByRIME;
-        if (!this.autoLandscape && this.landscape === 0
-            || this.autoWidth && this.autoLandscape
-            || !this.autoWidth && !this.autoLandscape && this.width === this.landscape) {
+        if (!this.processByRIME) obj.processByRIME = this.processByRIME;
+        if (
+            (!this.autoLandscape && this.landscape === 0) ||
+            (this.autoWidth && this.autoLandscape) ||
+            (!this.autoWidth && !this.autoLandscape && this.width === this.landscape)
+        ) {
             obj.width = this.autoWidth ? "available" : `percentage(${this.width / 100})`;
         } else {
             obj.width = {
@@ -642,7 +644,7 @@ export class Key {
                 obj.label = {
                     text: this.label,
                     loadingText: this.loading,
-                }
+                };
             } else {
                 obj.label = this.label;
             }
@@ -662,13 +664,14 @@ export class Key {
     }
 
     toObjectV2(): object {
-        var obj: any = {}
+        var obj: any = {};
         obj.action = this.action.toObjectV2();
-        if (!this.processByRIME)
-            obj.processByRIME = this.processByRIME;
-        if (!this.autoLandscape && this.landscape === 0
-            || this.autoWidth && this.autoLandscape
-            || !this.autoWidth && !this.autoLandscape && this.width === this.landscape) {
+        if (!this.processByRIME) obj.processByRIME = this.processByRIME;
+        if (
+            (!this.autoLandscape && this.landscape === 0) ||
+            (this.autoWidth && this.autoLandscape) ||
+            (!this.autoWidth && !this.autoLandscape && this.width === this.landscape)
+        ) {
             obj.width = this.autoWidth ? "available" : { percentage: this.width / 100 };
         } else {
             obj.width = {
@@ -700,7 +703,7 @@ export class Key {
         if (this.callout.length > 0) {
             obj.callout = this.callout.map((callout) => callout.toObjectV2());
         }
-        return obj
+        return obj;
     }
 
     clone(): Key {
@@ -715,7 +718,7 @@ export class Key {
         key.swipe = this.swipe.map((swipe) => swipe.clone()) as [Swipe, Swipe, Swipe, Swipe];
         return key;
     }
-};
+}
 
 /** 按鍵行属性 */
 export class Row {
@@ -751,7 +754,7 @@ export class Row {
             obj.rowHeight = {
                 portrait: this.rowHeight,
                 landscape: this.landscapeHeight,
-            }
+            };
         } else if (this.rowHeight > 0) {
             obj.rowHeight = this.rowHeight;
         }
@@ -759,7 +762,7 @@ export class Row {
     }
 
     toObjectV2(): object {
-        var obj: any = {}
+        var obj: any = {};
         obj.keys = this.keys.map((key) => key.toObjectV2());
         if (this.landscapeHeight > 0 && this.landscapeHeight !== this.rowHeight) {
             obj.rowHeight = {
@@ -769,7 +772,7 @@ export class Row {
         } else if (this.rowHeight > 0) {
             obj.rowHeight = this.rowHeight;
         }
-        return obj
+        return obj;
     }
 
     clone(): Row {
@@ -779,7 +782,7 @@ export class Row {
         row.landscapeHeight = this.landscapeHeight;
         return row;
     }
-};
+}
 
 /** 鍵盤属性 */
 export class Keyboard {
@@ -791,7 +794,7 @@ export class Keyboard {
 
     fromObject(obj: any) {
         if (obj && typeof obj === "object") {
-            this.name = typeof obj.name === "string" ? this.name = obj.name : "鍵盤";
+            this.name = typeof obj.name === "string" ? (this.name = obj.name) : "鍵盤";
             this.primary = obj.isPrimary ? true : false;
             this.buttonInsets.fromObject(obj.buttonInsets);
             this.rows = [];
@@ -817,12 +820,12 @@ export class Keyboard {
     }
 
     toObjectV2(): object {
-        var obj: any = {}
+        var obj: any = {};
         obj.name = this.name;
         obj.isPrimary = this.primary;
         obj.rows = this.rows.map((row) => row.toObjectV2());
         obj.buttonInsets = this.buttonInsets.toObjectV2();
-        return obj
+        return obj;
     }
 
     clone(): Keyboard {
@@ -833,4 +836,4 @@ export class Keyboard {
         keyboard.buttonInsets = this.buttonInsets.clone();
         return keyboard;
     }
-};
+}

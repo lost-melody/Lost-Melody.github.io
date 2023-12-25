@@ -40,7 +40,7 @@ export function loadSchemas(key: string): ColorSchema[] | null {
         try {
             let objList = YAML.parse(recoveryData);
             colorSchemas = (objList as object[]).map((obj) => {
-                var schema = new ColorSchema;
+                var schema = new ColorSchema();
                 schema.fromObject(obj);
                 return schema;
             });

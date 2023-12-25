@@ -32,25 +32,15 @@
 
     <span class="p-1 m-auto rounded-md variant-soft"> 一個下載頁 </span>
     <div class="btn-group variant-ghost m-auto">
-        <a
-            target="_blank"
-            href="https://github.com/lost-melody/rime-smyh"
-            class="gap-1"
-        >
+        <a target="_blank" href="https://github.com/lost-melody/rime-smyh" class="gap-1">
             <Icon icon="mdi:github" />
             倉庫
         </a>
-        <a
-            target="_blank"
-            href="https://lost-melody.github.io/rime-smyh"
-            class="gap-1"
-        >
+        <a target="_blank" href="https://lost-melody.github.io/rime-smyh" class="gap-1">
             <Icon icon="mdi:download" />
             雞蛋餅
         </a>
     </div>
 
-    <span class="p-1 m-auto rounded-md variant-soft">
-        餘下的, 需要時間來慢慢長大...
-    </span>
+    <span class="p-1 m-auto rounded-md variant-soft"> 餘下的, 需要時間來慢慢長大... </span>
 </div>

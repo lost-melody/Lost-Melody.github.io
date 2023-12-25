@@ -60,9 +60,7 @@
         const layouts = importKeyboards(obj);
         if (layouts && layouts.length > 0) keyboardLayouts = layouts;
     };
-    const onImportYaml = (
-        event: Event & { currentTarget: EventTarget & HTMLInputElement }
-    ) => {
+    const onImportYaml = (event: Event & { currentTarget: EventTarget & HTMLInputElement }) => {
         var input = event.currentTarget;
         if (input.files && input.files.length > 0) {
             for (let file of input.files) {
@@ -80,8 +78,7 @@
         }
     };
 
-    const classNames =
-        "h-8 w-full p-2 gap-2 flex items-center rounded-md hover:variant-ghost";
+    const classNames = "h-8 w-full p-2 gap-2 flex items-center rounded-md hover:variant-ghost";
 </script>
 
 <div class="w-full gap-2 flex flex-col">
@@ -108,30 +105,17 @@
         class={classNames}>複製佈局代碼·V2</IconButton
     >
     <!-- export -->
-    <IconButton
-        title="導出配色文件"
-        icon="mdi:export"
-        on:click={exportColorSchemas}
-        class={classNames}>導出配色文件</IconButton
+    <IconButton title="導出配色文件" icon="mdi:export" on:click={exportColorSchemas} class={classNames}
+        >導出配色文件</IconButton
     >
-    <IconButton
-        title="導出佈局文件"
-        icon="mdi:export"
-        on:click={exportKeyboardLayouts}
-        class={classNames}>導出佈局文件</IconButton
+    <IconButton title="導出佈局文件" icon="mdi:export" on:click={exportKeyboardLayouts} class={classNames}
+        >導出佈局文件</IconButton
     >
-    <IconButton
-        title="導出佈局文件·V2"
-        icon="mdi:export"
-        on:click={exportKeyboardLayoutsV2}
-        class={classNames}>導出佈局文件·V2</IconButton
+    <IconButton title="導出佈局文件·V2" icon="mdi:export" on:click={exportKeyboardLayoutsV2} class={classNames}
+        >導出佈局文件·V2</IconButton
     >
     <!-- import -->
-    <IconButton
-        title="導入配色或佈局文件"
-        icon="mdi:export"
-        on:click={onClickImport}
-        class={classNames}
+    <IconButton title="導入配色或佈局文件" icon="mdi:export" on:click={onClickImport} class={classNames}
         >導入配色或佈局文件
         <div class="w-0 h-0 overflow-hidden">
             <input

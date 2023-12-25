@@ -11,19 +11,13 @@
     /** 上移按鍵行 */
     function moveRowUp(index: number): void {
         if (index > 0) {
-            [layout.rows[index], layout.rows[index - 1]] = [
-                layout.rows[index - 1],
-                layout.rows[index],
-            ];
+            [layout.rows[index], layout.rows[index - 1]] = [layout.rows[index - 1], layout.rows[index]];
         }
     }
     /** 下移按鍵行 */
     function moveRowDown(index: number): void {
         if (index + 1 < layout.rows.length) {
-            [layout.rows[index], layout.rows[index + 1]] = [
-                layout.rows[index + 1],
-                layout.rows[index],
-            ];
+            [layout.rows[index], layout.rows[index + 1]] = [layout.rows[index + 1], layout.rows[index]];
         }
     }
 
@@ -44,10 +38,7 @@
         const count = Number((event.currentTarget as HTMLInputElement).value);
         const length = layout.rows[indexRow].keys.length;
         if (length > count) {
-            layout.rows[indexRow].keys = layout.rows[indexRow].keys.slice(
-                0,
-                count,
-            );
+            layout.rows[indexRow].keys = layout.rows[indexRow].keys.slice(0, count);
         } else if (length < count) {
             layout.rows[indexRow].keys = [
                 ...layout.rows[indexRow].keys,
@@ -62,9 +53,7 @@
 <div class="w-full p-2 flex flex-col rounded-md variant-soft">
     <!-- 佈局名稱 -->
     <div class="w-full p-2 rounded-md hover:variant-ghost">
-        <div
-            class="w-full p-2 gap-2 flex items-center rounded-md hover:variant-ghost"
-        >
+        <div class="w-full p-2 gap-2 flex items-center rounded-md hover:variant-ghost">
             <Icon icon="mdi:rename-box" />
             <span class="grow shrink"> 佈局名稱 </span>
             <input
@@ -76,9 +65,7 @@
             />
         </div>
         <IconButton
-            icon={layout.primary
-                ? "mdi:checkbox-marked-outline"
-                : "mdi:checkbox-blank-outline"}
+            icon={layout.primary ? "mdi:checkbox-marked-outline" : "mdi:checkbox-blank-outline"}
             on:click={() => {
                 layout.primary = !layout.primary;
             }}

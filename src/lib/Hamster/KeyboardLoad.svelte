@@ -13,13 +13,7 @@
 
     $: display = !opMode
         ? name
-        : `${
-              opMode === modeRemove
-                  ? "删除"
-                  : opMode === modeOverride
-                  ? "覆蓋"
-                  : "加載"
-          }中, 點擊取消`;
+        : `${opMode === modeRemove ? "删除" : opMode === modeOverride ? "覆蓋" : "加載"}中, 點擊取消`;
 
     /** 延遲作業 */
     function delay(f: () => void) {
@@ -111,11 +105,7 @@
             on:click={tryOverride}
             class="p-1 rounded-full hover:variant-ringed flex items-center"
         >
-            <Icon
-                icon={opMode === modeOverride
-                    ? "mdi:cancel"
-                    : "mdi:content-save"}
-            />
+            <Icon icon={opMode === modeOverride ? "mdi:cancel" : "mdi:content-save"} />
         </button>
     {/if}
 </div>

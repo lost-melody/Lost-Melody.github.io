@@ -10,11 +10,11 @@ function asString(obj: any, defaultValue?: string): string {
         // 數字轉字符串: 0xabcdef => "0xabcdef"
         obj = "0x" + obj.toString(16);
     }
-    return typeof obj === "string" ? obj : (defaultValue || "");
+    return typeof obj === "string" ? obj : defaultValue || "";
 }
 
 function asNumber(obj: any, defaultValue?: number): number {
-    return typeof obj === "number" ? obj : (defaultValue || 0);
+    return typeof obj === "number" ? obj : defaultValue || 0;
 }
 
 export class Color {
@@ -54,8 +54,8 @@ export class Color {
     fromAbgr(abgr: string): void {
         const matcher = /^0x([0-9a-fA-F]{2})?([0-9a-fA-F]{6})$/;
         var res = matcher.exec(abgr);
-        this.alpha = parseInt(res && res[1] || "FF", 16);
-        var bgr = res && res[2] || "000000";
+        this.alpha = parseInt((res && res[1]) || "FF", 16);
+        var bgr = (res && res[2]) || "000000";
         this.color = "#" + bgr.slice(4, 6) + bgr.slice(2, 4) + bgr.slice(0, 2);
     }
 }
@@ -86,11 +86,13 @@ export class ColorSchema {
     /** 劃動字體大小 */
     swipe_font_size: number = 0;
     /** 按鍵圓角 */
-    corner_radius: number = 5;
+    corner_radius: number = 0;
     /** 按鍵邊框 */
     border_color: Color = new Color("#000000");
     /** 預編輯文本 */
     text_color: Color = new Color("#000000");
+    /** 按鍵陰影 */
+    lower_edge_col: Color = new Color("#000000");
     /** 首選背景 */
     hilited_candidate_back_color: Color = new Color("#ffffff");
     /** 首選文本 */
@@ -117,11 +119,12 @@ export class ColorSchema {
             button_foreground_color: this.button_front_color.abgr(),
             button_pressed_foreground_color: this.button_pressed_front_color.abgr(),
             button_swipe_foreground_color: this.button_swipe_front_color.abgr(),
-            font_size: this.font_size || undefined,
-            swipe_font_size: this.swipe_font_size || undefined,
+            font_size: this.font_size,
+            swipe_font_size: this.swipe_font_size,
             corner_radius: this.corner_radius,
             border_color: this.border_color.abgr(),
             text_color: this.text_color.abgr(),
+            lower_edge_col: this.lower_edge_col.abgr(),
             hilited_candidate_back_color: this.hilited_candidate_back_color.abgr(),
             hilited_candidate_text_color: this.hilited_candidate_text_color.abgr(),
             hilited_candidate_label_color: this.hilited_candidate_label_color.abgr(),
@@ -141,7 +144,11 @@ export class ColorSchema {
             this.back_color.fromAbgr(asString(obj.back_color, "0xffffff"));
             this.button_back_color.fromAbgr(asString(obj.button_back_color, "0xffffff"));
             this.button_pressed_back_color.fromAbgr(asString(obj.button_pressed_back_color, "0xD0D0D0"));
-            if (obj.button_foreground_color || obj.button_pressed_foreground_color || obj.button_swipe_foreground_color) {
+            if (
+                obj.button_foreground_color ||
+                obj.button_pressed_foreground_color ||
+                obj.button_swipe_foreground_color
+            ) {
                 this.button_front_color.fromAbgr(asString(obj.button_foreground_color, "0x000000"));
                 this.button_pressed_front_color.fromAbgr(asString(obj.button_pressed_foreground_color, "0x000000"));
                 this.button_swipe_front_color.fromAbgr(asString(obj.button_swipe_foreground_color, "0x000000"));
@@ -155,6 +162,7 @@ export class ColorSchema {
             this.corner_radius = asNumber(obj.corner_radius, 5);
             this.border_color.fromAbgr(asString(obj.border_color, "0x000000"));
             this.text_color.fromAbgr(asString(obj.text_color, "0x000000"));
+            this.lower_edge_col.fromAbgr(asString(obj.lower_edge_col, "0x000000"));
             this.hilited_candidate_back_color.fromAbgr(asString(obj.hilited_candidate_back_color, "0xffffff"));
             this.hilited_candidate_text_color.fromAbgr(asString(obj.hilited_candidate_text_color, "0x000000"));
             this.hilited_candidate_label_color.fromAbgr(asString(obj.hilited_candidate_label_color, "0x000000"));
@@ -181,6 +189,7 @@ export class ColorSchema {
         schema.corner_radius = this.corner_radius;
         schema.border_color = this.border_color.clone();
         schema.text_color = this.text_color.clone();
+        schema.lower_edge_col = this.lower_edge_col.clone();
         schema.hilited_candidate_back_color = this.hilited_candidate_back_color.clone();
         schema.hilited_candidate_text_color = this.hilited_candidate_text_color.clone();
         schema.hilited_candidate_label_color = this.hilited_candidate_label_color.clone();
@@ -189,5 +198,74 @@ export class ColorSchema {
         schema.comment_text_color = this.comment_text_color.clone();
         schema.label_color = this.label_color.clone();
         return schema;
+    }
+}
+
+export class KeyStyle {
+    id: number = newId();
+    name: string = "name";
+    buttonBackgroundColor: Color = new Color();
+    pressedButtonBackgroundColor: Color = new Color();
+    buttonForegroundColor: Color = new Color();
+    pressedButtonForegroundColor: Color = new Color();
+    swipeForegroundColor: Color = new Color();
+    pressedSwipeForegroundColor: Color = new Color();
+    cornerRadius?: number;
+    borderSize?: number;
+    borderColor: Color = new Color();
+    lowerEdgeColor: Color = new Color();
+    fontSize?: number;
+    swipeFontSize?: number;
+
+    toObject(): object {
+        var obj: any = {};
+        obj.buttonBackgroundColor = this.buttonBackgroundColor.abgr();
+        obj.pressedButtonBackgroundColor = this.pressedButtonBackgroundColor.abgr();
+        obj.buttonForegroundColor = this.buttonForegroundColor.abgr();
+        obj.pressedButtonForegroundColor = this.pressedButtonForegroundColor.abgr();
+        obj.swipeForegroundColor = this.swipeForegroundColor.abgr();
+        obj.pressedSwipeForegroundColor = this.pressedSwipeForegroundColor.abgr();
+        obj.cornerRadius = this.cornerRadius;
+        obj.borderSize = this.borderSize;
+        obj.borderColor = this.borderColor.abgr();
+        obj.lowerEdgeColor = this.lowerEdgeColor.abgr();
+        obj.fontSize = this.fontSize;
+        obj.swipeFontSize = this.swipeFontSize;
+        return obj;
+    }
+
+    fromObject(obj: any): void {
+        if (obj && typeof obj === "object") {
+            this.name = asString(obj.name, "name");
+            this.buttonBackgroundColor.fromAbgr(asString(obj.buttonBackgroundColor, "0xffffff"));
+            this.pressedButtonBackgroundColor.fromAbgr(asString(obj.pressedButtonBackgroundColor, "0xd0d0d0"));
+            this.buttonForegroundColor.fromAbgr(asString(obj.buttonForegroundColor, "0x000000"));
+            this.pressedButtonForegroundColor.fromAbgr(asString(obj.pressedButtonForegroundColor, "0x000000"));
+            this.swipeForegroundColor.fromAbgr(asString(obj.swipeForegroundColor, "0x000000"));
+            this.pressedSwipeForegroundColor.fromAbgr(asString(obj.pressedSwipeForegroundColor, "0x000000"));
+            this.cornerRadius = asNumber(obj.cornerRadius) || undefined;
+            this.borderSize = asNumber(obj.borderSize) || undefined;
+            this.borderColor.fromAbgr(asString(obj.borderColor, "0x000000"));
+            this.lowerEdgeColor.fromAbgr(asString(obj.lowerEdgeColor, "0x000000"));
+            this.fontSize = asNumber(obj.fontSize) || undefined;
+            this.swipeFontSize = asNumber(obj.swipeFontSize) || undefined;
+        }
+    }
+
+    clone(): KeyStyle {
+        var keyStyle = new KeyStyle();
+        keyStyle.name = this.name;
+        keyStyle.buttonBackgroundColor = this.buttonBackgroundColor.clone();
+        keyStyle.pressedButtonBackgroundColor = this.pressedButtonBackgroundColor.clone();
+        keyStyle.buttonForegroundColor = this.buttonForegroundColor.clone();
+        keyStyle.pressedButtonForegroundColor = this.pressedButtonForegroundColor.clone();
+        keyStyle.swipeForegroundColor = this.swipeForegroundColor.clone();
+        keyStyle.pressedSwipeForegroundColor = this.pressedSwipeForegroundColor.clone();
+        keyStyle.cornerRadius = this.cornerRadius;
+        keyStyle.borderSize = this.borderSize;
+        keyStyle.lowerEdgeColor = this.lowerEdgeColor.clone();
+        keyStyle.fontSize = this.fontSize;
+        keyStyle.swipeFontSize = this.swipeFontSize;
+        return keyStyle;
     }
 }

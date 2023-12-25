@@ -3,8 +3,7 @@
 
     export var profile: Profile;
     var target = profile.github !== "" ? "_blank" : "_self";
-    var href =
-        profile.github !== "" ? "https://github.com/" + profile.github : "/";
+    var href = profile.github !== "" ? "https://github.com/" + profile.github : "/";
     var src = profile.avatar;
     var labels = profile.labels;
     var badges = profile.badges;

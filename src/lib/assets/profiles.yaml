@@ -1,8 +1,8 @@
 profiles:
   - github: lost-melody
     avatar: https://avatars.githubusercontent.com/u/32810294
-    labels: [ Lost Melody, 王牌餅乾 ]
-    badges: [ CTF, DLUT ]
+    labels: [Lost Melody, 王牌餅乾]
+    badges: [CTF, DLUT]
     desc:
       - Go語言後端工程師
       - 雞蛋餅輸入法開發者
@@ -16,9 +16,9 @@ profiles:
         address: https://github.com/lost-melody/rime-smyh
   - github: forfudan
     avatar: https://zhuyuhao.com/img/zhuyuhao.jpg
-    labels: [ forFudan, 夢澤閑客]
-    badges: [ 金融學博士, 復旦大學 ]
-    desc: [ 宇浩輸入法作者, 標準上海話簡明教程作者 ]
+    labels: [forFudan, 夢澤閑客]
+    badges: [金融學博士, 復旦大學]
+    desc: [宇浩輸入法作者, 標準上海話簡明教程作者]
     links:
       - label: 主頁
         address: https://zhuyuhao.com
@@ -28,8 +28,8 @@ profiles:
         address: https://www.zhihu.com/column/c_1621352649865043968
   - github: loora1n
     avatar: https://avatars.githubusercontent.com/u/102774816
-    labels: [ Loora1N, 鷺雨 ]
-    badges: [ Scr1w隧長, CTF, DLUT ]
+    labels: [Loora1N, 鷺雨]
+    badges: [Scr1w隧長, CTF, DLUT]
     desc:
       - PWN🖐️ from @DLUT
       - Scr1w, Double-S, 大吉北！
@@ -40,8 +40,8 @@ profiles:
         address: https://loora1n.github.io
   - github: Ephemeral1y
     avatar: https://ephemerally.top/icon/icon.jpg
-    labels: [ Ephemeral1y, 時光旅人 ]
-    badges: [ CTF, DLUT, Scr1w前隊長 ]
+    labels: [Ephemeral1y, 時光旅人]
+    badges: [CTF, DLUT, Scr1w前隊長]
     desc:
       - Web🖐️ of Scr1w
       - Computer Architecture Security
@@ -53,8 +53,8 @@ profiles:
         address: https://github.com/Ephemeral1y
   - github: sch01ar
     avatar: https://sch01ar.github.io/img/yy.jpg
-    labels: [ ROOK1EY, yy ]
-    badges: [ CTF, DLUT ]
+    labels: [ROOK1EY, yy]
+    badges: [CTF, DLUT]
     desc:
       - Amateur CTF player in Scr1w
       - Focus on Crypto

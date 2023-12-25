@@ -18,15 +18,10 @@
     };
 </script>
 
-<div
-    style:background-color={schema.back_color.rgba()}
-    class="w-full rounded-md backdrop-blur"
->
+<div style:background-color={schema.back_color.rgba()} class="w-full rounded-md backdrop-blur">
     <!-- preedit -->
     <div class="w-full px-2">
-        <span style:color={schema.text_color.rgba()} class="text-xs">
-            shouxuan
-        </span>
+        <span style:color={schema.text_color.rgba()} class="text-xs"> shouxuan </span>
     </div>
     <!-- candidates -->
     <div class="w-full px-2 gap-2 flex items-center">
@@ -35,15 +30,11 @@
                 style:color={index === 0
                     ? schema.hilited_candidate_text_color.rgba()
                     : schema.candidate_text_color.rgba()}
-                style:background-color={index === 0
-                    ? schema.hilited_candidate_back_color.rgba()
-                    : undefined}
+                style:background-color={index === 0 ? schema.hilited_candidate_back_color.rgba() : undefined}
                 class="px-1 rounded-md text-lg"
             >
                 <span
-                    style:color={index == 0
-                        ? schema.hilited_candidate_label_color.rgba()
-                        : schema.label_color.rgba()}
+                    style:color={index == 0 ? schema.hilited_candidate_label_color.rgba() : schema.label_color.rgba()}
                 >
                     {index + 1}.
                 </span>
@@ -60,17 +51,13 @@
         {/each}
         <span class="grow" />
         <button
-            title={(landscape ? "預覽: 横屏" : "預覽: 竪屏") +
-                "\n注: 行高和鍵寛的配置值在横竪屏模式下是各自獨立的"}
+            title={(landscape ? "預覽: 横屏" : "預覽: 竪屏") + "\n注: 行高和鍵寛的配置值在横竪屏模式下是各自獨立的"}
             on:click={() => {
                 landscape = !landscape;
             }}
             style:color={schema.comment_text_color.rgba()}
         >
-            <Icon
-                height="20"
-                icon={landscape ? "mdi:crop-landscape" : "mdi:crop-portrait"}
-            />
+            <Icon height="20" icon={landscape ? "mdi:crop-landscape" : "mdi:crop-portrait"} />
         </button>
         <button
             title={sticky ? "已置頂" : "未置頂"}
@@ -84,12 +71,7 @@
     </div>
     <!-- keyboard layout -->
     {#each keyboard.rows as row, indexRow (row.id)}
-        <div
-            style:height={`${
-                landscape ? row.landscapeHeight || 56 : row.rowHeight || 56
-            }px`}
-            class="w-full flex"
-        >
+        <div style:height={`${landscape ? row.landscapeHeight || 56 : row.rowHeight || 56}px`} class="w-full flex">
             {#each row.keys as key, indexKey (key.id)}
                 <KeyPreview
                     {landscape}
@@ -97,8 +79,7 @@
                     {row}
                     {key}
                     insets={keyboard.buttonInsets}
-                    selected={selected.row === indexRow &&
-                        selected.col === indexKey}
+                    selected={selected.row === indexRow && selected.col === indexKey}
                     on:clicked={() => {
                         onClick(indexRow, indexKey);
                     }}

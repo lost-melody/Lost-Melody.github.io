@@ -1,6 +1,8 @@
 <script lang="ts">
     import type { LayoutData } from "./$types";
     import { browser } from "$app/environment";
+    import { setContext } from "svelte";
+    import { writable } from "svelte/store";
     import { localStorageStore } from "@skeletonlabs/skeleton";
     import "../app.postcss";
     import { page } from "$app/stores";
@@ -36,6 +38,8 @@
     };
     /** 主題選擇控件綁定值 */
     var theme = localStorageStore("theme", "skeleton", { serializer });
+    /** 暗色模式監聽值 */
+    var darkMode = setContext("darkMode", writable(false));
     // 設置頁面主題
     $: if (browser) {
         let attr = document.body.attributes.getNamedItem("data-theme");
@@ -64,6 +68,13 @@
             closeNavigator();
         }
     };
+    const updateDarkMode = () => {
+        var elements = document.getElementsByTagName("html");
+        for (let html of elements) {
+            $darkMode = html.classList.contains("dark");
+        }
+    };
+    if (browser) updateDarkMode();
 </script>
 
 <svelte:head>
@@ -77,22 +88,10 @@
 <!-- 彈出導航欄 -->
 {#if showNavigator}
     <!-- 背景 -->
-    <div
-        bind:this={navigatorBackground}
-        transition:fade
-        class="z-20 fixed w-full h-full top-0 left-0 backdrop-blur"
-    >
+    <div bind:this={navigatorBackground} transition:fade class="z-20 fixed w-full h-full top-0 left-0 backdrop-blur">
         <!-- 導航區域 -->
-        <div
-            transition:fly={{ y: -32 }}
-            class="fixed top-14 left-2 p-4 rounded-md variant-ghost backdrop-blur"
-        >
-            <Navigation
-                bind:theme={$theme}
-                {navigations}
-                {themes}
-                on:navigate={closeNavigator}
-            />
+        <div transition:fly={{ y: -32 }} class="fixed top-14 left-2 p-4 rounded-md variant-ghost backdrop-blur">
+            <Navigation bind:theme={$theme} {navigations} {themes} on:navigate={closeNavigator} />
         </div>
     </div>
 {/if}
@@ -102,10 +101,7 @@
     <div class="h-12 flex p-2 gap-2 variant-soft backdrop-blur z-30">
         <!-- 左側動作按鈕 -->
         <div class="flex gap-1 justify-center items-center">
-            <button
-                class="btn-icon btn-icon-sm variant-ghost"
-                on:click={switchNavigator}
-            >
+            <button class="btn-icon btn-icon-sm variant-ghost" on:click={switchNavigator}>
                 <Icon icon="mdi:menu" />
             </button>
             <a href="/" class="btn-icon btn-icon-sm variant-ghost">
@@ -122,7 +118,7 @@
 
         <!-- 右側動作按鈕 -->
         <div class="flex gap-1 justify-center items-center">
-            <LightSwitch width="w-14" height="h-7" class="variant-ghost" />
+            <LightSwitch on:click={updateDarkMode} width="w-14" height="h-7" class="variant-ghost" />
             <a
                 class="btn-icon btn-icon-sm variant-ghost"
                 target="_blank"

@@ -43,7 +43,7 @@ export function loadKeyboards(key: string): Keyboard[] | null {
         try {
             let objList = YAML.parse(recoveryData);
             colorSchemes = (objList as object[]).map((obj) => {
-                var scheme = new Keyboard;
+                var scheme = new Keyboard();
                 scheme.fromObject(obj);
                 return scheme;
             });
@@ -51,7 +51,7 @@ export function loadKeyboards(key: string): Keyboard[] | null {
             console.warn("failed to load recovery data:", (err as Error).message);
         }
     }
-    return colorSchemes
+    return colorSchemes;
 }
 
 export function saveKeyboards(key: string, layouts: Keyboard[]) {

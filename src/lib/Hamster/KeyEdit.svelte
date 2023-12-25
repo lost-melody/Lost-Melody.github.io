@@ -60,19 +60,13 @@
     /** 上移長按動作 */
     function moveCalloutUp(index: number): void {
         if (index > 0) {
-            [key.callout[index], key.callout[index - 1]] = [
-                key.callout[index - 1],
-                key.callout[index],
-            ];
+            [key.callout[index], key.callout[index - 1]] = [key.callout[index - 1], key.callout[index]];
         }
     }
     /** 下移長按動作 */
     function moveCalloutDown(index: number): void {
         if (index + 1 < key.callout.length) {
-            [key.callout[index], key.callout[index + 1]] = [
-                key.callout[index + 1],
-                key.callout[index],
-            ];
+            [key.callout[index], key.callout[index + 1]] = [key.callout[index + 1], key.callout[index]];
         }
     }
 </script>
@@ -80,9 +74,7 @@
 <!-- 劃動配置 -->
 <div class="flex flex-col gap-1">
     <!-- 鍵寛和鍵值編輯區 -->
-    <div
-        class="flex flex-col p-2 gap-1 rounded-md hover:variant-ghost items-center"
-    >
+    <div class="flex flex-col p-2 gap-1 rounded-md hover:variant-ghost items-center">
         <div class="flex w-full p-1 gap-1">
             <Icon height="20" icon="mdi:gesture-touch" />
             <input
@@ -96,10 +88,7 @@
                 on:click={() => (key.processByRIME = !key.processByRIME)}
                 class="rounded-full p-1 hover:variant-soft"
             >
-                <Icon
-                    height="20"
-                    icon={key.processByRIME ? "mdi:web" : "mdi:web-off"}
-                />
+                <Icon height="20" icon={key.processByRIME ? "mdi:web" : "mdi:web-off"} />
             </button>
         </div>
         <ActionEdit bind:action={key.action} bind:clipAction />
@@ -114,9 +103,7 @@
     </div>
 
     {#each [2, 1, 0, 3] as index (key.swipe[index].id)}
-        <div
-            class="flex flex-col p-2 gap-1 rounded-md hover:variant-ghost items-center"
-        >
+        <div class="flex flex-col p-2 gap-1 rounded-md hover:variant-ghost items-center">
             {#if key.swipe[index].action.type === ActionType.none}
                 <div class="flex w-full p-1 gap-1">
                     <Icon height="20" icon={icons[index]} />
@@ -142,38 +129,21 @@
                     <!-- 經由 rime 處理 -->
                     <button
                         title="劃動是否經由 Rime 處理"
-                        on:click={() =>
-                            (key.swipe[index].processByRIME =
-                                !key.swipe[index].processByRIME)}
+                        on:click={() => (key.swipe[index].processByRIME = !key.swipe[index].processByRIME)}
                         class="rounded-full p-1 hover:variant-soft"
                     >
-                        <Icon
-                            height="20"
-                            icon={key.swipe[index].processByRIME
-                                ? "mdi:web"
-                                : "mdi:web-off"}
-                        />
+                        <Icon height="20" icon={key.swipe[index].processByRIME ? "mdi:web" : "mdi:web-off"} />
                     </button>
                     <!-- 顯示劃動 -->
                     <button
                         title="是否顯示此劃動"
-                        on:click={() =>
-                            (key.swipe[index].display =
-                                !key.swipe[index].display)}
+                        on:click={() => (key.swipe[index].display = !key.swipe[index].display)}
                         class="rounded-full p-1 hover:variant-soft"
                     >
-                        <Icon
-                            height="20"
-                            icon={key.swipe[index].display
-                                ? "mdi:eye"
-                                : "mdi:eye-off"}
-                        />
+                        <Icon height="20" icon={key.swipe[index].display ? "mdi:eye" : "mdi:eye-off"} />
                     </button>
                 </div>
-                <ActionEdit
-                    bind:action={key.swipe[index].action}
-                    bind:clipAction
-                />
+                <ActionEdit bind:action={key.swipe[index].action} bind:clipAction />
             {/if}
         </div>
     {/each}
@@ -191,9 +161,7 @@
             class="p-2 gap-1 flex items-center rounded-md hover:variant-ghost"
         />
         {#each key.callout as callout, index (callout.id)}
-            <div
-                class="flex flex-col p-2 gap-1 rounded-md hover:variant-ghost items-center"
-            >
+            <div class="flex flex-col p-2 gap-1 rounded-md hover:variant-ghost items-center">
                 <div class="flex w-full p-1 gap-1">
                     <Icon height="20" icon="mdi:message-outline" />
                     <input
@@ -225,9 +193,7 @@
     </details>
 
     <!-- 按鍵動作按鈕 -->
-    <div
-        class="max-w-full p-1 gap-1 flex mx-auto overflow-auto rounded-md hover:variant-ghost"
-    >
+    <div class="max-w-full p-1 gap-1 flex mx-auto overflow-auto rounded-md hover:variant-ghost">
         <button
             title="在鍵盤中删除此按鍵"
             on:click={delKey}
@@ -255,9 +221,7 @@
         >
             <Icon
                 height="20"
-                icon={(landscape ? key.autoLandscape : key.autoWidth)
-                    ? "mdi:table-sync"
-                    : "mdi:table-remove"}
+                icon={(landscape ? key.autoLandscape : key.autoWidth) ? "mdi:table-sync" : "mdi:table-remove"}
             />
         </button>
         {#if landscape}

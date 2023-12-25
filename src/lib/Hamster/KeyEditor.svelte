@@ -9,18 +9,11 @@
     var clipKey: Key;
     var clipAction: Action;
     var selectedKey: Key = new Key();
-    $: if (selectedValid(selected, layout))
-        selectedKey = layout.rows[selected.row].keys[selected.col] || new Key();
+    $: if (selectedValid(selected, layout)) selectedKey = layout.rows[selected.row].keys[selected.col] || new Key();
 
     /** 判定當前坐標是否有效 */
-    function selectedValid(
-        selected: { row: number; col: number },
-        layout: Keyboard
-    ): boolean {
-        return (
-            selected.row < layout.rows.length &&
-            selected.col < layout.rows[selected.row].keys.length
-        );
+    function selectedValid(selected: { row: number; col: number }, layout: Keyboard): boolean {
+        return selected.row < layout.rows.length && selected.col < layout.rows[selected.row].keys.length;
     }
 
     /** 删除按鍵 */
@@ -34,24 +27,15 @@
     function moveBtnLeft(): void {
         if (selected.col > 0 && selectedValid(selected, layout)) {
             var [i, j] = [selected.row, selected.col];
-            [layout.rows[i].keys[j], layout.rows[i].keys[j - 1]] = [
-                layout.rows[i].keys[j - 1],
-                layout.rows[i].keys[j],
-            ];
+            [layout.rows[i].keys[j], layout.rows[i].keys[j - 1]] = [layout.rows[i].keys[j - 1], layout.rows[i].keys[j]];
             selected.col--;
         }
     }
     /** 右移按鍵 */
     function moveBtnRight(): void {
-        if (
-            selectedValid(selected, layout) &&
-            selected.col < layout.rows[selected.row].keys.length - 1
-        ) {
+        if (selectedValid(selected, layout) && selected.col < layout.rows[selected.row].keys.length - 1) {
             var [i, j] = [selected.row, selected.col];
-            [layout.rows[i].keys[j], layout.rows[i].keys[j + 1]] = [
-                layout.rows[i].keys[j + 1],
-                layout.rows[i].keys[j],
-            ];
+            [layout.rows[i].keys[j], layout.rows[i].keys[j + 1]] = [layout.rows[i].keys[j + 1], layout.rows[i].keys[j]];
             selected.col++;
         }
     }

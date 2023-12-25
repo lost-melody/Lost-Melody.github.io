@@ -20,9 +20,7 @@
     }
 
     const bgBtnDisplay = (actionType: ActionType): boolean => {
-        return ![ActionType.none, ActionType.characterMargin].includes(
-            actionType,
-        );
+        return ![ActionType.none, ActionType.characterMargin].includes(actionType);
     };
     const dispatch = createEventDispatcher();
     const onClick = () => {
@@ -33,19 +31,8 @@
 <!-- key outer border -->
 <div
     style:padding={`${pt}px ${pr}px ${pb}px ${pl}px`}
-    style:width={`${
-        landscape
-            ? key.autoLandscape
-                ? 10
-                : key.landscape
-            : key.autoWidth
-              ? 10
-              : key.width
-    }%`}
-    style:height={`${
-        landscape ? row.landscapeHeight || 56 : row.rowHeight || 56
-    }px`}
-    style:border-color={`${schema.border_color.rgba()}`}
+    style:width={`${landscape ? (key.autoLandscape ? 10 : key.landscape) : key.autoWidth ? 10 : key.width}%`}
+    style:height={`${landscape ? row.landscapeHeight || 56 : row.rowHeight || 56}px`}
     class:grow={landscape ? key.autoLandscape : key.autoWidth}
     class:shrink={landscape ? key.autoLandscape : key.autoWidth}
     class:shrink-0={landscape ? !key.autoLandscape : !key.autoWidth}
@@ -59,6 +46,7 @@
             : undefined}
         style:border-radius={`${schema.corner_radius}px`}
         style:border-color={`${schema.border_color.rgba()}`}
+        style:box-shadow={bgBtnDisplay(key.action.type) ? `0 3px 3px -3px ${schema.lower_edge_col.rgba()}` : ""}
         class:border={bgBtnDisplay(key.action.type)}
         class="w-full h-full rounded-md relative"
         on:click={onClick}
@@ -79,9 +67,7 @@
         </div>
         <!-- key action -->
         <div
-            style:color={selected
-                ? schema.button_pressed_front_color.rgba()
-                : schema.button_front_color.rgba()}
+            style:color={selected ? schema.button_pressed_front_color.rgba() : schema.button_front_color.rgba()}
             style:font-size={`${schema.font_size || 16}px`}
             class="w-full h-[80%] absolute top-[20%] text-center"
         >

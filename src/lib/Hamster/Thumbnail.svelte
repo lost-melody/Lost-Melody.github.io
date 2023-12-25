@@ -6,9 +6,7 @@
     export var layout: Keyboard;
 
     const bgBtnDisplay = (actionType: ActionType): boolean => {
-        return ![ActionType.none, ActionType.characterMargin].includes(
-            actionType
-        );
+        return ![ActionType.none, ActionType.characterMargin].includes(actionType);
     };
 </script>
 
@@ -23,9 +21,7 @@
                 class:shrink-0={!key.autoWidth}
             >
                 <div
-                    style:border-color={bgBtnDisplay(key.action.type)
-                        ? schema.border_color.rgba()
-                        : ""}
+                    style:border-color={bgBtnDisplay(key.action.type) ? schema.border_color.rgba() : ""}
                     style:background-color={schema.button_back_color.rgba()}
                     class:border={bgBtnDisplay(key.action.type)}
                     class="h-full w-full rounded-sm"

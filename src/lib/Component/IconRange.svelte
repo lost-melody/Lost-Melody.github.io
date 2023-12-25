@@ -15,13 +15,6 @@
     <slot>
         <span class="grow shrink">{title}</span>
     </slot>
-    <input
-        on:change
-        {title}
-        type="range"
-        bind:value
-        {...$$restProps}
-        class="w-[30%]"
-    />
+    <input on:change {title} type="range" bind:value {...$$restProps} class="w-[30%]" />
     <span class="w-6">{value}</span>
 </div>

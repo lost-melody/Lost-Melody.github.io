@@ -81,10 +81,7 @@
         var flagged = false;
         for (let row of layout.rows) {
             for (let key of row.keys) {
-                if (
-                    key.landscape !== key.width ||
-                    key.autoLandscape !== key.autoWidth
-                ) {
+                if (key.landscape !== key.width || key.autoLandscape !== key.autoWidth) {
                     key.landscape = key.width;
                     key.autoLandscape = key.autoWidth;
                     flagged = true;
@@ -96,8 +93,7 @@
         }
     }
 
-    const classNames =
-        "p-2 gap-2 h-8 w-full flex items-center rounded-md hover:variant-ghost";
+    const classNames = "p-2 gap-2 h-8 w-full flex items-center rounded-md hover:variant-ghost";
 </script>
 
 <div class="flex flex-col gap-1">
