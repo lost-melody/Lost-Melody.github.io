@@ -261,7 +261,9 @@
                 </div>
             </div>
         {:else if editorTab === editKeyStyle}
-            <KeyStyleEdit bind:keyStyles />
+            <div transition:fly={{ duration: 250, y: -64 }} class="w-full row-start-1 col-start-1">
+                <KeyStyleEdit bind:keyStyles />
+            </div>
         {/if}
     </div>
 </div>
