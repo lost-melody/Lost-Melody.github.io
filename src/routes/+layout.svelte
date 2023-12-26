@@ -88,9 +88,16 @@
 <!-- 彈出導航欄 -->
 {#if showNavigator}
     <!-- 背景 -->
-    <div bind:this={navigatorBackground} transition:fade class="z-20 fixed w-full h-full top-0 left-0 backdrop-blur">
+    <div
+        bind:this={navigatorBackground}
+        transition:fade={{ duration: 250 }}
+        class="z-20 fixed w-full h-full top-0 left-0 backdrop-blur"
+    >
         <!-- 導航區域 -->
-        <div transition:fly={{ y: -32 }} class="fixed top-14 left-2 p-4 rounded-md variant-ghost backdrop-blur">
+        <div
+            transition:fly={{ duration: 250, y: -32 }}
+            class="fixed top-14 left-2 p-4 rounded-md variant-ghost backdrop-blur"
+        >
             <Navigation bind:theme={$theme} {navigations} {themes} on:navigate={closeNavigator} />
         </div>
     </div>

@@ -86,7 +86,7 @@ export class ColorSchema {
     /** 劃動字體大小 */
     swipe_font_size: number = 0;
     /** 按鍵圓角 */
-    corner_radius: number = 0;
+    corner_radius: number = 5;
     /** 按鍵邊框 */
     border_color: Color = new Color("#000000");
     /** 預編輯文本 */
@@ -119,8 +119,8 @@ export class ColorSchema {
             button_foreground_color: this.button_front_color.abgr(),
             button_pressed_foreground_color: this.button_pressed_front_color.abgr(),
             button_swipe_foreground_color: this.button_swipe_front_color.abgr(),
-            font_size: this.font_size,
-            swipe_font_size: this.swipe_font_size,
+            font_size: this.font_size || undefined,
+            swipe_font_size: this.swipe_font_size || undefined,
             corner_radius: this.corner_radius,
             border_color: this.border_color.abgr(),
             text_color: this.text_color.abgr(),
@@ -204,18 +204,18 @@ export class ColorSchema {
 export class KeyStyle {
     id: number = newId();
     name: string = "name";
-    buttonBackgroundColor: Color = new Color();
-    pressedButtonBackgroundColor: Color = new Color();
-    buttonForegroundColor: Color = new Color();
-    pressedButtonForegroundColor: Color = new Color();
-    swipeForegroundColor: Color = new Color();
-    pressedSwipeForegroundColor: Color = new Color();
-    cornerRadius?: number;
-    borderSize?: number;
-    borderColor: Color = new Color();
-    lowerEdgeColor: Color = new Color();
-    fontSize?: number;
-    swipeFontSize?: number;
+    buttonBackgroundColor: Color = new Color("#ffffff");
+    pressedButtonBackgroundColor: Color = new Color("#d0d0d0");
+    buttonForegroundColor: Color = new Color("#000000");
+    pressedButtonForegroundColor: Color = new Color("#000000");
+    swipeForegroundColor: Color = new Color("#000000");
+    pressedSwipeForegroundColor: Color = new Color("#000000");
+    cornerRadius: number = 5;
+    borderSize: number = 1;
+    borderColor: Color = new Color("#000000");
+    lowerEdgeColor: Color = new Color("#000000");
+    fontSize: number = 0;
+    swipeFontSize: number = 0;
 
     toObject(): object {
         var obj: any = {};
@@ -229,8 +229,8 @@ export class KeyStyle {
         obj.borderSize = this.borderSize;
         obj.borderColor = this.borderColor.abgr();
         obj.lowerEdgeColor = this.lowerEdgeColor.abgr();
-        obj.fontSize = this.fontSize;
-        obj.swipeFontSize = this.swipeFontSize;
+        obj.fontSize = this.fontSize || undefined;
+        obj.swipeFontSize = this.swipeFontSize || undefined;
         return obj;
     }
 
@@ -243,12 +243,12 @@ export class KeyStyle {
             this.pressedButtonForegroundColor.fromAbgr(asString(obj.pressedButtonForegroundColor, "0x000000"));
             this.swipeForegroundColor.fromAbgr(asString(obj.swipeForegroundColor, "0x000000"));
             this.pressedSwipeForegroundColor.fromAbgr(asString(obj.pressedSwipeForegroundColor, "0x000000"));
-            this.cornerRadius = asNumber(obj.cornerRadius) || undefined;
-            this.borderSize = asNumber(obj.borderSize) || undefined;
+            this.cornerRadius = asNumber(obj.cornerRadius, 5);
+            this.borderSize = asNumber(obj.borderSize) || 1;
             this.borderColor.fromAbgr(asString(obj.borderColor, "0x000000"));
             this.lowerEdgeColor.fromAbgr(asString(obj.lowerEdgeColor, "0x000000"));
-            this.fontSize = asNumber(obj.fontSize) || undefined;
-            this.swipeFontSize = asNumber(obj.swipeFontSize) || undefined;
+            this.fontSize = asNumber(obj.fontSize);
+            this.swipeFontSize = asNumber(obj.swipeFontSize);
         }
     }
 

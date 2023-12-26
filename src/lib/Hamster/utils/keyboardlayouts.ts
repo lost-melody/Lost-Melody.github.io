@@ -3,7 +3,7 @@ import YAML from "yaml";
 import { Keyboard } from "$lib/Hamster/model/keyboardLayout";
 
 export function exportKeyboards(layouts: Keyboard[]): string {
-    var objList = layouts.map((schema) => schema.toObject());
+    var objList = layouts.map((keyboard) => keyboard.toObject());
     return YAML.stringify({
         keyboards: objList,
     });
@@ -25,9 +25,9 @@ export function importKeyboards(obj: any): Keyboard[] | null {
         }
         if (layouts) {
             keyboardLayouts = (layouts as object[]).map((o) => {
-                var schema = new Keyboard();
-                schema.fromObject(o);
-                return schema;
+                var keyboard = new Keyboard();
+                keyboard.fromObject(o);
+                return keyboard;
             });
         }
     } catch (err) {
@@ -37,12 +37,12 @@ export function importKeyboards(obj: any): Keyboard[] | null {
 }
 
 export function loadKeyboards(key: string): Keyboard[] | null {
-    var colorSchemes: Keyboard[] | null = null;
+    var keyboards: Keyboard[] | null = null;
     var recoveryData = localStorage.getItem(key);
     if (recoveryData) {
         try {
             let objList = YAML.parse(recoveryData);
-            colorSchemes = (objList as object[]).map((obj) => {
+            keyboards = (objList as object[]).map((obj) => {
                 var scheme = new Keyboard();
                 scheme.fromObject(obj);
                 return scheme;
@@ -51,10 +51,10 @@ export function loadKeyboards(key: string): Keyboard[] | null {
             console.warn("failed to load recovery data:", (err as Error).message);
         }
     }
-    return colorSchemes;
+    return keyboards;
 }
 
 export function saveKeyboards(key: string, layouts: Keyboard[]) {
-    const objList = layouts.map((scheme) => scheme.toObjectV2());
+    const objList = layouts.map((keyboard) => keyboard.toObjectV2());
     localStorage.setItem(key, YAML.stringify(objList));
 }

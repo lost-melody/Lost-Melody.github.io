@@ -42,7 +42,7 @@
 
 <div class="flex gap-2 px-8">
     {#each colorSchemas as schema, index (schema.id)}
-        <div animate:flip transition:scale class="relative">
+        <div animate:flip={{ duration: 250 }} transition:scale={{ duration: 250 }} class="relative">
             <button
                 on:click={() => selectSchema(index)}
                 style:background-color={schema.back_color.rgba()}
