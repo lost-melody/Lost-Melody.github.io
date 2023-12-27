@@ -76,30 +76,32 @@
 <div class="flex flex-col gap-1">
     <!-- 鍵寛和鍵值編輯區 -->
     <div class="flex flex-col p-2 gap-1 rounded-md hover:variant-ghost items-center">
-        <div class="flex w-full p-1 gap-1">
+        <div class="flex w-full p-1 gap-2 items-center">
             <Icon height="20" icon="mdi:gesture-touch" />
             <input
                 title="調整按鍵顯示標籤"
                 bind:value={key.label}
                 placeholder="標籤"
-                class="px-2 grow rounded-md bg-transparent hover:variant-soft"
+                class="p-1 grow rounded-md bg-transparent variant-ringed hover:variant-ghost"
             />
             <button
                 title="是否經由 Rime 處理"
                 on:click={() => (key.processByRIME = !key.processByRIME)}
-                class="rounded-full p-1 hover:variant-soft"
+                class="hover:scale-105 active:scale-95"
             >
                 <Icon height="20" icon={key.processByRIME ? "mdi:web" : "mdi:web-off"} />
             </button>
         </div>
         <ActionEdit bind:action={key.action} bind:clipAction />
         {#if key.action.type === ActionType.space}
-            <input
-                title="調整空格鍵的加載時標籤"
-                bind:value={key.loading}
-                placeholder="加載標籤"
-                class="px-2 w-20 rounded-md bg-transparent hover:variant-soft"
-            />
+            <div class="flex w-full px-2 py-1 gap-1 items-center">
+                <input
+                    title="調整空格鍵的加載時標籤"
+                    bind:value={key.loading}
+                    placeholder="加載標籤"
+                    class="p-1 grow rounded-md bg-transparent variant-ringed hover:variant-ghost"
+                />
+            </div>
         {/if}
     </div>
 
@@ -125,7 +127,7 @@
                         title="調整劃動顯示標籤"
                         bind:value={key.swipe[index].label}
                         placeholder="標籤"
-                        class="px-2 grow rounded-md bg-transparent hover:variant-soft"
+                        class="p-1 grow rounded-md bg-transparent variant-ringed hover:variant-ghost"
                     />
                     <!-- 經由 rime 處理 -->
                     <button
@@ -163,29 +165,31 @@
         />
         {#each key.callout as callout, index (callout.id)}
             <div class="flex flex-col p-2 gap-1 rounded-md hover:variant-ghost items-center">
-                <div class="flex w-full p-1 gap-1">
+                <div class="flex w-full px-2 py-1 gap-1 items-center">
                     <Icon height="20" icon="mdi:message-outline" />
                     <input
                         title="調整長按動作標籤"
                         bind:value={callout.label}
                         placeholder="標籤"
-                        class="px-2 grow rounded-md bg-transparent hover:variant-soft"
+                        class="p-1 grow rounded-md bg-transparent variant-ringed hover:variant-ghost"
                     />
                     <IconButton
                         icon="mdi:arrow-up"
+                        height="20"
                         title="整行按鍵上移"
                         on:click={() => {
                             moveCalloutUp(index);
                         }}
-                        class="p-2 rounded-md hover:variant-ghost"
+                        class="p-2 rounded-md variant-ringed hover:variant-ghost active:scale-95"
                     />
                     <IconButton
                         icon="mdi:arrow-down"
+                        height="20"
                         title="整行按鍵下移"
                         on:click={() => {
                             moveCalloutDown(index);
                         }}
-                        class="p-2 rounded-md hover:variant-ghost"
+                        class="p-2 rounded-md variant-ringed hover:variant-ghost active:scale-95"
                     />
                 </div>
                 <ActionEdit bind:action={callout.action} bind:clipAction />

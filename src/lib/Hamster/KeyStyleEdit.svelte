@@ -36,7 +36,7 @@
                         type="text"
                         bind:value={keyStyle.name}
                         placeholder="僅大小寫字母, 需確保唯一性"
-                        class="w-[40%] px-2 bg-transparent rounded-md hover:variant-ghost"
+                        class="w-[40%] p-1 bg-transparent rounded-md variant-ringed hover:variant-ghost"
                     />
                 </div>
                 <ColorSelector title="背景" bind:color={keyStyle.buttonBackgroundColor} />

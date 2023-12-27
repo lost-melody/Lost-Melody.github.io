@@ -62,7 +62,7 @@
                 type="text"
                 bind:value={layout.name}
                 placeholder="天行鍵"
-                class="w-[50%] px-2 bg-transparent rounded-md hover:variant-ghost"
+                class="w-[50%] p-1 bg-transparent rounded-md variant-ringed hover:variant-ghost"
             />
         </div>
         <IconButton
