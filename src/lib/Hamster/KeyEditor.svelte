@@ -5,6 +5,7 @@
     export var landscape: boolean = false;
     export var layout: Keyboard;
     export var selected: { row: number; col: number };
+    export var keyStyleNames: string[];
 
     var clipKey: Key;
     var clipAction: Action;
@@ -61,6 +62,7 @@
         bind:key={selectedKey}
         bind:clipAction
         {landscape}
+        {keyStyleNames}
         on:delkey={delButton}
         on:moveleft={moveBtnLeft}
         on:moveright={moveBtnRight}

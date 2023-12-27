@@ -37,7 +37,7 @@ export function profilesFromYaml(content: string): Profile[] {
             profiles.push(profile);
         }
     } catch (e) {
-        console.error("failed to parse yaml:", (e as Error).message);
+        alert(`failed to parse yaml: ${(e as Error).message}`);
     }
     return profiles;
 }

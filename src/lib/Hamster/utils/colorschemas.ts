@@ -19,6 +19,8 @@ export function importSchemas(obj: any): ColorSchema[] | null {
             schemas = obj.keyboard.colorSchemas;
         } else if (obj && obj.Keyboard) {
             schemas = obj.Keyboard.colorSchemas;
+        } else if (obj && obj.colorSchemas) {
+            schemas = obj.colorSchemas;
         }
         if (schemas) {
             colorSchemas = (schemas as object[]).map((o) => {
@@ -28,7 +30,7 @@ export function importSchemas(obj: any): ColorSchema[] | null {
             });
         }
     } catch (err) {
-        console.warn("failed to parse file:", (err as Error).message);
+        alert(`failed to parse file: ${(err as Error).message}`);
     }
     return colorSchemas;
 }
@@ -45,7 +47,7 @@ export function loadSchemas(key: string): ColorSchema[] | null {
                 return schema;
             });
         } catch (err) {
-            console.warn("failed to load recovery data:", (err as Error).message);
+            alert(`failed to load recovery data: ${(err as Error).message}`);
         }
     }
     return colorSchemas;

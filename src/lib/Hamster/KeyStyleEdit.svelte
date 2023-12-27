@@ -30,7 +30,7 @@
             <div class="p-1 gap-1 flex flex-col">
                 <div class="w-full gap-2 flex items-center">
                     <Icon icon="mdi:rename-box" class="px-1 w-10 h-8" />
-                    <span class="grow shrink"> 樣式標識名 </span>
+                    <span class="grow shrink"> 樣式唯一標識名 </span>
                     <input
                         title="樣式標識名"
                         type="text"

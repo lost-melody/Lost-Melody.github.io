@@ -10,6 +10,7 @@
     /** 綁定的按鍵對象 */
     export var key: Key;
     export var clipAction: Action;
+    export var keyStyleNames: string[];
 
     const icons: [string, string, string, string] = [
         "mdi:gesture-swipe-left",
@@ -191,6 +192,36 @@
             </div>
         {/each}
     </details>
+
+    <!-- 按鍵樣式設置 -->
+    <div class="p-2 w-full rounded-md hover:variant-ghost">
+        <div class="w-full p-2 gap-2 flex items-center rounded-md hover:variant-ghost">
+            <Icon icon="mdi:weather-sunny" />
+            <span class="grow shrink"> 亮色樣式 </span>
+            <select
+                bind:value={key.lightStyle}
+                class="w-[50%] p-1 bg-transparent rounded-md variant-ringed hover:variant-ghost"
+            >
+                <option value="">None</option>
+                {#each keyStyleNames as name}
+                    <option value={name}>{name}</option>
+                {/each}
+            </select>
+        </div>
+        <div class="w-full p-2 gap-2 flex items-center rounded-md hover:variant-ghost">
+            <Icon icon="mdi:weather-night" />
+            <span class="grow shrink"> 暗色樣式 </span>
+            <select
+                bind:value={key.darkStyle}
+                class="w-[50%] p-1 bg-transparent rounded-md variant-ringed hover:variant-ghost"
+            >
+                <option value="">None</option>
+                {#each keyStyleNames as name}
+                    <option value={name}>{name}</option>
+                {/each}
+            </select>
+        </div>
+    </div>
 
     <!-- 按鍵動作按鈕 -->
     <div class="max-w-full p-1 gap-1 flex mx-auto overflow-auto rounded-md hover:variant-ghost">

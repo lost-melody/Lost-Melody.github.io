@@ -1,6 +1,7 @@
 import YAML from "yaml";
 
 import { Keyboard } from "$lib/Hamster/model/keyboardLayout";
+import { KeyStyle } from "$lib/Hamster/model/colorSchema";
 
 export function exportKeyboards(layouts: Keyboard[]): string {
     var objList = layouts.map((keyboard) => keyboard.toObject());
@@ -9,15 +10,24 @@ export function exportKeyboards(layouts: Keyboard[]): string {
     });
 }
 
-export function exportKeyboardsV2(layouts: Keyboard[]): string {
-    var objList = layouts.map((schema) => schema.toObjectV2());
+export function exportKeyboardsV2(layouts: Keyboard[], keyStyles?: KeyStyle[]): string {
+    var objList = layouts.map((keyboard) => keyboard.toObjectV2());
+    var stylesMap: { [name: string]: object } | undefined;
+    if (keyStyles) {
+        stylesMap = {};
+        for (let style of keyStyles) {
+            stylesMap[style.name] = style.toObject();
+        }
+    }
     return YAML.stringify({
+        customKeyStyles: stylesMap,
         keyboards: objList,
     });
 }
 
-export function importKeyboards(obj: any): Keyboard[] | null {
+export function importKeyboards(obj: any): { keyboardLayouts: Keyboard[] | null; keyStyles: KeyStyle[] | null } {
     var keyboardLayouts: Keyboard[] | null = null;
+    var keyStyles: KeyStyle[] | null = null;
     try {
         let layouts;
         if (obj && obj.keyboards) {
@@ -30,10 +40,22 @@ export function importKeyboards(obj: any): Keyboard[] | null {
                 return keyboard;
             });
         }
+        let styles: { [name: string]: object } | undefined;
+        if (obj && obj.customKeyStyles) {
+            styles = obj.customKeyStyles;
+        }
+        if (styles) {
+            keyStyles = Object.keys(styles).map((name) => {
+                var style = new KeyStyle();
+                style.name = name;
+                if (styles) style.fromObject(styles[name]);
+                return style;
+            });
+        }
     } catch (err) {
-        console.warn("failed to parse file:", (err as Error).message);
+        alert(`failed to parse file: ${(err as Error).message}`);
     }
-    return keyboardLayouts;
+    return { keyboardLayouts, keyStyles };
 }
 
 export function loadKeyboards(key: string): Keyboard[] | null {
@@ -43,12 +65,12 @@ export function loadKeyboards(key: string): Keyboard[] | null {
         try {
             let objList = YAML.parse(recoveryData);
             keyboards = (objList as object[]).map((obj) => {
-                var scheme = new Keyboard();
-                scheme.fromObject(obj);
-                return scheme;
+                var keyboard = new Keyboard();
+                keyboard.fromObject(obj);
+                return keyboard;
             });
         } catch (err) {
-            console.warn("failed to load recovery data:", (err as Error).message);
+            alert(`failed to load recovery data: ${(err as Error).message}`);
         }
     }
     return keyboards;

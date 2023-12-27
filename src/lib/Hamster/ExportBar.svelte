@@ -2,16 +2,17 @@
     import YAML from "yaml";
     import IconButton from "$lib/Component/IconButton.svelte";
 
-    import type { ColorSchema } from "./model/colorSchema";
+    import type { ColorSchema, KeyStyle } from "./model/colorSchema";
     import type { Keyboard } from "./model/keyboardLayout";
 
     import { exportFile } from "./utils/common";
     import { exportSchemas, importSchemas } from "./utils/colorschemas";
-    import { exportKeyboards, exportKeyboardsV2, importKeyboards } from "./utils/keyboardlayouts";
+    import { exportKeyboardsV2, importKeyboards } from "./utils/keyboardlayouts";
     import { getDateTimeString } from "./utils/format";
 
     export var colorSchemas: ColorSchema[];
     export var keyboardLayouts: Keyboard[];
+    export var keyStyles: KeyStyle[];
 
     const timeoutDelay = 3000;
     // copy code
@@ -21,11 +22,6 @@
         colorSchemasCopied = true;
         setTimeout(() => (colorSchemasCopied = false), timeoutDelay);
         navigator.clipboard.writeText(exportSchemas(colorSchemas));
-    };
-    const copyKeyboardLayouts = () => {
-        keyboardLayoutsCopied = true;
-        setTimeout(() => (keyboardLayoutsCopied = false), timeoutDelay);
-        navigator.clipboard.writeText(exportKeyboards(keyboardLayouts));
     };
     const copyKeyboardLayoutsV2 = () => {
         keyboardLayoutsCopied = true;
@@ -37,12 +33,8 @@
         const data = exportSchemas(colorSchemas);
         exportFile(data, `colorSchemas-${getDateTimeString()}.yaml`);
     };
-    const exportKeyboardLayouts = () => {
-        const data = exportKeyboards(keyboardLayouts);
-        exportFile(data, `keyboards-${getDateTimeString()}.yaml`);
-    };
     const exportKeyboardLayoutsV2 = () => {
-        const data = exportKeyboardsV2(keyboardLayouts);
+        const data = exportKeyboardsV2(keyboardLayouts, keyStyles);
         exportFile(data, `keyboards-v2-${getDateTimeString()}.yaml`);
     };
     // import code
@@ -58,7 +50,8 @@
         const schemas = importSchemas(obj);
         if (schemas && schemas.length > 0) colorSchemas = schemas;
         const layouts = importKeyboards(obj);
-        if (layouts && layouts.length > 0) keyboardLayouts = layouts;
+        if (layouts.keyboardLayouts && layouts.keyboardLayouts.length > 0) keyboardLayouts = layouts.keyboardLayouts;
+        if (layouts.keyStyles && layouts.keyStyles.length > 0) keyStyles = layouts.keyStyles;
     };
     const onImportYaml = (event: Event & { currentTarget: EventTarget & HTMLInputElement }) => {
         var input = event.currentTarget;
@@ -91,13 +84,6 @@
         class={classNames}>複製配色代碼</IconButton
     >
     <IconButton
-        title="複製佈局代碼"
-        disabled={keyboardLayoutsCopied}
-        icon={keyboardLayoutsCopied ? "mdi:check" : "mdi:clipboard"}
-        on:click={copyKeyboardLayouts}
-        class={classNames}>複製佈局代碼</IconButton
-    >
-    <IconButton
         title="複製佈局代碼·V2"
         disabled={keyboardLayoutsCopied}
         icon={keyboardLayoutsCopied ? "mdi:check" : "mdi:clipboard"}
@@ -107,9 +93,6 @@
     <!-- export -->
     <IconButton title="導出配色文件" icon="mdi:export" on:click={exportColorSchemas} class={classNames}
         >導出配色文件</IconButton
-    >
-    <IconButton title="導出佈局文件" icon="mdi:export" on:click={exportKeyboardLayouts} class={classNames}
-        >導出佈局文件</IconButton
     >
     <IconButton title="導出佈局文件·V2" icon="mdi:export" on:click={exportKeyboardLayoutsV2} class={classNames}
         >導出佈局文件·V2</IconButton

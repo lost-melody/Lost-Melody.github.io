@@ -30,6 +30,7 @@
     var indexLayout = 0;
     $: currentSchema = colorSchemas[indexSchema];
     $: currentLayout = keyboardLayouts[indexLayout];
+    $: keyStyleNames = keyStyles.map((style) => style.name);
 
     var actionTab = 0;
     const [actExport, actTemp, actSave, actBatch] = [1, 2, 3, 4];
@@ -75,7 +76,7 @@
         selectedKey = { row, col };
     };
 
-    var stickyPreview = true;
+    var stickyPreview = false;
     var landscapePreview = false;
 
     const colorSchemasKey = "recoveryColors";
@@ -126,7 +127,7 @@
                 transition:fly={{ duration: 250, y: -32 }}
                 class="p-2 w-full rounded-md variant-ghost row-start-1 col-start-1"
             >
-                <ExportBar bind:colorSchemas bind:keyboardLayouts />
+                <ExportBar bind:colorSchemas bind:keyboardLayouts bind:keyStyles />
             </div>
         {:else if actionTab === actTemp}
             <div
@@ -233,12 +234,17 @@
         {:else if editorTab === editLayout}
             <!-- Layout Editor -->
             <div transition:fly={{ duration: 250, y: -64 }} class="w-full row-start-1 col-start-1">
-                <LayoutEdit bind:layout={currentLayout} landscape={landscapePreview} />
+                <LayoutEdit bind:layout={currentLayout} {keyStyleNames} landscape={landscapePreview} />
             </div>
         {:else if editorTab === editKey}
             <!-- Key Editor -->
             <div transition:fly={{ duration: 250, y: -64 }} class="w-full row-start-1 col-start-1">
-                <KeyEdit bind:layout={currentLayout} bind:selected={selectedKey} landscape={landscapePreview} />
+                <KeyEdit
+                    bind:layout={currentLayout}
+                    bind:selected={selectedKey}
+                    {keyStyleNames}
+                    landscape={landscapePreview}
+                />
             </div>
         {:else if editorTab === editInset}
             <!-- Button Insets Editor -->
