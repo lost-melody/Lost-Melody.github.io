@@ -25,6 +25,62 @@ export function exportKeyboardsV2(layouts: Keyboard[], keyStyles?: KeyStyle[]): 
     });
 }
 
+export function exportKeyboardsV2Full(layouts: Keyboard[], keyStyles?: KeyStyle[]): string {
+    var objList: any[] = layouts.map((keyboard) => keyboard.toObjectV2());
+    var stylesMap: { [name: string]: object } | undefined;
+    if (keyStyles) {
+        stylesMap = {};
+        for (let style of keyStyles) {
+            stylesMap[style.name] = style.toObject();
+        }
+    }
+    // 將按鍵樣式索引展開並内聯到屬性中
+    for (let i = 0; i < layouts.length; i++) {
+        let kbd = layouts[i];
+        if (kbd.lightStyle) {
+            let style = stylesMap && stylesMap[kbd.lightStyle];
+            if (style) {
+                objList[i].lightModeStyle.keyStyle = style;
+            } else {
+                objList[i].lightModeStyle = undefined;
+            }
+        }
+        if (kbd.darkStyle) {
+            let style = stylesMap && stylesMap[kbd.darkStyle];
+            if (style) {
+                objList[i].darkModeStyle.keyStyle = style;
+            } else {
+                objList[i].darkModeStyle = undefined;
+            }
+        }
+        for (let j = 0; j < kbd.rows.length; j++) {
+            let row = kbd.rows[j];
+            for (let k = 0; k < row.keys.length; k++) {
+                let key = row.keys[k];
+                if (key.lightStyle) {
+                    let style = stylesMap && stylesMap[key.lightStyle];
+                    if (style) {
+                        objList[i].rows[j].keys[k].lightModeStyle = style;
+                    } else {
+                        objList[i].rows[j].keys[k].lightModeStyle = undefined;
+                    }
+                }
+                if (key.darkStyle) {
+                    let style = stylesMap && stylesMap[key.darkStyle];
+                    if (style) {
+                        objList[i].rows[j].keys[k].darkModeStyle = style;
+                    } else {
+                        objList[i].rows[j].keys[k].darkModeStyle = undefined;
+                    }
+                }
+            }
+        }
+    }
+    return YAML.stringify({
+        keyboards: objList,
+    });
+}
+
 export function importKeyboards(obj: any): { keyboardLayouts: Keyboard[] | null; keyStyles: KeyStyle[] | null } {
     var keyboardLayouts: Keyboard[] | null = null;
     var keyStyles: KeyStyle[] | null = null;

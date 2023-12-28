@@ -7,7 +7,7 @@
 
     import { exportFile } from "./utils/common";
     import { exportSchemas, importSchemas } from "./utils/colorschemas";
-    import { exportKeyboardsV2, importKeyboards } from "./utils/keyboardlayouts";
+    import { exportKeyboardsV2, exportKeyboardsV2Full, importKeyboards } from "./utils/keyboardlayouts";
     import { getDateTimeString } from "./utils/format";
 
     export var colorSchemas: ColorSchema[];
@@ -17,16 +17,10 @@
     const timeoutDelay = 3000;
     // copy code
     var colorSchemasCopied = false;
-    var keyboardLayoutsCopied = false;
     const copyColorSchemas = () => {
         colorSchemasCopied = true;
         setTimeout(() => (colorSchemasCopied = false), timeoutDelay);
         navigator.clipboard.writeText(exportSchemas(colorSchemas));
-    };
-    const copyKeyboardLayoutsV2 = () => {
-        keyboardLayoutsCopied = true;
-        setTimeout(() => (keyboardLayoutsCopied = false), timeoutDelay);
-        navigator.clipboard.writeText(exportKeyboardsV2(keyboardLayouts));
     };
     // export code
     const exportColorSchemas = () => {
@@ -35,6 +29,10 @@
     };
     const exportKeyboardLayoutsV2 = () => {
         const data = exportKeyboardsV2(keyboardLayouts, keyStyles);
+        exportFile(data, `keyboards-v2-${getDateTimeString()}.yaml`);
+    };
+    const exportKeyboardLayoutsV2Full = () => {
+        const data = exportKeyboardsV2Full(keyboardLayouts, keyStyles);
         exportFile(data, `keyboards-v2-${getDateTimeString()}.yaml`);
     };
     // import code
@@ -75,31 +73,9 @@
 </script>
 
 <div class="w-full gap-2 flex flex-col">
-    <!-- copy -->
-    <IconButton
-        title="複製配色代碼"
-        disabled={colorSchemasCopied}
-        icon={colorSchemasCopied ? "mdi:check" : "mdi:clipboard"}
-        on:click={copyColorSchemas}
-        class={classNames}>複製配色代碼</IconButton
-    >
-    <IconButton
-        title="複製佈局代碼·V2"
-        disabled={keyboardLayoutsCopied}
-        icon={keyboardLayoutsCopied ? "mdi:check" : "mdi:clipboard"}
-        on:click={copyKeyboardLayoutsV2}
-        class={classNames}>複製佈局代碼·V2</IconButton
-    >
-    <!-- export -->
-    <IconButton title="導出配色文件" icon="mdi:export" on:click={exportColorSchemas} class={classNames}
-        >導出配色文件</IconButton
-    >
-    <IconButton title="導出佈局文件·V2" icon="mdi:export" on:click={exportKeyboardLayoutsV2} class={classNames}
-        >導出佈局文件·V2</IconButton
-    >
     <!-- import -->
-    <IconButton title="導入配色或佈局文件" icon="mdi:export" on:click={onClickImport} class={classNames}
-        >導入配色或佈局文件
+    <IconButton title="導入配色或佈局文件" icon="mdi:export" on:click={onClickImport} class={classNames}>
+        導入配色/佈局
         <div class="w-0 h-0 overflow-hidden">
             <input
                 type="file"
@@ -107,8 +83,37 @@
                 bind:this={importFileInput}
                 accept=".yaml,.yml"
                 on:change={onImportYaml}
-                class="px-2 py-1 w-[60%] rounded-full variant-soft"
             />
         </div>
+    </IconButton>
+    <!-- copy -->
+    <IconButton
+        title="複製配色代碼"
+        disabled={colorSchemasCopied}
+        icon={colorSchemasCopied ? "mdi:check" : "mdi:clipboard"}
+        on:click={copyColorSchemas}
+        class={classNames}
+    >
+        複製配色代碼
+    </IconButton>
+    <!-- export -->
+    <IconButton title="導出配色文件" icon="mdi:export" on:click={exportColorSchemas} class={classNames}>
+        導出配色文件
+    </IconButton>
+    <IconButton
+        title="導出佈局文件 (所有按鍵樣式存儲在customKeyStyles節點下)"
+        icon="mdi:export"
+        on:click={exportKeyboardLayoutsV2}
+        class={classNames}
+    >
+        導出佈局文件 (索引按鍵樣式)
+    </IconButton>
+    <IconButton
+        title="導出完整佈局 (所有按鍵樣式内聯, 文件無法導入回本頁面)"
+        icon="mdi:export"
+        on:click={exportKeyboardLayoutsV2Full}
+        class={classNames}
+    >
+        導出完整佈局 (内聯按鍵樣式)
     </IconButton>
 </div>
