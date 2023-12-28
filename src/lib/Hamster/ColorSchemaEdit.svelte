@@ -67,4 +67,6 @@
     <ColorSelector title="次選文字" bind:color={schema.candidate_text_color} />
     <ColorSelector title="次選註釋" bind:color={schema.comment_text_color} />
     <ColorSelector title="次選序號" bind:color={schema.label_color} />
+    <ColorSelector title="長按首選背景" bind:color={schema.hilited_callout_back_color} />
+    <ColorSelector title="長按首選文字" bind:color={schema.hilited_callout_foreground_color} />
 </div>

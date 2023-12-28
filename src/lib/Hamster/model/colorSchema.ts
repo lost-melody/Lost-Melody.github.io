@@ -107,6 +107,10 @@ export class ColorSchema {
     comment_text_color: Color = new Color("#000000");
     /** 候選欄次選序號 */
     label_color: Color = new Color("#000000");
+    /** 長按首選背景 */
+    hilited_callout_back_color: Color = new Color("#ffffff");
+    /** 長按首選文本 */
+    hilited_callout_foreground_color: Color = new Color("#000000");
 
     toObject(): object {
         var obj: any = {
@@ -132,6 +136,8 @@ export class ColorSchema {
             candidate_text_color: this.candidate_text_color.abgr(),
             comment_text_color: this.comment_text_color.abgr(),
             label_color: this.label_color.abgr(),
+            hilited_callout_back_color: this.hilited_callout_back_color.abgr(),
+            hilited_callout_foreground_color: this.hilited_callout_foreground_color.abgr(),
         };
         return obj;
     }
@@ -170,6 +176,8 @@ export class ColorSchema {
             this.candidate_text_color.fromAbgr(asString(obj.candidate_text_color, "0x000000"));
             this.comment_text_color.fromAbgr(asString(obj.comment_text_color, "0x000000"));
             this.label_color.fromAbgr(asString(obj.label_color, "0x000000"));
+            this.hilited_callout_back_color.fromAbgr(asString(obj.hilited_callout_back_color, "0xffffff"));
+            this.hilited_callout_foreground_color.fromAbgr(asString(obj.hilited_callout_foreground_color, "0x000000"));
         }
     }
 
@@ -197,6 +205,8 @@ export class ColorSchema {
         schema.candidate_text_color = this.candidate_text_color.clone();
         schema.comment_text_color = this.comment_text_color.clone();
         schema.label_color = this.label_color.clone();
+        schema.hilited_callout_back_color = this.hilited_callout_back_color.clone();
+        schema.hilited_callout_foreground_color = this.hilited_callout_foreground_color.clone();
         return schema;
     }
 }
