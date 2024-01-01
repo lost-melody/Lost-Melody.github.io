@@ -14,7 +14,8 @@
         style:border-radius={`${keyStyle.cornerRadius || 5}px`}
         style:border-color={keyStyle.borderColor.rgba()}
         style:border-width={`${keyStyle.borderSize}px`}
-        style:box-shadow={`0 3px 3px -3px ${keyStyle.lowerEdgeColor.rgba()}`}
+        style:border-bottom-color={`${keyStyle.lowerEdgeColor.rgba()}`}
+        style:box-shadow={`0 ${keyStyle.shadowSize}px 4px 0px ${keyStyle.shadowColor.rgba()}`}
         class="w-full h-full border rounded-md relative"
     >
         <!-- swipe up and down -->

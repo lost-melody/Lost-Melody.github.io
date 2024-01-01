@@ -54,11 +54,18 @@
     <div class="w-full gap-2 flex items-center">
         <Icon icon="mdi:format-size" class="p-2 w-10 h-10" />
         <span class="grow shrink"> 劃動字體大小 </span>
-        <input type="range" min="0" max="32" bind:value={schema.swipe_font_size} class="w-[30%]" />
+        <input type="range" min="0" max="24" bind:value={schema.swipe_font_size} class="w-[30%]" />
         <span class="w-6 code"> {schema.swipe_font_size} </span>
     </div>
     <ColorSelector title="按鍵邊框" bind:color={schema.border_color} />
-    <ColorSelector title="按鍵陰影" bind:color={schema.lower_edge_col} />
+    <ColorSelector title="按鍵下邊框" bind:color={schema.lower_edge_col} />
+    <ColorSelector title="按鍵陰影" bind:color={schema.shadow_color} />
+    <div class="w-full gap-2 flex items-center">
+        <Icon icon="mdi:format-size" class="p-2 w-10 h-10" />
+        <span class="grow shrink"> 按鍵陰影大小 </span>
+        <input type="range" min="0" max="12" bind:value={schema.shadow_size} class="w-[30%]" />
+        <span class="w-6 code"> {schema.shadow_size} </span>
+    </div>
     <ColorSelector title="預編輯區文字" bind:color={schema.text_color} />
     <ColorSelector title="首選文字" bind:color={schema.hilited_candidate_text_color} />
     <ColorSelector title="首選註釋" bind:color={schema.hilited_comment_text_color} />

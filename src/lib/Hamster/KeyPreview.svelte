@@ -46,7 +46,10 @@
             : undefined}
         style:border-radius={`${schema.corner_radius}px`}
         style:border-color={`${schema.border_color.rgba()}`}
-        style:box-shadow={bgBtnDisplay(key.action.type) ? `0 3px 3px -3px ${schema.lower_edge_col.rgba()}` : ""}
+        style:border-bottom-color={`${schema.lower_edge_col.rgba()}`}
+        style:box-shadow={bgBtnDisplay(key.action.type)
+            ? `0 ${schema.shadow_size}px 4px 0px ${schema.shadow_color.rgba()}`
+            : ""}
         class:border={bgBtnDisplay(key.action.type)}
         class="w-full h-full rounded-md relative"
         on:click={onClick}

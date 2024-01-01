@@ -91,8 +91,12 @@ export class ColorSchema {
     border_color: Color = new Color("#000000");
     /** 預編輯文本 */
     text_color: Color = new Color("#000000");
-    /** 按鍵陰影 */
+    /** 按鍵下邊框 */
     lower_edge_col: Color = new Color("#000000");
+    /** 按鍵陰影 */
+    shadow_color: Color = new Color("#000000");
+    /** 按鍵陰影大小 */
+    shadow_size: number = 0;
     /** 首選背景 */
     hilited_candidate_back_color: Color = new Color("#ffffff");
     /** 首選文本 */
@@ -129,6 +133,8 @@ export class ColorSchema {
             border_color: this.border_color.abgr(),
             text_color: this.text_color.abgr(),
             lower_edge_col: this.lower_edge_col.abgr(),
+            shadow_color: this.shadow_color.abgr(),
+            shadow_size: this.shadow_size || undefined,
             hilited_candidate_back_color: this.hilited_candidate_back_color.abgr(),
             hilited_candidate_text_color: this.hilited_candidate_text_color.abgr(),
             hilited_candidate_label_color: this.hilited_candidate_label_color.abgr(),
@@ -169,6 +175,8 @@ export class ColorSchema {
             this.border_color.fromAbgr(asString(obj.border_color, "0x000000"));
             this.text_color.fromAbgr(asString(obj.text_color, "0x000000"));
             this.lower_edge_col.fromAbgr(asString(obj.lower_edge_col, "0x000000"));
+            this.shadow_color.fromAbgr(asString(obj.shadow_color, "0x000000"));
+            this.shadow_size = asNumber(obj.shadow_size);
             this.hilited_candidate_back_color.fromAbgr(asString(obj.hilited_candidate_back_color, "0xffffff"));
             this.hilited_candidate_text_color.fromAbgr(asString(obj.hilited_candidate_text_color, "0x000000"));
             this.hilited_candidate_label_color.fromAbgr(asString(obj.hilited_candidate_label_color, "0x000000"));
@@ -198,6 +206,8 @@ export class ColorSchema {
         schema.border_color = this.border_color.clone();
         schema.text_color = this.text_color.clone();
         schema.lower_edge_col = this.lower_edge_col.clone();
+        schema.shadow_color = this.shadow_color.clone();
+        schema.shadow_size = this.shadow_size;
         schema.hilited_candidate_back_color = this.hilited_candidate_back_color.clone();
         schema.hilited_candidate_text_color = this.hilited_candidate_text_color.clone();
         schema.hilited_candidate_label_color = this.hilited_candidate_label_color.clone();
@@ -224,6 +234,8 @@ export class KeyStyle {
     borderSize: number = 1;
     borderColor: Color = new Color("#000000");
     lowerEdgeColor: Color = new Color("#000000");
+    shadowColor: Color = new Color("#000000");
+    shadowSize: number = 0;
     fontSize: number = 0;
     swipeFontSize: number = 0;
 
@@ -239,6 +251,8 @@ export class KeyStyle {
         obj.borderSize = this.borderSize;
         obj.borderColor = this.borderColor.abgr();
         obj.lowerEdgeColor = this.lowerEdgeColor.abgr();
+        obj.shadowColor = this.shadowColor.abgr();
+        obj.shadowSize = this.shadowSize || undefined;
         obj.fontSize = this.fontSize || undefined;
         obj.swipeFontSize = this.swipeFontSize || undefined;
         return obj;
@@ -256,6 +270,8 @@ export class KeyStyle {
             this.borderSize = asNumber(obj.borderSize) || 1;
             this.borderColor.fromAbgr(asString(obj.borderColor, "0x000000"));
             this.lowerEdgeColor.fromAbgr(asString(obj.lowerEdgeColor, "0x000000"));
+            this.shadowColor.fromAbgr(asString(obj.shadowColor, "0x000000"));
+            this.shadowSize = asNumber(obj.shadowSize);
             this.fontSize = asNumber(obj.fontSize);
             this.swipeFontSize = asNumber(obj.swipeFontSize);
         }
@@ -273,6 +289,7 @@ export class KeyStyle {
         keyStyle.cornerRadius = this.cornerRadius;
         keyStyle.borderSize = this.borderSize;
         keyStyle.lowerEdgeColor = this.lowerEdgeColor.clone();
+        keyStyle.shadowColor = this.shadowColor.clone();
         keyStyle.fontSize = this.fontSize;
         keyStyle.swipeFontSize = this.swipeFontSize;
         return keyStyle;
