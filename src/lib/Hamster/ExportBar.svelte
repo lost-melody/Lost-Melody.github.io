@@ -17,10 +17,22 @@
     const timeoutDelay = 3000;
     // copy code
     var colorSchemasCopied = false;
+    var keyboardLayoutCopied = false;
+    var keyboardLayoutFullCopied = false;
     const copyColorSchemas = () => {
         colorSchemasCopied = true;
         setTimeout(() => (colorSchemasCopied = false), timeoutDelay);
         navigator.clipboard.writeText(exportSchemas(colorSchemas));
+    };
+    const copyKeyboardLayoutsV2 = () => {
+        keyboardLayoutCopied = true;
+        setTimeout(() => (keyboardLayoutCopied = false), timeoutDelay);
+        navigator.clipboard.writeText(exportKeyboardsV2(keyboardLayouts, keyStyles));
+    };
+    const copyKeyboardLayoutsV2Full = () => {
+        keyboardLayoutFullCopied = true;
+        setTimeout(() => (keyboardLayoutFullCopied = false), timeoutDelay);
+        navigator.clipboard.writeText(exportKeyboardsV2Full(keyboardLayouts, keyStyles));
     };
     // export code
     const exportColorSchemas = () => {
@@ -95,6 +107,24 @@
         class={classNames}
     >
         複製配色代碼
+    </IconButton>
+    <IconButton
+        title="複製佈局代碼"
+        disabled={keyboardLayoutCopied}
+        icon={keyboardLayoutCopied ? "mdi:check" : "mdi:clipboard"}
+        on:click={copyKeyboardLayoutsV2}
+        class={classNames}
+    >
+        複製佈局代碼
+    </IconButton>
+    <IconButton
+        title="複製完整佈局代碼"
+        disabled={keyboardLayoutFullCopied}
+        icon={keyboardLayoutFullCopied ? "mdi:check" : "mdi:clipboard"}
+        on:click={copyKeyboardLayoutsV2Full}
+        class={classNames}
+    >
+        複製完整佈局代碼
     </IconButton>
     <!-- export -->
     <IconButton title="導出配色文件" icon="mdi:export" on:click={exportColorSchemas} class={classNames}>
