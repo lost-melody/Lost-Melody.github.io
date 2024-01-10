@@ -1,6 +1,6 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
-    import type { ColorSchema } from "./model/colorSchema";
+    import type { ColorSchema, KeyStyle } from "./model/colorSchema";
     import { ActionType, ButtonInsets, Key, Row } from "./model/keyboardLayout";
 
     export var landscape: boolean;
@@ -9,6 +9,7 @@
     export var key: Key;
     export var insets: ButtonInsets;
     export var selected: boolean;
+    export var keyStyle: KeyStyle | undefined = undefined;
 
     // 按鍵内距样式
     var pl: number, pb: number, pt: number, pr: number;
@@ -18,6 +19,30 @@
         let p = insets.value;
         [pl, pb, pt, pr] = [p, p, p, p];
     }
+    $: width = landscape ? (!key.autoLandscape && key.landscape) || 10 : (!key.autoWidth && key.width) || 10;
+    $: height = landscape ? row.landscapeHeight || 56 : row.rowHeight || 56;
+    $: grow = landscape ? key.autoLandscape : key.autoWidth;
+
+    $: bgColor = keyStyle ? keyStyle.buttonBackgroundColor.rgba() : schema.button_back_color.rgba();
+    $: pressedBgColor = keyStyle
+        ? keyStyle.pressedButtonBackgroundColor.rgba()
+        : schema.button_pressed_back_color.rgba();
+    $: frontColor = keyStyle ? keyStyle.buttonForegroundColor.rgba() : schema.button_front_color.rgba();
+    $: pressedFrontColor = keyStyle
+        ? keyStyle.pressedButtonForegroundColor.rgba()
+        : schema.button_pressed_front_color.rgba();
+    $: swipeColor = keyStyle ? keyStyle.swipeForegroundColor.rgba() : schema.button_swipe_front_color.rgba();
+    $: pressedSwipeColor = keyStyle
+        ? keyStyle.pressedSwipeForegroundColor.rgba()
+        : schema.button_swipe_front_color.rgba();
+    $: cornerRadius = keyStyle ? keyStyle.cornerRadius : schema.corner_radius;
+    $: borderWidth = keyStyle ? keyStyle.borderSize : 1;
+    $: borderColor = keyStyle ? keyStyle.borderColor.rgba() : schema.border_color.rgba();
+    $: bottomColor = keyStyle ? keyStyle.lowerEdgeColor.rgba() : schema.lower_edge_col.rgba();
+    $: shadowColor = keyStyle ? keyStyle.shadowColor.rgba() : schema.shadow_color.rgba();
+    $: shadowSize = keyStyle ? keyStyle.shadowSize : schema.shadow_size;
+    $: swipeFont = keyStyle ? keyStyle.swipeFontSize : schema.swipe_font_size;
+    $: fontSize = keyStyle ? keyStyle.fontSize : schema.font_size;
 
     const bgBtnDisplay = (actionType: ActionType): boolean => {
         return ![ActionType.none, ActionType.characterMargin].includes(actionType);
@@ -31,33 +56,30 @@
 <!-- key outer border -->
 <div
     style:padding={`${pt}px ${pr}px ${pb}px ${pl}px`}
-    style:width={`${landscape ? (key.autoLandscape ? 10 : key.landscape) : key.autoWidth ? 10 : key.width}%`}
-    style:height={`${landscape ? row.landscapeHeight || 56 : row.rowHeight || 56}px`}
-    class:grow={landscape ? key.autoLandscape : key.autoWidth}
-    class:shrink={landscape ? key.autoLandscape : key.autoWidth}
-    class:shrink-0={landscape ? !key.autoLandscape : !key.autoWidth}
+    style:width={`${width}%`}
+    style:height={`${height}px`}
+    class:grow
+    class:shrink={grow}
+    class:shrink-0={!grow}
 >
     <!-- key -->
     <button
-        style:background-color={bgBtnDisplay(key.action.type)
-            ? selected
-                ? schema.button_pressed_back_color.rgba()
-                : schema.button_back_color.rgba()
-            : undefined}
-        style:border-radius={`${schema.corner_radius}px`}
-        style:border-color={`${schema.border_color.rgba()}`}
-        style:border-bottom-color={`${schema.lower_edge_col.rgba()}`}
+        style:background-color={bgBtnDisplay(key.action.type) ? (selected ? pressedBgColor : bgColor) : undefined}
+        style:border-radius={`${cornerRadius}px`}
+        style:border-color={borderColor}
+        style:border-bottom-color={bottomColor}
+        style:border-width={`${borderWidth}px`}
         style:box-shadow={bgBtnDisplay(key.action.type)
-            ? `0 ${schema.shadow_size}px 4px 0px ${schema.shadow_color.rgba()}`
-            : ""}
+            ? `0 ${shadowSize}px ${shadowSize}px 0px ${shadowColor}`
+            : undefined}
         class:border={bgBtnDisplay(key.action.type)}
         class="w-full h-full rounded-md relative"
         on:click={onClick}
     >
         <!-- swipe up and down -->
         <div
-            style:color={schema.button_swipe_front_color.rgba()}
-            style:font-size={`${schema.swipe_font_size || 8}px`}
+            style:color={selected ? pressedSwipeColor : swipeColor}
+            style:font-size={`${swipeFont || 8}px`}
             class="w-full h-[20%] absolute -top-2 flex justify-around"
         >
             {#each [key.swipe[2], key.swipe[1]] as swipe}
@@ -70,8 +92,8 @@
         </div>
         <!-- key action -->
         <div
-            style:color={selected ? schema.button_pressed_front_color.rgba() : schema.button_front_color.rgba()}
-            style:font-size={`${schema.font_size || 16}px`}
+            style:color={selected ? pressedFrontColor : frontColor}
+            style:font-size={`${fontSize || 16}px`}
             class="w-full h-[80%] absolute top-[20%] text-center"
         >
             {key.label ? key.label : key.action.display()}

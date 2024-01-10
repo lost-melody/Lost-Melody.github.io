@@ -42,6 +42,7 @@
     <ColorSelector title="鍵盤背景" bind:color={schema.back_color} />
     <ColorSelector title="按鍵背景" bind:color={schema.button_back_color} />
     <ColorSelector title="按鍵按下背景" bind:color={schema.button_pressed_back_color} />
+    <ColorSelector title="按鍵氣泡背景" bind:color={schema.button_bubble_back_color} />
     <ColorSelector title="按鍵文字" bind:color={schema.button_front_color} />
     <ColorSelector title="按鍵按下文字" bind:color={schema.button_pressed_front_color} />
     <ColorSelector title="按鍵劃動文字" bind:color={schema.button_swipe_front_color} />

@@ -31,6 +31,13 @@
     $: currentSchema = colorSchemas[indexSchema];
     $: currentLayout = keyboardLayouts[indexLayout];
     $: keyStyleNames = keyStyles.map((style) => style.name);
+    var keyStyleMap: { [name: string]: KeyStyle };
+    $: {
+        keyStyleMap = {};
+        for (let keyStyle of keyStyles) {
+            keyStyleMap[keyStyle.name] = keyStyle;
+        }
+    }
 
     var actionTab = 0;
     const [actExport, actTemp, actSave, actBatch] = [1, 2, 3, 4];
@@ -202,6 +209,7 @@
             bind:landscape={landscapePreview}
             schema={currentSchema}
             keyboard={currentLayout}
+            {keyStyleMap}
             selected={selectedKey}
             on:clicked={(event) => {
                 selectKey(event.detail.row, event.detail.col);

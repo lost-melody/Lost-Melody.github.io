@@ -75,6 +75,8 @@ export class ColorSchema {
     button_back_color: Color = new Color("#ffffff");
     /** 按鍵按下背景 */
     button_pressed_back_color: Color = new Color("#d0d0d0");
+    /** 按鍵氣泡背景 */
+    button_bubble_back_color: Color = new Color("#d0d0d0");
     /** 按鍵文本 */
     button_front_color: Color = new Color("#000000");
     /** 按鍵按下文本 */
@@ -124,6 +126,7 @@ export class ColorSchema {
             back_color: this.back_color.abgr(),
             button_back_color: this.button_back_color.abgr(),
             button_pressed_back_color: this.button_pressed_back_color.abgr(),
+            button_bubble_back_color: this.button_bubble_back_color.abgr(),
             button_foreground_color: this.button_front_color.abgr(),
             button_pressed_foreground_color: this.button_pressed_front_color.abgr(),
             button_swipe_foreground_color: this.button_swipe_front_color.abgr(),
@@ -156,6 +159,7 @@ export class ColorSchema {
             this.back_color.fromAbgr(asString(obj.back_color, "0xffffff"));
             this.button_back_color.fromAbgr(asString(obj.button_back_color, "0xffffff"));
             this.button_pressed_back_color.fromAbgr(asString(obj.button_pressed_back_color, "0xD0D0D0"));
+            this.button_bubble_back_color.fromAbgr(asString(obj.button_bubble_back_color, "0xD0D0D0"));
             if (
                 obj.button_foreground_color ||
                 obj.button_pressed_foreground_color ||
@@ -197,6 +201,7 @@ export class ColorSchema {
         schema.back_color = this.back_color.clone();
         schema.button_back_color = this.button_back_color.clone();
         schema.button_pressed_back_color = this.button_pressed_back_color.clone();
+        schema.button_bubble_back_color = this.button_bubble_back_color.clone();
         schema.button_front_color = this.button_front_color.clone();
         schema.button_pressed_front_color = this.button_pressed_front_color.clone();
         schema.button_swipe_front_color = this.button_swipe_front_color.clone();
@@ -267,7 +272,7 @@ export class KeyStyle {
             this.swipeForegroundColor.fromAbgr(asString(obj.swipeForegroundColor, "0x000000"));
             this.pressedSwipeForegroundColor.fromAbgr(asString(obj.pressedSwipeForegroundColor, "0x000000"));
             this.cornerRadius = asNumber(obj.cornerRadius, 5);
-            this.borderSize = asNumber(obj.borderSize) || 1;
+            this.borderSize = asNumber(obj.borderSize, 1);
             this.borderColor.fromAbgr(asString(obj.borderColor, "0x000000"));
             this.lowerEdgeColor.fromAbgr(asString(obj.lowerEdgeColor, "0x000000"));
             this.shadowColor.fromAbgr(asString(obj.shadowColor, "0x000000"));

@@ -1,7 +1,8 @@
 <script lang="ts">
-    import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher, getContext } from "svelte";
+    import type { Writable } from "svelte/store";
     import Icon from "@iconify/svelte";
-    import type { ColorSchema } from "./model/colorSchema";
+    import type { ColorSchema, KeyStyle } from "./model/colorSchema";
     import type { Keyboard } from "./model/keyboardLayout";
     import KeyPreview from "./KeyPreview.svelte";
 
@@ -9,8 +10,11 @@
     export var landscape: boolean = false;
     export var schema: ColorSchema;
     export var keyboard: Keyboard;
+    export var keyStyleMap: { [name: string]: KeyStyle } = {};
 
     export var selected: { row: number; col: number };
+
+    var darkMode: Writable<boolean> = getContext("darkMode");
 
     const dispatch = createEventDispatcher();
     const onClick = (row: number, col: number) => {
@@ -78,6 +82,9 @@
                     {schema}
                     {row}
                     {key}
+                    keyStyle={keyStyleMap[$darkMode ? key.darkStyle : key.lightStyle] ||
+                        keyStyleMap[$darkMode ? keyboard.darkStyle : keyboard.lightStyle] ||
+                        undefined}
                     insets={keyboard.buttonInsets}
                     selected={selected.row === indexRow && selected.col === indexKey}
                     on:clicked={() => {
