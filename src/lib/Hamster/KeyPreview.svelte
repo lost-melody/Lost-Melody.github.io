@@ -44,9 +44,7 @@
     $: swipeFont = keyStyle ? keyStyle.swipeFontSize : schema.swipe_font_size;
     $: fontSize = keyStyle ? keyStyle.fontSize : schema.font_size;
 
-    const bgBtnDisplay = (actionType: ActionType): boolean => {
-        return ![ActionType.none, ActionType.characterMargin].includes(actionType);
-    };
+    $: bgBtnDisplay = ![ActionType.none, ActionType.characterMargin].includes(key.action.type);
     const dispatch = createEventDispatcher();
     const onClick = () => {
         dispatch("clicked");
@@ -63,40 +61,44 @@
     class:shrink-0={!grow}
 >
     <!-- key -->
-    <button
-        style:background-color={bgBtnDisplay(key.action.type) ? (selected ? pressedBgColor : bgColor) : undefined}
+    <div
         style:border-radius={`${cornerRadius}px`}
-        style:border-color={borderColor}
         style:border-bottom-color={bottomColor}
-        style:border-width={`${borderWidth}px`}
-        style:box-shadow={bgBtnDisplay(key.action.type)
-            ? `0 ${shadowSize}px ${shadowSize}px 0px ${shadowColor}`
-            : undefined}
-        class:border={bgBtnDisplay(key.action.type)}
-        class="w-full h-full rounded-md relative"
-        on:click={onClick}
+        style:border-bottom-style="solid"
+        style:border-bottom-width={bgBtnDisplay ? "1px" : undefined}
+        class="w-full h-full"
     >
-        <!-- swipe up and down -->
-        <div
-            style:color={selected ? pressedSwipeColor : swipeColor}
-            style:font-size={`${swipeFont || 8}px`}
-            class="w-full h-[20%] absolute -top-2 flex justify-around"
+        <button
+            style:background-color={bgBtnDisplay ? (selected ? pressedBgColor : bgColor) : undefined}
+            style:border-radius={`${cornerRadius}px`}
+            style:border-color={borderColor}
+            style:border-width={bgBtnDisplay ? `${borderWidth}px` : undefined}
+            style:box-shadow={bgBtnDisplay ? `0 ${shadowSize}px ${shadowSize}px 0px ${shadowColor}` : undefined}
+            class="w-full h-full rounded-md relative"
+            on:click={onClick}
         >
-            {#each [key.swipe[2], key.swipe[1]] as swipe}
-                {#if swipe.action.type !== ActionType.none && swipe.display}
-                    <span>
-                        {swipe.label ? swipe.label : swipe.action.display()}
-                    </span>
-                {/if}
-            {/each}
-        </div>
-        <!-- key action -->
-        <div
-            style:color={selected ? pressedFrontColor : frontColor}
-            style:font-size={`${fontSize || 16}px`}
-            class="w-full h-[80%] absolute top-[20%] text-center"
-        >
-            {key.label ? key.label : key.action.display()}
-        </div>
-    </button>
+            <!-- swipe up and down -->
+            <div
+                style:color={selected ? pressedSwipeColor : swipeColor}
+                style:font-size={`${swipeFont || 8}px`}
+                class="w-full h-[20%] absolute -top-2 flex justify-around"
+            >
+                {#each [key.swipe[2], key.swipe[1]] as swipe}
+                    {#if swipe.action.type !== ActionType.none && swipe.display}
+                        <span>
+                            {swipe.label ? swipe.label : swipe.action.display()}
+                        </span>
+                    {/if}
+                {/each}
+            </div>
+            <!-- key action -->
+            <div
+                style:color={selected ? pressedFrontColor : frontColor}
+                style:font-size={`${fontSize || 16}px`}
+                class="w-full h-[80%] absolute top-[20%] text-center"
+            >
+                {key.label ? key.label : key.action.display()}
+            </div>
+        </button>
+    </div>
 </div>
