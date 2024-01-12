@@ -2,6 +2,8 @@
     import { browser } from "$app/environment";
     import { onNavigate } from "$app/navigation";
     import { fly } from "svelte/transition";
+    import { localStorageStore } from "@skeletonlabs/skeleton";
+    import Icon from "@iconify/svelte";
 
     import IconButton from "$lib/Component/IconButton.svelte";
     import { ColorSchema, KeyStyle } from "$lib/Hamster/model/colorSchema";
@@ -85,6 +87,7 @@
 
     var stickyPreview = false;
     var landscapePreview = false;
+    var previewFontFamilies = localStorageStore("previewFontFamilies", "");
 
     const colorSchemasKey = "recoveryColors";
     const keyboardLayoutsKey = "recoveryKeyboards";
@@ -197,6 +200,7 @@
 
     <!-- Preview Keyboard -->
     <div
+        style:font-family={$previewFontFamilies}
         class:sticky={stickyPreview}
         class:max-w-[400px]={!landscapePreview}
         class:max-w-[800px]={landscapePreview}
@@ -246,7 +250,17 @@
             </div>
         {:else if editorTab === editKey}
             <!-- Key Editor -->
-            <div transition:fly={{ duration: 250, y: -64 }} class="w-full row-start-1 col-start-1">
+            <div transition:fly={{ duration: 250, y: -64 }} class="w-full row-start-1 col-start-1 flex flex-col gap-2">
+                <div class="px-4 py-2 w-full flex gap-2 items-center rounded-md variant-soft">
+                    <Icon height="20" icon="mdi-format-size" />
+                    <span class="">預覽字體</span>
+                    <input
+                        title="鍵盤預覽區顯示字體, 逗號分隔"
+                        bind:value={$previewFontFamilies}
+                        placeholder="Symbols Nerd Font, sans-serif"
+                        class="p-1 grow rounded-md bg-transparent variant-ringed hover:variant-ghost"
+                    />
+                </div>
                 <KeyEdit
                     bind:layout={currentLayout}
                     bind:selected={selectedKey}
