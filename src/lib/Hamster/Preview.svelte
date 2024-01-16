@@ -82,9 +82,7 @@
                     {schema}
                     {row}
                     {key}
-                    keyStyle={keyStyleMap[$darkMode ? key.darkStyle : key.lightStyle] ||
-                        keyStyleMap[$darkMode ? keyboard.darkStyle : keyboard.lightStyle] ||
-                        undefined}
+                    keyStyle={keyStyleMap[$darkMode ? key.darkStyle : key.lightStyle] || undefined}
                     insets={keyboard.buttonInsets}
                     selected={selected.row === indexRow && selected.col === indexKey}
                     on:clicked={() => {

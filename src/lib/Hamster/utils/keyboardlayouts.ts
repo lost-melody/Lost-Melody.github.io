@@ -37,22 +37,6 @@ export function exportKeyboardsV2Full(layouts: Keyboard[], keyStyles?: KeyStyle[
     // 將按鍵樣式索引展開並内聯到屬性中
     for (let i = 0; i < layouts.length; i++) {
         let kbd = layouts[i];
-        if (kbd.lightStyle) {
-            let style = stylesMap && stylesMap[kbd.lightStyle];
-            if (style) {
-                objList[i].lightModeStyle.keyStyle = style;
-            } else {
-                objList[i].lightModeStyle = undefined;
-            }
-        }
-        if (kbd.darkStyle) {
-            let style = stylesMap && stylesMap[kbd.darkStyle];
-            if (style) {
-                objList[i].darkModeStyle.keyStyle = style;
-            } else {
-                objList[i].darkModeStyle = undefined;
-            }
-        }
         for (let j = 0; j < kbd.rows.length; j++) {
             let row = kbd.rows[j];
             for (let k = 0; k < row.keys.length; k++) {

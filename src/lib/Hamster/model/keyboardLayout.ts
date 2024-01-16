@@ -811,8 +811,6 @@ export class Keyboard {
     primary: boolean = false;
     rows: Row[] = [];
     buttonInsets: ButtonInsets = new ButtonInsets();
-    lightStyle: string = "";
-    darkStyle: string = "";
 
     fromObject(obj: any) {
         if (obj && typeof obj === "object") {
@@ -828,12 +826,6 @@ export class Keyboard {
                         return row;
                     });
                 }
-            }
-            if (obj.lightModeStyle && obj.lightModeStyle.keyStyle && obj.lightModeStyle.keyStyle.__include) {
-                this.lightStyle = obj.lightModeStyle.keyStyle.__include.split("/").at(-1);
-            }
-            if (obj.darkModeStyle && obj.darkModeStyle.keyStyle && obj.darkModeStyle.keyStyle.__include) {
-                this.darkStyle = obj.darkModeStyle.keyStyle.__include.split("/").at(-1);
             }
         }
     }
@@ -853,20 +845,6 @@ export class Keyboard {
         obj.isPrimary = this.primary;
         obj.rows = this.rows.map((row) => row.toObjectV2());
         obj.buttonInsets = this.buttonInsets.toObjectV2();
-        if (this.lightStyle) {
-            obj.lightModeStyle = {
-                keyStyle: {
-                    __include: `customKeyStyles/${this.lightStyle}`,
-                },
-            };
-        }
-        if (this.darkStyle) {
-            obj.darkModeStyle = {
-                keyStyle: {
-                    __include: `customKeyStyles/${this.darkStyle}`,
-                },
-            };
-        }
         return obj;
     }
 
@@ -876,8 +854,6 @@ export class Keyboard {
         keyboard.primary = this.primary;
         keyboard.rows = this.rows.map((row) => row.clone());
         keyboard.buttonInsets = this.buttonInsets.clone();
-        keyboard.lightStyle = this.lightStyle;
-        keyboard.darkStyle = this.darkStyle;
         return keyboard;
     }
 }

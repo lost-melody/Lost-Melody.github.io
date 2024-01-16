@@ -246,7 +246,7 @@
         {:else if editorTab === editLayout}
             <!-- Layout Editor -->
             <div transition:fly={{ duration: 250, y: -64 }} class="w-full row-start-1 col-start-1">
-                <LayoutEdit bind:layout={currentLayout} {keyStyleNames} landscape={landscapePreview} />
+                <LayoutEdit bind:layout={currentLayout} landscape={landscapePreview} />
             </div>
         {:else if editorTab === editKey}
             <!-- Key Editor -->

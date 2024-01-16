@@ -7,7 +7,6 @@
 
     export var landscape: boolean = false;
     export var layout: Keyboard;
-    export var keyStyleNames: string[];
 
     /** 上移按鍵行 */
     function moveRowUp(index: number): void {
@@ -140,34 +139,4 @@
             </IconRange>
         {/each}
     </details>
-
-    <!-- 預設樣式設置 -->
-    <div class="p-2 w-full rounded-md hover:variant-ghost">
-        <div class="w-full p-2 gap-2 flex items-center rounded-md hover:variant-ghost">
-            <Icon icon="mdi:weather-sunny" />
-            <span class="grow shrink"> 預設亮色樣式 </span>
-            <select
-                bind:value={layout.lightStyle}
-                class="w-[50%] p-1 bg-transparent rounded-md variant-ringed hover:variant-ghost"
-            >
-                <option value="">None</option>
-                {#each keyStyleNames as name}
-                    <option value={name}>{name}</option>
-                {/each}
-            </select>
-        </div>
-        <div class="w-full p-2 gap-2 flex items-center rounded-md hover:variant-ghost">
-            <Icon icon="mdi:weather-night" />
-            <span class="grow shrink"> 預設暗色樣式 </span>
-            <select
-                bind:value={layout.darkStyle}
-                class="w-[50%] p-1 bg-transparent rounded-md variant-ringed hover:variant-ghost"
-            >
-                <option value="">None</option>
-                {#each keyStyleNames as name}
-                    <option value={name}>{name}</option>
-                {/each}
-            </select>
-        </div>
-    </div>
 </div>
