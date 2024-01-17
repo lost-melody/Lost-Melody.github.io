@@ -18,7 +18,7 @@
     /** 延遲作業 */
     function delay(f: () => void) {
         clearTimeout(timeout);
-        timeout = setTimeout(f, 2500);
+        timeout = setTimeout(f, 2000);
     }
     /** 切換模式 */
     function setMode(mode: number): number {

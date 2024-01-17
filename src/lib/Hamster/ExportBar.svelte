@@ -14,7 +14,7 @@
     export var keyboardLayouts: Keyboard[];
     export var keyStyles: KeyStyle[];
 
-    const timeoutDelay = 3000;
+    const timeoutDelay = 2000;
     // copy code
     var colorSchemasCopied = false;
     var keyboardLayoutCopied = false;
