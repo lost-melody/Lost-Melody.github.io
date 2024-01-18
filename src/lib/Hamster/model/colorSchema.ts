@@ -137,7 +137,7 @@ export class ColorSchema {
             text_color: this.text_color.abgr(),
             lower_edge_col: this.lower_edge_col.abgr(),
             shadow_color: this.shadow_color.abgr(),
-            shadow_size: this.shadow_size || undefined,
+            shadow_size: this.shadow_size,
             hilited_candidate_back_color: this.hilited_candidate_back_color.abgr(),
             hilited_candidate_text_color: this.hilited_candidate_text_color.abgr(),
             hilited_candidate_label_color: this.hilited_candidate_label_color.abgr(),
@@ -257,7 +257,7 @@ export class KeyStyle {
         obj.borderColor = this.borderColor.abgr();
         obj.lowerEdgeColor = this.lowerEdgeColor.abgr();
         obj.shadowColor = this.shadowColor.abgr();
-        obj.shadowSize = this.shadowSize || undefined;
+        obj.shadowSize = this.shadowSize;
         obj.fontSize = this.fontSize || undefined;
         obj.swipeFontSize = this.swipeFontSize || undefined;
         return obj;
