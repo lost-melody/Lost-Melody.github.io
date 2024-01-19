@@ -55,7 +55,7 @@
             <li>
                 補丁文件: 在 <code>Hamster/Rime/</code> 下新建文件 <code>hamster.custom.yaml</code>, 並填入以下内容:
             </li>
-            <pre class="pre text-sm rounded-md variant-soft">{patchCode}</pre>
+            <pre class="p-2 pre text-sm rounded-md variant-soft">{patchCode}</pre>
             <li>
                 配色方案: 將導出的配色方案文件移動到 <code>Hamster/Rime/</code> 並改名爲
                 <code>hamster_color_schemas.yaml</code>, 然後重新部署
@@ -80,6 +80,6 @@
         @apply ml-4 list-disc;
     }
     code {
-        @apply text-sm;
+        @apply code;
     }
 </style>
