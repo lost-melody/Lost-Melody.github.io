@@ -3,9 +3,18 @@
     import { flip } from "svelte/animate";
     import { KeyStyle } from "./model/colorSchema";
     import ColorSelector from "./ColorSelector.svelte";
+    import IconButton from "$lib/Component/IconButton.svelte";
     import KeyStylePreview from "./KeyStylePreview.svelte";
 
     export var keyStyles: KeyStyle[] = [];
+
+    var keyStyle: KeyStyle = new KeyStyle();
+    const copyKeyStyle = (index: number) => {
+        keyStyle = keyStyles[index].clone();
+    };
+    const pasteKeyStyle = (index: number) => {
+        keyStyles[index] = keyStyle.clone();
+    };
 </script>
 
 <div class="w-full p-1 gap-1 flex flex-col rounded-md variant-soft">
@@ -14,6 +23,18 @@
             <summary class="px-2 gap-1 flex items-center">
                 <span class="p-1 font-mono rounded variant-soft">{keyStyle.name}</span>
                 <span class="grow" />
+                <IconButton
+                    title="複製"
+                    icon={"mdi:content-copy"}
+                    on:click={() => copyKeyStyle(index)}
+                    class="gap-1 p-2 flex items-center rounded-md variant-ghost active:scale-90"
+                />
+                <IconButton
+                    title="粘貼"
+                    icon={"mdi:content-paste"}
+                    on:click={() => pasteKeyStyle(index)}
+                    class="gap-1 p-2 flex items-center rounded-md variant-ghost active:scale-90"
+                />
                 <KeyStylePreview {keyStyle} />
                 <KeyStylePreview pressed {keyStyle} />
                 <button

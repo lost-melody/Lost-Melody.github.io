@@ -20,6 +20,7 @@
     import ButtonInsets from "$lib/Hamster/ButtonInsets.svelte";
     import KeyEdit from "$lib/Hamster/KeyEditor.svelte";
     import KeyStyleEdit from "$lib/Hamster/KeyStyleEdit.svelte";
+    import Manual from "$lib/Hamster/Manual.svelte";
 
     import { loadSchemas, saveSchemas } from "$lib/Hamster/utils/colorschemas";
     import { loadKeyboards, saveKeyboards } from "$lib/Hamster/utils/keyboardlayouts";
@@ -293,5 +294,12 @@
                 <KeyStyleEdit bind:keyStyles />
             </div>
         {/if}
+    </div>
+
+    <div class="w-full max-w-[600px] mx-auto grid grid-cols-1 grid-rows-1">
+        <details class="p-2 w-full rounded-md hover:variant-ghost">
+            <summary class="max-w-[400px] mx-auto p-2">可能有用的簡易説明書</summary>
+            <Manual />
+        </details>
     </div>
 </div>
