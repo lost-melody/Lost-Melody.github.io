@@ -7,6 +7,9 @@
     import KeyStylePreview from "./KeyStylePreview.svelte";
 
     export var keyStyles: KeyStyle[] = [];
+    const sortKeyStyles = () => {
+        keyStyles.sort((a, b) => (a.name < b.name ? -1 : a.name === b.name ? 0 : 1));
+    };
 
     var keyStyle: KeyStyle = new KeyStyle();
     const copyKeyStyle = (index: number) => {
@@ -56,6 +59,10 @@
                         title="樣式標識名"
                         type="text"
                         bind:value={keyStyle.name}
+                        on:change={() => {
+                            sortKeyStyles();
+                            keyStyles = keyStyles;
+                        }}
                         placeholder="僅大小寫字母, 需確保唯一性"
                         class="w-[40%] p-1 bg-transparent rounded-md variant-ringed hover:variant-ghost"
                     />
@@ -106,6 +113,7 @@
         class="p-2 flex justify-center rounded hover:variant-ghost active:scale-95"
         on:click={() => {
             keyStyles.push(new KeyStyle());
+            sortKeyStyles();
             keyStyles = keyStyles;
         }}
     >

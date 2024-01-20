@@ -136,7 +136,7 @@
         on:click={exportKeyboardLayoutsV2}
         class={classNames}
     >
-        導出佈局文件 (索引按鍵樣式)
+        導出佈局·樣式索引
     </IconButton>
     <IconButton
         title="導出完整佈局 (所有按鍵樣式内聯, 文件無法導入回本頁面)"
@@ -144,6 +144,6 @@
         on:click={exportKeyboardLayoutsV2Full}
         class={classNames}
     >
-        導出完整佈局 (内聯按鍵樣式)
+        <span>導出佈局·樣式内聯 (<b>無法導入回本頁面</b>)</span>
     </IconButton>
 </div>
