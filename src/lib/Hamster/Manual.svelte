@@ -3,10 +3,10 @@
         "patch:\n" +
         "  # 下面兩行是導入自定義配色方案文件\n" +
         "  keyboard/colorSchemas:\n" +
-        "    __include: hamster_color_schemas:/keyboard/colorSchemas\n" +
+        "    __include: custom_color_schemas:/keyboard/colorSchemas\n" +
         "  # 下面兩行是導入自定義鍵盤佈局文件, 如果使用倉UI導入則不需要這兩行\n" +
         "  keyboards:\n" +
-        "    __include: hamster_keyboards:/keyboards";
+        "    __include: custom_keyboards:/keyboards";
 </script>
 
 <div class="p-2 rounded-md variant-soft">
@@ -58,7 +58,7 @@
             <pre class="p-2 pre text-sm rounded-md variant-soft">{patchCode}</pre>
             <li>
                 配色方案: 將導出的配色方案文件移動到 <code>Hamster/Rime/</code> 並改名爲
-                <code>hamster_color_schemas.yaml</code>, 然後重新部署
+                <code>custom_color_schemas.yaml</code>, 然後重新部署
             </li>
             <li>鍵盤佈局:</li>
             <ul>
@@ -68,7 +68,7 @@
                 </li>
                 <li>
                     方法二: 將導出的 <b>索引</b> 模式文件移動到 <code>Hamster/Rime/</code> 並改名爲
-                    <code>hamster_keyboards.yaml</code>, 然後重新部署
+                    <code>custom_keyboards.yaml</code>, 然後重新部署
                 </li>
             </ul>
         </ul>
