@@ -7,7 +7,7 @@
 
     import { exportFile } from "./utils/common";
     import { exportSchemas, importSchemas } from "./utils/colorschemas";
-    import { exportKeyboardsV2, exportKeyboardsV2Full, importKeyboards } from "./utils/keyboardlayouts";
+    import { exportKeyboardsV2, exportKeyboardsV2Inline, importKeyboards } from "./utils/keyboardlayouts";
     import { getDateTimeString } from "./utils/format";
 
     export var colorSchemas: ColorSchema[];
@@ -29,23 +29,23 @@
         setTimeout(() => (keyboardLayoutCopied = false), timeoutDelay);
         navigator.clipboard.writeText(exportKeyboardsV2(keyboardLayouts, keyStyles));
     };
-    const copyKeyboardLayoutsV2Full = () => {
+    const copyKeyboardLayoutsV2Inline = () => {
         keyboardLayoutFullCopied = true;
         setTimeout(() => (keyboardLayoutFullCopied = false), timeoutDelay);
-        navigator.clipboard.writeText(exportKeyboardsV2Full(keyboardLayouts, keyStyles));
+        navigator.clipboard.writeText(exportKeyboardsV2Inline(keyboardLayouts, keyStyles));
     };
     // export code
     const exportColorSchemas = () => {
         const data = exportSchemas(colorSchemas);
-        exportFile(data, `colorSchemas-${getDateTimeString()}.yaml`);
+        exportFile(data, `custom_color_schemas-${getDateTimeString()}.yaml`);
     };
     const exportKeyboardLayoutsV2 = () => {
         const data = exportKeyboardsV2(keyboardLayouts, keyStyles);
-        exportFile(data, `keyboards-v2-${getDateTimeString()}.yaml`);
+        exportFile(data, `custom_keyboards_indexed-${getDateTimeString()}.yaml`);
     };
-    const exportKeyboardLayoutsV2Full = () => {
-        const data = exportKeyboardsV2Full(keyboardLayouts, keyStyles);
-        exportFile(data, `keyboards-v2-${getDateTimeString()}.yaml`);
+    const exportKeyboardLayoutsV2Inline = () => {
+        const data = exportKeyboardsV2Inline(keyboardLayouts, keyStyles);
+        exportFile(data, `custom_keyboards_inlined-${getDateTimeString()}.yaml`);
     };
     // import code
     var importFileInput: HTMLInputElement;
@@ -118,10 +118,10 @@
         複製佈局代碼
     </IconButton>
     <IconButton
-        title="複製完整佈局代碼"
+        title="複製佈局代碼 (内聯)"
         disabled={keyboardLayoutFullCopied}
         icon={keyboardLayoutFullCopied ? "mdi:check" : "mdi:clipboard"}
-        on:click={copyKeyboardLayoutsV2Full}
+        on:click={copyKeyboardLayoutsV2Inline}
         class={classNames}
     >
         複製完整佈局代碼
@@ -139,9 +139,9 @@
         導出佈局·樣式索引
     </IconButton>
     <IconButton
-        title="導出完整佈局 (所有按鍵樣式内聯, 文件無法導入回本頁面)"
+        title="導出佈局文件 (所有按鍵樣式内聯, 文件無法導入回本頁面)"
         icon="mdi:export"
-        on:click={exportKeyboardLayoutsV2Full}
+        on:click={exportKeyboardLayoutsV2Inline}
         class={classNames}
     >
         <span>導出佈局·樣式内聯 (<b>無法導入回本頁面</b>)</span>

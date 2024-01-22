@@ -56,14 +56,16 @@
                     <Icon icon="mdi:rename-box" class="px-1 w-10 h-8" />
                     <span class="grow shrink"> 樣式唯一標識名 </span>
                     <input
-                        title="樣式標識名"
+                        title={"樣式標識名, 不可重複.\n" +
+                            "建議使用蛇形或駝峰命名: keyname_style_variant; keynameStyleVariant.\n" +
+                            "如: space_light_alphabet26, returnDarkNumeric."}
                         type="text"
                         bind:value={keyStyle.name}
                         on:change={() => {
                             sortKeyStyles();
                             keyStyles = keyStyles;
                         }}
-                        placeholder="僅大小寫字母, 需確保唯一性"
+                        placeholder="space_light_eng"
                         class="w-[40%] p-1 bg-transparent rounded-md variant-ringed hover:variant-ghost"
                     />
                 </div>

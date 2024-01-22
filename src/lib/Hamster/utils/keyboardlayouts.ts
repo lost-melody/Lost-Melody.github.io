@@ -25,7 +25,7 @@ export function exportKeyboardsV2(layouts: Keyboard[], keyStyles?: KeyStyle[]): 
     });
 }
 
-export function exportKeyboardsV2Full(layouts: Keyboard[], keyStyles?: KeyStyle[]): string {
+export function exportKeyboardsV2Inline(layouts: Keyboard[], keyStyles?: KeyStyle[]): string {
     var objList: any[] = layouts.map((keyboard) => keyboard.toObjectV2());
     var stylesMap: { [name: string]: object } | undefined;
     if (keyStyles) {

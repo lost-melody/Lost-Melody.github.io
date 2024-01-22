@@ -6,7 +6,7 @@
         "    __include: custom_color_schemas:/keyboard/colorSchemas\n" +
         "  # 下面兩行是導入自定義鍵盤佈局文件, 如果使用倉UI導入則不需要這兩行\n" +
         "  keyboards:\n" +
-        "    __include: custom_keyboards:/keyboards";
+        "    __include: custom_keyboards_indexed:/keyboards";
 </script>
 
 <div class="p-2 rounded-md variant-soft">
@@ -63,12 +63,13 @@
             <li>鍵盤佈局:</li>
             <ul>
                 <li>
-                    方法一: 將導出的 <b>内聯</b> 模式文件 <b>移動到 <code>Hamster/</code> 中</b>, 並在
-                    <i>鍵盤設置-鍵盤佈局</i> 頁面選擇導入該文件
+                    方法一: 將導出的 <b>内聯</b> 模式文件 <code>custom_keyboards_inlined-xxxx.yaml</code>
+                    <b>移動到 <code>Hamster/</code> 中</b>, 並在 <i>鍵盤設置-鍵盤佈局</i> 頁面選擇導入該文件
                 </li>
                 <li>
                     方法二: 將導出的 <b>索引</b> 模式文件移動到 <code>Hamster/Rime/</code> 並改名爲
-                    <code>custom_keyboards.yaml</code>, 然後重新部署
+                    <code>custom_keyboards_indexed.yaml</code>, 然後重新部署.
+                    <b>注意</b>: 如果曾經在鍵盤佈局頁面導入過文件, 則此方案無效, 需要先在倉APP的「關於」頁面重置界面設置
                 </li>
             </ul>
         </ul>
