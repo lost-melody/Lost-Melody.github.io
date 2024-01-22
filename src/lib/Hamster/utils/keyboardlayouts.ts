@@ -65,6 +65,19 @@ export function exportKeyboardsV2Inline(layouts: Keyboard[], keyStyles?: KeyStyl
     });
 }
 
+export function exportKeyStyles(keyStyles: KeyStyle[]): string {
+    var stylesMap: { [name: string]: object } | undefined;
+    if (keyStyles) {
+        stylesMap = {};
+        for (let style of keyStyles) {
+            stylesMap[style.name] = style.toObject();
+        }
+    }
+    return YAML.stringify({
+        customKeyStyles: stylesMap,
+    });
+}
+
 export function importKeyboards(obj: any): { keyboardLayouts: Keyboard[] | null; keyStyles: KeyStyle[] | null } {
     var keyboardLayouts: Keyboard[] | null = null;
     var keyStyles: KeyStyle[] | null = null;
