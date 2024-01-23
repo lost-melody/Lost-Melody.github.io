@@ -16,6 +16,33 @@
     function selectedValid(selected: { row: number; col: number }, layout: Keyboard): boolean {
         return selected.row < layout.rows.length && selected.col < layout.rows[selected.row].keys.length;
     }
+    /** 繼續編輯下一個按鍵 */
+    function selectNextKey() {
+        // 統計總數
+        var count = 0;
+        layout.rows.forEach((row) => {
+            row.keys.forEach((_) => count++);
+        });
+        // 總數爲零, 直接返回
+        if (!count) {
+            [selected.row, selected.col] = [0, 0];
+            return;
+        }
+        // 遍歷查找下一個按鍵
+        var { row, col } = selected;
+        col++;
+        while (!selectedValid({ row, col }, layout)) {
+            if (row >= layout.rows.length) {
+                [row, col] = [0, 0];
+            } else if (col >= layout.rows[row].keys.length) {
+                row++;
+                col = 0;
+            } else {
+                col++;
+            }
+        }
+        [selected.row, selected.col] = [row, col];
+    }
 
     /** 删除按鍵 */
     function delButton(): void {
@@ -63,6 +90,7 @@
         bind:clipAction
         {landscape}
         {keyStyleNames}
+        on:selectnext={selectNextKey}
         on:delkey={delButton}
         on:moveleft={moveBtnLeft}
         on:moveright={moveBtnRight}

@@ -19,11 +19,37 @@
         "mdi:gesture-swipe-right",
     ];
 
+    // 當樣式不存在時, 將按鍵樣式恢復爲空
+    $: {
+        let [lightStyleExists, darkStyleExists] = [false, false];
+        for (let keyStyleName of keyStyleNames) {
+            if ((!key.lightStyle || lightStyleExists) && (!key.darkStyle || darkStyleExists)) {
+                break;
+            }
+            if (key.lightStyle === keyStyleName) {
+                lightStyleExists = true;
+            }
+            if (key.darkStyle === keyStyleName) {
+                darkStyleExists = true;
+            }
+        }
+        if (!lightStyleExists) {
+            key.lightStyle = "";
+        }
+        if (!darkStyleExists) {
+            key.darkStyle = "";
+        }
+    }
+
     function activateSwipe(index: number): void {
         key.swipe[index].action.type = ActionType.character;
     }
 
     var dispatch = createEventDispatcher();
+    /** 選擇下一個按鍵 */
+    function selectNextKey(): void {
+        dispatch("selectnext");
+    }
     /** 發送删除按鍵事件 */
     function delKey(): void {
         dispatch("delkey");
@@ -206,7 +232,7 @@
                 bind:value={key.lightStyle}
                 class="w-[50%] p-1 bg-transparent rounded-md variant-ringed hover:variant-ghost"
             >
-                <option value="">None</option>
+                <option value="">none</option>
                 {#each keyStyleNames as name}
                     <option value={name}>{name}</option>
                 {/each}
@@ -219,7 +245,7 @@
                 bind:value={key.darkStyle}
                 class="w-[50%] p-1 bg-transparent rounded-md variant-ringed hover:variant-ghost"
             >
-                <option value="">None</option>
+                <option value="">none</option>
                 {#each keyStyleNames as name}
                     <option value={name}>{name}</option>
                 {/each}
@@ -300,6 +326,13 @@
             class="gap-1 p-2 flex items-center rounded-md variant-ghost active:scale-90"
         >
             <Icon height="20" icon="mdi:arrow-right" />
+        </button>
+        <button
+            title="繼續編輯下一個按鍵"
+            on:click={selectNextKey}
+            class="gap-1 p-2 flex items-center rounded-md variant-ghost active:scale-90"
+        >
+            <Icon height="20" icon="mdi:check-circle-outline" />
         </button>
     </div>
 </div>

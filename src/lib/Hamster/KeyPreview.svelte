@@ -73,7 +73,9 @@
             style:border-radius={`${cornerRadius}px`}
             style:border-color={borderColor}
             style:border-width={bgBtnDisplay ? `${borderWidth}px` : undefined}
-            style:box-shadow={bgBtnDisplay ? `0 ${shadowSize}px ${shadowSize}px 0px ${shadowColor}` : undefined}
+            style:box-shadow={bgBtnDisplay
+                ? `0 ${shadowSize && shadowSize + 1}px ${shadowSize && shadowSize + 1}px 0px ${shadowColor}`
+                : undefined}
             class="w-full h-full rounded-md relative"
             on:click={onClick}
         >

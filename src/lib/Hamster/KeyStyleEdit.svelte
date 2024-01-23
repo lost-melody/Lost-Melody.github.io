@@ -93,7 +93,7 @@
                 <div class="w-full gap-2 flex items-center">
                     <Icon icon="mdi:format-size" class="px-1 w-10 h-8" />
                     <span class="grow shrink"> 陰影大小 </span>
-                    <input type="range" min="0" max="12" bind:value={keyStyle.shadowSize} class="w-[30%]" />
+                    <input type="range" min="0" max="8" bind:value={keyStyle.shadowSize} class="w-[30%]" />
                     <span class="w-6 code"> {keyStyle.shadowSize} </span>
                 </div>
                 <div class="w-full gap-2 flex items-center">
