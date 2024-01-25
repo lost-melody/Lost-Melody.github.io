@@ -526,8 +526,8 @@ export class Key {
     /** 行寛百分比, 1~100 */
     width: number = 10;
     landscape: number = 10;
-    autoWidth: boolean = false;
-    autoLandscape: boolean = false;
+    autoWidth: boolean = true;
+    autoLandscape: boolean = true;
     label: string = "";
     loading: string = "";
     swipe: [Swipe, Swipe, Swipe, Swipe];
