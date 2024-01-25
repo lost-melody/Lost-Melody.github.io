@@ -129,7 +129,7 @@ export class Action {
             case ActionType.tab:
                 return "⇥";
             case ActionType.space:
-                return "____";
+                return "space";
             case ActionType.keyboardType:
                 switch (this.kbd) {
                     case KeyboardType.alphabetic:
@@ -194,7 +194,7 @@ export class Action {
             case ActionType.none:
                 return "";
             case ActionType.nextKeyboard:
-                return "⌘";
+                return "🌐";
             default:
                 return ActionType.none;
         }
