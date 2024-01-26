@@ -54,9 +54,9 @@ export var ActionNames: { [key: string]: string } = {
     [ActionType.tab]: "縮進",
     [ActionType.space]: "空格",
     [ActionType.character]: "字符",
-    [ActionType.characterMargin]: "佔位符",
+    [ActionType.characterMargin]: "佔位",
     [ActionType.keyboardType]: "鍵盤",
-    [ActionType.symbol]: "短語",
+    [ActionType.symbol]: "符號",
     [ActionType.shortCommand]: "命令",
     [ActionType.none]: "無",
     [ActionType.nextKeyboard]: "地球",
@@ -129,7 +129,7 @@ export class Action {
             case ActionType.tab:
                 return "⇥";
             case ActionType.space:
-                return "space";
+                return "空格";
             case ActionType.keyboardType:
                 switch (this.kbd) {
                     case KeyboardType.alphabetic:
@@ -191,12 +191,11 @@ export class Action {
                     default:
                         return this.cmd;
                 }
-            case ActionType.none:
-                return "";
             case ActionType.nextKeyboard:
                 return "🌐";
+            case ActionType.none:
             default:
-                return ActionType.none;
+                return "";
         }
     }
 

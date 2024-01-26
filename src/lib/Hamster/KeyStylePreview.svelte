@@ -33,7 +33,7 @@
                 style:color={pressed
                     ? keyStyle.pressedSwipeForegroundColor.rgba()
                     : keyStyle.swipeForegroundColor.rgba()}
-                style:font-size={`${keyStyle.swipeFontSize || 8}px`}
+                style:font-size={`${keyStyle.swipeFontSize || 6}px`}
                 class="w-full h-[20%] absolute -top-2 flex justify-around"
             >
                 {#each ["up", "dn"] as swipe}

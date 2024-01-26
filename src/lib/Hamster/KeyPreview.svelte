@@ -81,7 +81,7 @@
             <!-- swipe up and down -->
             <div
                 style:color={selected ? pressedSwipeColor : swipeColor}
-                style:font-size={`${swipeFont || 8}px`}
+                style:font-size={`${swipeFont || 6}px`}
                 class="w-full h-[20%] absolute -top-2 flex justify-around"
             >
                 {#each [key.swipe[2], key.swipe[1]] as swipe}
