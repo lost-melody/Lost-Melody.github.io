@@ -3,6 +3,10 @@
 
     export var pressed: boolean = false;
     export var keyStyle: KeyStyle;
+
+    $: shadowSize = keyStyle.shadowSize * 2;
+    $: shadowColor = keyStyle.shadowColor.clone();
+    $: shadowColor.alpha = shadowColor.alpha / (shadowSize || 2);
 </script>
 
 <div style:padding="8px 3px 4px 3px" style:width="32px" style:height="48px">
@@ -21,9 +25,7 @@
             style:border-radius={`${keyStyle.cornerRadius}px`}
             style:border-color={keyStyle.borderColor.rgba()}
             style:border-width={`${keyStyle.borderSize}px`}
-            style:box-shadow={`0 ${keyStyle.shadowSize && keyStyle.shadowSize + 1}px ${
-                keyStyle.shadowSize && keyStyle.shadowSize + 1
-            }px 0px ${keyStyle.shadowColor.rgba()}`}
+            style:box-shadow={`0 ${shadowSize}px ${shadowSize}px ${shadowColor.rgba()}`}
             class="w-full h-full border rounded-md relative"
         >
             <!-- swipe up and down -->

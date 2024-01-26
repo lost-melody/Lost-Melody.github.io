@@ -124,22 +124,22 @@
         複製配色代碼
     </IconButton>
     <IconButton
-        title="複製佈局代碼"
+        title="複制佈局代碼 (所有按鍵樣式存儲在customKeyStyles節點下)"
         disabled={keyboardLayoutCopied}
         icon={keyboardLayoutCopied ? "mdi:check" : "mdi:clipboard"}
         on:click={copyKeyboardLayoutsV2}
         class={classNames}
     >
-        複製佈局代碼
+        複製佈局代碼·樣式索引
     </IconButton>
     <IconButton
-        title="複製佈局代碼 (内聯)"
+        title="複制佈局代碼 (所有按鍵樣式内聯, 文件無法導入回本頁面)"
         disabled={keyboardLayoutFullCopied}
         icon={keyboardLayoutFullCopied ? "mdi:check" : "mdi:clipboard"}
         on:click={copyKeyboardLayoutsV2Inline}
         class={classNames}
     >
-        複製完整佈局代碼
+        複製佈局代碼·樣式内聯
     </IconButton>
     <IconButton
         title="複製按鍵樣式表"

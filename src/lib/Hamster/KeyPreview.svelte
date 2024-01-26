@@ -39,8 +39,9 @@
     $: borderWidth = keyStyle ? keyStyle.borderSize : 1;
     $: borderColor = keyStyle ? keyStyle.borderColor.rgba() : schema.border_color.rgba();
     $: bottomColor = keyStyle ? keyStyle.lowerEdgeColor.rgba() : schema.lower_edge_col.rgba();
-    $: shadowColor = keyStyle ? keyStyle.shadowColor.rgba() : schema.shadow_color.rgba();
-    $: shadowSize = keyStyle ? keyStyle.shadowSize : schema.shadow_size;
+    $: shadowSize = keyStyle ? keyStyle.shadowSize * 2 : schema.shadow_size * 2;
+    $: shadowColor = keyStyle ? keyStyle.shadowColor.clone() : schema.shadow_color.clone();
+    $: shadowColor.alpha = shadowColor.alpha / (shadowSize || 2);
     $: swipeFont = keyStyle ? keyStyle.swipeFontSize : schema.swipe_font_size;
     $: fontSize = keyStyle ? keyStyle.fontSize : schema.font_size;
 
@@ -73,9 +74,7 @@
             style:border-radius={`${cornerRadius}px`}
             style:border-color={borderColor}
             style:border-width={bgBtnDisplay ? `${borderWidth}px` : undefined}
-            style:box-shadow={bgBtnDisplay
-                ? `0 ${shadowSize && shadowSize + 1}px ${shadowSize && shadowSize + 1}px 0px ${shadowColor}`
-                : undefined}
+            style:box-shadow={bgBtnDisplay ? `0 ${shadowSize}px ${shadowSize}px ${shadowColor.rgba()}` : undefined}
             class="w-full h-full rounded-md relative"
             on:click={onClick}
         >
