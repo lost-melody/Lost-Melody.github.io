@@ -73,8 +73,10 @@ export function importKeyboards(obj: any): { keyboardLayouts: Keyboard[] | null;
             let styles = obj.customKeyStyles;
             keyStyles = Object.keys(styles).map((name) => {
                 let style = new KeyStyle();
-                style.name = name;
                 if (styles) style.fromObject(styles[name]);
+                if (!style.name) {
+                    style.name = name;
+                }
                 return style;
             });
         }
