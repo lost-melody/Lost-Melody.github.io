@@ -84,7 +84,7 @@
     const classNames = "h-8 w-full p-2 gap-2 flex items-center rounded-md hover:variant-ghost";
 </script>
 
-<div class="w-full gap-2 flex flex-col">
+<div class="w-full gap-1 flex flex-col">
     <!-- import -->
     <IconButton title="導入配色或佈局文件" icon="mdi:import" on:click={onClickImport} class={classNames}>
         導入配色/佈局
@@ -97,6 +97,16 @@
                 on:change={onImportYaml}
             />
         </div>
+    </IconButton>
+    <!-- export -->
+    <IconButton title="導出配色文件" icon="mdi:export" on:click={exportColorSchemas} class={classNames}>
+        導出配色文件
+    </IconButton>
+    <IconButton title="導出佈局文件" icon="mdi:export" on:click={exportKeyboardLayouts} class={classNames}>
+        <span>導出佈局文件</span>
+    </IconButton>
+    <IconButton title="導出按鍵樣式表" icon="mdi:export" on:click={exportKeyboardKeyStyles} class={classNames}>
+        <span>導出按鍵樣式表</span>
     </IconButton>
     <!-- copy -->
     <IconButton
@@ -125,15 +135,5 @@
         class={classNames}
     >
         複製按鍵樣式表
-    </IconButton>
-    <!-- export -->
-    <IconButton title="導出配色文件" icon="mdi:export" on:click={exportColorSchemas} class={classNames}>
-        導出配色文件
-    </IconButton>
-    <IconButton title="導出佈局文件" icon="mdi:export" on:click={exportKeyboardLayouts} class={classNames}>
-        <span>導出佈局文件</span>
-    </IconButton>
-    <IconButton title="導出按鍵樣式表" icon="mdi:export" on:click={exportKeyboardKeyStyles} class={classNames}>
-        <span>導出按鍵樣式表</span>
     </IconButton>
 </div>
