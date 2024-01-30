@@ -38,9 +38,11 @@
             <ul>
                 <li>從 <i>yaml</i> 文件的 <code>keyboard/colorSchemas</code> 節點導入配色方案</li>
                 <li>從 <i>yaml</i> 文件的 <code>keyboards</code> 節點導入鍵盤佈局</li>
+                <li>從 <i>yaml</i> 文件的 <code>customKeyStyles</code> 節點導入按鍵樣式</li>
             </ul>
             <li>導出配色方案: 將配色導出爲文件, 隨後可在倉APP中通過手動引用文件的方式應用</li>
             <li>導出鍵盤佈局: 將鍵盤佈局導出爲文件, 隨後在倉APP中手動引用文件或在佈局界面點擊加號導入</li>
+            <li>導出按鍵樣式表: 將自定義按鍵樣式導出爲文件, 用於存檔或隨後分享給他人使用</li>
         </ul>
 
         <li>應用到倉APP</li>

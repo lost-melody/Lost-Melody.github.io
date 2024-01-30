@@ -3,30 +3,8 @@ import YAML from "yaml";
 import { Keyboard } from "$lib/Hamster/model/keyboardLayout";
 import { KeyStyle } from "$lib/Hamster/model/colorSchema";
 
-export function exportKeyboards(layouts: Keyboard[]): string {
-    var objList = layouts.map((keyboard) => keyboard.toObject());
-    return YAML.stringify({
-        keyboards: objList,
-    });
-}
-
-export function exportKeyboardsV2(layouts: Keyboard[], keyStyles?: KeyStyle[]): string {
-    var objList = layouts.map((keyboard) => keyboard.toObjectV2());
-    var stylesMap: { [name: string]: object } | undefined;
-    if (keyStyles) {
-        stylesMap = {};
-        for (let style of keyStyles) {
-            stylesMap[style.name] = style.toObject();
-        }
-    }
-    return YAML.stringify({
-        customKeyStyles: stylesMap,
-        keyboards: objList,
-    });
-}
-
-export function exportKeyboardsV2Inline(layouts: Keyboard[], keyStyles?: KeyStyle[]): string {
-    var objList: any[] = layouts.map((keyboard) => keyboard.toObjectV2());
+export function exportKeyboards(layouts: Keyboard[], keyStyles?: KeyStyle[]): string {
+    var objList: any[] = layouts.map((keyboard) => keyboard.toObject());
     var stylesMap: { [name: string]: object } | undefined;
     if (keyStyles) {
         stylesMap = {};
@@ -61,6 +39,7 @@ export function exportKeyboardsV2Inline(layouts: Keyboard[], keyStyles?: KeyStyl
         }
     }
     return YAML.stringify({
+        customKeyStyles: stylesMap,
         keyboards: objList,
     });
 }
@@ -78,14 +57,6 @@ export function exportKeyStyles(keyStyles: KeyStyle[]): string {
     });
 }
 
-function storeKeyStyleToMap(stylesMap: { [name: string]: KeyStyle }, name: string, obj: any) {
-    if (!stylesMap[name]) {
-        var style: KeyStyle = new KeyStyle();
-        style.fromObject(obj);
-        stylesMap[name] = style;
-    }
-}
-
 export function importKeyboards(obj: any): { keyboardLayouts: Keyboard[] | null; keyStyles: KeyStyle[] | null } {
     var keyboardLayouts: Keyboard[] | null = null;
     var keyStyles: KeyStyle[] | null = null;
@@ -97,28 +68,6 @@ export function importKeyboards(obj: any): { keyboardLayouts: Keyboard[] | null;
                 keyboard.fromObject(o);
                 return keyboard;
             });
-            let stylesMap: { [name: string]: KeyStyle } = {};
-            for (let i = 0; i < layouts.length; i++) {
-                let layout = layouts[i];
-                for (let j = 0; j < layout.rows.length; j++) {
-                    let row = layout.rows[j];
-                    for (let k = 0; k < row.keys.length; k++) {
-                        let key = row.keys[k];
-                        // 若 Key 模型按鍵樣式結構中含有 name 字段, 則録入到樣式表中
-                        if (key.lightModeStyle && key.lightModeStyle.name) {
-                            let name: string = key.lightModeStyle.name;
-                            keyboardLayouts[i].rows[j].keys[k].lightStyle = name;
-                            storeKeyStyleToMap(stylesMap, name, key.lightModeStyle);
-                        }
-                        if (key.darkModeStyle && key.darkModeStyle.name) {
-                            let name: string = key.darkModeStyle.name;
-                            keyboardLayouts[i].rows[j].keys[k].darkStyle = name;
-                            storeKeyStyleToMap(stylesMap, name, key.darkModeStyle);
-                        }
-                    }
-                }
-            }
-            keyStyles = Object.values(stylesMap);
         }
         if (obj && obj.customKeyStyles) {
             let styles = obj.customKeyStyles;
@@ -154,6 +103,6 @@ export function loadKeyboards(key: string): Keyboard[] | null {
 }
 
 export function saveKeyboards(key: string, layouts: Keyboard[]) {
-    const objList = layouts.map((keyboard) => keyboard.toObjectV2());
+    const objList = layouts.map((keyboard) => keyboard.toObject());
     localStorage.setItem(key, YAML.stringify(objList));
 }

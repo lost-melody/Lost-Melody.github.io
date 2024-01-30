@@ -7,7 +7,7 @@
 
     import { exportFile } from "./utils/common";
     import { exportSchemas, importSchemas } from "./utils/colorschemas";
-    import { exportKeyboardsV2Inline, exportKeyStyles, importKeyboards } from "./utils/keyboardlayouts";
+    import { exportKeyboards, exportKeyStyles, importKeyboards } from "./utils/keyboardlayouts";
     import { getDateTimeString } from "./utils/format";
 
     export var colorSchemas: ColorSchema[];
@@ -24,10 +24,10 @@
         setTimeout(() => (colorSchemasCopied = false), timeoutDelay);
         navigator.clipboard.writeText(exportSchemas(colorSchemas));
     };
-    const copyKeyboardLayoutsV2Inline = () => {
+    const copyKeyboardLayouts = () => {
         keyboardLayoutInlineCopied = true;
         setTimeout(() => (keyboardLayoutInlineCopied = false), timeoutDelay);
-        navigator.clipboard.writeText(exportKeyboardsV2Inline(keyboardLayouts, keyStyles));
+        navigator.clipboard.writeText(exportKeyboards(keyboardLayouts, keyStyles));
     };
     const copyKeyboardKeyStyles = () => {
         keyStylesCopied = true;
@@ -39,8 +39,8 @@
         const data = exportSchemas(colorSchemas);
         exportFile(data, `custom_color_schemas-${getDateTimeString()}.yaml`);
     };
-    const exportKeyboardLayoutsV2Inline = () => {
-        const data = exportKeyboardsV2Inline(keyboardLayouts, keyStyles);
+    const exportKeyboardLayouts = () => {
+        const data = exportKeyboards(keyboardLayouts, keyStyles);
         exportFile(data, `custom_keyboards-${getDateTimeString()}.yaml`);
     };
     const exportKeyboardKeyStyles = () => {
@@ -112,7 +112,7 @@
         title="複制佈局代碼"
         disabled={keyboardLayoutInlineCopied}
         icon={keyboardLayoutInlineCopied ? "mdi:check" : "mdi:clipboard"}
-        on:click={copyKeyboardLayoutsV2Inline}
+        on:click={copyKeyboardLayouts}
         class={classNames}
     >
         複製佈局代碼
@@ -130,7 +130,7 @@
     <IconButton title="導出配色文件" icon="mdi:export" on:click={exportColorSchemas} class={classNames}>
         導出配色文件
     </IconButton>
-    <IconButton title="導出佈局文件" icon="mdi:export" on:click={exportKeyboardLayoutsV2Inline} class={classNames}>
+    <IconButton title="導出佈局文件" icon="mdi:export" on:click={exportKeyboardLayouts} class={classNames}>
         <span>導出佈局文件</span>
     </IconButton>
     <IconButton title="導出按鍵樣式表" icon="mdi:export" on:click={exportKeyboardKeyStyles} class={classNames}>

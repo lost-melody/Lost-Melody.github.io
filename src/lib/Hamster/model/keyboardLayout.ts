@@ -296,36 +296,7 @@ export class Action {
         this.type = ActionType.none;
     }
 
-    toObject(): string {
-        switch (this.type) {
-            case ActionType.backspace:
-            case ActionType.enter:
-            case ActionType.shift:
-            case ActionType.tab:
-            case ActionType.space:
-            case ActionType.nextKeyboard:
-            case ActionType.none:
-                return this.type;
-            case ActionType.character:
-            case ActionType.characterMargin:
-            case ActionType.symbol:
-                return `${this.type}(${this.text})`;
-            case ActionType.keyboardType:
-                if (this.kbd === KeyboardType.custom) {
-                    return `${this.type}(${this.kbd}(${this.text}))`;
-                }
-                return `${this.type}(${this.kbd})`;
-            case ActionType.shortCommand:
-                if (this.cmd === ShortCmd.sendkeys) {
-                    return `${this.type}(${this.cmd}(${this.text}))`;
-                }
-                return `${this.type}(#${this.cmd})`;
-            default:
-                return ActionType.none;
-        }
-    }
-
-    toObjectV2(): any {
+    toObject(): any {
         switch (this.type) {
             case ActionType.backspace:
             case ActionType.enter:
@@ -418,12 +389,7 @@ export class ButtonInsets {
         }
     }
 
-    toObject(): string {
-        var [l, b, t, r] = this.insets;
-        return this.expr ? `left(${l}),bottom(${b}),top(${t}),right(${r})` : `${this.value}`;
-    }
-
-    toObjectV2(): any {
+    toObject(): any {
         var [l, b, t, r] = this.insets;
         return this.expr ? { left: l, bottom: b, top: t, right: r } : this.value;
     }
@@ -469,17 +435,6 @@ export class Swipe {
         return obj;
     }
 
-    toObjectV2(): object {
-        var obj: any = {};
-        obj.action = this.action.toObjectV2();
-        if (this.label) {
-            obj.label = this.label;
-        }
-        obj.display = this.display;
-        obj.processByRIME = this.processByRIME;
-        return obj;
-    }
-
     clone(): Swipe {
         let swipe = new Swipe();
         swipe.action = this.action.clone();
@@ -500,9 +455,9 @@ export class Callout {
         if (typeof obj.label === "string") this.label = obj.label;
     }
 
-    toObjectV2(): object {
+    toObject(): object {
         var obj: any = {};
-        obj.action = this.action.toObjectV2();
+        obj.action = this.action.toObject();
         if (this.label) {
             obj.label = this.label;
         }
@@ -621,11 +576,19 @@ export class Key {
                     this.callout.push(callout);
                 }
             }
-            if (obj.lightModeStyle && obj.lightModeStyle.__include) {
-                this.lightStyle = obj.lightModeStyle.__include.split("/").at(-1);
+            if (obj.lightModeStyle) {
+                if (obj.lightModeStyle.__include) {
+                    this.lightStyle = obj.lightModeStyle.__include.split("/").at(-1);
+                } else if (obj.lightModeStyle.name) {
+                    this.lightStyle = obj.lightModeStyle.name;
+                }
             }
-            if (obj.darkModeStyle && obj.darkModeStyle.__include) {
-                this.darkStyle = obj.darkModeStyle.__include.split("/").at(-1);
+            if (obj.darkModeStyle) {
+                if (obj.darkModeStyle.__include) {
+                    this.darkStyle = obj.darkModeStyle.__include.split("/").at(-1);
+                } else if (obj.darkModeStyle.name) {
+                    this.darkStyle = obj.darkModeStyle.name;
+                }
             }
         }
     }
@@ -633,46 +596,6 @@ export class Key {
     toObject(): object {
         var obj: any = {};
         obj.action = this.action.toObject();
-        if (!this.processByRIME) obj.processByRIME = this.processByRIME;
-        if (
-            (!this.autoLandscape && this.landscape === 0) ||
-            (this.autoWidth && this.autoLandscape) ||
-            (!this.autoWidth && !this.autoLandscape && this.width === this.landscape)
-        ) {
-            obj.width = this.autoWidth ? "available" : `percentage(${this.width / 100})`;
-        } else {
-            obj.width = {
-                portrait: this.autoWidth ? "available" : `percentage(${this.width / 100})`,
-                landscape: this.autoLandscape ? "available" : `percentage(${this.landscape / 100})`,
-            };
-        }
-        if (this.label) {
-            if (this.loading && this.action.type === ActionType.space) {
-                obj.label = {
-                    text: this.label,
-                    loadingText: this.loading,
-                };
-            } else {
-                obj.label = this.label;
-            }
-        }
-        var swipes: object[] = [];
-        for (let i of [2, 1, 0, 3]) {
-            if (this.swipe[i].action.type !== ActionType.none) {
-                let swipe: any = this.swipe[i].toObject();
-                swipe.direction = Object.values(Direction)[i];
-                swipes.push(swipe);
-            }
-        }
-        if (swipes.length > 0) {
-            obj.swipe = swipes;
-        }
-        return obj;
-    }
-
-    toObjectV2(): object {
-        var obj: any = {};
-        obj.action = this.action.toObjectV2();
         if (!this.processByRIME) obj.processByRIME = this.processByRIME;
         if (
             (!this.autoLandscape && this.landscape === 0) ||
@@ -699,7 +622,7 @@ export class Key {
         var swipes: object[] = [];
         for (let i of [2, 1, 0, 3]) {
             if (this.swipe[i].action.type !== ActionType.none) {
-                let swipe: any = this.swipe[i].toObjectV2();
+                let swipe: any = this.swipe[i].toObject();
                 swipe.direction = Object.values(Direction)[i];
                 swipes.push(swipe);
             }
@@ -708,7 +631,7 @@ export class Key {
             obj.swipe = swipes;
         }
         if (this.callout.length > 0) {
-            obj.callout = this.callout.map((callout) => callout.toObjectV2());
+            obj.callout = this.callout.map((callout) => callout.toObject());
         }
         if (this.lightStyle) {
             obj.lightModeStyle = {
@@ -780,20 +703,6 @@ export class Row {
         return obj;
     }
 
-    toObjectV2(): object {
-        var obj: any = {};
-        obj.keys = this.keys.map((key) => key.toObjectV2());
-        if (this.landscapeHeight > 0 && this.landscapeHeight !== this.rowHeight) {
-            obj.rowHeight = {
-                portrait: this.rowHeight,
-                landscape: this.landscapeHeight,
-            };
-        } else if (this.rowHeight > 0) {
-            obj.rowHeight = this.rowHeight;
-        }
-        return obj;
-    }
-
     clone(): Row {
         let row = new Row();
         row.keys = this.keys.map((key) => key.clone());
@@ -835,15 +744,6 @@ export class Keyboard {
         obj.isPrimary = this.primary;
         obj.rows = this.rows.map((row) => row.toObject());
         obj.buttonInsets = this.buttonInsets.toObject();
-        return obj;
-    }
-
-    toObjectV2(): object {
-        var obj: any = {};
-        obj.name = this.name;
-        obj.isPrimary = this.primary;
-        obj.rows = this.rows.map((row) => row.toObjectV2());
-        obj.buttonInsets = this.buttonInsets.toObjectV2();
         return obj;
     }
 
