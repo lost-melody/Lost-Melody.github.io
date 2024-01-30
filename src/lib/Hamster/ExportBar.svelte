@@ -7,12 +7,7 @@
 
     import { exportFile } from "./utils/common";
     import { exportSchemas, importSchemas } from "./utils/colorschemas";
-    import {
-        exportKeyboardsV2,
-        exportKeyboardsV2Inline,
-        exportKeyStyles,
-        importKeyboards,
-    } from "./utils/keyboardlayouts";
+    import { exportKeyboardsV2Inline, exportKeyStyles, importKeyboards } from "./utils/keyboardlayouts";
     import { getDateTimeString } from "./utils/format";
 
     export var colorSchemas: ColorSchema[];
@@ -22,22 +17,16 @@
     const timeoutDelay = 2000;
     // copy code
     var colorSchemasCopied = false;
-    var keyboardLayoutCopied = false;
-    var keyboardLayoutFullCopied = false;
+    var keyboardLayoutInlineCopied = false;
     var keyStylesCopied = false;
     const copyColorSchemas = () => {
         colorSchemasCopied = true;
         setTimeout(() => (colorSchemasCopied = false), timeoutDelay);
         navigator.clipboard.writeText(exportSchemas(colorSchemas));
     };
-    const copyKeyboardLayoutsV2 = () => {
-        keyboardLayoutCopied = true;
-        setTimeout(() => (keyboardLayoutCopied = false), timeoutDelay);
-        navigator.clipboard.writeText(exportKeyboardsV2(keyboardLayouts, keyStyles));
-    };
     const copyKeyboardLayoutsV2Inline = () => {
-        keyboardLayoutFullCopied = true;
-        setTimeout(() => (keyboardLayoutFullCopied = false), timeoutDelay);
+        keyboardLayoutInlineCopied = true;
+        setTimeout(() => (keyboardLayoutInlineCopied = false), timeoutDelay);
         navigator.clipboard.writeText(exportKeyboardsV2Inline(keyboardLayouts, keyStyles));
     };
     const copyKeyboardKeyStyles = () => {
@@ -50,13 +39,9 @@
         const data = exportSchemas(colorSchemas);
         exportFile(data, `custom_color_schemas-${getDateTimeString()}.yaml`);
     };
-    const exportKeyboardLayoutsV2 = () => {
-        const data = exportKeyboardsV2(keyboardLayouts, keyStyles);
-        exportFile(data, `custom_keyboards_indexed-${getDateTimeString()}.yaml`);
-    };
     const exportKeyboardLayoutsV2Inline = () => {
         const data = exportKeyboardsV2Inline(keyboardLayouts, keyStyles);
-        exportFile(data, `custom_keyboards_inlined-${getDateTimeString()}.yaml`);
+        exportFile(data, `custom_keyboards-${getDateTimeString()}.yaml`);
     };
     const exportKeyboardKeyStyles = () => {
         const data = exportKeyStyles(keyStyles);
@@ -101,7 +86,7 @@
 
 <div class="w-full gap-2 flex flex-col">
     <!-- import -->
-    <IconButton title="導入配色或佈局文件" icon="mdi:export" on:click={onClickImport} class={classNames}>
+    <IconButton title="導入配色或佈局文件" icon="mdi:import" on:click={onClickImport} class={classNames}>
         導入配色/佈局
         <div class="w-0 h-0 overflow-hidden">
             <input
@@ -124,22 +109,13 @@
         複製配色代碼
     </IconButton>
     <IconButton
-        title="複制佈局代碼 (所有按鍵樣式存儲在customKeyStyles節點下)"
-        disabled={keyboardLayoutCopied}
-        icon={keyboardLayoutCopied ? "mdi:check" : "mdi:clipboard"}
-        on:click={copyKeyboardLayoutsV2}
-        class={classNames}
-    >
-        複製佈局代碼·樣式索引
-    </IconButton>
-    <IconButton
-        title="複制佈局代碼 (所有按鍵樣式内聯, 文件無法導入回本頁面)"
-        disabled={keyboardLayoutFullCopied}
-        icon={keyboardLayoutFullCopied ? "mdi:check" : "mdi:clipboard"}
+        title="複制佈局代碼"
+        disabled={keyboardLayoutInlineCopied}
+        icon={keyboardLayoutInlineCopied ? "mdi:check" : "mdi:clipboard"}
         on:click={copyKeyboardLayoutsV2Inline}
         class={classNames}
     >
-        複製佈局代碼·樣式内聯
+        複製佈局代碼
     </IconButton>
     <IconButton
         title="複製按鍵樣式表"
@@ -154,21 +130,8 @@
     <IconButton title="導出配色文件" icon="mdi:export" on:click={exportColorSchemas} class={classNames}>
         導出配色文件
     </IconButton>
-    <IconButton
-        title="導出佈局文件 (所有按鍵樣式存儲在customKeyStyles節點下)"
-        icon="mdi:export"
-        on:click={exportKeyboardLayoutsV2}
-        class={classNames}
-    >
-        導出佈局·樣式索引
-    </IconButton>
-    <IconButton
-        title="導出佈局文件 (所有按鍵樣式内聯, 文件無法導入回本頁面)"
-        icon="mdi:export"
-        on:click={exportKeyboardLayoutsV2Inline}
-        class={classNames}
-    >
-        <span>導出佈局·樣式内聯 (<b>無法導入回本頁面</b>)</span>
+    <IconButton title="導出佈局文件" icon="mdi:export" on:click={exportKeyboardLayoutsV2Inline} class={classNames}>
+        <span>導出佈局文件</span>
     </IconButton>
     <IconButton title="導出按鍵樣式表" icon="mdi:export" on:click={exportKeyboardKeyStyles} class={classNames}>
         <span>導出按鍵樣式表</span>

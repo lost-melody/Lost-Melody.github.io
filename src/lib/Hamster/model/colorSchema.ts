@@ -246,6 +246,7 @@ export class KeyStyle {
 
     toObject(): object {
         var obj: any = {};
+        obj.name = this.name;
         obj.buttonBackgroundColor = this.buttonBackgroundColor.abgr();
         obj.pressedButtonBackgroundColor = this.pressedButtonBackgroundColor.abgr();
         obj.buttonForegroundColor = this.buttonForegroundColor.abgr();
@@ -265,6 +266,7 @@ export class KeyStyle {
 
     fromObject(obj: any): void {
         if (obj && typeof obj === "object") {
+            this.name = obj.name || "";
             this.buttonBackgroundColor.fromAbgr(asString(obj.buttonBackgroundColor, "0xffffff"));
             this.pressedButtonBackgroundColor.fromAbgr(asString(obj.pressedButtonBackgroundColor, "0xd0d0d0"));
             this.buttonForegroundColor.fromAbgr(asString(obj.buttonForegroundColor, "0x000000"));
