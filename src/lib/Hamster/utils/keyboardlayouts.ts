@@ -71,14 +71,15 @@ export function importKeyboards(obj: any): { keyboardLayouts: Keyboard[] | null;
         }
         if (obj && obj.customKeyStyles) {
             let styles = obj.customKeyStyles;
-            keyStyles = Object.keys(styles).map((name) => {
-                let style = new KeyStyle();
-                if (styles) style.fromObject(styles[name]);
-                if (!style.name) {
+            keyStyles = Object.keys(styles)
+                .map((name) => {
+                    let style = new KeyStyle();
                     style.name = name;
-                }
-                return style;
-            });
+                    if (styles) style.fromObject(styles[name]);
+                    return style;
+                })
+                .filter((style) => style.name)
+                .sort((a, b) => (a.name < b.name ? -1 : a.name === b.name ? 0 : 1));
         }
     } catch (err) {
         alert(`failed to parse file: ${(err as Error).message}`);
