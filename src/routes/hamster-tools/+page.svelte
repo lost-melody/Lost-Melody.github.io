@@ -16,6 +16,7 @@
     import ExportBar from "$lib/Hamster/ExportBar.svelte";
     import BatchKeyEdit from "$lib/Hamster/BatchKeyEdit.svelte";
     import PredefinedLayout from "$lib/Hamster/PredefinedLayout.svelte";
+    import CustomLayout from "$lib/Hamster/CustomLayout.svelte";
     import ButtonInsets from "$lib/Hamster/ButtonInsets.svelte";
     import KeyEdit from "$lib/Hamster/KeyEditor.svelte";
     import KeyStyleEdit from "$lib/Hamster/KeyStyleEdit.svelte";
@@ -42,10 +43,11 @@
     }
 
     var actionTab = 0;
-    const [actExport, actTemp, actBatch] = [1, 2, 3];
+    const [actExport, actTemp, actSave, actBatch] = [1, 2, 3, 4];
     const actNames = {
         [actExport]: "導出",
         [actTemp]: "模板",
+        [actSave]: "檔案",
         [actBatch]: "操作",
     };
     const selectActTab = (tab: number) => {
@@ -118,7 +120,7 @@
 <div class="flex flex-col py-2 gap-2">
     <!-- Action Tab Bar -->
     <div class="h-8 w-full max-w-[400px] mx-auto flex gap-2">
-        {#each [actExport, actTemp, actBatch] as tab}
+        {#each [actExport, actTemp, actSave, actBatch] as tab}
             <button
                 on:click={() => {
                     selectActTab(tab);
@@ -144,6 +146,13 @@
                 class="p-2 w-full max-h-[25vh] overflow-y-auto rounded-md variant-ghost row-start-1 col-start-1"
             >
                 <PredefinedLayout bind:layout={currentLayout} />
+            </div>
+        {:else if actionTab === actSave}
+            <div
+                transition:fly={{ duration: 250, y: -32 }}
+                class="p-2 w-full max-h-[25vh] overflow-y-auto rounded-md variant-ghost row-start-1 col-start-1"
+            >
+                <CustomLayout bind:layout={currentLayout} />
             </div>
         {:else if actionTab === actBatch}
             <div
