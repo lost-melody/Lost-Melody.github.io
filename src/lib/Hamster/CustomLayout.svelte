@@ -24,7 +24,7 @@
                 var obj = YAML.parse(keyboardData);
                 return obj;
             } catch (err) {
-                console.error("parse custom keyboard failed:", (err as Error).message);
+                alert(`parse custom keyboard failed: ${(err as Error).message}`);
             }
         }
         return { name: nameEmpty };
@@ -51,7 +51,7 @@
                 localStorage.setItem(customKeyboardKey(index), keyboardData);
                 customKeyboards[index] = obj;
             } catch (err) {
-                console.error("save to local storage failed:", (err as Error).message);
+                alert(`save to local storage failed: ${(err as Error).message}`);
             }
         }
     }

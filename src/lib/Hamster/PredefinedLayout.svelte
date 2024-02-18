@@ -11,7 +11,7 @@
             var keyboardsObj = YAML.parse(keyboardsYaml);
             return keyboardsObj.keyboards as object[];
         } catch (err) {
-            console.error("parse keyboards.yaml failed:", (err as Error).message);
+            alert(`parse keyboards.yaml failed: ${(err as Error).message}`);
         }
         return [];
     }

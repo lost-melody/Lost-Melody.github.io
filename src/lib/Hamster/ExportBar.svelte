@@ -54,7 +54,7 @@
         try {
             obj = YAML.parse(data, { maxAliasCount: -1 });
         } catch (err) {
-            console.warn("failed to parse file:", (err as Error).message);
+            alert(`failed to parse file: ${(err as Error).message}`);
             return;
         }
         const schemas = importSchemas(obj);
