@@ -6,7 +6,7 @@ import { KeyStyle } from "$lib/Hamster/model/colorSchema";
 export function exportKeyboards(layouts: Keyboard[], keyStyles?: KeyStyle[]): string {
     var objList: any[] = layouts.map((keyboard) => keyboard.toObject());
     var stylesMap: { [name: string]: object } | undefined;
-    if (keyStyles) {
+    if (keyStyles && keyStyles.length != 0) {
         stylesMap = {};
         for (let style of keyStyles) {
             stylesMap[style.name] = style.toObject();

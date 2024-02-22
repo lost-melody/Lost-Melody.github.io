@@ -18,5 +18,6 @@ export function getDateTimeString(now?: Date): string {
     }
     var hour = zeroPaddedInteger(2, now.getHours());
     var minute = zeroPaddedInteger(2, now.getMinutes());
-    return `${getDateString(now)}${hour}${minute}`;
+    var second = zeroPaddedInteger(2, now.getSeconds());
+    return `${getDateString(now)}${hour}${minute}${second}`;
 }
