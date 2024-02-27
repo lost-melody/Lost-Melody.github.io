@@ -38,7 +38,7 @@
     $: cornerRadius = keyStyle ? keyStyle.cornerRadius : schema.corner_radius;
     $: borderWidth = keyStyle ? keyStyle.borderSize : 1;
     $: borderColor = keyStyle ? keyStyle.borderColor.rgba() : schema.border_color.rgba();
-    $: bottomColor = keyStyle ? keyStyle.lowerEdgeColor.rgba() : schema.lower_edge_col.rgba();
+    $: bottomColor = keyStyle ? keyStyle.lowerEdgeColor.rgba() : schema.lower_edge_color.rgba();
     $: shadowSize = keyStyle ? keyStyle.shadowSize * 2 : schema.shadow_size * 2;
     $: shadowColor = keyStyle ? keyStyle.shadowColor.clone() : schema.shadow_color.clone();
     $: shadowColor.alpha = shadowColor.alpha / (shadowSize || 2);

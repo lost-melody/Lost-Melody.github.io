@@ -59,7 +59,7 @@
         <span class="w-6 code"> {schema.swipe_font_size} </span>
     </div>
     <ColorSelector title="按鍵邊框" bind:color={schema.border_color} />
-    <ColorSelector title="按鍵下邊框" bind:color={schema.lower_edge_col} />
+    <ColorSelector title="按鍵下邊框" bind:color={schema.lower_edge_color} />
     <ColorSelector title="按鍵陰影" bind:color={schema.shadow_color} />
     <div class="w-full gap-2 flex items-center">
         <Icon icon="mdi:format-size" class="p-2 w-10 h-10" />

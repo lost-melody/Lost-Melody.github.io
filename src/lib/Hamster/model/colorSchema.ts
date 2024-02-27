@@ -94,7 +94,7 @@ export class ColorSchema {
     /** 預編輯文本 */
     text_color: Color = new Color("#000000");
     /** 按鍵下邊框 */
-    lower_edge_col: Color = new Color("#000000");
+    lower_edge_color: Color = new Color("#000000");
     /** 按鍵陰影 */
     shadow_color: Color = new Color("#000000");
     /** 按鍵陰影大小 */
@@ -135,7 +135,7 @@ export class ColorSchema {
             corner_radius: this.corner_radius,
             border_color: this.border_color.abgr(),
             text_color: this.text_color.abgr(),
-            lower_edge_col: this.lower_edge_col.abgr(),
+            lower_edge_color: this.lower_edge_color.abgr(),
             shadow_color: this.shadow_color.abgr(),
             shadow_size: this.shadow_size,
             hilited_candidate_back_color: this.hilited_candidate_back_color.abgr(),
@@ -178,7 +178,7 @@ export class ColorSchema {
             this.corner_radius = asNumber(obj.corner_radius, 5);
             this.border_color.fromAbgr(asString(obj.border_color, "0x000000"));
             this.text_color.fromAbgr(asString(obj.text_color, "0x000000"));
-            this.lower_edge_col.fromAbgr(asString(obj.lower_edge_col, "0x000000"));
+            this.lower_edge_color.fromAbgr(asString(obj.lower_edge_color, "0x000000"));
             this.shadow_color.fromAbgr(asString(obj.shadow_color, "0x000000"));
             this.shadow_size = asNumber(obj.shadow_size);
             this.hilited_candidate_back_color.fromAbgr(asString(obj.hilited_candidate_back_color, "0xffffff"));
@@ -210,7 +210,7 @@ export class ColorSchema {
         schema.corner_radius = this.corner_radius;
         schema.border_color = this.border_color.clone();
         schema.text_color = this.text_color.clone();
-        schema.lower_edge_col = this.lower_edge_col.clone();
+        schema.lower_edge_color = this.lower_edge_color.clone();
         schema.shadow_color = this.shadow_color.clone();
         schema.shadow_size = this.shadow_size;
         schema.hilited_candidate_back_color = this.hilited_candidate_back_color.clone();
