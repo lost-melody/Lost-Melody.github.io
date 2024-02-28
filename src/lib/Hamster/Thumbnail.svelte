@@ -14,7 +14,7 @@
     <div class="w-full grow shrink flex">
         {#each row.keys as key}
             <div
-                class="h-full px-[1px] py-[2px]"
+                class="h-full p-px"
                 style:width={`${key.autoWidth ? 10 : key.width}%`}
                 class:grow={key.autoWidth}
                 class:shrink={key.autoWidth}

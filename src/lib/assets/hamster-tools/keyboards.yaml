@@ -1,44 +1,4 @@
 keyboards:
-  - name: 空模板
-    rows:
-      - keys: []
-      - keys: []
-      - keys: []
-      - keys: []
-  - name: 九宫數字
-    rows:
-      - keys:
-          - action: character(+)
-            width: percentage(0.16)
-          - action: character(1)
-          - action: character(2)
-          - action: character(3)
-          - action: character(:)
-            width: percentage(0.16)
-      - keys:
-          - action: character(-)
-            width: percentage(0.16)
-          - action: character(4)
-          - action: character(5)
-          - action: character(6)
-          - action: character(.)
-            width: percentage(0.16)
-      - keys:
-          - action: character(*)
-            width: percentage(0.16)
-          - action: character(7)
-          - action: character(8)
-          - action: character(9)
-          - action: backspace
-            width: percentage(0.16)
-      - keys:
-          - action: character(/)
-            width: percentage(0.16)
-          - action: keyboardType(chinese)
-          - action: character(0)
-          - action: space
-          - action: enter
-            width: percentage(0.16)
   - name: 26鍵字母
     rows:
       - keys:
@@ -91,6 +51,40 @@ keyboards:
           - action: character(.)
           - action: enter
             width: percentage(0.2)
+  - name: 九宫數字
+    rows:
+      - keys:
+          - action: character(+)
+            width: percentage(0.16)
+          - action: character(1)
+          - action: character(2)
+          - action: character(3)
+          - action: character(:)
+            width: percentage(0.16)
+      - keys:
+          - action: character(-)
+            width: percentage(0.16)
+          - action: character(4)
+          - action: character(5)
+          - action: character(6)
+          - action: character(.)
+            width: percentage(0.16)
+      - keys:
+          - action: character(*)
+            width: percentage(0.16)
+          - action: character(7)
+          - action: character(8)
+          - action: character(9)
+          - action: backspace
+            width: percentage(0.16)
+      - keys:
+          - action: character(/)
+            width: percentage(0.16)
+          - action: keyboardType(chinese)
+          - action: character(0)
+          - action: space
+          - action: enter
+            width: percentage(0.16)
   - name: 數字符號
     rows:
       - keys:

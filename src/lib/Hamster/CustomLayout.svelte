@@ -1,34 +1,17 @@
 <script lang="ts">
-    import { browser } from "$app/environment";
     import YAML from "yaml";
     import KeyboardLoad from "./KeyboardLoad.svelte";
     import type { Keyboard } from "./model/keyboardLayout";
 
     export var layout: Keyboard;
+    /** 自定義鍵盤存儲位 */
+    export var customKeyboards: object[];
 
     const nameEmpty = "空的";
     /** LocalStorage 自定義鍵檔案鍵名 */
     function customKeyboardKey(index: number): string {
         return `customKeyboard${index}`;
     }
-    /** 自定義鍵盤存儲位 */
-    var customKeyboards: object[] = new Array(10).fill(0).map((_, index) => {
-        if (!browser) {
-            // server 端渲染, 没有 localStorage 接口
-            return { name: nameEmpty };
-        }
-
-        var keyboardData = localStorage.getItem(customKeyboardKey(index));
-        if (keyboardData) {
-            try {
-                var obj = YAML.parse(keyboardData);
-                return obj;
-            } catch (err) {
-                alert(`parse custom keyboard failed: ${(err as Error).message}`);
-            }
-        }
-        return { name: nameEmpty };
-    });
     /** 加載自定義鍵盤檔案 */
     function loadCustom(index: number): void {
         if (layout && customKeyboards[index]) {
