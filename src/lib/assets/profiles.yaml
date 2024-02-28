@@ -8,8 +8,10 @@ profiles:
       - 雞蛋餅輸入法開發者
       - 倉輸入法佈局編輯器
     links:
-      - label: 本頁
+      - label: 主頁
         address: https://lost-melody.github.io
+      - label: 主頁 (鏡像)
+        address: https://lost-melody.pages.dev
       - label: 博客
         address: https://www.cnblogs.com/lost-melody
       - label: 雞蛋餅輸入法
