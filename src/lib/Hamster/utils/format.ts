@@ -12,12 +12,19 @@ export function getDateString(now?: Date): string {
     return `${year}${month}${date}`;
 }
 
-export function getDateTimeString(now?: Date): string {
+export function getTimeString(now?: Date): string {
     if (!now) {
         now = new Date();
     }
     var hour = zeroPaddedInteger(2, now.getHours());
     var minute = zeroPaddedInteger(2, now.getMinutes());
     var second = zeroPaddedInteger(2, now.getSeconds());
-    return `${getDateString(now)}${hour}${minute}${second}`;
+    return `${hour}${minute}${second}`;
+}
+
+export function getDateTimeString(now?: Date): string {
+    if (!now) {
+        now = new Date();
+    }
+    return `${getDateString(now)}-${getTimeString(now)}`;
 }
