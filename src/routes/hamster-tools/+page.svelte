@@ -4,7 +4,6 @@
     import { fly } from "svelte/transition";
     import { localStorageStore } from "@skeletonlabs/skeleton";
     import Icon from "@iconify/svelte";
-    import YAML from "yaml";
 
     import IconButton from "$lib/Component/IconButton.svelte";
     import { ColorSchema, KeyStyle } from "$lib/Hamster/model/colorSchema";
@@ -22,7 +21,6 @@
     import KeyEdit from "$lib/Hamster/KeyEditor.svelte";
     import KeyStyleEdit from "$lib/Hamster/KeyStyleEdit.svelte";
     import Manual from "$lib/Hamster/Manual.svelte";
-    import keyboardsYaml from "$lib/assets/hamster-tools/keyboards.yaml?raw";
 
     import { loadSchemas, saveSchemas } from "$lib/Hamster/utils/colorschemas";
     import { loadKeyboards, saveKeyboards } from "$lib/Hamster/utils/keyboardlayouts";
@@ -45,35 +43,9 @@
     }
 
     /** 預設鍵盤模板 */
-    var predefinedKeyboards: object[] = initPredefined();
-    function initPredefined() {
-        try {
-            var keyboardsObj = YAML.parse(keyboardsYaml);
-            return keyboardsObj.keyboards as object[];
-        } catch (err) {
-            alert(`parse keyboards.yaml failed: ${(err as Error).message}`);
-        }
-        return [];
-    }
+    var predefinedKeyboards: object[] = [];
     /** 自定義鍵盤存儲位 */
-    const nameEmpty = "空的";
-    var customKeyboards: object[] = new Array(10).fill(0).map((_, index) => {
-        if (!browser) {
-            // server 端渲染, 没有 localStorage 接口
-            return { name: nameEmpty };
-        }
-
-        var keyboardData = localStorage.getItem(`customKeyboard${index}`);
-        if (keyboardData) {
-            try {
-                var obj = YAML.parse(keyboardData);
-                return obj;
-            } catch (err) {
-                alert(`parse custom keyboard failed: ${(err as Error).message}`);
-            }
-        }
-        return { name: nameEmpty };
-    });
+    var customKeyboards: object[];
 
     const [actExport, actTemp, actSave, actBatch] = [1, 2, 3, 4];
     var actionTab = 0;
@@ -148,7 +120,6 @@
         loadLocalData();
         if (keyboardLayouts[0].rows.length === 0) {
             actionTab = actTemp;
-            keyboardLayouts[0].fromObject(predefinedKeyboards[0]);
         }
     }
 </script>
@@ -185,7 +156,7 @@
                     transition:fly={{ duration: 250, y: -32 }}
                     class="p-2 w-full max-h-[25vh] overflow-y-auto rounded-md variant-ghost row-start-1 col-start-1"
                 >
-                    <PredefinedLayout bind:layout={currentLayout} {predefinedKeyboards} />
+                    <PredefinedLayout bind:layout={currentLayout} bind:predefinedKeyboards />
                 </div>
             {:else if actionTab === actSave}
                 <div
