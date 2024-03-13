@@ -94,6 +94,7 @@ export enum ShortCmd {
     second = "次选上屏",
     third = "三选上屏",
     schema = "上个输入方案",
+    schemas = "方案切换",
     return = "换行",
     switcher = "RimeSwitcher",
     left = "左移",
@@ -166,6 +167,8 @@ export class Action {
                     case ShortCmd.third:
                         return "三選";
                     case ShortCmd.schema:
+                        return "方案";
+                    case ShortCmd.schemas:
                         return "方案";
                     case ShortCmd.return:
                         return "換行";
