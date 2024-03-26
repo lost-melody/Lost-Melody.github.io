@@ -14,11 +14,11 @@
     <div class="btn-group variant-ghost m-auto">
         <a target="_blank" href="https://github.com/lost-melody/rime-smyh" class="gap-1">
             <Icon icon="mdi:github" />
-            倉庫
+            訪問倉庫
         </a>
-        <a target="_blank" href="https://lost-melody.github.io/rime-smyh" class="gap-1">
+        <a target="_blank" href="https://github.com/lost-melody/rime-smyh/releases" class="gap-1">
             <Icon icon="mdi:download" />
-            雞蛋餅
+            下載方案包
         </a>
     </div>
 
