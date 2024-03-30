@@ -46,6 +46,7 @@
     <ColorSelector title="按鍵文字" bind:color={schema.button_front_color} />
     <ColorSelector title="按鍵按下文字" bind:color={schema.button_pressed_front_color} />
     <ColorSelector title="按鍵劃動文字" bind:color={schema.button_swipe_front_color} />
+    <ColorSelector title="按鍵按下劃動文字" bind:color={schema.button_swipe_pressed_front_color} />
     <div class="w-full gap-2 flex items-center">
         <Icon icon="mdi:format-size" class="p-2 w-10 h-10" />
         <span class="grow shrink"> 鍵面字體大小 </span>

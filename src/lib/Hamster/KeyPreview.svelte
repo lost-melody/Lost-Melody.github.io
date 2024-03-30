@@ -34,7 +34,7 @@
     $: swipeColor = keyStyle ? keyStyle.swipeForegroundColor.rgba() : schema.button_swipe_front_color.rgba();
     $: pressedSwipeColor = keyStyle
         ? keyStyle.pressedSwipeForegroundColor.rgba()
-        : schema.button_swipe_front_color.rgba();
+        : schema.button_swipe_pressed_front_color.rgba();
     $: cornerRadius = keyStyle ? keyStyle.cornerRadius : schema.corner_radius;
     $: borderWidth = keyStyle ? keyStyle.borderSize : 1;
     $: borderColor = keyStyle ? keyStyle.borderColor.rgba() : schema.border_color.rgba();

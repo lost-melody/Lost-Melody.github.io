@@ -83,6 +83,8 @@ export class ColorSchema {
     button_pressed_front_color: Color = new Color("#000000");
     /** 按鍵劃動文本 */
     button_swipe_front_color: Color = new Color("#000000");
+    /** 按鍵按下劃動文本 */
+    button_swipe_pressed_front_color: Color = new Color("#000000");
     /** 鍵面字體大小 */
     font_size: number = 0;
     /** 劃動字體大小 */
@@ -130,6 +132,7 @@ export class ColorSchema {
             button_foreground_color: this.button_front_color.abgr(),
             button_pressed_foreground_color: this.button_pressed_front_color.abgr(),
             button_swipe_foreground_color: this.button_swipe_front_color.abgr(),
+            button_swipe_pressed_foreground_color: this.button_swipe_pressed_front_color.abgr(),
             font_size: this.font_size || undefined,
             swipe_font_size: this.swipe_font_size || undefined,
             corner_radius: this.corner_radius,
@@ -168,10 +171,16 @@ export class ColorSchema {
                 this.button_front_color.fromAbgr(asString(obj.button_foreground_color, "0x000000"));
                 this.button_pressed_front_color.fromAbgr(asString(obj.button_pressed_foreground_color, "0x000000"));
                 this.button_swipe_front_color.fromAbgr(asString(obj.button_swipe_foreground_color, "0x000000"));
+                this.button_swipe_pressed_front_color.fromAbgr(
+                    asString(obj.button_swipe_pressed_foreground_color, "0x000000"),
+                );
             } else {
                 this.button_front_color.fromAbgr(asString(obj.button_front_color, "0x000000"));
                 this.button_pressed_front_color.fromAbgr(asString(obj.button_pressed_front_color, "0x000000"));
                 this.button_swipe_front_color.fromAbgr(asString(obj.button_swipe_front_color, "0x000000"));
+                this.button_swipe_pressed_front_color.fromAbgr(
+                    asString(obj.button_swipe_pressed_front_color, "0x000000"),
+                );
             }
             this.font_size = asNumber(obj.font_size);
             this.swipe_font_size = asNumber(obj.swipe_font_size);
@@ -205,6 +214,7 @@ export class ColorSchema {
         schema.button_front_color = this.button_front_color.clone();
         schema.button_pressed_front_color = this.button_pressed_front_color.clone();
         schema.button_swipe_front_color = this.button_swipe_front_color.clone();
+        schema.button_swipe_pressed_front_color = this.button_swipe_pressed_front_color.clone();
         schema.font_size = this.font_size;
         schema.swipe_font_size = this.swipe_font_size;
         schema.corner_radius = this.corner_radius;
