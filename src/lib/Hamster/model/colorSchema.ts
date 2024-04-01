@@ -245,6 +245,7 @@ export class KeyStyle {
     pressedButtonForegroundColor: Color = new Color("#000000");
     swipeForegroundColor: Color = new Color("#000000");
     pressedSwipeForegroundColor: Color = new Color("#000000");
+    buttonBubbleBackColor: Color = new Color("#d0d0d0");
     cornerRadius: number = 5;
     borderSize: number = 1;
     borderColor: Color = new Color("#000000");
@@ -263,6 +264,7 @@ export class KeyStyle {
         obj.pressedButtonForegroundColor = this.pressedButtonForegroundColor.abgr();
         obj.swipeForegroundColor = this.swipeForegroundColor.abgr();
         obj.pressedSwipeForegroundColor = this.pressedSwipeForegroundColor.abgr();
+        obj.buttonBubbleBackColor = this.buttonBubbleBackColor.abgr();
         obj.cornerRadius = this.cornerRadius;
         obj.borderSize = this.borderSize;
         obj.borderColor = this.borderColor.abgr();
@@ -283,6 +285,7 @@ export class KeyStyle {
             this.pressedButtonForegroundColor.fromAbgr(asString(obj.pressedButtonForegroundColor, "0x000000"));
             this.swipeForegroundColor.fromAbgr(asString(obj.swipeForegroundColor, "0x000000"));
             this.pressedSwipeForegroundColor.fromAbgr(asString(obj.pressedSwipeForegroundColor, "0x000000"));
+            this.buttonBubbleBackColor.fromAbgr(asString(obj.buttonBubbleBackColor, "0xd0d0d0"));
             this.cornerRadius = asNumber(obj.cornerRadius, 5);
             this.borderSize = asNumber(obj.borderSize, 1);
             this.borderColor.fromAbgr(asString(obj.borderColor, "0x000000"));
@@ -303,6 +306,7 @@ export class KeyStyle {
         keyStyle.pressedButtonForegroundColor = this.pressedButtonForegroundColor.clone();
         keyStyle.swipeForegroundColor = this.swipeForegroundColor.clone();
         keyStyle.pressedSwipeForegroundColor = this.pressedSwipeForegroundColor.clone();
+        keyStyle.buttonBubbleBackColor = this.buttonBubbleBackColor.clone();
         keyStyle.cornerRadius = this.cornerRadius;
         keyStyle.borderSize = this.borderSize;
         keyStyle.lowerEdgeColor = this.lowerEdgeColor.clone();

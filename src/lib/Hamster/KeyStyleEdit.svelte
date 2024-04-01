@@ -75,6 +75,7 @@
                 <ColorSelector title="按下前景" bind:color={keyStyle.pressedButtonForegroundColor} />
                 <ColorSelector title="劃動前景" bind:color={keyStyle.swipeForegroundColor} />
                 <ColorSelector title="按下劃動前景" bind:color={keyStyle.pressedSwipeForegroundColor} />
+                <ColorSelector title="按下气泡背景" bind:color={keyStyle.buttonBubbleBackColor} />
                 <div class="w-full gap-2 flex items-center">
                     <Icon icon="mdi:rounded-corner" class="px-1 w-10 h-8" />
                     <span class="grow shrink"> 按鍵圓角 </span>
