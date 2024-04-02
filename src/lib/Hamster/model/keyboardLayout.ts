@@ -579,19 +579,15 @@ export class Key {
                     this.callout.push(callout);
                 }
             }
-            if (obj.lightModeStyle) {
-                if (obj.lightModeStyle.__include) {
-                    this.lightStyle = obj.lightModeStyle.__include.split("/").at(-1);
-                } else if (obj.lightModeStyle.name) {
-                    this.lightStyle = obj.lightModeStyle.name;
-                }
+            if (obj.lightModeStyleName) {
+                this.lightStyle = obj.lightModeStyleName;
+            } else if (obj.lightModeStyle) {
+                this.lightStyle = obj.lightModeStyle.name;
             }
-            if (obj.darkModeStyle) {
-                if (obj.darkModeStyle.__include) {
-                    this.darkStyle = obj.darkModeStyle.__include.split("/").at(-1);
-                } else if (obj.darkModeStyle.name) {
-                    this.darkStyle = obj.darkModeStyle.name;
-                }
+            if (obj.darkModeStyleName) {
+                this.darkStyle = obj.darkModeStyleName;
+            } else if (obj.darkModeStyle) {
+                this.darkStyle = obj.darkModeStyle.name;
             }
         }
     }
@@ -637,14 +633,10 @@ export class Key {
             obj.callout = this.callout.map((callout) => callout.toObject());
         }
         if (this.lightStyle) {
-            obj.lightModeStyle = {
-                __include: `customKeyStyles/${this.lightStyle}`,
-            };
+            obj.lightModeStyleName = this.lightStyle;
         }
         if (this.darkStyle) {
-            obj.darkModeStyle = {
-                __include: `customKeyStyles/${this.darkStyle}`,
-            };
+            obj.darkModeStyleName = this.darkStyle;
         }
         return obj;
     }

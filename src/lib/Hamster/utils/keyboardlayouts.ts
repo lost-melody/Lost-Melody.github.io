@@ -13,34 +13,51 @@ export function exportKeyboards(layouts: Keyboard[], keyStyles?: KeyStyle[]): st
         }
     }
     // 將按鍵樣式索引展開並内聯到屬性中
-    for (let i = 0; i < layouts.length; i++) {
-        let kbd = layouts[i];
-        for (let j = 0; j < kbd.rows.length; j++) {
-            let row = kbd.rows[j];
-            for (let k = 0; k < row.keys.length; k++) {
-                let key = row.keys[k];
-                if (key.lightStyle) {
-                    let style = stylesMap && stylesMap[key.lightStyle];
-                    if (style) {
-                        objList[i].rows[j].keys[k].lightModeStyle = style;
-                    } else {
-                        objList[i].rows[j].keys[k].lightModeStyle = undefined;
-                    }
+    for (let kbd of objList) {
+        for (let row of kbd.rows) {
+            for (let key of row.keys) {
+                if (key.lightModeStyleName) {
+                    key.lightModeStyle = stylesMap && stylesMap[key.lightModeStyleName];
                 }
-                if (key.darkStyle) {
-                    let style = stylesMap && stylesMap[key.darkStyle];
-                    if (style) {
-                        objList[i].rows[j].keys[k].darkModeStyle = style;
-                    } else {
-                        objList[i].rows[j].keys[k].darkModeStyle = undefined;
-                    }
+                if (key.darkModeStyleName) {
+                    key.darkModeStyle = stylesMap && stylesMap[key.darkModeStyleName];
                 }
+                key.lightModeStyleName = undefined;
+                key.darkModeStyleName = undefined;
             }
         }
     }
     return YAML.stringify({
         customKeyStyles: stylesMap,
         keyboards: objList,
+    });
+}
+
+/** 導出鍵盤佈局列表
+ * 使用 Hamster build 201 及 build 203 引入的 keyStyle 和 lightModeStyleName 格式
+ */
+export function exportKeyboardsB203(layouts: Keyboard[], keyStyles: KeyStyle[]): string {
+    var kbdList: any[] = layouts.map((keyboard) => keyboard.toObject());
+    var stylesMap: { [name: string]: object } = {};
+    for (let style of keyStyles) {
+        stylesMap[style.name] = style.toObject();
+    }
+    for (let kbd of kbdList) {
+        kbd.keyStyle = {};
+        for (let row of kbd.rows) {
+            for (let key of row.keys) {
+                for (let name of [key.lightModeStyleName, key.darkModeStyleName]) {
+                    if (name && stylesMap[name]) {
+                        if (!kbd.keyStyle[name]) {
+                            kbd.keyStyle[name] = stylesMap[name];
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return YAML.stringify({
+        keyboards: kbdList,
     });
 }
 
