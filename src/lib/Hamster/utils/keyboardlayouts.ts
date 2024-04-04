@@ -3,37 +3,14 @@ import YAML from "yaml";
 import { Keyboard } from "$lib/Hamster/model/keyboardLayout";
 import { KeyStyle } from "$lib/Hamster/model/colorSchema";
 
-export function exportKeyboards(layouts: Keyboard[], keyStyles?: KeyStyle[]): string {
+export function exportKeyboards(layouts: Keyboard[]): object {
     var objList: any[] = layouts.map((keyboard) => keyboard.toObject());
-    var stylesMap: { [name: string]: object } | undefined;
-    if (keyStyles && keyStyles.length != 0) {
-        stylesMap = {};
-        for (let style of keyStyles) {
-            stylesMap[style.name] = style.toObject();
-        }
-    }
-    // 將按鍵樣式索引展開並内聯到屬性中
-    for (let kbd of objList) {
-        for (let row of kbd.rows) {
-            for (let key of row.keys) {
-                if (key.lightModeStyleName) {
-                    key.lightModeStyle = stylesMap && stylesMap[key.lightModeStyleName];
-                }
-                if (key.darkModeStyleName) {
-                    key.darkModeStyle = stylesMap && stylesMap[key.darkModeStyleName];
-                }
-                key.lightModeStyleName = undefined;
-                key.darkModeStyleName = undefined;
-            }
-        }
-    }
-    return YAML.stringify({
-        keyStyle: stylesMap,
+    return {
         keyboards: objList,
-    });
+    };
 }
 
-export function exportKeyStyles(keyStyles: KeyStyle[]): string {
+export function exportKeyStyles(keyStyles: KeyStyle[]): object {
     var stylesMap: { [name: string]: object } | undefined;
     if (keyStyles) {
         stylesMap = {};
@@ -41,9 +18,9 @@ export function exportKeyStyles(keyStyles: KeyStyle[]): string {
             stylesMap[style.name] = style.toObject();
         }
     }
-    return YAML.stringify({
+    return {
         keyStyle: stylesMap,
-    });
+    };
 }
 
 export function importKeyboards(obj: any): { keyboardLayouts: Keyboard[] | null; keyStyles: KeyStyle[] | null } {

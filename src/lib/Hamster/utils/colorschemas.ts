@@ -2,13 +2,13 @@ import YAML from "yaml";
 
 import { ColorSchema } from "$lib/Hamster/model/colorSchema";
 
-export function exportSchemas(schemas: ColorSchema[]): string {
+export function exportSchemas(schemas: ColorSchema[]): object {
     var objList = schemas.map((schema) => schema.toObject());
-    return YAML.stringify({
+    return {
         keyboard: {
             colorSchemas: objList,
         },
-    });
+    };
 }
 
 export function importSchemas(obj: any): ColorSchema[] | null {
