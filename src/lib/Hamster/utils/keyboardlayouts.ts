@@ -28,7 +28,7 @@ export function exportKeyboards(layouts: Keyboard[], keyStyles?: KeyStyle[]): st
         }
     }
     return YAML.stringify({
-        customKeyStyles: stylesMap,
+        keyStyle: stylesMap,
         keyboards: objList,
     });
 }
@@ -70,7 +70,7 @@ export function exportKeyStyles(keyStyles: KeyStyle[]): string {
         }
     }
     return YAML.stringify({
-        customKeyStyles: stylesMap,
+        keyStyle: stylesMap,
     });
 }
 
@@ -87,7 +87,10 @@ export function importKeyboards(obj: any): { keyboardLayouts: Keyboard[] | null;
             });
         }
         if (obj && obj.customKeyStyles) {
-            let styles = obj.customKeyStyles;
+            obj.keyStyle = obj.customKeyStyles;
+        }
+        if (obj && obj.keyStyle) {
+            let styles = obj.keyStyle;
             keyStyles = Object.keys(styles)
                 .map((name) => {
                     let style = new KeyStyle();
