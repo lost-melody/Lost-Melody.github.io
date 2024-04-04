@@ -33,34 +33,6 @@ export function exportKeyboards(layouts: Keyboard[], keyStyles?: KeyStyle[]): st
     });
 }
 
-/** 導出鍵盤佈局列表
- * 使用 Hamster build 201 及 build 203 引入的 keyStyle 和 lightModeStyleName 格式
- */
-export function exportKeyboardsB203(layouts: Keyboard[], keyStyles: KeyStyle[]): string {
-    var kbdList: any[] = layouts.map((keyboard) => keyboard.toObject());
-    var stylesMap: { [name: string]: object } = {};
-    for (let style of keyStyles) {
-        stylesMap[style.name] = style.toObject();
-    }
-    for (let kbd of kbdList) {
-        kbd.keyStyle = {};
-        for (let row of kbd.rows) {
-            for (let key of row.keys) {
-                for (let name of [key.lightModeStyleName, key.darkModeStyleName]) {
-                    if (name && stylesMap[name]) {
-                        if (!kbd.keyStyle[name]) {
-                            kbd.keyStyle[name] = stylesMap[name];
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return YAML.stringify({
-        keyboards: kbdList,
-    });
-}
-
 export function exportKeyStyles(keyStyles: KeyStyle[]): string {
     var stylesMap: { [name: string]: object } | undefined;
     if (keyStyles) {

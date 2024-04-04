@@ -7,7 +7,7 @@
 
     import { exportFile } from "./utils/common";
     import { exportSchemas, importSchemas } from "./utils/colorschemas";
-    import { exportKeyboards, exportKeyboardsB203, exportKeyStyles, importKeyboards } from "./utils/keyboardlayouts";
+    import { exportKeyboards, exportKeyStyles, importKeyboards } from "./utils/keyboardlayouts";
     import { getDateTimeString } from "./utils/format";
 
     export var colorSchemas: ColorSchema[];
@@ -42,10 +42,6 @@
     const exportKeyboardLayouts = () => {
         const data = exportKeyboards(keyboardLayouts, keyStyles);
         exportFile(data, `custom_keyboards-${getDateTimeString()}.yaml`);
-    };
-    const exportKeyboardLayoutsB203 = () => {
-        const data = exportKeyboardsB203(keyboardLayouts, keyStyles);
-        exportFile(data, `custom_keyboards_b203-${getDateTimeString()}.yaml`);
     };
     const exportKeyboardKeyStyles = () => {
         const data = exportKeyStyles(keyStyles);
@@ -108,16 +104,6 @@
     </IconButton>
     <IconButton title="導出佈局文件" icon="mdi:export" on:click={exportKeyboardLayouts} class={classNames}>
         <span>導出佈局文件</span>
-    </IconButton>
-    <IconButton
-        title={"導出佈局文件\n" +
-            "採用 Hamster b201 及 b203 引入的新 keyStyle+styleName 方式\n" +
-            "注意: 這將無法導入回本頁面"}
-        icon="mdi:export"
-        on:click={exportKeyboardLayoutsB203}
-        class={classNames}
-    >
-        <span>導出佈局文件 (b203)</span>
     </IconButton>
     <IconButton title="導出按鍵樣式表" icon="mdi:export" on:click={exportKeyboardKeyStyles} class={classNames}>
         <span>導出按鍵樣式表</span>
