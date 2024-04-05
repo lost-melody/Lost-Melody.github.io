@@ -113,19 +113,29 @@
         saveKeyboards(keyboardLayoutsKey, keyboardLayouts);
         saveKeyStyles(keyStylesKey, keyStyles);
     };
+    /** save data on visibility hidden */
+    const onVisibilityChange = (e: Event & { currentTarget: EventTarget & Document }) => {
+        if (e.currentTarget.visibilityState === "hidden") {
+            saveLocalData();
+        }
+    };
     // save before navigation
     onNavigate(saveLocalData);
     // load data if in browser
     if (browser) {
         loadLocalData();
         if (keyboardLayouts[0].rows.length === 0) {
-            actionTab = actTemp;
+            actionTab = actExport;
         }
     }
 </script>
 
+<!-- save before hidden -->
+<svelte:document on:visibilitychange={onVisibilityChange} />
+
 <!-- save before unload -->
-<svelte:window on:beforeunload={saveLocalData} />
+<!-- this does not work in Safari -->
+<!-- <svelte:window on:beforeunload={saveLocalData} /> -->
 
 <div class="max-lg:flex max-lg:flex-col lg:grid lg:grid-cols-2 gap-2">
     <div class="p-1 gap-2 flex flex-col md:col-start-2">
@@ -317,7 +327,7 @@
         <div class="italic text-xs">
             倉輸入法而今已實現内建佈局和配色方案編輯器,<br />
             是故本工具將不再添加新功能.<br />
-            您可通過「導出佈局 (b203)」來將以往配置輸出並轉入内建編輯器,<br />
+            您可通過「導出配置」來將以往配置輸出並轉入内建編輯器,<br />
             感謝您的信賴與支持, 江湖路遠, 後會有期!<br />
             餅乾 敬上
         </div>
