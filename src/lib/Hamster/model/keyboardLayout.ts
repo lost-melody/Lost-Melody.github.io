@@ -582,12 +582,20 @@ export class Key {
             if (obj.lightModeStyleName) {
                 this.lightStyle = obj.lightModeStyleName;
             } else if (obj.lightModeStyle) {
-                this.lightStyle = obj.lightModeStyle.name;
+                if (obj.lightModeStyle.name) {
+                    this.lightStyle = obj.lightModeStyle.name;
+                } else if (obj.lightModeStyle.__include) {
+                    this.lightStyle = obj.lightModeStyle.__include.split("/").at(-1);
+                }
             }
             if (obj.darkModeStyleName) {
                 this.darkStyle = obj.darkModeStyleName;
             } else if (obj.darkModeStyle) {
-                this.darkStyle = obj.darkModeStyle.name;
+                if (obj.darkModeStyle.name) {
+                    this.darkStyle = obj.darkModeStyle.name;
+                } else if (obj.darkModeStyle.__include) {
+                    this.darkStyle = obj.darkModeStyle.__include.split("/").at(-1);
+                }
             }
         }
     }
