@@ -75,6 +75,32 @@
         }
     };
     if (browser) updateDarkMode();
+
+    let browser_languages = navigator.languages;
+
+    // 判斷使用者的語言，繁體中文與簡體中文何者為先
+    for (let zh_index = 0; zh_index < browser_languages.length; zh_index++) {
+        if (["zh", "zh-cn", "zh-tw", "zh-hk", "zh-mo"].includes(browser_languages[zh_index].toLowerCase())) {
+            switch (browser_languages[zh_index].toLowerCase()) {
+                case "zh":
+                case "zh-cn":
+                    // 簡體優先，則採用簡體字型
+                    document.documentElement.lang = "zh-Hans";
+                    break;
+
+                case "zh-tw":
+                case "zh-hk":
+                case "zh-mo":
+                    // 繁體優先，則採用繁體字型
+                    document.documentElement.lang = "zh-Hant";
+                    break;
+            
+                default:
+                    break;
+            }
+            break;
+        }
+    }
 </script>
 
 <svelte:head>
