@@ -69,34 +69,31 @@
         }
     };
     const updateDarkMode = () => {
-        var elements = document.getElementsByTagName("html");
-        for (let html of elements) {
-            $darkMode = html.classList.contains("dark");
-        }
+        $darkMode = document.documentElement.classList.contains("dark");
     };
-    if (browser) updateDarkMode();
 
-    let browser_languages = navigator.languages;
+    if (browser) {
+        // 暗色模式監聽值初始化
+        updateDarkMode();
 
-    // 判斷使用者的語言，繁體中文與簡體中文何者為先
-    for (let zh_index = 0; zh_index < browser_languages.length; zh_index++) {
-        if (["zh", "zh-cn", "zh-tw", "zh-hk", "zh-mo"].includes(browser_languages[zh_index].toLowerCase())) {
-            switch (browser_languages[zh_index].toLowerCase()) {
+        // 判斷使用者的語言，繁體中文與簡體中文何者為先
+        for (let lang of navigator.languages) {
+            switch (lang.toLowerCase()) {
                 case "zh":
                 case "zh-cn":
                     // 簡體優先，則採用簡體字型
-                    document.documentElement.lang = "zh-Hans";
+                    document.documentElement.lang = "cmn-Hans-CN";
                     break;
 
                 case "zh-tw":
                 case "zh-hk":
                 case "zh-mo":
                     // 繁體優先，則採用繁體字型
-                    document.documentElement.lang = "zh-Hant";
+                    document.documentElement.lang = "cmn-Hant-CN";
                     break;
-            
+
                 default:
-                    break;
+                    continue;
             }
             break;
         }
