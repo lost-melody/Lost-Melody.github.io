@@ -1,12 +1,5 @@
 <script lang="ts">
-    const patchCode =
-        "patch:\n" +
-        "  # 下面兩行是導入自定義配色方案文件\n" +
-        "  keyboard/colorSchemas:\n" +
-        "    __include: custom_color_schemas:/keyboard/colorSchemas\n" +
-        "  # 下面兩行是導入自定義鍵盤佈局文件, 如果使用倉UI導入則不需要這兩行\n" +
-        "  keyboards:\n" +
-        "    __include: custom_keyboards:/keyboards";
+    import patchCode from "$lib/assets/hamster-tools/hamster.custom.yaml?raw";
 </script>
 
 <div class="p-2 rounded-md variant-soft">
@@ -32,41 +25,31 @@
             </ul>
         </ul>
 
-        <li>導入導出</li>
+        <li>導入與導出</li>
         <ul>
             <li>導入配色方案或鍵盤佈局</li>
             <ul>
                 <li>從 <i>yaml</i> 文件的 <code>keyboard/colorSchemas</code> 節點導入配色方案</li>
                 <li>從 <i>yaml</i> 文件的 <code>keyboards</code> 節點導入鍵盤佈局</li>
-                <li>從 <i>yaml</i> 文件的 <code>customKeyStyles</code> 節點導入按鍵樣式</li>
+                <li>從 <i>yaml</i> 文件的 <code>keyStyle</code> 節點導入按鍵樣式</li>
             </ul>
-            <li>導出配色方案: 將配色導出爲文件, 隨後可在倉APP中通過手動引用文件的方式應用</li>
-            <li>導出鍵盤佈局: 將鍵盤佈局導出爲文件, 隨後在倉APP中手動引用文件或在佈局界面點擊加號導入</li>
-            <li>導出按鍵樣式表: 將自定義按鍵樣式導出爲文件, 用於存檔或隨後分享給他人使用</li>
+            <li>導出配置: 將配色, 佈局和樣式一同導出爲文件, 隨後可在倉APP中手動引用或導入</li>
         </ul>
 
         <li>應用到倉APP</li>
         <ul>
-            <li>
-                補丁文件: 在 <code>Hamster/Rime/</code> 下新建文件 <code>hamster.custom.yaml</code>, 並填入以下内容:
-            </li>
-            <pre class="p-2 pre text-sm rounded-md variant-soft">{patchCode}</pre>
-            <li>
-                配色方案: 將導出的配色方案文件移動到 <code>Hamster/Rime/</code> 並改名爲
-                <code>custom_color_schemas.yaml</code>, 然後重新部署
-            </li>
-            <li>鍵盤佈局:</li>
+            <li>通過内置導入功能導入</li>
             <ul>
-                <li>
-                    方法一: 將導出佈局文件 <code>custom_keyboards-xxxx.yaml</code>
-                    <b>移動到 <code>Hamster/</code> 中</b>, 並在倉APP的 <i>鍵盤設置-鍵盤佈局</i> 頁面選擇導入該文件
-                </li>
-                <li>
-                    方法二: 將導出的佈局文件移動到 <code>Hamster/Rime/</code> 並改名爲
-                    <code>custom_keyboards.yaml</code>, 然後重新部署.
-                    <b>注意</b>: 如果曾經在鍵盤佈局頁面導入過文件, 則此方案無效, 需要先在倉APP的「關於」頁面重置界面設置
-                </li>
-                <li>注: 鍵盤佈局現不再一同導出嵌入樣式表, 相關功能請使用「導出配置」並轉入倉内置編輯器來實現</li>
+                <li>將從此頁面導出的完整配置文件移動到 <code>iPhone/Hamster/</code> 下</li>
+                <li>在倉輸入法「自定義鍵盤」右上角加號菜單中選擇「導入配色與佈局」, 並選擇剛才準備的文件</li>
+            </ul>
+        </ul>
+        <ul>
+            <li>通過文件手動導入</li>
+            <ul>
+                <li>將從此頁面導出的完整配置文件存儲爲 <code>Rime/custom_configs.yaml</code></li>
+                <li>新建文件 <code>Rime/hamster.custom.yaml</code>, 並填入以下内容:</li>
+                <pre class="p-2 pre text-sm rounded-md variant-soft">{patchCode}</pre>
             </ul>
         </ul>
     </ul>
