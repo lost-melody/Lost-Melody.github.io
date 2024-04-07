@@ -7,7 +7,7 @@
 
     import { exportFile } from "./utils/common";
     import { exportSchemas, importSchemas } from "./utils/colorschemas";
-    import { exportKeyboards, exportKeyStyles, importKeyboards } from "./utils/keyboardlayouts";
+    import { assignKeyStyles, exportKeyboards, exportKeyStyles, importKeyboards } from "./utils/keyboardlayouts";
     import { getDateTimeString } from "./utils/format";
 
     export var colorSchemas: ColorSchema[];
@@ -27,7 +27,7 @@
     const copyKeyboardLayouts = () => {
         keyboardLayoutInlineCopied = true;
         setTimeout(() => (keyboardLayoutInlineCopied = false), timeoutDelay);
-        navigator.clipboard.writeText(YAML.stringify(exportKeyboards(keyboardLayouts)));
+        navigator.clipboard.writeText(YAML.stringify(exportKeyboards(keyboardLayouts, keyStyles)));
     };
     const copyKeyboardKeyStyles = () => {
         keyStylesCopied = true;
@@ -37,12 +37,13 @@
     // export code
     const exportConfigs = () => {
         const expSchemas = exportSchemas(colorSchemas);
-        const expLayouts = exportKeyboards(keyboardLayouts);
-        const expStyles = exportKeyStyles(keyStyles);
+        const expLayouts: any = exportKeyboards(keyboardLayouts);
+        const expStyles: any = exportKeyStyles(keyStyles);
+        expLayouts.keyboards = assignKeyStyles(expLayouts.keyboards, expStyles.keyStyle);
         const data = YAML.stringify({
             ...expSchemas,
-            ...expLayouts,
             ...expStyles,
+            ...expLayouts,
         });
         exportFile(data, `custom_configs-${getDateTimeString()}.yaml`);
     };
@@ -51,7 +52,7 @@
         exportFile(data, `custom_color_schemas-${getDateTimeString()}.yaml`);
     };
     const exportKeyboardLayouts = () => {
-        const data = YAML.stringify(exportKeyboards(keyboardLayouts));
+        const data = YAML.stringify(exportKeyboards(keyboardLayouts, keyStyles));
         exportFile(data, `custom_keyboards-${getDateTimeString()}.yaml`);
     };
     const exportKeyboardKeyStyles = () => {

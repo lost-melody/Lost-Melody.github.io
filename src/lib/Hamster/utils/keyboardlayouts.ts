@@ -3,15 +3,18 @@ import YAML from "yaml";
 import { Keyboard } from "$lib/Hamster/model/keyboardLayout";
 import { KeyStyle } from "$lib/Hamster/model/colorSchema";
 
-export function exportKeyboards(layouts: Keyboard[]): object {
-    var objList: any[] = layouts.map((keyboard) => keyboard.toObject());
+export function exportKeyboards(layouts: Keyboard[], keyStyles?: KeyStyle[]): object {
+    var kbdList: object[] = layouts.map((keyboard) => keyboard.toObject());
+    if (keyStyles) {
+        kbdList = assignKeyStyles(kbdList, exportKeyStyles(keyStyles));
+    }
     return {
-        keyboards: objList,
+        keyboards: kbdList,
     };
 }
 
 export function exportKeyStyles(keyStyles: KeyStyle[]): object {
-    var stylesMap: { [name: string]: object } | undefined;
+    var stylesMap: { [name: string]: object } = {};
     if (keyStyles) {
         stylesMap = {};
         for (let style of keyStyles) {
@@ -21,6 +24,29 @@ export function exportKeyStyles(keyStyles: KeyStyle[]): object {
     return {
         keyStyle: stylesMap,
     };
+}
+
+export function assignKeyStyles(kbdList: any, styles: any): any {
+    if (!kbdList || !styles) {
+        return kbdList;
+    }
+    for (let kbd of kbdList) {
+        for (let row of kbd.rows) {
+            for (let key of row.keys) {
+                for (let name of [key.lightModeStyleName, key.darkModeStyleName]) {
+                    if (name && styles[name]) {
+                        if (!kbd.keyStyle) {
+                            kbd.keyStyle = {};
+                        }
+                        if (!kbd.keyStyle[name]) {
+                            kbd.keyStyle[name] = styles[name];
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return kbdList;
 }
 
 export function importKeyboards(obj: any): { keyboardLayouts: Keyboard[] | null; keyStyles: KeyStyle[] | null } {
