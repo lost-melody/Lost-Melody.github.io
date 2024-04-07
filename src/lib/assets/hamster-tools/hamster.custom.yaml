@@ -7,6 +7,3 @@ patch:
   keyboards:
     # 導入鍵盤佈局
     __include: custom_configs:/keyboards
-  keyStyle:
-    # 導入按鍵樣式
-    __include: custom_configs:/keyStyle
