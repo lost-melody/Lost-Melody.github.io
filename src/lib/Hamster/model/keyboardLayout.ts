@@ -87,7 +87,8 @@ export var KeyboardNames: { [key: string]: string } = {
 /** 快捷命令枚舉 */
 export enum ShortCmd {
     clear = "重输",
-    trad = "繁简切换",
+    clearAll = "清空",
+    trad = "简繁切换",
     eng = "中英切换",
     begin = "行首",
     end = "行尾",
@@ -101,6 +102,7 @@ export enum ShortCmd {
     right = "右移",
     lefthand = "左手模式",
     righthand = "右手模式",
+    selectAll = "全选",
     cut = "剪切",
     copy = "复制",
     paste = "粘贴",
@@ -153,6 +155,8 @@ export class Action {
             case ActionType.shortCommand:
                 switch (this.cmd) {
                     case ShortCmd.clear:
+                        return "重輸";
+                    case ShortCmd.clearAll:
                         return "清空";
                     case ShortCmd.trad:
                         return "繁簡";
@@ -178,6 +182,8 @@ export class Action {
                         return "左移";
                     case ShortCmd.right:
                         return "右移";
+                    case ShortCmd.selectAll:
+                        return "全選";
                     case ShortCmd.cut:
                         return "剪切";
                     case ShortCmd.copy:
@@ -280,7 +286,7 @@ export class Action {
             if (typeof obj.shortcutCommand === "string") {
                 this.type = ActionType.shortCommand;
                 this.cmd = (obj.shortcutCommand as string).replace(/^#/, "") as ShortCmd;
-                if ((this.cmd as string) === "简繁切换") {
+                if ((this.cmd as string) === "繁简切换") {
                     this.cmd = ShortCmd.trad;
                 }
                 return;
@@ -321,8 +327,6 @@ export class Action {
             case ActionType.shortCommand:
                 if (this.cmd === ShortCmd.sendkeys) {
                     return { shortcutCommand: { [this.cmd]: { keys: this.text } } };
-                } else if (this.cmd === ShortCmd.trad) {
-                    return { shortcutCommand: "#简繁切换" };
                 }
                 return { shortcutCommand: "#" + this.cmd };
             default:
