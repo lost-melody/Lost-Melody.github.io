@@ -10,6 +10,15 @@
     var actionTypes = Object.values(ActionType);
     var keyboardTypes = Object.values(KeyboardType);
     var shortCmdTypes = Object.values(ShortCmd);
+    $: funcKeys = [
+        ActionType.backspace,
+        ActionType.enter,
+        ActionType.shift,
+        ActionType.tab,
+        ActionType.space,
+        ActionType.nextKeyboard,
+        ActionType.none,
+    ].includes(action.type);
 
     // 包含内容文本的動作類型
     const text: ActionType[] = [ActionType.character, ActionType.characterMargin, ActionType.symbol];
@@ -22,12 +31,13 @@
     }
 </script>
 
-<div class="flex flex-col w-full px-1 gap-1 items-center">
-    <div class="flex w-full p-1 gap-1 items-center">
+<div class="flex flex-col w-full items-center">
+    <div class="flex w-full items-center">
         <!-- 單選: 動作類型 -->
         <select
             bind:value={action.type}
-            class="w-full rounded-md p-1 bg-transparent variant-ringed hover:variant-ghost"
+            class="w-full h-10 px-2 bg-transparent variant-ringed hover:variant-ghost"
+            class:rounded-bl-md={funcKeys}
         >
             {#each actionTypes as typ}
                 <option value={typ}>
@@ -38,14 +48,15 @@
         <button
             title="複製動作配置"
             on:click={copyAction}
-            class="gap-1 p-2 flex items-center rounded-md variant-ringed hover:variant-ghost active:scale-90"
+            class="h-10 px-2 flex items-center variant-ringed hover:variant-ghost active:scale-95"
         >
             <Icon height="20" icon="mdi:content-copy" />
         </button>
         <button
             title="粘貼動作配置"
             on:click={pasteAction}
-            class="gap-1 p-2 flex items-center rounded-md variant-ringed hover:variant-ghost active:scale-90"
+            class="h-10 px-2 flex items-center variant-ringed hover:variant-ghost active:scale-95"
+            class:rounded-br-md={funcKeys}
         >
             <Icon height="20" icon="mdi:content-paste" />
         </button>
@@ -53,10 +64,10 @@
 
     <!-- 輸入: 動作内容文本 -->
     {#if text.includes(action.type)}
-        <div class="flex w-full p-1 gap-1 items-center">
+        <div class="flex w-full h-10 items-center">
             <input
                 bind:value={action.text}
-                class="p-1 grow rounded-md bg-transparent variant-ringed hover:variant-ghost"
+                class="w-full h-full px-2 grow rounded-b-md bg-transparent variant-ringed hover:variant-ghost"
                 placeholder="按鍵字符内容"
             />
         </div>
@@ -64,10 +75,11 @@
 
     <!-- 單選: 切換鍵盤類型 -->
     {#if action.type === ActionType.keyboardType}
-        <div class="flex w-full p-1 gap-1 items-center">
+        <div class="flex w-full h-10 items-center">
             <select
                 bind:value={action.kbd}
-                class="grow rounded-md p-1 bg-transparent variant-ringed hover:variant-ghost"
+                class="grow h-full px-2 bg-transparent variant-ringed hover:variant-ghost"
+                class:rounded-b-md={action.kbd !== KeyboardType.custom}
             >
                 {#each keyboardTypes as typ}
                     <option value={typ}>
@@ -80,10 +92,10 @@
 
     <!-- 輸入: 自定義鍵盤名稱 -->
     {#if action.type === ActionType.keyboardType && action.kbd === KeyboardType.custom}
-        <div class="flex w-full p-1 gap-1 items-center">
+        <div class="flex w-full h-10 items-center">
             <input
                 bind:value={action.text}
-                class="grow rounded-md p-1 bg-transparent variant-ringed hover:variant-ghost"
+                class="grow h-full px-2 rounded-b-md bg-transparent variant-ringed hover:variant-ghost"
                 placeholder="自定義鍵盤名"
             />
         </div>
@@ -91,10 +103,11 @@
 
     <!-- 單選: 快捷命令類型 -->
     {#if action.type === ActionType.shortCommand}
-        <div class="flex w-full p-1 gap-1 items-center">
+        <div class="flex w-full h-10 items-center">
             <select
                 bind:value={action.cmd}
-                class="grow rounded-md p-1 bg-transparent variant-ringed hover:variant-ghost"
+                class="grow h-full px-2 bg-transparent variant-ringed hover:variant-ghost"
+                class:rounded-b-md={action.cmd !== ShortCmd.sendkeys}
             >
                 {#each shortCmdTypes as typ}
                     <option value={typ}>
@@ -107,10 +120,10 @@
 
     <!-- 輸入: 快捷命令·快捷键 -->
     {#if action.type === ActionType.shortCommand && action.cmd === ShortCmd.sendkeys}
-        <div class="flex w-full p-1 gap-1 items-center">
+        <div class="flex w-full h-10 items-center">
             <input
                 bind:value={action.text}
-                class="grow rounded-md p-1 bg-transparent variant-ringed hover:variant-ghost"
+                class="grow h-full px-2 rounded-b-md bg-transparent variant-ringed hover:variant-ghost"
                 placeholder="快捷鍵内容"
             />
         </div>
