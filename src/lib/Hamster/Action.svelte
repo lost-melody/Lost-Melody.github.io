@@ -36,7 +36,7 @@
         <!-- 單選: 動作類型 -->
         <select
             bind:value={action.type}
-            class="w-full h-10 px-2 bg-transparent variant-ringed hover:variant-ghost"
+            class="appearance-none w-full h-10 px-2 variant-ringed hover:variant-ghost"
             class:rounded-bl-md={funcKeys}
         >
             {#each actionTypes as typ}
@@ -67,7 +67,7 @@
         <div class="flex w-full h-10 items-center">
             <input
                 bind:value={action.text}
-                class="w-full h-full px-2 grow rounded-b-md bg-transparent variant-ringed hover:variant-ghost"
+                class="w-full h-full px-2 grow rounded-none rounded-b-md variant-ringed hover:variant-ghost"
                 placeholder="按鍵字符内容"
             />
         </div>
@@ -78,7 +78,7 @@
         <div class="flex w-full h-10 items-center">
             <select
                 bind:value={action.kbd}
-                class="grow h-full px-2 bg-transparent variant-ringed hover:variant-ghost"
+                class="appearance-none grow h-full px-2 variant-ringed hover:variant-ghost"
                 class:rounded-b-md={action.kbd !== KeyboardType.custom}
             >
                 {#each keyboardTypes as typ}
@@ -95,7 +95,7 @@
         <div class="flex w-full h-10 items-center">
             <input
                 bind:value={action.text}
-                class="grow h-full px-2 rounded-b-md bg-transparent variant-ringed hover:variant-ghost"
+                class="grow h-full px-2 rounded-none rounded-b-md variant-ringed hover:variant-ghost"
                 placeholder="自定義鍵盤名"
             />
         </div>
@@ -106,7 +106,7 @@
         <div class="flex w-full h-10 items-center">
             <select
                 bind:value={action.cmd}
-                class="grow h-full px-2 bg-transparent variant-ringed hover:variant-ghost"
+                class="appearance-none grow h-full px-2 variant-ringed hover:variant-ghost"
                 class:rounded-b-md={action.cmd !== ShortCmd.sendkeys}
             >
                 {#each shortCmdTypes as typ}
@@ -123,7 +123,7 @@
         <div class="flex w-full h-10 items-center">
             <input
                 bind:value={action.text}
-                class="grow h-full px-2 rounded-b-md bg-transparent variant-ringed hover:variant-ghost"
+                class="grow h-full px-2 rounded-none rounded-b-md variant-ringed hover:variant-ghost"
                 placeholder="快捷鍵内容"
             />
         </div>

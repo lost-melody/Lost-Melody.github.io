@@ -275,14 +275,14 @@
                 {:else if editorTab === editKey}
                     <!-- Key Editor -->
                     <div in:fade class="w-full flex flex-col gap-2">
-                        <div class="px-4 py-2 w-full flex gap-2 items-center rounded-md variant-soft">
+                        <div class="p-2 w-full flex gap-2 items-center rounded-md variant-soft">
                             <Icon height="20" icon="mdi-format-size" />
                             <span class="">預覽字體</span>
                             <input
                                 title="鍵盤預覽區顯示字體, 逗號分隔"
                                 bind:value={$previewFontFamilies}
                                 placeholder="Symbols Nerd Font, sans-serif"
-                                class="p-1 grow rounded-md bg-transparent variant-ringed hover:variant-ghost"
+                                class="h-10 px-2 grow rounded-md variant-ringed hover:variant-ghost"
                             />
                         </div>
                         <KeyEdit

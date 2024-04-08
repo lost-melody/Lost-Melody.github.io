@@ -103,7 +103,7 @@
 <!-- 劃動配置 -->
 <div class="p-2 gap-2 flex flex-col">
     <!-- 鍵寛和鍵值編輯區 -->
-    <div class="flex flex-col items-center">
+    <div class="flex flex-col items-center p-[0.5px] rounded-md variant-ringed">
         <div class="flex w-full items-center">
             <div class="h-10 px-2 flex items-center rounded-tl-md variant-ringed">
                 <Icon height="20" icon="mdi:gesture-touch" />
@@ -112,7 +112,7 @@
                 title="調整按鍵顯示標籤"
                 bind:value={key.label}
                 placeholder="標籤"
-                class="h-10 px-2 grow bg-transparent variant-ringed hover:variant-ghost"
+                class="h-10 px-2 grow rounded-none variant-ringed hover:variant-ghost"
             />
             <button
                 title="是否經由 Rime 處理"
@@ -128,7 +128,7 @@
                     title="調整空格鍵的加載時標籤"
                     bind:value={key.loading}
                     placeholder="加載標籤"
-                    class="h-10 px-2 grow bg-transparent variant-ringed hover:variant-ghost"
+                    class="h-10 px-2 grow variant-ringed hover:variant-ghost"
                 />
             </div>
         {/if}
@@ -136,7 +136,7 @@
     </div>
 
     {#each [2, 1, 0, 3] as index (key.swipe[index].id)}
-        <div class="flex flex-col items-center">
+        <div class="flex flex-col items-center p-[0.5px] rounded-md variant-ringed">
             {#if key.swipe[index].action.type === ActionType.none}
                 <div class="flex w-full">
                     <div class="h-10 px-2 flex items-center rounded-l-md variant-ringed">
@@ -161,7 +161,7 @@
                         title="調整劃動顯示標籤"
                         bind:value={key.swipe[index].label}
                         placeholder="標籤"
-                        class="h-10 px-2 grow bg-transparent variant-ringed hover:variant-ghost"
+                        class="h-10 px-2 grow rounded-none variant-ringed hover:variant-ghost"
                     />
                     <!-- 經由 rime 處理 -->
                     <button
@@ -205,7 +205,7 @@
                 class="h-10 px-2 flex items-center rounded-md variant-ringed hover:variant-ghost"
             />
             {#each key.callout as callout, index (callout.id)}
-                <div class="flex flex-col items-center">
+                <div class="flex flex-col items-center p-[0.5px] rounded-md variant-ringed">
                     <div class="flex w-full items-center">
                         <div class="h-10 px-2 flex items-center rounded-tl-md variant-ringed">
                             <Icon height="20" icon="mdi:message-outline" />
@@ -214,7 +214,7 @@
                             title="調整長按動作標籤"
                             bind:value={callout.label}
                             placeholder="標籤"
-                            class="h-10 px-2 grow bg-transparent variant-ringed hover:variant-ghost"
+                            class="h-10 px-2 grow rounded-none variant-ringed hover:variant-ghost"
                         />
                         <IconButton
                             icon="mdi:arrow-up"
@@ -242,7 +242,7 @@
     </details>
 
     <!-- 按鍵樣式設置 -->
-    <div class="w-full">
+    <div class="w-full p-[0.5px] rounded-md variant-ringed">
         <div class="w-full flex">
             <div class="h-10 px-2 flex items-center rounded-tl-md variant-ringed">
                 <Icon icon="mdi:weather-sunny" />
@@ -276,18 +276,18 @@
     </div>
 
     <!-- 按鍵動作按鈕 -->
-    <div class="max-w-full flex mx-auto overflow-auto">
+    <div class="w-full flex mx-auto p-[0.5px] rounded-md variant-ringed overflow-auto">
         <button
             title="在鍵盤中删除此按鍵"
             on:click={delKey}
-            class="gap-1 p-2 flex items-center rounded-l-md variant-ringed hover:variant-ghost active:scale-90"
+            class="gap-1 p-2 flex items-center rounded-l-md variant-ringed hover:variant-ghost active:scale-95"
         >
             <Icon height="20" icon="mdi:close" />
         </button>
         <button
             title="將此按鍵左移一位"
             on:click={moveLeft}
-            class="gap-1 p-2 flex items-center variant-ringed hover:variant-ghost active:scale-90"
+            class="gap-1 p-2 flex items-center variant-ringed hover:variant-ghost active:scale-95"
         >
             <Icon height="20" icon="mdi:arrow-left" />
         </button>
@@ -300,7 +300,7 @@
                     key.autoWidth = !key.autoWidth;
                 }
             }}
-            class="gap-1 p-2 flex items-center variant-ringed hover:variant-ghost active:scale-90"
+            class="gap-1 p-2 flex items-center variant-ringed hover:variant-ghost active:scale-95"
         >
             <Icon
                 height="20"
@@ -315,7 +315,7 @@
                 placeholder="鍵寛"
                 min={1}
                 max={100}
-                class="min-w-0 grow shrink p-2 variant-ringed hover:variant-ghost"
+                class="min-w-0 grow shrink p-2 rounded-none variant-ringed hover:variant-ghost"
             />
         {:else}
             <input
@@ -325,34 +325,34 @@
                 placeholder="鍵寛"
                 min={1}
                 max={100}
-                class="min-w-0 grow shrink p-2 variant-ringed hover:variant-ghost"
+                class="min-w-0 grow shrink p-2 rounded-none variant-ringed hover:variant-ghost"
             />
         {/if}
         <button
             title="複製按鍵配置"
             on:click={copyKey}
-            class="gap-1 p-2 flex items-center variant-ringed hover:variant-ghost active:scale-90"
+            class="gap-1 p-2 flex items-center variant-ringed hover:variant-ghost active:scale-95"
         >
             <Icon height="20" icon="mdi:content-copy" />
         </button>
         <button
             title="粘貼按鍵配置"
             on:click={pasteKey}
-            class="gap-1 p-2 flex items-center variant-ringed hover:variant-ghost active:scale-90"
+            class="gap-1 p-2 flex items-center variant-ringed hover:variant-ghost active:scale-95"
         >
             <Icon height="20" icon="mdi:content-paste" />
         </button>
         <button
             title="將此按鍵右移一位"
             on:click={moveRight}
-            class="gap-1 p-2 flex items-center variant-ringed hover:variant-ghost active:scale-90"
+            class="gap-1 p-2 flex items-center variant-ringed hover:variant-ghost active:scale-95"
         >
             <Icon height="20" icon="mdi:arrow-right" />
         </button>
         <button
             title="繼續編輯下一個按鍵"
             on:click={selectNextKey}
-            class="gap-1 p-2 flex items-center rounded-r-md variant-ringed hover:variant-ghost active:scale-90"
+            class="gap-1 p-2 flex items-center rounded-r-md variant-ringed hover:variant-ghost active:scale-95"
         >
             <Icon height="20" icon="mdi:check-circle-outline" />
         </button>

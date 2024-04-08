@@ -87,7 +87,6 @@ export var KeyboardNames: { [key: string]: string } = {
 /** 快捷命令枚舉 */
 export enum ShortCmd {
     clear = "重输",
-    clearAll = "清空",
     trad = "简繁切换",
     eng = "中英切换",
     begin = "行首",
@@ -102,10 +101,13 @@ export enum ShortCmd {
     right = "右移",
     lefthand = "左手模式",
     righthand = "右手模式",
+    clearAll = "清空",
     selectAll = "全选",
     cut = "剪切",
     copy = "复制",
     paste = "粘贴",
+    undo = "撤销",
+    redo = "重做",
     sendkeys = "sendKeys",
     close = "关闭键盘",
 }
@@ -146,7 +148,7 @@ export class Action {
                     case KeyboardType.numericNineGrid:
                         return "123";
                     case KeyboardType.custom:
-                        return this.text;
+                        return "⌨";
                     case KeyboardType.emojis:
                         return "😀";
                     default:
@@ -154,57 +156,36 @@ export class Action {
                 }
             case ActionType.shortCommand:
                 switch (this.cmd) {
-                    case ShortCmd.clear:
-                        return "重輸";
-                    case ShortCmd.clearAll:
-                        return "清空";
                     case ShortCmd.trad:
                         return "繁簡";
                     case ShortCmd.eng:
                         return "中英";
-                    case ShortCmd.begin:
-                        return "行首";
-                    case ShortCmd.end:
-                        return "行尾";
                     case ShortCmd.second:
                         return "次選";
                     case ShortCmd.third:
                         return "三選";
                     case ShortCmd.schema:
-                        return "方案";
+                        return "上個";
                     case ShortCmd.schemas:
                         return "方案";
-                    case ShortCmd.return:
-                        return "換行";
                     case ShortCmd.switcher:
-                        return "開關";
-                    case ShortCmd.left:
-                        return "左移";
-                    case ShortCmd.right:
-                        return "右移";
-                    case ShortCmd.selectAll:
-                        return "全選";
-                    case ShortCmd.cut:
-                        return "剪切";
-                    case ShortCmd.copy:
-                        return "复制";
-                    case ShortCmd.paste:
-                        return "粘贴";
+                        return "選單";
+                    case ShortCmd.close:
+                        return "收起";
                     case ShortCmd.sendkeys:
                         return this.text
                             .split("+")
                             .map((str) => str.slice(0, 1))
                             .join("-");
-                    case ShortCmd.close:
-                        return "關閉";
                     default:
                         return this.cmd;
                 }
             case ActionType.nextKeyboard:
                 return "🌐";
             case ActionType.none:
-            default:
                 return "";
+            default:
+                return this.type;
         }
     }
 
