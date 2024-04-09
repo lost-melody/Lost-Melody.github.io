@@ -9,7 +9,7 @@
     $: shadowColor.alpha = shadowColor.alpha / (shadowSize || 2);
 </script>
 
-<div style:padding="8px 3px 4px 3px" style:width="32px" style:height="48px">
+<div class="w-[32px] h-[48px] pt-[8px] pb-[4px] pl-[3px] pr-[3px] variant-ringed">
     <!-- key -->
     <div
         style:border-radius={`${keyStyle.cornerRadius}px`}

@@ -67,15 +67,19 @@
                 class="w-[50%] h-10 px-2 rounded-none rounded-tr-md variant-ringed hover:variant-ghost"
             />
         </div>
-        <IconButton
-            icon={layout.primary ? "mdi:checkbox-marked-outline" : "mdi:checkbox-blank-outline"}
-            on:click={() => {
-                layout.primary = !layout.primary;
-            }}
-            class="w-full h-10 p-2 flex items-center rounded-b-md variant-ringed hover:variant-ghost active:scale-95"
-        >
-            點擊切換: {layout.primary ? "主鍵盤" : "非主鍵盤"}
-        </IconButton>
+        <div class="w-full flex items-center">
+            <div class="h-10 px-2 flex items-center rounded-bl-md variant-ringed">
+                <Icon icon={layout.primary ? "mdi:checkbox-marked-outline" : "mdi:checkbox-blank-outline"} />
+            </div>
+            <button
+                class="h-10 p-2 flex grow shrink items-center rounded-br-md variant-ringed hover:variant-ghost active:scale-95"
+                on:click={() => {
+                    layout.primary = !layout.primary;
+                }}
+            >
+                點擊切換: {layout.primary ? "主鍵盤" : "非主鍵盤"}
+            </button>
+        </div>
     </div>
 
     <!-- 編輯按鍵分佈 -->
@@ -102,7 +106,9 @@
                     max="24"
                     class="h-10 px-2 flex items-center rounded-md variant-ringed hover:variant-ghost"
                 >
-                    <span class="h-10 px-2 grow shrink flex border-surface-500 border-r items-center"> {`第 ${index + 1} 行`} </span>
+                    <span class="h-10 px-2 grow shrink flex border-surface-500 border-r items-center">
+                        {`第 ${index + 1} 行`}
+                    </span>
                     <IconButton
                         icon="mdi:arrow-up"
                         title="整行按鍵上移"

@@ -280,7 +280,7 @@
             {:else if editorTab === editInset}
                 <!-- Button Insets Editor -->
                 <div in:fade class="w-full">
-                    <div class="p-2 rounded-md variant-soft">
+                    <div class="p-1 gap-1 flex flex-col rounded-md variant-soft">
                         <IconButton
                             icon={currentLayout.buttonInsets.expr
                                 ? "mdi:checkbox-blank-outline"
@@ -289,7 +289,7 @@
                             on:click={() => {
                                 currentLayout.buttonInsets.expr = !currentLayout.buttonInsets.expr;
                             }}
-                            class="p-2 gap-2 w-full flex items-center rounded-md hover:variant-ghost"
+                            class="p-2 gap-2 w-full flex items-center rounded-md variant-ringed hover:variant-ghost"
                         >
                             <span class="grow text-left">使用統一内距</span>
                         </IconButton>
@@ -315,11 +315,7 @@
         </div>
     </div>
 
-    <SmoothDiv
-        height
-        outerClass="w-full max-w-2xl mx-auto rounded-md hover:variant-ghost md:col-span-2"
-        class="w-full"
-    >
+    <SmoothDiv height outerClass="w-full max-w-2xl mx-auto rounded-md hover:variant-ghost md:col-span-2" class="w-full">
         <details class="p-2 w-full">
             <summary class="max-w-md mx-auto p-2">可能有用的簡易説明書</summary>
             <Manual />

@@ -13,8 +13,6 @@
     export var clipAction: Action;
     export var keyStyleNames: string[];
 
-    var calloutOpen: boolean;
-
     const icons: [string, string, string, string] = [
         "mdi:gesture-swipe-left",
         "mdi:gesture-swipe-down",

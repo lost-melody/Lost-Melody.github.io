@@ -7,31 +7,34 @@
 </script>
 
 <div class="w-full p-2 gap-2 flex flex-col rounded-md variant-soft">
-    <div class="w-full gap-2 flex items-center">
-        <Icon icon="mdi:content-save-cog" class="p-2 w-10 h-10" />
-        <span class="grow shrink"> 方案名稱代碼 </span>
-        <input
-            type="text"
-            bind:value={schema.schemaName}
-            class="w-[30%] p-2 bg-transparent rounded-md hover:variant-ghost"
-        />
-        <span class="w-6" />
-    </div>
-    <div class="w-full gap-2 flex items-center">
-        <Icon icon="mdi:rename-box" class="p-2 w-10 h-10" />
-        <span class="grow shrink"> 方案顯示名稱 </span>
-        <input type="text" bind:value={schema.name} class="w-[30%] p-2 bg-transparent rounded-md hover:variant-ghost" />
-        <span class="w-6" />
-    </div>
-    <div class="w-full gap-2 flex items-center">
-        <Icon icon="mdi:account-box" class="p-2 w-10 h-10" />
-        <span class="grow shrink"> 方案作者信息 </span>
-        <input
-            type="text"
-            bind:value={schema.author}
-            class="w-[30%] p-2 bg-transparent rounded-md hover:variant-ghost"
-        />
-        <span class="w-6" />
+    <div class="p-[0.5px] flex flex-col rounded-md variant-ringed">
+        <div class="w-full gap-2 flex items-center rounded-t-md variant-ringed">
+            <Icon icon="mdi:content-save-cog" class="p-2 w-10 h-10" />
+            <span class="grow shrink"> 方案名稱代碼 </span>
+            <input
+                type="text"
+                bind:value={schema.schemaName}
+                class="h-10 w-[40%] px-2 rounded-none rounded-tr-md variant-ringed hover:variant-ghost"
+            />
+        </div>
+        <div class="w-full gap-2 flex items-center variant-ringed">
+            <Icon icon="mdi:rename-box" class="p-2 w-10 h-10" />
+            <span class="grow shrink"> 方案顯示名稱 </span>
+            <input
+                type="text"
+                bind:value={schema.name}
+                class="h-10 w-[40%] px-2 rounded-none variant-ringed hover:variant-ghost"
+            />
+        </div>
+        <div class="w-full gap-2 flex items-center rounded-b-md variant-ringed">
+            <Icon icon="mdi:account-box" class="p-2 w-10 h-10" />
+            <span class="grow shrink"> 方案作者信息 </span>
+            <input
+                type="text"
+                bind:value={schema.author}
+                class="h-10 w-[40%] px-2 rounded-none rounded-br-md variant-ringed hover:variant-ghost"
+            />
+        </div>
     </div>
     <div class="w-full gap-2 flex items-center">
         <Icon icon="mdi:rounded-corner" class="p-2 w-10 h-10" />
