@@ -5,6 +5,7 @@
     import ActionEdit from "./Action.svelte";
     import IconRange from "$lib/Component/IconRange.svelte";
     import IconButton from "$lib/Component/IconButton.svelte";
+    import Details from "$lib/Component/Details.svelte";
 
     export var landscape: boolean = false;
     /** 綁定的按鍵對象 */
@@ -186,14 +187,7 @@
     {/each}
 
     <!-- 長按動作 -->
-    <details bind:open={calloutOpen} class="w-full rounded-md variant-ringed">
-        <summary
-            class="p-2 rounded-t-md hover:variant-ghost"
-            class:rounded-b-md={!calloutOpen}
-            class:variant-ghost={calloutOpen}
-        >
-            長按動作配置
-        </summary>
+    <Details summary="長按動作配置">
         <div class="p-1.5 gap-2 flex flex-col">
             <IconRange
                 icon="mdi:table-cog"
@@ -219,27 +213,27 @@
                         <IconButton
                             icon="mdi:arrow-up"
                             height="20"
-                            title="整行按鍵上移"
+                            title="上移長按動作"
                             on:click={() => {
                                 moveCalloutUp(index);
                             }}
-                            class="h-10 px-2 variant-ringed hover:variant-ghost"
+                            class="h-10 px-2 variant-ringed hover:variant-ghost active:scale-95"
                         />
                         <IconButton
                             icon="mdi:arrow-down"
                             height="20"
-                            title="整行按鍵下移"
+                            title="下移長按動作"
                             on:click={() => {
                                 moveCalloutDown(index);
                             }}
-                            class="h-10 px-2 rounded-tr-md variant-ringed hover:variant-ghost"
+                            class="h-10 px-2 rounded-tr-md variant-ringed hover:variant-ghost active:scale-95"
                         />
                     </div>
                     <ActionEdit bind:action={callout.action} bind:clipAction />
                 </div>
             {/each}
         </div>
-    </details>
+    </Details>
 
     <!-- 按鍵樣式設置 -->
     <div class="w-full p-[0.5px] rounded-md variant-ringed">

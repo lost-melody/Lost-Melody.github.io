@@ -1,13 +1,12 @@
 <script lang="ts">
     import { browser } from "$app/environment";
     import { onNavigate } from "$app/navigation";
-    import { tweened } from "svelte/motion";
-    import { cubicOut } from "svelte/easing";
     import { fade } from "svelte/transition";
     import { localStorageStore } from "@skeletonlabs/skeleton";
     import Icon from "@iconify/svelte";
 
     import IconButton from "$lib/Component/IconButton.svelte";
+    import SmoothDiv from "$lib/Component/SmoothDiv.svelte";
     import { ColorSchema, KeyStyle } from "$lib/Hamster/model/colorSchema";
     import { Keyboard } from "$lib/Hamster/model/keyboardLayout";
     import ColorsEditor from "$lib/Hamster/ColorSchemaEdit.svelte";
@@ -57,9 +56,6 @@
         [actSave]: "檔案",
         [actBatch]: "操作",
     };
-    const actHeight = tweened(0, {
-        easing: cubicOut,
-    });
     const selectActTab = (tab: number) => {
         if (actionTab === tab) {
             actionTab = 0;
@@ -87,16 +83,9 @@
         [editInset]: "内距",
         [editKeyStyle]: "樣式",
     };
-    const editHeight = tweened(0, {
-        easing: cubicOut,
-    });
     const selectEditTab = (tab: number) => {
         editorTab = tab;
     };
-
-    const manHeight = tweened(0, {
-        easing: cubicOut,
-    });
 
     var selectedKey: { row: number; col: number } = { row: 0, col: 0 };
     const selectKey = (row: number, col: number) => {
@@ -167,28 +156,25 @@
         </div>
 
         <!-- Action Tab Content -->
-        <div style={`height: ${$actHeight}px`} class="overflow-y-hidden w-full max-w-md mx-auto">
-            <!-- 監控内部容器高度變化, 並使用緩動函數應用到外部容器 -->
-            <div bind:clientHeight={$actHeight} class="w-full">
-                {#if actionTab === actExport}
-                    <div in:fade class="p-2 w-full max-h-[25vh] overflow-y-auto rounded-md variant-ghost">
-                        <ExportBar bind:colorSchemas bind:keyboardLayouts bind:keyStyles />
-                    </div>
-                {:else if actionTab === actTemp}
-                    <div in:fade class="p-2 w-full max-h-[25vh] overflow-y-auto rounded-md variant-ghost">
-                        <PredefinedLayout bind:layout={currentLayout} bind:predefinedKeyboards />
-                    </div>
-                {:else if actionTab === actSave}
-                    <div in:fade class="p-2 w-full max-h-[25vh] overflow-y-auto rounded-md variant-ghost">
-                        <CustomLayout bind:layout={currentLayout} bind:customKeyboards />
-                    </div>
-                {:else if actionTab === actBatch}
-                    <div in:fade class="p-2 w-full max-h-[25vh] overflow-y-auto rounded-md variant-ghost">
-                        <BatchKeyEdit bind:layout={currentLayout} />
-                    </div>
-                {/if}
-            </div>
-        </div>
+        <SmoothDiv height outerClass="w-full max-w-md mx-auto" class="max-h-[25vh] overflow-y-auto w-full">
+            {#if actionTab === actExport}
+                <div in:fade class="p-2 w-full rounded-md variant-ghost">
+                    <ExportBar bind:colorSchemas bind:keyboardLayouts bind:keyStyles />
+                </div>
+            {:else if actionTab === actTemp}
+                <div in:fade class="p-2 w-full rounded-md variant-ghost">
+                    <PredefinedLayout bind:layout={currentLayout} bind:predefinedKeyboards />
+                </div>
+            {:else if actionTab === actSave}
+                <div in:fade class="p-2 w-full rounded-md variant-ghost">
+                    <CustomLayout bind:layout={currentLayout} bind:customKeyboards />
+                </div>
+            {:else if actionTab === actBatch}
+                <div in:fade class="p-2 w-full rounded-md variant-ghost">
+                    <BatchKeyEdit bind:layout={currentLayout} />
+                </div>
+            {/if}
+        </SmoothDiv>
 
         <!-- Gallery Tab Bar -->
         <div class="h-8 w-full max-w-md mx-auto flex gap-2">
@@ -260,65 +246,63 @@
             {/each}
         </div>
 
-        <div style={`height: ${$editHeight}px`} class="overflow-y-hidden w-full max-w-md mx-auto">
-            <div bind:clientHeight={$editHeight} class="w-full">
-                {#if editorTab === editColor}
-                    <!-- Color Schema Editor -->
-                    <div in:fade class="w-full">
-                        <ColorsEditor bind:schema={currentSchema} />
-                    </div>
-                {:else if editorTab === editLayout}
-                    <!-- Layout Editor -->
-                    <div in:fade class="w-full">
-                        <LayoutEdit bind:layout={currentLayout} landscape={landscapePreview} />
-                    </div>
-                {:else if editorTab === editKey}
-                    <!-- Key Editor -->
-                    <div in:fade class="w-full flex flex-col gap-2">
-                        <div class="p-2 w-full flex gap-2 items-center rounded-md variant-soft">
-                            <Icon height="20" icon="mdi-format-size" />
-                            <span class="">預覽字體</span>
-                            <input
-                                title="鍵盤預覽區顯示字體, 逗號分隔"
-                                bind:value={$previewFontFamilies}
-                                placeholder="Symbols Nerd Font, sans-serif"
-                                class="h-10 px-2 grow rounded-md variant-ringed hover:variant-ghost"
-                            />
-                        </div>
-                        <KeyEdit
-                            bind:layout={currentLayout}
-                            bind:selected={selectedKey}
-                            {keyStyleNames}
-                            landscape={landscapePreview}
+        <SmoothDiv height outerClass="w-full max-w-md mx-auto" class="w-full">
+            {#if editorTab === editColor}
+                <!-- Color Schema Editor -->
+                <div in:fade class="w-full">
+                    <ColorsEditor bind:schema={currentSchema} />
+                </div>
+            {:else if editorTab === editLayout}
+                <!-- Layout Editor -->
+                <div in:fade class="w-full">
+                    <LayoutEdit bind:layout={currentLayout} landscape={landscapePreview} />
+                </div>
+            {:else if editorTab === editKey}
+                <!-- Key Editor -->
+                <div in:fade class="w-full flex flex-col gap-2">
+                    <div class="p-2 w-full flex gap-2 items-center rounded-md variant-soft">
+                        <Icon height="20" icon="mdi-format-size" />
+                        <span class="">預覽字體</span>
+                        <input
+                            title="鍵盤預覽區顯示字體, 逗號分隔"
+                            bind:value={$previewFontFamilies}
+                            placeholder="Symbols Nerd Font, sans-serif"
+                            class="h-10 px-2 grow rounded-md variant-ringed hover:variant-ghost"
                         />
                     </div>
-                {:else if editorTab === editInset}
-                    <!-- Button Insets Editor -->
-                    <div in:fade class="w-full">
-                        <div class="p-2 rounded-md variant-soft">
-                            <IconButton
-                                icon={currentLayout.buttonInsets.expr
-                                    ? "mdi:checkbox-blank-outline"
-                                    : "mdi:checkbox-marked-outline"}
-                                height="20"
-                                on:click={() => {
-                                    currentLayout.buttonInsets.expr = !currentLayout.buttonInsets.expr;
-                                }}
-                                class="p-2 gap-2 w-full flex items-center rounded-md hover:variant-ghost"
-                            >
-                                <span class="grow text-left">使用統一内距</span>
-                            </IconButton>
+                    <KeyEdit
+                        bind:layout={currentLayout}
+                        bind:selected={selectedKey}
+                        {keyStyleNames}
+                        landscape={landscapePreview}
+                    />
+                </div>
+            {:else if editorTab === editInset}
+                <!-- Button Insets Editor -->
+                <div in:fade class="w-full">
+                    <div class="p-2 rounded-md variant-soft">
+                        <IconButton
+                            icon={currentLayout.buttonInsets.expr
+                                ? "mdi:checkbox-blank-outline"
+                                : "mdi:checkbox-marked-outline"}
+                            height="20"
+                            on:click={() => {
+                                currentLayout.buttonInsets.expr = !currentLayout.buttonInsets.expr;
+                            }}
+                            class="p-2 gap-2 w-full flex items-center rounded-md hover:variant-ghost"
+                        >
+                            <span class="grow text-left">使用統一内距</span>
+                        </IconButton>
 
-                            <ButtonInsets bind:buttonInsets={currentLayout.buttonInsets} />
-                        </div>
+                        <ButtonInsets bind:buttonInsets={currentLayout.buttonInsets} />
                     </div>
-                {:else if editorTab === editKeyStyle}
-                    <div in:fade class="w-full">
-                        <KeyStyleEdit bind:keyStyles />
-                    </div>
-                {/if}
-            </div>
-        </div>
+                </div>
+            {:else if editorTab === editKeyStyle}
+                <div in:fade class="w-full">
+                    <KeyStyleEdit bind:keyStyles />
+                </div>
+            {/if}
+        </SmoothDiv>
     </div>
 
     <div class="w-full max-w-2xl mx-auto grid grid-cols-1 grid-rows-1 md:col-span-2">
@@ -331,15 +315,14 @@
         </div>
     </div>
 
-    <div
-        style={`height: ${$manHeight}px`}
-        class="overflow-hidden w-full max-w-2xl mx-auto rounded-md hover:variant-ghost md:col-span-2"
+    <SmoothDiv
+        height
+        outerClass="w-full max-w-2xl mx-auto rounded-md hover:variant-ghost md:col-span-2"
+        class="w-full"
     >
-        <div bind:clientHeight={$manHeight} class="w-full">
-            <details class="p-2 w-full">
-                <summary class="max-w-md mx-auto p-2">可能有用的簡易説明書</summary>
-                <Manual />
-            </details>
-        </div>
-    </div>
+        <details class="p-2 w-full">
+            <summary class="max-w-md mx-auto p-2">可能有用的簡易説明書</summary>
+            <Manual />
+        </details>
+    </SmoothDiv>
 </div>

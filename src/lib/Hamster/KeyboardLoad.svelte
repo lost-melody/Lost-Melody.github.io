@@ -79,7 +79,7 @@
     }
 </script>
 
-<div class="px-2 py-1 h-8 gap-1 rounded-md variant-ghost flex items-center">
+<div class="px-2 py-1 h-8 gap-1 rounded-md variant-ringed hover:variant-ghost flex items-center">
     <!-- 删除檔案 -->
     {#if remove}
         <button
@@ -94,7 +94,7 @@
     <button
         title="點擊以此檔案數據覆蓋當前編輯配置"
         on:click={tryLoad}
-        class="p-1 w-full justify-center rounded-md hover:variant-soft flex items-center"
+        class="p-1 w-full justify-center rounded-md flex items-center"
     >
         {display}
     </button>
