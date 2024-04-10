@@ -21,7 +21,7 @@
     };
 </script>
 
-<div class="w-full p-1 gap-1 flex flex-col rounded-md variant-soft">
+<div class="w-full p-2 gap-1 flex flex-col rounded-md variant-soft">
     {#each keyStyles as keyStyle, index (keyStyle.id)}
         <div animate:flip={{ duration: 250 }}>
             <Details>

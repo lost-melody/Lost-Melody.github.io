@@ -67,7 +67,7 @@
         style:border-bottom-color={bottomColor}
         style:border-bottom-style="solid"
         style:border-bottom-width={bgBtnDisplay ? "1px" : undefined}
-        class="w-full h-full"
+        class="w-full h-full relative"
     >
         <button
             style:background-color={bgBtnDisplay ? (selected ? pressedBgColor : bgColor) : undefined}
@@ -75,14 +75,15 @@
             style:border-color={borderColor}
             style:border-width={bgBtnDisplay ? `${borderWidth}px` : undefined}
             style:box-shadow={bgBtnDisplay ? `0 ${shadowSize}px ${shadowSize}px ${shadowColor.rgba()}` : undefined}
-            class="w-full h-full rounded-md relative"
+            class="w-full h-full rounded-md absolute"
             on:click={onClick}
         >
             <!-- swipe up and down -->
             <div
                 style:color={selected ? pressedSwipeColor : swipeColor}
-                style:font-size={`${swipeFont || 6}px`}
-                class="w-full h-[20%] absolute -top-2 flex justify-around"
+                style:font-size={`${swipeFont || 8}px`}
+                style:line-height={`${(swipeFont || 8) + 2}px`}
+                class="w-full absolute top-0 flex justify-around"
             >
                 {#each [key.swipe[2], key.swipe[1]] as swipe}
                     {#if swipe.action.type !== ActionType.none && swipe.display}
@@ -96,9 +97,10 @@
             <div
                 style:color={selected ? pressedFrontColor : frontColor}
                 style:font-size={`${fontSize || 16}px`}
-                class="w-full h-[80%] absolute top-[20%] text-center"
+                style:line-height={`${(swipeFont || 16) + 2}px`}
+                class="w-full h-full absolute top-0 flex items-center justify-center"
             >
-                {key.label ? key.label : key.action.display()}
+                <span> {key.label ? key.label : key.action.display()} </span>
             </div>
         </button>
     </div>

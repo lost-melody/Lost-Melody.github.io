@@ -136,7 +136,7 @@
                                 placeholder="行高"
                                 type="number"
                                 bind:value={row.landscapeHeight}
-                                class="w-20 h-10 p-2 rounded-none bg-transparent border-surface-500 border-r hover:variant-ghost"
+                                class="w-16 h-10 p-2 rounded-none bg-transparent border-surface-500 border-r hover:variant-ghost"
                                 min="0"
                                 max="128"
                             />
@@ -146,7 +146,7 @@
                                 placeholder="行高"
                                 type="number"
                                 bind:value={row.rowHeight}
-                                class="w-20 h-10 p-2 rounded-none bg-transparent border-surface-500 border-r hover:variant-ghost"
+                                class="w-16 h-10 p-2 rounded-none bg-transparent border-surface-500 border-r hover:variant-ghost"
                                 min="0"
                                 max="128"
                             />

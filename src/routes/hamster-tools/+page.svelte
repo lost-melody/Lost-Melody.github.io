@@ -61,6 +61,7 @@
             actionTab = 0;
         } else {
             actionTab = tab;
+            stickyPreview = false;
         }
     };
 
@@ -95,6 +96,12 @@
     var stickyPreview = false;
     var landscapePreview = false;
     var previewFontFamilies = localStorageStore("previewFontFamilies", "");
+    const onStickyClick = () => {
+        stickyPreview = !stickyPreview;
+        if (stickyPreview) {
+            actionTab = 0;
+        }
+    };
 
     const colorSchemasKey = "recoveryColors";
     const keyboardLayoutsKey = "recoveryKeyboards";
@@ -139,7 +146,7 @@
 <!-- <svelte:window on:beforeunload={saveLocalData} /> -->
 
 <div class="max-lg:flex max-lg:flex-col lg:grid lg:grid-cols-2 gap-2">
-    <div class="p-1 gap-2 flex flex-col md:col-start-2">
+    <div class="-top-60 p-1 gap-2 flex flex-col md:col-start-2" class:sticky={!actionTab && stickyPreview}>
         <!-- Action Tab Bar -->
         <div class="h-8 w-full max-w-md mx-auto flex gap-2">
             {#each [actExport, actTemp, actSave, actBatch] as tab}
@@ -208,7 +215,6 @@
         <!-- Preview Keyboard -->
         <div
             style:font-family={$previewFontFamilies}
-            class:sticky={stickyPreview}
             class:max-w-md={!landscapePreview}
             class:max-w-3xl={landscapePreview}
             class:max-h-[50vh]={stickyPreview}
@@ -216,7 +222,7 @@
         >
             <!-- color schema and keyboard layout preview -->
             <Preview
-                bind:sticky={stickyPreview}
+                sticky={stickyPreview}
                 bind:landscape={landscapePreview}
                 schema={currentSchema}
                 keyboard={currentLayout}
@@ -225,6 +231,7 @@
                 on:clicked={(event) => {
                     selectKey(event.detail.row, event.detail.col);
                 }}
+                on:sticky={onStickyClick}
             />
         </div>
     </div>

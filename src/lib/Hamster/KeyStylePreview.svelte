@@ -16,7 +16,7 @@
         style:border-bottom-color={`${keyStyle.lowerEdgeColor.rgba()}`}
         style:border-bottom-style="solid"
         style:border-bottom-width="1px"
-        class="w-full h-full"
+        class="w-full h-full relative"
     >
         <div
             style:background-color={pressed
@@ -26,15 +26,16 @@
             style:border-color={keyStyle.borderColor.rgba()}
             style:border-width={`${keyStyle.borderSize}px`}
             style:box-shadow={`0 ${shadowSize}px ${shadowSize}px ${shadowColor.rgba()}`}
-            class="w-full h-full border rounded-md relative"
+            class="w-full h-full rounded-md absolute"
         >
             <!-- swipe up and down -->
             <div
                 style:color={pressed
                     ? keyStyle.pressedSwipeForegroundColor.rgba()
                     : keyStyle.swipeForegroundColor.rgba()}
-                style:font-size={`${keyStyle.swipeFontSize || 6}px`}
-                class="w-full h-[20%] absolute -top-2 flex justify-around"
+                style:font-size={`${keyStyle.swipeFontSize || 8}px`}
+                style:line-height={`${(keyStyle.swipeFontSize || 8) + 2}px`}
+                class="w-full absolute top-0 flex justify-around"
             >
                 {#each ["up", "dn"] as swipe}
                     <span>
@@ -48,7 +49,8 @@
                     ? keyStyle.pressedButtonForegroundColor.rgba()
                     : keyStyle.buttonForegroundColor.rgba()}
                 style:font-size={`${keyStyle.fontSize || 16}px`}
-                class="w-full h-[80%] absolute top-[20%] text-center"
+                style:line-height={`${(keyStyle.fontSize || 16) + 2}px`}
+                class="w-full h-full absolute top-0 flex items-center justify-center"
             >
                 c
             </div>

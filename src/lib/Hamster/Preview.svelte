@@ -20,6 +20,9 @@
     const onClick = (row: number, col: number) => {
         dispatch("clicked", { row, col });
     };
+    const onStickyClick = () => {
+        dispatch("sticky");
+    };
 </script>
 
 <div style:background-color={schema.back_color.rgba()} class="w-full rounded-md backdrop-blur">
@@ -35,7 +38,7 @@
                     ? schema.hilited_candidate_text_color.rgba()
                     : schema.candidate_text_color.rgba()}
                 style:background-color={index === 0 ? schema.hilited_candidate_back_color.rgba() : undefined}
-                class="px-1 rounded-md text-lg"
+                class="px-1 rounded-md text-md"
             >
                 <span
                     style:color={index == 0 ? schema.hilited_candidate_label_color.rgba() : schema.label_color.rgba()}
@@ -64,10 +67,8 @@
             <Icon height="20" icon={landscape ? "mdi:crop-landscape" : "mdi:crop-portrait"} />
         </button>
         <button
-            title={sticky ? "已置頂" : "未置頂"}
-            on:click={() => {
-                sticky = !sticky;
-            }}
+            title={sticky ? "取消置頂" : "置頂預覽"}
+            on:click={onStickyClick}
             style:color={schema.comment_text_color.rgba()}
         >
             <Icon height="20" icon={sticky ? "mdi:pin" : "mdi:pin-off"} />
