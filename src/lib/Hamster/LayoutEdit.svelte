@@ -94,60 +94,66 @@
                 max="8"
                 class="h-10 px-2 flex items-center rounded-md variant-ringed hover:variant-ghost"
             />
-            {#each layout.rows as row, index (row.id)}
-                <IconRange
-                    icon="mdi:table-cog"
-                    title="按鍵數量"
-                    value={row.keys.length}
-                    on:change={(event) => {
-                        onRowKeysChange(event, index);
-                    }}
-                    min="0"
-                    max="24"
-                    class="h-10 px-2 flex items-center rounded-md variant-ringed hover:variant-ghost"
-                >
-                    <span class="h-10 px-2 grow shrink flex border-surface-500 border-r items-center">
-                        {`第 ${index + 1} 行`}
-                    </span>
-                    <IconButton
-                        icon="mdi:arrow-up"
-                        title="整行按鍵上移"
-                        on:click={() => {
-                            moveRowUp(index);
+            <div class="p-[0.5px] rounded-md variant-ringed">
+                {#each layout.rows as row, index (row.id)}
+                    <IconRange
+                        icon="mdi:table-cog"
+                        title="按鍵數量"
+                        value={row.keys.length}
+                        on:change={(event) => {
+                            onRowKeysChange(event, index);
                         }}
-                        class="h-10 px-2 border-surface-500 border-r hover:variant-ghost active:scale-95 active:border-l"
-                    />
-                    <IconButton
-                        icon="mdi:arrow-down"
-                        title="整行按鍵下移"
-                        on:click={() => {
-                            moveRowDown(index);
-                        }}
-                        class="h-10 px-2 border-surface-500 border-r hover:variant-ghost active:scale-95 active:border-l"
-                    />
-                    {#if landscape}
-                        <input
-                            title="行高, 默認56"
-                            placeholder="行高"
-                            type="number"
-                            bind:value={row.landscapeHeight}
-                            class="w-20 h-10 p-2 rounded-none bg-transparent border-surface-500 border-r hover:variant-ghost"
-                            min="0"
-                            max="128"
+                        min="0"
+                        max="24"
+                        r_tl={index === 0}
+                        r_tr={index === 0}
+                        r_bl={index === layout.rows.length - 1}
+                        r_br={index === layout.rows.length - 1}
+                        class="h-10 px-2 flex items-center variant-ringed hover:variant-ghost"
+                    >
+                        <span class="h-10 px-2 grow shrink flex border-surface-500 border-r items-center">
+                            {`第 ${index + 1} 行`}
+                        </span>
+                        <IconButton
+                            icon="mdi:arrow-up"
+                            title="整行按鍵上移"
+                            on:click={() => {
+                                moveRowUp(index);
+                            }}
+                            class="h-10 px-2 border-surface-500 border-r hover:variant-ghost active:scale-95 active:border-l"
                         />
-                    {:else}
-                        <input
-                            title="行高, 默認56"
-                            placeholder="行高"
-                            type="number"
-                            bind:value={row.rowHeight}
-                            class="w-20 h-10 p-2 rounded-none bg-transparent border-surface-500 border-r hover:variant-ghost"
-                            min="0"
-                            max="128"
+                        <IconButton
+                            icon="mdi:arrow-down"
+                            title="整行按鍵下移"
+                            on:click={() => {
+                                moveRowDown(index);
+                            }}
+                            class="h-10 px-2 border-surface-500 border-r hover:variant-ghost active:scale-95 active:border-l"
                         />
-                    {/if}
-                </IconRange>
-            {/each}
+                        {#if landscape}
+                            <input
+                                title="行高, 默認56"
+                                placeholder="行高"
+                                type="number"
+                                bind:value={row.landscapeHeight}
+                                class="w-20 h-10 p-2 rounded-none bg-transparent border-surface-500 border-r hover:variant-ghost"
+                                min="0"
+                                max="128"
+                            />
+                        {:else}
+                            <input
+                                title="行高, 默認56"
+                                placeholder="行高"
+                                type="number"
+                                bind:value={row.rowHeight}
+                                class="w-20 h-10 p-2 rounded-none bg-transparent border-surface-500 border-r hover:variant-ghost"
+                                min="0"
+                                max="128"
+                            />
+                        {/if}
+                    </IconRange>
+                {/each}
+            </div>
         </div>
     </Details>
 </div>
