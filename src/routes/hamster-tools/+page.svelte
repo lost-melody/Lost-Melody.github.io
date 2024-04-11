@@ -287,7 +287,7 @@
             {:else if editorTab === editInset}
                 <!-- Button Insets Editor -->
                 <div in:fade class="w-full">
-                    <div class="p-1 gap-1 flex flex-col rounded-md variant-soft">
+                    <div class="p-2 gap-2 flex flex-col rounded-md variant-soft">
                         <IconButton
                             icon={currentLayout.buttonInsets.expr
                                 ? "mdi:checkbox-blank-outline"
