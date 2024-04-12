@@ -1,9 +1,0 @@
-patch:
-  # 倸用此方法導入配置, 請確認已經在倉APP中「重置界面設置」
-  # 如果使用過倉内置編輯器的編輯或導入功能, 則此處配置會被覆盖
-  keyboard/colorSchemas:
-    # 導入配色方案
-    __include: custom_configs:/keyboard/colorSchemas
-  keyboards:
-    # 導入鍵盤佈局
-    __include: custom_configs:/keyboards
