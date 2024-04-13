@@ -113,7 +113,7 @@
                     r_br={index === layout.rows.length - 1}
                     class="h-10 px-2 flex items-center variant-ringed hover:variant-ghost"
                 >
-                    <span class="h-10 px-2 text-sm grow shrink flex border-surface-500 border-r items-center">
+                    <span class="h-10 px-2 grow shrink flex border-surface-500 border-r items-center">
                         {`第 ${index + 1} 行`}
                     </span>
                     <IconButton
@@ -134,21 +134,21 @@
                     />
                     {#if landscape}
                         <input
-                            title="行高, 默認56"
+                            title="行高"
                             placeholder="行高"
                             type="number"
                             bind:value={row.landscapeHeight}
-                            class="w-12 h-10 p-2 text-sm rounded-none bg-transparent border-surface-500 border-r hover:variant-ghost"
+                            class="w-12 h-10 p-2 rounded-none bg-transparent border-surface-500 border-r hover:variant-ghost"
                             min="0"
                             max="128"
                         />
                     {:else}
                         <input
-                            title="行高, 默認56"
+                            title="行高"
                             placeholder="行高"
                             type="number"
                             bind:value={row.rowHeight}
-                            class="w-12 h-10 p-2 text-sm rounded-none bg-transparent border-surface-500 border-r hover:variant-ghost"
+                            class="w-12 h-10 p-2 rounded-none bg-transparent border-surface-500 border-r hover:variant-ghost"
                             min="0"
                             max="128"
                         />

@@ -1,6 +1,6 @@
 <script lang="ts">
     export var text: string;
-    export var raw: string;
+    export const raw: string = "";
     export var lang: string;
 </script>
 

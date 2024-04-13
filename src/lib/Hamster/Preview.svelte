@@ -86,6 +86,7 @@
                     keyStyle={keyStyleMap[$darkMode ? key.darkStyle : key.lightStyle]}
                     insets={keyboard.buttonInsets}
                     selected={selected.row === indexRow && selected.col === indexKey}
+                    coordinate={selected}
                     on:clicked={() => {
                         onClick(indexRow, indexKey);
                     }}

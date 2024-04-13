@@ -10,6 +10,13 @@
     export var insets: ButtonInsets;
     export var selected: boolean;
     export var keyStyle: KeyStyle | undefined = undefined;
+    export var coordinate: { row: number; col: number };
+
+    const [holdNone, holdBubble, holdCallout] = [0, 1, 2];
+    var holdState = holdNone;
+    $: if (!selected) {
+        holdState = holdNone;
+    }
 
     // 按鍵内距样式
     var pl: number, pb: number, pt: number, pr: number;
@@ -44,11 +51,37 @@
     $: shadowColor.alpha = shadowColor.alpha / (shadowSize || 2);
     $: swipeFont = keyStyle ? keyStyle.swipeFontSize : schema.swipe_font_size;
     $: fontSize = keyStyle ? keyStyle.fontSize : schema.font_size;
+    $: bubbleColor = keyStyle ? keyStyle.buttonBubbleBackgroundColor.rgba() : schema.button_bubble_back_color.rgba();
+    $: calloutColor = keyStyle ? keyStyle.actionCalloutBackgroundColor.rgba() : schema.action_callout_back_color.rgba();
+    $: calloutSelected = keyStyle
+        ? keyStyle.actionCalloutSelectedBackgroundColor.rgba()
+        : schema.hilited_callout_back_color.rgba();
+    $: calloutSelectedFg = keyStyle
+        ? keyStyle.actionCalloutSelectedForegroundColor.rgba()
+        : schema.hilited_callout_foreground_color.rgba();
 
     $: bgBtnDisplay = ![ActionType.none, ActionType.characterMargin].includes(key.action.type);
     const dispatch = createEventDispatcher();
     const onClick = () => {
-        dispatch("clicked");
+        if (selected) {
+            // 当前按键已选中时, 再次点击切换长按预览
+            switch (holdState) {
+                case holdNone:
+                    holdState = holdBubble;
+                    break;
+                case holdBubble:
+                    if (key.callout.length) {
+                        holdState = holdCallout;
+                        break;
+                    }
+                case holdCallout:
+                    holdState = holdNone;
+                    break;
+            }
+        } else {
+            // 当前按键未被选中, 点击时发送事件
+            dispatch("clicked");
+        }
     };
 </script>
 
@@ -69,6 +102,35 @@
         style:border-bottom-width={bgBtnDisplay ? "1px" : undefined}
         class="w-full h-full relative"
     >
+        {#if holdState === holdBubble}
+            <div
+                class="h-10 px-2 gap-1 text-lg flex items-center rounded-md absolute -top-11"
+                class:left-0={coordinate.col < row.keys.length / 2}
+                class:right-0={coordinate.col >= row.keys.length / 2}
+                style:background-color={bubbleColor}
+            >
+                <div class="px-2 rounded-md" style:color={pressedFrontColor}>
+                    {key.label ? key.label : key.action.display()}
+                </div>
+            </div>
+        {:else if holdState === holdCallout}
+            <div
+                class="h-10 px-2 gap-1 text-lg flex items-center rounded-md absolute -top-11"
+                class:left-0={coordinate.col < row.keys.length / 2}
+                class:right-0={coordinate.col >= row.keys.length / 2}
+                style:background-color={calloutColor}
+            >
+                {#each key.callout as callout, index}
+                    <div
+                        class="px-2 rounded-md"
+                        style:background-color={index === 0 ? calloutSelected : undefined}
+                        style:color={index === 0 ? calloutSelectedFg : pressedFrontColor}
+                    >
+                        {callout.label ? callout.label : callout.action.display()}
+                    </div>
+                {/each}
+            </div>
+        {/if}
         <button
             style:background-color={bgBtnDisplay ? (selected ? pressedBgColor : bgColor) : undefined}
             style:border-radius={`${cornerRadius}px`}

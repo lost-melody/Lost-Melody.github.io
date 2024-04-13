@@ -49,7 +49,7 @@
                 style:border-color={schema.border_color.rgba()}
                 class:border-2={index === indexSchema}
                 class:border-dashed={index === indexSchema}
-                class="w-32 h-24 p-2 shrink-0 flex flex-col rounded-md border active:scale-95"
+                class="w-32 h-20 p-2 shrink-0 flex flex-col rounded-md border active:scale-95"
             >
                 <Thumbnail layout={currentLayout} {schema} />
             </button>
@@ -89,7 +89,7 @@
     {/each}
     <button
         on:click={addSchema}
-        class="flex justify-center items-center w-32 h-24 p-2 shrink-0 btn rounded-md variant-ghost"
+        class="flex justify-center items-center w-32 h-20 p-2 shrink-0 btn rounded-md variant-ghost"
     >
         <Icon height="64" icon="mdi:plus" />
     </button>

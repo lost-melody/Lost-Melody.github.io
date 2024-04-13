@@ -77,7 +77,10 @@
                     <ColorSelector title="按下前景" bind:color={keyStyle.pressedButtonForegroundColor} />
                     <ColorSelector title="劃動前景" bind:color={keyStyle.swipeForegroundColor} />
                     <ColorSelector title="按下劃動前景" bind:color={keyStyle.pressedSwipeForegroundColor} />
-                    <ColorSelector title="按下气泡背景" bind:color={keyStyle.buttonBubbleBackColor} />
+                    <ColorSelector title="按下气泡背景" bind:color={keyStyle.buttonBubbleBackgroundColor} />
+                    <ColorSelector title="長按气泡背景" bind:color={keyStyle.actionCalloutBackgroundColor} />
+                    <ColorSelector title="長按首選背景" bind:color={keyStyle.actionCalloutSelectedBackgroundColor} />
+                    <ColorSelector title="長按首選文字" bind:color={keyStyle.actionCalloutSelectedForegroundColor} />
                     <div class="w-full gap-2 flex items-center">
                         <Icon icon="mdi:rounded-corner" class="px-1 w-10 h-8" />
                         <span class="grow shrink"> 按鍵圓角 </span>

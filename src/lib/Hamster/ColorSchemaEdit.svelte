@@ -81,4 +81,5 @@
     <ColorSelector title="次選序號" bind:color={schema.label_color} />
     <ColorSelector title="長按首選背景" bind:color={schema.hilited_callout_back_color} />
     <ColorSelector title="長按首選文字" bind:color={schema.hilited_callout_foreground_color} />
+    <ColorSelector title="長按氣泡背景" bind:color={schema.action_callout_back_color} />
 </div>

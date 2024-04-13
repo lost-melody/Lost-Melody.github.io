@@ -253,7 +253,7 @@
             {/each}
         </div>
 
-        <SmoothDiv height outerClass="w-full max-w-md mx-auto" class="w-full">
+        <SmoothDiv height outerClass="w-full max-w-md mx-auto" class="w-full max-sm:text-sm">
             {#if editorTab === editColor}
                 <!-- Color Schema Editor -->
                 <div in:fade class="w-full">

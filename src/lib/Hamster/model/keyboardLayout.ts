@@ -438,6 +438,11 @@ export class Callout {
     action: Action = new Action();
     label: string = "";
 
+    constructor() {
+        this.action.type = ActionType.character;
+        this.action.text = "c";
+    }
+
     fromObject(obj: any) {
         this.action.fromObject(obj.action);
         if (typeof obj.label === "string") this.label = obj.label;
