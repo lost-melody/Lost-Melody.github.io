@@ -116,6 +116,7 @@
         {:else if holdState === holdCallout}
             <div
                 class="h-10 px-2 gap-1 text-lg flex items-center rounded-md absolute -top-11"
+                class:flex-row-reverse={coordinate.col >= row.keys.length / 2}
                 class:left-0={coordinate.col < row.keys.length / 2}
                 class:right-0={coordinate.col >= row.keys.length / 2}
                 style:background-color={calloutColor}
@@ -124,7 +125,7 @@
                     <div
                         class="px-2 rounded-md"
                         style:background-color={index === 0 ? calloutSelected : undefined}
-                        style:color={index === 0 ? calloutSelectedFg : pressedFrontColor}
+                        style:color={index === 0 ? calloutSelectedFg : schema.candidate_text_color.rgba()}
                     >
                         {callout.label ? callout.label : callout.action.display()}
                     </div>

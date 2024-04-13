@@ -146,7 +146,7 @@
 <!-- <svelte:window on:beforeunload={saveLocalData} /> -->
 
 <div class="max-lg:flex max-lg:flex-col lg:grid lg:grid-cols-2 gap-2">
-    <div class="-top-60 p-1 gap-2 flex flex-col md:col-start-2" class:sticky={!actionTab && stickyPreview}>
+    <div class="-top-44 p-1 gap-2 flex flex-col lg:col-start-2 lg:h-full" class:sticky={!actionTab && stickyPreview}>
         <!-- Action Tab Bar -->
         <div class="h-8 w-full max-w-md mx-auto flex gap-2">
             {#each [actExport, actTemp, actSave, actBatch] as tab}
@@ -218,7 +218,8 @@
             class:max-w-md={!landscapePreview}
             class:max-w-3xl={landscapePreview}
             class:max-h-[50vh]={stickyPreview}
-            class="top-0 w-full max-w-md mx-auto overflow-auto"
+            class:sticky={!actionTab && stickyPreview}
+            class="top-1 w-full max-w-md mx-auto overflow-auto"
         >
             <!-- color schema and keyboard layout preview -->
             <Preview
@@ -236,7 +237,7 @@
         </div>
     </div>
 
-    <div class="p-1 gap-2 flex flex-col md:row-start-1 md:overflow-y-auto">
+    <div class="p-1 gap-2 flex flex-col lg:row-start-1 lg:overflow-y-auto lg:h-full">
         <!-- Editor Tab Bar -->
         <div class="h-8 w-full max-w-md mx-auto flex gap-2">
             {#each [editKey, editColor, editLayout, editInset, editKeyStyle] as tab}
@@ -256,17 +257,17 @@
         <SmoothDiv height outerClass="w-full max-w-md mx-auto" class="w-full max-sm:text-sm">
             {#if editorTab === editColor}
                 <!-- Color Schema Editor -->
-                <div in:fade class="w-full">
+                <div in:fade class="w-full lg:overflow-y-auto">
                     <ColorsEditor bind:schema={currentSchema} />
                 </div>
             {:else if editorTab === editLayout}
                 <!-- Layout Editor -->
-                <div in:fade class="w-full">
+                <div in:fade class="w-full lg:overflow-y-auto">
                     <LayoutEdit bind:layout={currentLayout} landscape={landscapePreview} />
                 </div>
             {:else if editorTab === editKey}
                 <!-- Key Editor -->
-                <div in:fade class="w-full flex flex-col gap-2">
+                <div in:fade class="w-full flex flex-col gap-2 lg:overflow-y-auto">
                     <div class="p-2 w-full flex gap-2 items-center rounded-md variant-soft">
                         <Icon height="20" icon="mdi-format-size" />
                         <span class="">預覽字體</span>
@@ -286,7 +287,7 @@
                 </div>
             {:else if editorTab === editInset}
                 <!-- Button Insets Editor -->
-                <div in:fade class="w-full">
+                <div in:fade class="w-full lg:overflow-y-auto">
                     <div class="p-2 gap-2 flex flex-col rounded-md variant-soft">
                         <IconButton
                             icon={currentLayout.buttonInsets.expr
@@ -305,14 +306,14 @@
                     </div>
                 </div>
             {:else if editorTab === editKeyStyle}
-                <div in:fade class="w-full">
+                <div in:fade class="w-full lg:overflow-y-auto">
                     <KeyStyleEdit bind:keyStyles />
                 </div>
             {/if}
         </SmoothDiv>
     </div>
 
-    <div class="w-full max-w-2xl mx-auto grid grid-cols-1 grid-rows-1 md:col-span-2">
+    <div class="w-full max-w-2xl mx-auto grid grid-cols-1 grid-rows-1 lg:col-span-2">
         <div class="italic text-xs">
             倉輸入法而今已實現内建佈局和配色方案編輯器,<br />
             是故本工具將不再添加新功能.<br />
@@ -322,7 +323,7 @@
         </div>
     </div>
 
-    <SmoothDiv height outerClass="w-full max-w-2xl mx-auto rounded-md hover:variant-ghost md:col-span-2" class="w-full">
+    <SmoothDiv height outerClass="w-full max-w-2xl mx-auto rounded-md hover:variant-ghost lg:col-span-2" class="w-full">
         <details class="p-2 w-full">
             <summary class="max-w-md mx-auto p-2">可能有用的簡易説明書</summary>
             <Manual />
