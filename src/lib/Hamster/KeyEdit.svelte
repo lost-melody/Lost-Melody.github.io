@@ -134,55 +134,59 @@
         <ActionEdit bind:action={key.action} bind:clipAction />
     </div>
 
-    {#each [2, 1, 0, 3] as index (key.swipe[index].id)}
-        <div class="flex flex-col items-center p-[0.5px] rounded-md variant-ringed">
-            {#if key.swipe[index].action.type === ActionType.none}
-                <div class="flex w-full">
-                    <div class="h-10 px-2 flex items-center rounded-l-md variant-ringed">
-                        <Icon height="20" icon={icons[index]} />
-                    </div>
-                    <button
-                        title="添加劃動配置"
-                        on:click={() => {
-                            activateSwipe(index);
-                        }}
-                        class="h-10 px-2 rounded-r-md grow flex justify-center items-center variant-ringed hover:variant-ghost"
-                    >
-                        <Icon height="20" icon="mdi:plus" />
-                    </button>
+    <Details summary="劃動動作配置">
+        <div class="p-1.5 gap-2 flex flex-col">
+            {#each [2, 1, 0, 3] as index (key.swipe[index].id)}
+                <div class="flex flex-col items-center p-[0.5px] rounded-md variant-ringed">
+                    {#if key.swipe[index].action.type === ActionType.none}
+                        <div class="flex w-full">
+                            <div class="h-10 px-2 flex items-center rounded-l-md variant-ringed">
+                                <Icon height="20" icon={icons[index]} />
+                            </div>
+                            <button
+                                title="添加劃動配置"
+                                on:click={() => {
+                                    activateSwipe(index);
+                                }}
+                                class="h-10 px-2 rounded-r-md grow flex justify-center items-center variant-ringed hover:variant-ghost"
+                            >
+                                <Icon height="20" icon="mdi:plus" />
+                            </button>
+                        </div>
+                    {:else}
+                        <div class="flex w-full">
+                            <div class="h-10 px-2 flex items-center rounded-tl-md variant-ringed">
+                                <Icon height="20" icon={icons[index]} />
+                            </div>
+                            <input
+                                title="調整劃動顯示標籤"
+                                bind:value={key.swipe[index].label}
+                                placeholder="標籤"
+                                class="h-10 px-2 grow rounded-none variant-ringed hover:variant-ghost"
+                            />
+                            <!-- 經由 rime 處理 -->
+                            <button
+                                title="劃動是否經由 Rime 處理"
+                                on:click={() => (key.swipe[index].processByRIME = !key.swipe[index].processByRIME)}
+                                class="h-10 px-2 variant-ringed hover:variant-ghost"
+                            >
+                                <Icon height="20" icon={key.swipe[index].processByRIME ? "mdi:web" : "mdi:web-off"} />
+                            </button>
+                            <!-- 顯示劃動 -->
+                            <button
+                                title="是否顯示此劃動"
+                                on:click={() => (key.swipe[index].display = !key.swipe[index].display)}
+                                class="h-10 px-2 rounded-tr-md variant-ringed hover:variant-ghost"
+                            >
+                                <Icon height="20" icon={key.swipe[index].display ? "mdi:eye" : "mdi:eye-off"} />
+                            </button>
+                        </div>
+                        <ActionEdit bind:action={key.swipe[index].action} bind:clipAction />
+                    {/if}
                 </div>
-            {:else}
-                <div class="flex w-full">
-                    <div class="h-10 px-2 flex items-center rounded-tl-md variant-ringed">
-                        <Icon height="20" icon={icons[index]} />
-                    </div>
-                    <input
-                        title="調整劃動顯示標籤"
-                        bind:value={key.swipe[index].label}
-                        placeholder="標籤"
-                        class="h-10 px-2 grow rounded-none variant-ringed hover:variant-ghost"
-                    />
-                    <!-- 經由 rime 處理 -->
-                    <button
-                        title="劃動是否經由 Rime 處理"
-                        on:click={() => (key.swipe[index].processByRIME = !key.swipe[index].processByRIME)}
-                        class="h-10 px-2 variant-ringed hover:variant-ghost"
-                    >
-                        <Icon height="20" icon={key.swipe[index].processByRIME ? "mdi:web" : "mdi:web-off"} />
-                    </button>
-                    <!-- 顯示劃動 -->
-                    <button
-                        title="是否顯示此劃動"
-                        on:click={() => (key.swipe[index].display = !key.swipe[index].display)}
-                        class="h-10 px-2 rounded-tr-md variant-ringed hover:variant-ghost"
-                    >
-                        <Icon height="20" icon={key.swipe[index].display ? "mdi:eye" : "mdi:eye-off"} />
-                    </button>
-                </div>
-                <ActionEdit bind:action={key.swipe[index].action} bind:clipAction />
-            {/if}
+            {/each}
         </div>
-    {/each}
+    </Details>
 
     <!-- 長按動作 -->
     <Details summary="長按動作配置">

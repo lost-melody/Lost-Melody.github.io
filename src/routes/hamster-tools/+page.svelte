@@ -2,8 +2,6 @@
     import { browser } from "$app/environment";
     import { onNavigate } from "$app/navigation";
     import { fade } from "svelte/transition";
-    import { localStorageStore } from "@skeletonlabs/skeleton";
-    import Icon from "@iconify/svelte";
 
     import IconButton from "$lib/Component/IconButton.svelte";
     import SmoothDiv from "$lib/Component/SmoothDiv.svelte";
@@ -95,7 +93,6 @@
 
     var stickyPreview = false;
     var landscapePreview = false;
-    var previewFontFamilies = localStorageStore("previewFontFamilies", "");
     const onStickyClick = () => {
         stickyPreview = !stickyPreview;
         if (stickyPreview) {
@@ -146,9 +143,12 @@
 <!-- <svelte:window on:beforeunload={saveLocalData} /> -->
 
 <div class="max-lg:flex max-lg:flex-col lg:grid lg:grid-cols-2 gap-2">
-    <div class="-top-44 p-1 gap-2 flex flex-col lg:col-start-2 lg:h-full" class:sticky={!actionTab && stickyPreview}>
+    <div
+        class="-top-44 py-1 gap-2 flex flex-col lg:col-start-2 lg:h-full z-10"
+        class:sticky={!actionTab && stickyPreview}
+    >
         <!-- Action Tab Bar -->
-        <div class="h-8 w-full max-w-md mx-auto flex gap-2">
+        <div class="h-8 px-1 w-full max-w-md mx-auto flex gap-2">
             {#each [actExport, actTemp, actSave, actBatch] as tab}
                 <button
                     on:click={() => {
@@ -163,7 +163,7 @@
         </div>
 
         <!-- Action Tab Content -->
-        <SmoothDiv height outerClass="w-full max-w-md mx-auto" class="max-h-[25vh] overflow-y-auto w-full">
+        <SmoothDiv height outerClass="px-1 w-full max-w-md mx-auto" class="max-h-[25vh] overflow-y-auto w-full">
             {#if actionTab === actExport}
                 <div in:fade class="p-2 w-full rounded-md variant-ghost">
                     <ExportBar bind:colorSchemas bind:keyboardLayouts bind:keyStyles />
@@ -184,7 +184,7 @@
         </SmoothDiv>
 
         <!-- Gallery Tab Bar -->
-        <div class="h-8 w-full max-w-md mx-auto flex gap-2">
+        <div class="h-8 px-1 w-full max-w-md mx-auto flex gap-2">
             {#each [galLayout, galColor] as tab}
                 <button
                     disabled={galleryTab === tab}
@@ -214,7 +214,7 @@
 
         <!-- Preview Keyboard -->
         <div
-            style:font-family={$previewFontFamilies}
+            style:font-family="sans-serif, Symbols Nerd Font"
             class:max-w-md={!landscapePreview}
             class:max-w-3xl={landscapePreview}
             class:max-h-[50vh]={stickyPreview}
@@ -237,9 +237,9 @@
         </div>
     </div>
 
-    <div class="p-1 gap-2 flex flex-col lg:row-start-1 lg:overflow-y-auto lg:h-full">
+    <div class="py-1 gap-2 flex flex-col lg:row-start-1 lg:overflow-y-auto lg:h-full">
         <!-- Editor Tab Bar -->
-        <div class="h-8 w-full max-w-md mx-auto flex gap-2">
+        <div class="px-1 h-8 w-full max-w-md mx-auto flex gap-2">
             {#each [editKey, editColor, editLayout, editInset, editKeyStyle] as tab}
                 <button
                     disabled={editorTab === tab}
@@ -254,7 +254,7 @@
             {/each}
         </div>
 
-        <SmoothDiv height outerClass="w-full max-w-md mx-auto" class="w-full max-sm:text-sm">
+        <SmoothDiv height outerClass="px-1 w-full max-w-md mx-auto" class="w-full max-sm:text-sm">
             {#if editorTab === editColor}
                 <!-- Color Schema Editor -->
                 <div in:fade class="w-full lg:overflow-y-auto">
@@ -268,16 +268,6 @@
             {:else if editorTab === editKey}
                 <!-- Key Editor -->
                 <div in:fade class="w-full flex flex-col gap-2 lg:overflow-y-auto">
-                    <div class="p-2 w-full flex gap-2 items-center rounded-md variant-soft">
-                        <Icon height="20" icon="mdi-format-size" />
-                        <span class="">預覽字體</span>
-                        <input
-                            title="鍵盤預覽區顯示字體, 逗號分隔"
-                            bind:value={$previewFontFamilies}
-                            placeholder="Symbols Nerd Font, sans-serif"
-                            class="h-10 px-2 grow rounded-md variant-ringed hover:variant-ghost"
-                        />
-                    </div>
                     <KeyEdit
                         bind:layout={currentLayout}
                         bind:selected={selectedKey}
@@ -330,3 +320,13 @@
         </details>
     </SmoothDiv>
 </div>
+
+<style>
+    @font-face {
+        font-family: "Symbols Nerd Font";
+        src:
+            local("Symbols Nerd Font"),
+            url("https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/NerdFontsSymbolsOnly/SymbolsNerdFont-Regular.ttf")
+                format("truetype");
+    }
+</style>
