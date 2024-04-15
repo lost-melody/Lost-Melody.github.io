@@ -65,23 +65,27 @@ export var ActionNames: { [key: string]: string } = {
 /** 鍵盤類型枚舉 */
 export enum KeyboardType {
     alphabetic = "alphabetic",
-    classifySymbolic = "classifySymbolic",
     chinese = "chinese",
+    classifySymbolic = "classifySymbolic",
     chineseNineGrid = "chineseNineGrid",
     numericNineGrid = "numericNineGrid",
-    custom = "custom",
+    numeric = "numeric",
+    symbolic = "symbolic",
     emojis = "emojis",
+    custom = "custom",
 }
 
 /** 鍵盤類型名稱映射表 */
 export var KeyboardNames: { [key: string]: string } = {
     [KeyboardType.alphabetic]: "英文26鍵",
-    [KeyboardType.classifySymbolic]: "分類符號",
     [KeyboardType.chinese]: "中文26鍵",
+    [KeyboardType.classifySymbolic]: "分類符號",
     [KeyboardType.chineseNineGrid]: "中文九宫",
     [KeyboardType.numericNineGrid]: "數字九宫",
-    [KeyboardType.custom]: "自定義",
+    [KeyboardType.numeric]: "數字",
+    [KeyboardType.symbolic]: "符號",
     [KeyboardType.emojis]: "Emoji",
+    [KeyboardType.custom]: "自定義",
 };
 
 /** 快捷命令枚舉 */
@@ -251,7 +255,9 @@ export class Action {
                         KeyboardType.chineseNineGrid,
                         KeyboardType.classifySymbolic,
                         KeyboardType.emojis,
+                        KeyboardType.numeric,
                         KeyboardType.numericNineGrid,
+                        KeyboardType.symbolic,
                     ].includes(kbd as KeyboardType)
                 ) {
                     this.type = ActionType.keyboardType;
@@ -260,6 +266,14 @@ export class Action {
                     this.type = ActionType.keyboardType;
                     this.kbd = KeyboardType.custom;
                     this.text = kbd;
+                }
+                return;
+            } else if (typeof obj[ActionType.keyboardType] === "object") {
+                let kbd = obj[ActionType.keyboardType];
+                this.type = ActionType.keyboardType;
+                this.kbd = KeyboardType.custom;
+                if (kbd.custom && kbd.custom.named) {
+                    this.text = kbd.custom.named || "";
                 }
                 return;
             }
@@ -302,7 +316,7 @@ export class Action {
                 return { [this.type]: { char: this.text } };
             case ActionType.keyboardType:
                 if (this.kbd === KeyboardType.custom) {
-                    return { [this.type]: this.text };
+                    return { [this.type]: { custom: { named: this.text } } };
                 }
                 return { [this.type]: this.kbd };
             case ActionType.shortCommand:
@@ -445,7 +459,11 @@ export class Callout {
 
     fromObject(obj: any) {
         this.action.fromObject(obj.action);
-        if (typeof obj.label === "string") this.label = obj.label;
+        if (typeof obj.label === "string") {
+            this.label = obj.label;
+        } else if (obj.label && typeof obj.label === "object" && typeof obj.label.text === "string") {
+            this.label = obj.label.text;
+        }
     }
 
     toObject(): object {
