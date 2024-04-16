@@ -42,13 +42,13 @@
     $: pressedSwipeColor = keyStyle
         ? keyStyle.pressedSwipeForegroundColor.rgba()
         : schema.button_swipe_pressed_front_color.rgba();
-    $: cornerRadius = keyStyle ? keyStyle.cornerRadius : schema.corner_radius;
-    $: borderWidth = keyStyle ? keyStyle.borderSize : schema.border_size;
+    $: cornerRadius = keyStyle && keyStyle.cornerRadius >= 0 ? keyStyle.cornerRadius : schema.corner_radius;
+    $: borderWidth = keyStyle && keyStyle.borderSize >= 0 ? keyStyle.borderSize : schema.border_size;
     $: borderColor = (keyStyle && keyStyle.borderColor.rgba()) || schema.border_color.rgba();
     $: bottomColor = (keyStyle && keyStyle.lowerEdgeColor.rgba()) || schema.lower_edge_color.rgba();
-    $: shadowSize = keyStyle ? keyStyle.shadowSize * 2 : schema.shadow_size * 2;
+    $: shadowSize = keyStyle && keyStyle.shadowSize >= 0 ? keyStyle.shadowSize * 2 : schema.shadow_size * 2;
     $: shadowColor = (keyStyle && keyStyle.shadowColor.clone()) || schema.shadow_color.clone();
-    $: shadowColor.alpha = shadowColor.alpha / (shadowSize || 2);
+    $: shadowColor.alpha = shadowColor.alpha / shadowSize;
     $: swipeFont = keyStyle ? keyStyle.swipeFontSize : schema.swipe_font_size;
     $: fontSize = keyStyle ? keyStyle.fontSize : schema.font_size;
     $: bubbleColor =
