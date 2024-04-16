@@ -11,6 +11,7 @@
     export var selected: boolean;
     export var keyStyle: KeyStyle | undefined = undefined;
     export var coordinate: { row: number; col: number };
+    export var previewWidth: number;
 
     const [holdNone, holdBubble, holdCallout] = [0, 1, 2];
     var holdState = holdNone;
@@ -104,26 +105,27 @@
     >
         {#if holdState === holdBubble}
             <div
-                class="h-10 px-2 gap-1 text-lg flex items-center rounded-md absolute -top-11"
+                class="h-10 px-1 min-w-10 flex items-center justify-center rounded-md absolute -top-11"
                 class:left-0={coordinate.col < row.keys.length / 2}
                 class:right-0={coordinate.col >= row.keys.length / 2}
                 style:background-color={bubbleColor}
             >
-                <div class="px-2 rounded-md" style:color={pressedFrontColor}>
+                <div class="px-1 rounded-md" style:color={pressedFrontColor}>
                     {key.label ? key.label : key.action.display()}
                 </div>
             </div>
         {:else if holdState === holdCallout}
             <div
-                class="h-10 px-2 gap-1 text-lg flex items-center rounded-md absolute -top-11"
+                class="h-10 px-1 min-w-10 text-nowrap flex items-center rounded-md absolute -top-11 overflow-x-auto"
                 class:flex-row-reverse={coordinate.col >= row.keys.length / 2}
                 class:left-0={coordinate.col < row.keys.length / 2}
                 class:right-0={coordinate.col >= row.keys.length / 2}
+                style:max-width={`${previewWidth >> 1}px`}
                 style:background-color={calloutColor}
             >
                 {#each key.callout as callout, index}
                     <div
-                        class="px-2 rounded-md"
+                        class="px-1 rounded-md"
                         style:background-color={index === 0 ? calloutSelected : undefined}
                         style:color={index === 0 ? calloutSelectedFg : schema.candidate_text_color.rgba()}
                     >

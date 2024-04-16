@@ -15,6 +15,7 @@
     export var selected: { row: number; col: number };
 
     var darkMode: Writable<boolean> = getContext("darkMode");
+    var previewWidth: number = 0;
 
     const dispatch = createEventDispatcher();
     const onClick = (row: number, col: number) => {
@@ -25,7 +26,11 @@
     };
 </script>
 
-<div style:background-color={schema.back_color.rgba()} class="w-full rounded-md backdrop-blur">
+<div
+    bind:clientWidth={previewWidth}
+    style:background-color={schema.back_color.rgba()}
+    class="w-full rounded-md backdrop-blur"
+>
     <!-- preedit -->
     <div class="w-full px-2">
         <span style:color={schema.text_color.rgba()} class="text-xs"> shouxuan </span>
@@ -87,6 +92,7 @@
                     insets={keyboard.buttonInsets}
                     selected={selected.row === indexRow && selected.col === indexKey}
                     coordinate={selected}
+                    {previewWidth}
                     on:clicked={() => {
                         onClick(indexRow, indexKey);
                     }}
