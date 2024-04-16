@@ -5,9 +5,9 @@
     export var keyStyle: KeyStyle;
     export var colorSchema: ColorSchema;
 
-    $: shadowSize = keyStyle.shadowSize * 2;
+    $: shadowSize = keyStyle.shadowSize >= 0 ? keyStyle.shadowSize * 2 : colorSchema.shadow_size * 2;
     $: shadowColor = (keyStyle.shadowColor.color && keyStyle.shadowColor.clone()) || colorSchema.shadow_color.clone();
-    $: shadowColor.alpha = shadowColor.alpha / (shadowSize || 2);
+    $: shadowColor.alpha = shadowColor.alpha / shadowSize;
 </script>
 
 <div class="w-[32px] h-[48px] pt-[8px] pb-[4px] pl-[3px] pr-[3px] variant-ringed">
@@ -23,9 +23,9 @@
             style:background-color={pressed
                 ? keyStyle.pressedButtonBackgroundColor.rgba() || colorSchema.button_pressed_back_color.rgba()
                 : keyStyle.buttonBackgroundColor.rgba() || colorSchema.button_back_color.rgba()}
-            style:border-radius={`${keyStyle.cornerRadius}px`}
+            style:border-radius={`${keyStyle.cornerRadius >= 0 ? keyStyle.cornerRadius : colorSchema.corner_radius}px`}
             style:border-color={keyStyle.borderColor.rgba() || colorSchema.border_color.rgba()}
-            style:border-width={`${keyStyle.borderSize}px`}
+            style:border-width={`${keyStyle.borderSize >= 0 ? keyStyle.borderSize : colorSchema.border_size}px`}
             style:box-shadow={`0 ${shadowSize}px ${shadowSize}px ${shadowColor.rgba()}`}
             class="w-full h-full rounded-md absolute"
         >

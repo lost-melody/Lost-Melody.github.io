@@ -103,6 +103,8 @@ export class ColorSchema {
     corner_radius: number = 5;
     /** 按鍵邊框 */
     border_color: Color = new Color("#000000");
+    /** 邊框寛度 */
+    border_size: number = 1;
     /** 預編輯文本 */
     text_color: Color = new Color("#000000");
     /** 按鍵下邊框 */
@@ -149,6 +151,7 @@ export class ColorSchema {
             swipe_font_size: this.swipe_font_size || undefined,
             corner_radius: this.corner_radius,
             border_color: this.border_color.abgr(),
+            border_size: this.border_size,
             text_color: this.text_color.abgr(),
             lower_edge_color: this.lower_edge_color.abgr(),
             shadow_color: this.shadow_color.abgr(),
@@ -199,6 +202,7 @@ export class ColorSchema {
             this.swipe_font_size = asNumber(obj.swipe_font_size);
             this.corner_radius = asNumber(obj.corner_radius, 5);
             this.border_color.fromAbgr(asString(obj.border_color, "0x000000"));
+            this.border_size = asNumber(obj.border_size, 1);
             this.text_color.fromAbgr(asString(obj.text_color, "0x000000"));
             this.lower_edge_color.fromAbgr(asString(obj.lower_edge_color, "0x000000"));
             this.shadow_color.fromAbgr(asString(obj.shadow_color, "0x000000"));
@@ -233,6 +237,7 @@ export class ColorSchema {
         schema.swipe_font_size = this.swipe_font_size;
         schema.corner_radius = this.corner_radius;
         schema.border_color = this.border_color.clone();
+        schema.border_size = this.border_size;
         schema.text_color = this.text_color.clone();
         schema.lower_edge_color = this.lower_edge_color.clone();
         schema.shadow_color = this.shadow_color.clone();
@@ -264,12 +269,12 @@ export class KeyStyle {
     actionCalloutBackgroundColor: Color = new Color();
     actionCalloutSelectedBackgroundColor: Color = new Color();
     actionCalloutSelectedForegroundColor: Color = new Color("");
-    cornerRadius: number = 5;
-    borderSize: number = 1;
+    cornerRadius: number = -1;
+    borderSize: number = -1;
     borderColor: Color = new Color("");
     lowerEdgeColor: Color = new Color("");
     shadowColor: Color = new Color("");
-    shadowSize: number = 0;
+    shadowSize: number = -1;
     fontSize: number = 0;
     swipeFontSize: number = 0;
 
@@ -286,12 +291,12 @@ export class KeyStyle {
         obj.actionCalloutBackgroundColor = this.actionCalloutBackgroundColor.abgr() || undefined;
         obj.actionCalloutSelectedBackgroundColor = this.actionCalloutSelectedBackgroundColor.abgr() || undefined;
         obj.actionCalloutSelectedForegroundColor = this.actionCalloutSelectedForegroundColor.abgr() || undefined;
-        obj.cornerRadius = this.cornerRadius;
-        obj.borderSize = this.borderSize;
+        obj.cornerRadius = this.cornerRadius >= 0 ? this.cornerRadius : undefined;
+        obj.borderSize = this.borderSize >= 0 ? this.borderSize : undefined;
         obj.borderColor = this.borderColor.abgr() || undefined;
         obj.lowerEdgeColor = this.lowerEdgeColor.abgr() || undefined;
         obj.shadowColor = this.shadowColor.abgr() || undefined;
-        obj.shadowSize = this.shadowSize;
+        obj.shadowSize = this.shadowSize >= 0 ? this.shadowSize : undefined;
         obj.fontSize = this.fontSize || undefined;
         obj.swipeFontSize = this.swipeFontSize || undefined;
         return obj;
@@ -314,12 +319,12 @@ export class KeyStyle {
             this.actionCalloutBackgroundColor.fromAbgr(asString(obj.actionCalloutBackgroundColor));
             this.actionCalloutSelectedBackgroundColor.fromAbgr(asString(obj.actionCalloutSelectedBackgroundColor));
             this.actionCalloutSelectedForegroundColor.fromAbgr(asString(obj.actionCalloutSelectedForegroundColor));
-            this.cornerRadius = asNumber(obj.cornerRadius, 5);
-            this.borderSize = asNumber(obj.borderSize, 1);
+            this.cornerRadius = asNumber(obj.cornerRadius, -1);
+            this.borderSize = asNumber(obj.borderSize, -1);
             this.borderColor.fromAbgr(asString(obj.borderColor));
             this.lowerEdgeColor.fromAbgr(asString(obj.lowerEdgeColor));
             this.shadowColor.fromAbgr(asString(obj.shadowColor));
-            this.shadowSize = asNumber(obj.shadowSize);
+            this.shadowSize = asNumber(obj.shadowSize, -1);
             this.fontSize = asNumber(obj.fontSize);
             this.swipeFontSize = asNumber(obj.swipeFontSize);
         }
