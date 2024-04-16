@@ -22,11 +22,14 @@ export class Color {
     alpha: number;
 
     constructor(color?: string, alpha?: number) {
-        this.color = color || "#000000";
+        this.color = color || "";
         this.alpha = typeof alpha === "number" && alpha >= 0 && alpha <= 0xff ? alpha : 0xff;
     }
 
     rgba(): string {
+        if (!this.color) {
+            return "";
+        }
         var r = parseInt(this.color.slice(1, 3), 16);
         var g = parseInt(this.color.slice(3, 5), 16);
         var b = parseInt(this.color.slice(5, 7), 16);
@@ -34,6 +37,9 @@ export class Color {
     }
 
     abgr(): string {
+        if (!this.color) {
+            return "";
+        }
         var r = this.color.slice(1, 3);
         var g = this.color.slice(3, 5);
         var b = this.color.slice(5, 7);
@@ -52,6 +58,10 @@ export class Color {
     }
 
     fromAbgr(abgr: string): void {
+        if (!abgr) {
+            this.color = "";
+            return;
+        }
         const matcher = /^0x([0-9a-fA-F]{2})?([0-9a-fA-F]{6})$/;
         var res = matcher.exec(abgr);
         this.alpha = parseInt((res && res[1]) || "FF", 16);
@@ -244,21 +254,21 @@ export class ColorSchema {
 export class KeyStyle {
     id: number = newId();
     name: string = "name";
-    buttonBackgroundColor: Color = new Color("#ffffff");
-    pressedButtonBackgroundColor: Color = new Color("#d0d0d0");
-    buttonForegroundColor: Color = new Color("#000000");
-    pressedButtonForegroundColor: Color = new Color("#000000");
-    swipeForegroundColor: Color = new Color("#000000");
-    pressedSwipeForegroundColor: Color = new Color("#000000");
-    buttonBubbleBackgroundColor: Color = new Color("#d0d0d0");
-    actionCalloutBackgroundColor: Color = new Color("#d0d0d0");
-    actionCalloutSelectedBackgroundColor: Color = new Color("#ffffff");
-    actionCalloutSelectedForegroundColor: Color = new Color("000000");
+    buttonBackgroundColor: Color = new Color();
+    pressedButtonBackgroundColor: Color = new Color();
+    buttonForegroundColor: Color = new Color();
+    pressedButtonForegroundColor: Color = new Color();
+    swipeForegroundColor: Color = new Color();
+    pressedSwipeForegroundColor: Color = new Color();
+    buttonBubbleBackgroundColor: Color = new Color();
+    actionCalloutBackgroundColor: Color = new Color();
+    actionCalloutSelectedBackgroundColor: Color = new Color();
+    actionCalloutSelectedForegroundColor: Color = new Color("");
     cornerRadius: number = 5;
     borderSize: number = 1;
-    borderColor: Color = new Color("#000000");
-    lowerEdgeColor: Color = new Color("#000000");
-    shadowColor: Color = new Color("#000000");
+    borderColor: Color = new Color("");
+    lowerEdgeColor: Color = new Color("");
+    shadowColor: Color = new Color("");
     shadowSize: number = 0;
     fontSize: number = 0;
     swipeFontSize: number = 0;
@@ -266,21 +276,21 @@ export class KeyStyle {
     toObject(): object {
         var obj: any = {};
         obj.name = this.name;
-        obj.buttonBackgroundColor = this.buttonBackgroundColor.abgr();
-        obj.pressedButtonBackgroundColor = this.pressedButtonBackgroundColor.abgr();
-        obj.buttonForegroundColor = this.buttonForegroundColor.abgr();
-        obj.pressedButtonForegroundColor = this.pressedButtonForegroundColor.abgr();
-        obj.swipeForegroundColor = this.swipeForegroundColor.abgr();
-        obj.pressedSwipeForegroundColor = this.pressedSwipeForegroundColor.abgr();
-        obj.buttonBubbleBackgroundColor = this.buttonBubbleBackgroundColor.abgr();
-        obj.actionCalloutBackgroundColor = this.actionCalloutBackgroundColor.abgr();
-        obj.actionCalloutSelectedBackgroundColor = this.actionCalloutSelectedBackgroundColor.abgr();
-        obj.actionCalloutSelectedForegroundColor = this.actionCalloutSelectedForegroundColor.abgr();
+        obj.buttonBackgroundColor = this.buttonBackgroundColor.abgr() || undefined;
+        obj.pressedButtonBackgroundColor = this.pressedButtonBackgroundColor.abgr() || undefined;
+        obj.buttonForegroundColor = this.buttonForegroundColor.abgr() || undefined;
+        obj.pressedButtonForegroundColor = this.pressedButtonForegroundColor.abgr() || undefined;
+        obj.swipeForegroundColor = this.swipeForegroundColor.abgr() || undefined;
+        obj.pressedSwipeForegroundColor = this.pressedSwipeForegroundColor.abgr() || undefined;
+        obj.buttonBubbleBackgroundColor = this.buttonBubbleBackgroundColor.abgr() || undefined;
+        obj.actionCalloutBackgroundColor = this.actionCalloutBackgroundColor.abgr() || undefined;
+        obj.actionCalloutSelectedBackgroundColor = this.actionCalloutSelectedBackgroundColor.abgr() || undefined;
+        obj.actionCalloutSelectedForegroundColor = this.actionCalloutSelectedForegroundColor.abgr() || undefined;
         obj.cornerRadius = this.cornerRadius;
         obj.borderSize = this.borderSize;
-        obj.borderColor = this.borderColor.abgr();
-        obj.lowerEdgeColor = this.lowerEdgeColor.abgr();
-        obj.shadowColor = this.shadowColor.abgr();
+        obj.borderColor = this.borderColor.abgr() || undefined;
+        obj.lowerEdgeColor = this.lowerEdgeColor.abgr() || undefined;
+        obj.shadowColor = this.shadowColor.abgr() || undefined;
         obj.shadowSize = this.shadowSize;
         obj.fontSize = this.fontSize || undefined;
         obj.swipeFontSize = this.swipeFontSize || undefined;
@@ -290,29 +300,25 @@ export class KeyStyle {
     fromObject(obj: any): void {
         if (obj && typeof obj === "object") {
             this.name = obj.name || this.name;
-            this.buttonBackgroundColor.fromAbgr(asString(obj.buttonBackgroundColor, "0xffffff"));
-            this.pressedButtonBackgroundColor.fromAbgr(asString(obj.pressedButtonBackgroundColor, "0xd0d0d0"));
-            this.buttonForegroundColor.fromAbgr(asString(obj.buttonForegroundColor, "0x000000"));
-            this.pressedButtonForegroundColor.fromAbgr(asString(obj.pressedButtonForegroundColor, "0x000000"));
-            this.swipeForegroundColor.fromAbgr(asString(obj.swipeForegroundColor, "0x000000"));
-            this.pressedSwipeForegroundColor.fromAbgr(asString(obj.pressedSwipeForegroundColor, "0x000000"));
+            this.buttonBackgroundColor.fromAbgr(asString(obj.buttonBackgroundColor));
+            this.pressedButtonBackgroundColor.fromAbgr(asString(obj.pressedButtonBackgroundColor));
+            this.buttonForegroundColor.fromAbgr(asString(obj.buttonForegroundColor));
+            this.pressedButtonForegroundColor.fromAbgr(asString(obj.pressedButtonForegroundColor));
+            this.swipeForegroundColor.fromAbgr(asString(obj.swipeForegroundColor));
+            this.pressedSwipeForegroundColor.fromAbgr(asString(obj.pressedSwipeForegroundColor));
             if (obj.buttonBubbleBackgroundColor) {
-                this.buttonBubbleBackgroundColor.fromAbgr(asString(obj.buttonBubbleBackgroundColor, "0xd0d0d0"));
+                this.buttonBubbleBackgroundColor.fromAbgr(asString(obj.buttonBubbleBackgroundColor));
             } else {
-                this.buttonBubbleBackgroundColor.fromAbgr(asString(obj.buttonBubbleBackColor, "0xd0d0d0"));
+                this.buttonBubbleBackgroundColor.fromAbgr(asString(obj.buttonBubbleBackColor));
             }
-            this.actionCalloutBackgroundColor.fromAbgr(asString(obj.actionCalloutBackgroundColor, "0xd0d0d0"));
-            this.actionCalloutSelectedBackgroundColor.fromAbgr(
-                asString(obj.actionCalloutSelectedBackgroundColor, "0xffffff"),
-            );
-            this.actionCalloutSelectedForegroundColor.fromAbgr(
-                asString(obj.actionCalloutSelectedForegroundColor, "0x000000"),
-            );
+            this.actionCalloutBackgroundColor.fromAbgr(asString(obj.actionCalloutBackgroundColor));
+            this.actionCalloutSelectedBackgroundColor.fromAbgr(asString(obj.actionCalloutSelectedBackgroundColor));
+            this.actionCalloutSelectedForegroundColor.fromAbgr(asString(obj.actionCalloutSelectedForegroundColor));
             this.cornerRadius = asNumber(obj.cornerRadius, 5);
             this.borderSize = asNumber(obj.borderSize, 1);
-            this.borderColor.fromAbgr(asString(obj.borderColor, "0x000000"));
-            this.lowerEdgeColor.fromAbgr(asString(obj.lowerEdgeColor, "0x000000"));
-            this.shadowColor.fromAbgr(asString(obj.shadowColor, "0x000000"));
+            this.borderColor.fromAbgr(asString(obj.borderColor));
+            this.lowerEdgeColor.fromAbgr(asString(obj.lowerEdgeColor));
+            this.shadowColor.fromAbgr(asString(obj.shadowColor));
             this.shadowSize = asNumber(obj.shadowSize);
             this.fontSize = asNumber(obj.fontSize);
             this.swipeFontSize = asNumber(obj.swipeFontSize);

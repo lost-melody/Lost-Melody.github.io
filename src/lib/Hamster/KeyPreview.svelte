@@ -31,29 +31,30 @@
     $: height = landscape ? row.landscapeHeight || 56 : row.rowHeight || 56;
     $: grow = landscape ? key.autoLandscape : key.autoWidth;
 
-    $: bgColor = keyStyle ? keyStyle.buttonBackgroundColor.rgba() : schema.button_back_color.rgba();
-    $: pressedBgColor = keyStyle
-        ? keyStyle.pressedButtonBackgroundColor.rgba()
-        : schema.button_pressed_back_color.rgba();
-    $: frontColor = keyStyle ? keyStyle.buttonForegroundColor.rgba() : schema.button_front_color.rgba();
+    $: bgColor = (keyStyle && keyStyle.buttonBackgroundColor.rgba()) || schema.button_back_color.rgba();
+    $: pressedBgColor =
+        (keyStyle && keyStyle.pressedButtonBackgroundColor.rgba()) || schema.button_pressed_back_color.rgba();
+    $: frontColor = (keyStyle && keyStyle.buttonForegroundColor.rgba()) || schema.button_front_color.rgba();
     $: pressedFrontColor = keyStyle
         ? keyStyle.pressedButtonForegroundColor.rgba()
         : schema.button_pressed_front_color.rgba();
-    $: swipeColor = keyStyle ? keyStyle.swipeForegroundColor.rgba() : schema.button_swipe_front_color.rgba();
+    $: swipeColor = (keyStyle && keyStyle.swipeForegroundColor.rgba()) || schema.button_swipe_front_color.rgba();
     $: pressedSwipeColor = keyStyle
         ? keyStyle.pressedSwipeForegroundColor.rgba()
         : schema.button_swipe_pressed_front_color.rgba();
     $: cornerRadius = keyStyle ? keyStyle.cornerRadius : schema.corner_radius;
     $: borderWidth = keyStyle ? keyStyle.borderSize : 1;
-    $: borderColor = keyStyle ? keyStyle.borderColor.rgba() : schema.border_color.rgba();
-    $: bottomColor = keyStyle ? keyStyle.lowerEdgeColor.rgba() : schema.lower_edge_color.rgba();
+    $: borderColor = (keyStyle && keyStyle.borderColor.rgba()) || schema.border_color.rgba();
+    $: bottomColor = (keyStyle && keyStyle.lowerEdgeColor.rgba()) || schema.lower_edge_color.rgba();
     $: shadowSize = keyStyle ? keyStyle.shadowSize * 2 : schema.shadow_size * 2;
-    $: shadowColor = keyStyle ? keyStyle.shadowColor.clone() : schema.shadow_color.clone();
+    $: shadowColor = (keyStyle && keyStyle.shadowColor.clone()) || schema.shadow_color.clone();
     $: shadowColor.alpha = shadowColor.alpha / (shadowSize || 2);
     $: swipeFont = keyStyle ? keyStyle.swipeFontSize : schema.swipe_font_size;
     $: fontSize = keyStyle ? keyStyle.fontSize : schema.font_size;
-    $: bubbleColor = keyStyle ? keyStyle.buttonBubbleBackgroundColor.rgba() : schema.button_bubble_back_color.rgba();
-    $: calloutColor = keyStyle ? keyStyle.actionCalloutBackgroundColor.rgba() : schema.action_callout_back_color.rgba();
+    $: bubbleColor =
+        (keyStyle && keyStyle.buttonBubbleBackgroundColor.rgba()) || schema.button_bubble_back_color.rgba();
+    $: calloutColor =
+        (keyStyle && keyStyle.actionCalloutBackgroundColor.rgba()) || schema.action_callout_back_color.rgba();
     $: calloutSelected = keyStyle
         ? keyStyle.actionCalloutSelectedBackgroundColor.rgba()
         : schema.hilited_callout_back_color.rgba();

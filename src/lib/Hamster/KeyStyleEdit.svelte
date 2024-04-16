@@ -1,12 +1,13 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
     import { flip } from "svelte/animate";
-    import { KeyStyle } from "./model/colorSchema";
+    import { ColorSchema, KeyStyle } from "./model/colorSchema";
     import ColorSelector from "./ColorSelector.svelte";
     import IconButton from "$lib/Component/IconButton.svelte";
     import Details from "$lib/Component/Details.svelte";
     import KeyStylePreview from "./KeyStylePreview.svelte";
 
+    export var colorSchema: ColorSchema;
     export var keyStyles: KeyStyle[] = [];
     const sortKeyStyles = () => {
         keyStyles.sort((a, b) => (a.name < b.name ? -1 : a.name === b.name ? 0 : 1));
@@ -28,8 +29,8 @@
                 <div slot="summary" class="grow flex items-center">
                     <span class="px-2 font-mono rounded variant-soft">{keyStyle.name}</span>
                     <span class="h-[48px] border-surface-500 border-r grow" />
-                    <KeyStylePreview {keyStyle} />
-                    <KeyStylePreview pressed {keyStyle} />
+                    <KeyStylePreview {keyStyle} {colorSchema} />
+                    <KeyStylePreview pressed {keyStyle} {colorSchema} />
                     <IconButton
                         title="複製"
                         icon={"mdi:content-copy"}
@@ -71,16 +72,24 @@
                             class="h-10 w-[40%] p-1 rounded-none rounded-r-md variant-ringed hover:variant-ghost"
                         />
                     </div>
-                    <ColorSelector title="背景" bind:color={keyStyle.buttonBackgroundColor} />
-                    <ColorSelector title="按下背景" bind:color={keyStyle.pressedButtonBackgroundColor} />
-                    <ColorSelector title="前景" bind:color={keyStyle.buttonForegroundColor} />
-                    <ColorSelector title="按下前景" bind:color={keyStyle.pressedButtonForegroundColor} />
-                    <ColorSelector title="劃動前景" bind:color={keyStyle.swipeForegroundColor} />
-                    <ColorSelector title="按下劃動前景" bind:color={keyStyle.pressedSwipeForegroundColor} />
-                    <ColorSelector title="按下气泡背景" bind:color={keyStyle.buttonBubbleBackgroundColor} />
-                    <ColorSelector title="長按气泡背景" bind:color={keyStyle.actionCalloutBackgroundColor} />
-                    <ColorSelector title="長按首選背景" bind:color={keyStyle.actionCalloutSelectedBackgroundColor} />
-                    <ColorSelector title="長按首選文字" bind:color={keyStyle.actionCalloutSelectedForegroundColor} />
+                    <ColorSelector title="背景" allowEmpty bind:color={keyStyle.buttonBackgroundColor} />
+                    <ColorSelector title="按下背景" allowEmpty bind:color={keyStyle.pressedButtonBackgroundColor} />
+                    <ColorSelector title="前景" allowEmpty bind:color={keyStyle.buttonForegroundColor} />
+                    <ColorSelector title="按下前景" allowEmpty bind:color={keyStyle.pressedButtonForegroundColor} />
+                    <ColorSelector title="劃動前景" allowEmpty bind:color={keyStyle.swipeForegroundColor} />
+                    <ColorSelector title="按下劃動前景" allowEmpty bind:color={keyStyle.pressedSwipeForegroundColor} />
+                    <ColorSelector title="按下氣泡背景" allowEmpty bind:color={keyStyle.buttonBubbleBackgroundColor} />
+                    <ColorSelector title="長按氣泡背景" allowEmpty bind:color={keyStyle.actionCalloutBackgroundColor} />
+                    <ColorSelector
+                        title="長按首選背景"
+                        allowEmpty
+                        bind:color={keyStyle.actionCalloutSelectedBackgroundColor}
+                    />
+                    <ColorSelector
+                        title="長按首選文字"
+                        allowEmpty
+                        bind:color={keyStyle.actionCalloutSelectedForegroundColor}
+                    />
                     <div class="w-full gap-2 flex items-center">
                         <Icon icon="mdi:rounded-corner" class="px-1 w-10 h-8" />
                         <span class="grow shrink"> 按鍵圓角 </span>
@@ -93,9 +102,9 @@
                         <input type="range" min="0" max="8" bind:value={keyStyle.borderSize} class="w-[30%]" />
                         <span class="w-6 code"> {keyStyle.borderSize} </span>
                     </div>
-                    <ColorSelector title="邊框" bind:color={keyStyle.borderColor} />
-                    <ColorSelector title="下邊框" bind:color={keyStyle.lowerEdgeColor} />
-                    <ColorSelector title="陰影" bind:color={keyStyle.shadowColor} />
+                    <ColorSelector title="邊框" allowEmpty bind:color={keyStyle.borderColor} />
+                    <ColorSelector title="下邊框" allowEmpty bind:color={keyStyle.lowerEdgeColor} />
+                    <ColorSelector title="陰影" allowEmpty bind:color={keyStyle.shadowColor} />
                     <div class="w-full gap-2 flex items-center">
                         <Icon icon="mdi:format-size" class="px-1 w-10 h-8" />
                         <span class="grow shrink"> 陰影大小 </span>

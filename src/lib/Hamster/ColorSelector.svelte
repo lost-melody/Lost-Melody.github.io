@@ -3,6 +3,7 @@
 
     export var color: Color;
     export var title: string = "顔色";
+    export var allowEmpty: boolean = false;
 
     const [min, max, step] = [0, 0xff, 0x05];
 
@@ -14,6 +15,9 @@
     };
     const postTyping = () => {
         typing = false;
+        if (allowEmpty && !color.color) {
+            return;
+        }
         if (!/^#[0-9a-fA-F]{6}$/.test(color.color)) {
             color.color = before;
         }
@@ -29,7 +33,7 @@
         <input type="text" bind:value={color.color} autofocus on:blur={postTyping} class="w-16 code" />
     {:else}
         <button on:click={onTyping} class="w-12 code">
-            {color.color.slice(1).toUpperCase()}
+            {color.color.slice(1).toUpperCase() || "-"}
         </button>
     {/if}
     <span class="grow shrink"> {title} </span>

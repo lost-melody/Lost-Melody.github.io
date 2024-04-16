@@ -297,7 +297,7 @@
                 </div>
             {:else if editorTab === editKeyStyle}
                 <div in:fade class="w-full lg:overflow-y-auto">
-                    <KeyStyleEdit bind:keyStyles />
+                    <KeyStyleEdit bind:keyStyles colorSchema={currentSchema} />
                 </div>
             {/if}
         </SmoothDiv>

@@ -1,11 +1,12 @@
 <script lang="ts">
-    import type { KeyStyle } from "./model/colorSchema";
+    import type { ColorSchema, KeyStyle } from "./model/colorSchema";
 
     export var pressed: boolean = false;
     export var keyStyle: KeyStyle;
+    export var colorSchema: ColorSchema;
 
     $: shadowSize = keyStyle.shadowSize * 2;
-    $: shadowColor = keyStyle.shadowColor.clone();
+    $: shadowColor = (keyStyle.shadowColor.color && keyStyle.shadowColor.clone()) || colorSchema.shadow_color.clone();
     $: shadowColor.alpha = shadowColor.alpha / (shadowSize || 2);
 </script>
 
@@ -13,17 +14,17 @@
     <!-- key -->
     <div
         style:border-radius={`${keyStyle.cornerRadius}px`}
-        style:border-bottom-color={`${keyStyle.lowerEdgeColor.rgba()}`}
+        style:border-bottom-color={`${keyStyle.lowerEdgeColor.rgba() || colorSchema.lower_edge_color.rgba()}`}
         style:border-bottom-style="solid"
         style:border-bottom-width="1px"
         class="w-full h-full relative"
     >
         <div
             style:background-color={pressed
-                ? keyStyle.pressedButtonBackgroundColor.rgba()
-                : keyStyle.buttonBackgroundColor.rgba()}
+                ? keyStyle.pressedButtonBackgroundColor.rgba() || colorSchema.button_pressed_back_color.rgba()
+                : keyStyle.buttonBackgroundColor.rgba() || colorSchema.button_back_color.rgba()}
             style:border-radius={`${keyStyle.cornerRadius}px`}
-            style:border-color={keyStyle.borderColor.rgba()}
+            style:border-color={keyStyle.borderColor.rgba() || colorSchema.border_color.rgba()}
             style:border-width={`${keyStyle.borderSize}px`}
             style:box-shadow={`0 ${shadowSize}px ${shadowSize}px ${shadowColor.rgba()}`}
             class="w-full h-full rounded-md absolute"
@@ -31,8 +32,8 @@
             <!-- swipe up and down -->
             <div
                 style:color={pressed
-                    ? keyStyle.pressedSwipeForegroundColor.rgba()
-                    : keyStyle.swipeForegroundColor.rgba()}
+                    ? keyStyle.pressedSwipeForegroundColor.rgba() || colorSchema.button_swipe_pressed_front_color.rgba()
+                    : keyStyle.swipeForegroundColor.rgba() || colorSchema.button_swipe_front_color.rgba()}
                 style:font-size={`${keyStyle.swipeFontSize || 8}px`}
                 style:line-height={`${(keyStyle.swipeFontSize || 8) + 2}px`}
                 class="w-full absolute top-0 flex justify-around"
@@ -46,8 +47,8 @@
             <!-- key action -->
             <div
                 style:color={pressed
-                    ? keyStyle.pressedButtonForegroundColor.rgba()
-                    : keyStyle.buttonForegroundColor.rgba()}
+                    ? keyStyle.pressedButtonForegroundColor.rgba() || colorSchema.button_pressed_front_color.rgba()
+                    : keyStyle.buttonForegroundColor.rgba() || colorSchema.button_front_color.rgba()}
                 style:font-size={`${keyStyle.fontSize || 16}px`}
                 style:line-height={`${(keyStyle.fontSize || 16) + 2}px`}
                 class="w-full h-full absolute top-0 flex items-center justify-center"
