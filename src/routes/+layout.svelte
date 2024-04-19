@@ -95,7 +95,6 @@
                 default:
                     continue;
             }
-            break;
         }
     }
 </script>

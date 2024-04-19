@@ -144,7 +144,7 @@
 
 <div class="max-lg:flex max-lg:flex-col lg:grid lg:grid-cols-2 gap-2">
     <div
-        class="-top-44 py-1 gap-2 flex flex-col lg:col-start-2 lg:h-full z-10"
+        class="-top-48 py-1 gap-2 flex flex-col lg:col-start-2 lg:h-full z-10"
         class:sticky={!actionTab && stickyPreview}
     >
         <!-- Action Tab Bar -->
@@ -219,7 +219,7 @@
             class:max-w-3xl={landscapePreview}
             class:max-h-[50vh]={stickyPreview}
             class:sticky={!actionTab && stickyPreview}
-            class="top-1 w-full max-w-md mx-auto overflow-auto"
+            class="-top-2 w-full max-w-md mx-auto overflow-auto"
         >
             <!-- color schema and keyboard layout preview -->
             <Preview

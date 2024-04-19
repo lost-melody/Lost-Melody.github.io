@@ -19,7 +19,7 @@
             <span class="px-1 py-0.5 font-mono text-xs/[100%] rounded-md variant-ghost">
                 <!-- 單個小碼展示爲「上 丄 g」 -->
                 <span class="">
-                    {comps[secondary].map((comp) => comp.replace(/^{|}$/g, "")).join(" ")}
+                    {comps[secondary].join(" ")}
                 </span>
                 <span class="text-error-700 dark:text-error-300">
                     {secondary}
