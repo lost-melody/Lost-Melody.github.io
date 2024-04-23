@@ -326,7 +326,8 @@
         font-family: "Symbols Nerd Font";
         src:
             local("Symbols Nerd Font"),
-            url("https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/NerdFontsSymbolsOnly/SymbolsNerdFont-Regular.ttf")
-                format("truetype");
+            url("https://www.nerdfonts.com/assets/fonts/Symbols-2048-em Nerd Font Complete.woff2") format("woff2");
+        font-weight: normal;
+        font-style: normal;
     }
 </style>
