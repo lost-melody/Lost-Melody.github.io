@@ -18,6 +18,7 @@
     $: if (!selected) {
         holdState = holdNone;
     }
+    var calloutSelectedIndex = 0;
 
     // 按鍵内距样式
     var pl: number, pb: number, pt: number, pr: number;
@@ -74,6 +75,7 @@
                 case holdBubble:
                     if (key.callout.length) {
                         holdState = holdCallout;
+                        calloutSelectedIndex = 0;
                         break;
                     }
                 case holdCallout:
@@ -106,18 +108,18 @@
     >
         {#if holdState === holdBubble}
             <div
-                class="h-10 px-1 min-w-10 flex items-center justify-center rounded-md absolute -top-11"
+                class="h-10 px-2 min-w-10 flex items-center justify-center rounded-md absolute -top-11"
                 class:left-0={coordinate.col < row.keys.length / 2}
                 class:right-0={coordinate.col >= row.keys.length / 2}
                 style:background-color={bubbleColor}
             >
-                <div class="px-1 rounded-md" style:color={pressedFrontColor}>
+                <div class="px-2 rounded-md" style:color={pressedFrontColor}>
                     {key.label ? key.label : key.action.display()}
                 </div>
             </div>
         {:else if holdState === holdCallout}
             <div
-                class="h-10 px-1 min-w-10 text-nowrap flex items-center rounded-md absolute -top-11 overflow-x-auto"
+                class="h-10 px-2 min-w-10 text-nowrap flex items-center rounded-md absolute -top-11 overflow-x-auto"
                 class:flex-row-reverse={coordinate.col >= row.keys.length / 2}
                 class:left-0={coordinate.col < row.keys.length / 2}
                 class:right-0={coordinate.col >= row.keys.length / 2}
@@ -125,13 +127,18 @@
                 style:background-color={calloutColor}
             >
                 {#each key.callout as callout, index}
-                    <div
-                        class="px-1 rounded-md"
-                        style:background-color={index === 0 ? calloutSelected : undefined}
-                        style:color={index === 0 ? calloutSelectedFg : schema.candidate_text_color.rgba()}
+                    <button
+                        class="px-2 rounded-md"
+                        style:background-color={index === calloutSelectedIndex ? calloutSelected : undefined}
+                        style:color={index === calloutSelectedIndex
+                            ? calloutSelectedFg
+                            : schema.candidate_text_color.rgba()}
+                        on:click={() => {
+                            calloutSelectedIndex = index;
+                        }}
                     >
                         {callout.label ? callout.label : callout.action.display()}
-                    </div>
+                    </button>
                 {/each}
             </div>
         {/if}
