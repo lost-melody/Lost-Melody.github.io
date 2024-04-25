@@ -94,8 +94,8 @@
     <button
         title="點擊以此檔案數據覆蓋當前編輯配置"
         on:click={tryLoad}
-        class="p-1 w-full justify-center rounded-md flex items-center"
-        class:text-sm={opMode}
+        class="p-1 w-full justify-center rounded-md flex items-center text-nowrap"
+        class:text-xs={opMode}
     >
         {display}
     </button>

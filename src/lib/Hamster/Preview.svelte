@@ -33,17 +33,17 @@
 >
     <!-- preedit -->
     <div class="w-full px-2">
-        <span style:color={schema.text_color.rgba()} class="text-xs"> shouxuan </span>
+        <span style:color={schema.text_color.rgba()} class="px-1 text-xs"> lleiu </span>
     </div>
     <!-- candidates -->
-    <div class="w-full px-2 gap-2 flex items-center">
-        {#each ["首選", "次選", "三選"] as cand, index}
+    <div class="w-full px-2 gap-1 flex items-center text-sm">
+        {#each ["卢老师", "罗老师", "罗利市"] as cand, index}
             <span
                 style:color={index === 0
                     ? schema.hilited_candidate_text_color.rgba()
                     : schema.candidate_text_color.rgba()}
                 style:background-color={index === 0 ? schema.hilited_candidate_back_color.rgba() : undefined}
-                class="px-1 rounded-md text-md"
+                class="px-1 rounded-md text-md text-nowrap"
             >
                 <span
                     style:color={index == 0 ? schema.hilited_candidate_label_color.rgba() : schema.label_color.rgba()}
@@ -57,7 +57,7 @@
                         : schema.comment_text_color.rgba()}
                     class="text-xs"
                 >
-                    {["uzxr", "cixr", "sjxr"][index]}
+                    {["lleiu", "lleiui", "lleiuo"][index]}
                 </span>
             </span>
         {/each}
