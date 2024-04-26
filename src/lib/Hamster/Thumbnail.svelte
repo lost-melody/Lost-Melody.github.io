@@ -22,7 +22,7 @@
             >
                 <div
                     style:border-color={bgBtnDisplay(key.action.type) ? schema.border_color.rgba() : ""}
-                    style:background-color={schema.button_back_color.rgba()}
+                    style:background-color={bgBtnDisplay(key.action.type) ? schema.button_back_color.rgba() : ""}
                     class:border={bgBtnDisplay(key.action.type)}
                     class="h-full w-full rounded-sm"
                 />
