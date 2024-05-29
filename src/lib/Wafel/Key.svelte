@@ -16,15 +16,22 @@
     <div class="w-full h-full px-0.5 py-1 flex flex-wrap gap-0.5 justify-center content-start">
         {#each Object.keys(comps).sort() as secondary}
             <!-- 顯示每個小碼對應的一個或多個字根 -->
-            <span class="px-1 py-0.5 font-mono text-xs/[100%] rounded-md variant-ghost">
+            <span class="px-1 py-0.5 text-xs/[100%] rounded-md variant-ghost">
                 <!-- 單個小碼展示爲「上 丄 g」 -->
-                <span class="">
+                <span class="font-comp">
                     {comps[secondary].join(" ")}
                 </span>
-                <span class="text-error-700 dark:text-error-300">
+                <span class="font-mono text-error-700 dark:text-error-300">
                     {secondary}
                 </span>
             </span>
         {/each}
     </div>
 </div>
+
+<style>
+    /* 字根专用字体 */
+    .font-comp {
+        font-family: "等线", sans-serif;
+    }
+</style>
