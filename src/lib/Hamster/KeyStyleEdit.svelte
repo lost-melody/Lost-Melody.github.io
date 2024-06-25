@@ -69,7 +69,7 @@
                                 keyStyles = keyStyles;
                             }}
                             placeholder="space_light_eng"
-                            class="h-10 w-[40%] p-1 rounded-none rounded-r-md variant-ringed hover:variant-ghost"
+                            class="h-10 w-[40%] p-1 font-mono rounded-none rounded-r-md variant-ringed hover:variant-ghost"
                         />
                     </div>
                     <ColorSelector title="背景" allowEmpty bind:color={keyStyle.buttonBackgroundColor} />

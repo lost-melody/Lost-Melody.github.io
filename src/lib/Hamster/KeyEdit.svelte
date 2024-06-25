@@ -109,7 +109,7 @@
             </div>
             <input
                 title="調整按鍵顯示標籤"
-                bind:value={key.label}
+                bind:value={key.label.text}
                 placeholder="標籤"
                 class="h-10 px-2 grow rounded-none variant-ringed hover:variant-ghost"
             />
@@ -125,9 +125,18 @@
             <div class="flex w-full items-center">
                 <input
                     title="調整空格鍵的加載時標籤"
-                    bind:value={key.loading}
+                    bind:value={key.label.loading}
                     placeholder="加載標籤"
-                    class="h-10 px-2 grow variant-ringed hover:variant-ghost"
+                    class="h-10 px-2 grow rounded-none variant-ringed hover:variant-ghost"
+                />
+            </div>
+        {:else}
+            <div class="flex w-full items-center">
+                <input
+                    title="使用 SF Symbol 作爲標籤 (覆蓋文本標籤)"
+                    bind:value={key.label.sysImage}
+                    placeholder="SF Symbol"
+                    class="h-10 px-2 font-mono grow rounded-none variant-ringed hover:variant-ghost"
                 />
             </div>
         {/if}
@@ -160,7 +169,7 @@
                             </div>
                             <input
                                 title="調整劃動顯示標籤"
-                                bind:value={key.swipe[index].label}
+                                bind:value={key.swipe[index].label.text}
                                 placeholder="標籤"
                                 class="h-10 px-2 grow rounded-none variant-ringed hover:variant-ghost"
                             />
@@ -208,7 +217,7 @@
                         </div>
                         <input
                             title="調整長按動作標籤"
-                            bind:value={callout.label}
+                            bind:value={callout.label.text}
                             placeholder="標籤"
                             class="h-10 px-2 grow rounded-none variant-ringed hover:variant-ghost"
                         />

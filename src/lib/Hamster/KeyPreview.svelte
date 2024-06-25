@@ -114,7 +114,7 @@
                 style:background-color={bubbleColor}
             >
                 <div class="px-2 rounded-md" style:color={pressedFrontColor}>
-                    {key.label ? key.label : key.action.display()}
+                    {key.label.text ? key.label.text : key.action.display()}
                 </div>
             </div>
         {:else if holdState === holdCallout}
@@ -137,7 +137,7 @@
                             calloutSelectedIndex = index;
                         }}
                     >
-                        {callout.label ? callout.label : callout.action.display()}
+                        {callout.label.text ? callout.label.text : callout.action.display()}
                     </button>
                 {/each}
             </div>
@@ -161,7 +161,7 @@
                 {#each [key.swipe[2], key.swipe[1]] as swipe}
                     {#if swipe.action.type !== ActionType.none && swipe.display}
                         <span>
-                            {swipe.label ? swipe.label : swipe.action.display()}
+                            {swipe.label.text ? swipe.label.text : swipe.action.display()}
                         </span>
                     {/if}
                 {/each}
@@ -173,7 +173,7 @@
                 style:line-height={`${(swipeFont || 16) + 2}px`}
                 class="w-full h-full absolute top-0 flex items-center justify-center"
             >
-                <span> {key.label ? key.label : key.action.display()} </span>
+                <span> {key.label.text ? key.label.text : key.action.display()} </span>
             </div>
         </button>
     </div>

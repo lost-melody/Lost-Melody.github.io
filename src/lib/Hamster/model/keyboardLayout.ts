@@ -405,22 +405,64 @@ export class ButtonInsets {
     }
 }
 
+export class Label {
+    text: string = "";
+    loading: string = "";
+    sysImage: string = "";
+
+    fromObject(label: any) {
+        if (typeof label === "string") {
+            this.text = label;
+        } else if (label && typeof label === "object") {
+            if (typeof label.text === "string") {
+                this.text = label.text;
+                if (typeof label.loadingText === "string") {
+                    this.loading = label.loadingText;
+                }
+            } else if (typeof label.systemImageName === "string") {
+                this.sysImage = label.systemImageName;
+            }
+        }
+    }
+
+    toObject(): object {
+        var obj: any = {};
+        if (this.sysImage) {
+            obj.systemImageName = this.sysImage;
+        } else if (this.text) {
+            if (this.loading) {
+                obj.text = this.text;
+                obj.loadingText = this.loading;
+            } else {
+                obj = this.text;
+            }
+        } else {
+            obj.text = "";
+        }
+        return obj;
+    }
+
+    clone(): Label {
+        var label = new Label();
+        label.text = this.text;
+        label.loading = this.loading;
+        label.sysImage = this.sysImage;
+        return label;
+    }
+}
+
 /** 按鍵劃動 */
 export class Swipe {
     id: number = newId();
     action: Action = new Action();
-    label: string = "";
+    label: Label = new Label();
     display: boolean = true;
     processByRIME: boolean = true;
 
     fromObject(obj: any) {
         if (obj && typeof obj === "object") {
             this.action.fromObject(obj.action);
-            if (typeof obj.label === "string") {
-                this.label = obj.label;
-            } else if (obj.label && typeof obj.label === "object" && typeof obj.label.text === "string") {
-                this.label = obj.label.text;
-            }
+            this.label.fromObject(obj.label);
             this.display = obj.display ? true : false;
             this.processByRIME = obj.processByRIME ? true : false;
         }
@@ -429,9 +471,7 @@ export class Swipe {
     toObject(): object {
         var obj: any = {};
         obj.action = this.action.toObject();
-        if (this.label) {
-            obj.label = this.label;
-        }
+        obj.label = this.label.toObject();
         obj.display = this.display;
         obj.processByRIME = this.processByRIME;
         return obj;
@@ -440,7 +480,7 @@ export class Swipe {
     clone(): Swipe {
         let swipe = new Swipe();
         swipe.action = this.action.clone();
-        swipe.label = this.label;
+        swipe.label = this.label.clone();
         swipe.display = this.display;
         swipe.processByRIME = this.processByRIME;
         return swipe;
@@ -450,7 +490,7 @@ export class Swipe {
 export class Callout {
     id: number = newId();
     action: Action = new Action();
-    label: string = "";
+    label: Label = new Label();
 
     constructor() {
         this.action.type = ActionType.character;
@@ -459,26 +499,20 @@ export class Callout {
 
     fromObject(obj: any) {
         this.action.fromObject(obj.action);
-        if (typeof obj.label === "string") {
-            this.label = obj.label;
-        } else if (obj.label && typeof obj.label === "object" && typeof obj.label.text === "string") {
-            this.label = obj.label.text;
-        }
+        this.label.fromObject(obj.label);
     }
 
     toObject(): object {
         var obj: any = {};
         obj.action = this.action.toObject();
-        if (this.label) {
-            obj.label = this.label;
-        }
+        obj.label = this.label.toObject();
         return obj;
     }
 
     clone(): Callout {
         let callout = new Callout();
         callout.action = this.action.clone();
-        callout.label = this.label;
+        callout.label = this.label.clone();
         return callout;
     }
 }
@@ -493,8 +527,7 @@ export class Key {
     landscape: number = 10;
     autoWidth: boolean = true;
     autoLandscape: boolean = true;
-    label: string = "";
-    loading: string = "";
+    label: Label = new Label();
     swipe: [Swipe, Swipe, Swipe, Swipe];
     callout: Callout[] = [];
     lightStyle: string = "";
@@ -509,14 +542,7 @@ export class Key {
     fromObject(obj: any) {
         if (obj && typeof obj === "object") {
             this.action.fromObject(obj.action);
-            if (typeof obj.label === "string") {
-                this.label = obj.label;
-            } else if (obj.label && typeof obj.label === "object" && typeof obj.label.text === "string") {
-                this.label = obj.label.text;
-                if (this.action.type === ActionType.space && typeof obj.label.loadingText === "string") {
-                    this.loading = obj.label.loadingText;
-                }
-            }
+            this.label.fromObject(obj.label);
             this.processByRIME = obj.processByRIME !== false;
             if (typeof obj.width === "string") {
                 if (obj.width === "available") {
@@ -624,16 +650,7 @@ export class Key {
                 landscape: this.autoLandscape ? "available" : { percentage: this.landscape / 100 },
             };
         }
-        if (this.label) {
-            if (this.loading && this.action.type === ActionType.space) {
-                obj.label = {
-                    text: this.label,
-                    loadingText: this.loading,
-                };
-            } else {
-                obj.label = this.label;
-            }
-        }
+        obj.label = this.label.toObject();
         var swipes: object[] = [];
         for (let i of [2, 1, 0, 3]) {
             if (this.swipe[i].action.type !== ActionType.none) {
@@ -665,7 +682,7 @@ export class Key {
         key.autoWidth = this.autoWidth;
         key.landscape = this.landscape;
         key.autoLandscape = this.autoLandscape;
-        key.label = this.label;
+        key.label = this.label.clone();
         key.swipe = this.swipe.map((swipe) => swipe.clone()) as [Swipe, Swipe, Swipe, Swipe];
         key.lightStyle = this.lightStyle;
         key.darkStyle = this.darkStyle;

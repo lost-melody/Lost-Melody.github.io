@@ -14,7 +14,7 @@
             <input
                 type="text"
                 bind:value={schema.schemaName}
-                class="h-10 w-[40%] px-2 rounded-none rounded-tr-md variant-ringed hover:variant-ghost"
+                class="h-10 w-[40%] px-2 font-mono rounded-none rounded-tr-md variant-ringed hover:variant-ghost"
             />
         </div>
         <div class="w-full gap-2 flex items-center variant-ringed">
