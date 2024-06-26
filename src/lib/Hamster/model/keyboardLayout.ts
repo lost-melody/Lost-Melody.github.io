@@ -130,29 +130,31 @@ export class Action {
             case ActionType.symbol:
                 return this.text;
             case ActionType.backspace:
-                return "⌫";
+                return "󰭜";
             case ActionType.enter:
-                return "↵";
+                return "󰒊";
             case ActionType.shift:
-                return "⇧";
+                return "󰘶";
             case ActionType.tab:
-                return "⇥";
+                return "󰌒";
             case ActionType.space:
-                return "空格";
+                return "espace";
             case ActionType.keyboardType:
                 switch (this.kbd) {
                     case KeyboardType.alphabetic:
-                        return "En";
+                        return "󰀬";
                     case KeyboardType.classifySymbolic:
-                        return "#+=";
+                        return "󱔁";
                     case KeyboardType.chinese:
-                        return "漢²⁶";
+                        return "漢";
                     case KeyboardType.chineseNineGrid:
-                        return "漢⁹";
+                        return "󱗼";
                     case KeyboardType.numericNineGrid:
-                        return "123";
+                        return "󰎠";
+                    case KeyboardType.numeric:
+                        return "󰎠";
                     case KeyboardType.custom:
-                        return "⌨";
+                        return "󰥻";
                     case KeyboardType.emojis:
                         return "😀";
                     default:
@@ -160,32 +162,59 @@ export class Action {
                 }
             case ActionType.shortCommand:
                 switch (this.cmd) {
+                    case ShortCmd.clear:
+                        return "󰁮";
                     case ShortCmd.trad:
-                        return "繁簡";
+                        return "簡";
                     case ShortCmd.eng:
-                        return "中英";
+                        return "󰗊";
+                    case ShortCmd.begin:
+                        return "";
+                    case ShortCmd.end:
+                        return "";
                     case ShortCmd.second:
-                        return "次選";
+                        return "󰲣";
                     case ShortCmd.third:
-                        return "三選";
+                        return "󰲥";
                     case ShortCmd.schema:
-                        return "上個";
+                        return "󱑞";
                     case ShortCmd.schemas:
-                        return "方案";
+                        return "󱑠";
+                    case ShortCmd.return:
+                        return "󰌑";
                     case ShortCmd.switcher:
-                        return "選單";
+                        return "󰒓";
+                    case ShortCmd.left:
+                        return "";
+                    case ShortCmd.right:
+                        return "";
+                    case ShortCmd.lefthand:
+                        return "󱂫";
+                    case ShortCmd.righthand:
+                        return "󱂪";
+                    case ShortCmd.clearAll:
+                        return "󰗨";
+                    case ShortCmd.selectAll:
+                        return "󰄭";
+                    case ShortCmd.cut:
+                        return "󰆐";
+                    case ShortCmd.copy:
+                        return "󰆏";
+                    case ShortCmd.paste:
+                        return "󰆒";
+                    case ShortCmd.undo:
+                        return "󰕌";
+                    case ShortCmd.redo:
+                        return "󰑎";
                     case ShortCmd.close:
-                        return "收起";
+                        return "󰹋";
                     case ShortCmd.sendkeys:
-                        return this.text
-                            .split("+")
-                            .map((str) => str.slice(0, 1))
-                            .join("-");
+                        return "󰌹";
                     default:
                         return this.cmd;
                 }
             case ActionType.nextKeyboard:
-                return "🌐";
+                return "󱞑";
             case ActionType.none:
                 return "";
             default:
