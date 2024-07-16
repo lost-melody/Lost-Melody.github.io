@@ -345,7 +345,7 @@ export class Action {
                 return { [this.type]: { char: this.text } };
             case ActionType.keyboardType:
                 if (this.kbd === KeyboardType.custom) {
-                    return { [this.type]: { custom: { named: this.text } } };
+                    return { [this.type]: this.text };
                 }
                 return { [this.type]: this.kbd };
             case ActionType.shortCommand:
