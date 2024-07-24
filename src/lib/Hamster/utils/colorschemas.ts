@@ -5,9 +5,7 @@ import { ColorSchema } from "$lib/Hamster/model/colorSchema";
 export function exportSchemas(schemas: ColorSchema[]): object {
     var objList = schemas.map((schema) => schema.toObject());
     return {
-        keyboard: {
-            colorSchemas: objList,
-        },
+        colorSchemas: objList,
     };
 }
 
