@@ -161,9 +161,7 @@
     <!-- 頁面内容插槽 -->
     <slot />
 
-    <div class="grow" />
-
-    <div>
+    <div class="sticky top-[100lvh]">
         <!-- 底部鏈接欄 -->
         <div class="py-2 gap-2 flex flex-col justify-center items-center">
             <p>Powered by</p>
