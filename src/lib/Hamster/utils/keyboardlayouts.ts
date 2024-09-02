@@ -50,6 +50,21 @@ export function assignKeyStyles(kbdList: any, styles: any): any {
     return kbdList;
 }
 
+export function obtainKeyStyles(kbdList: any): Record<string, any> {
+    var styles: Record<string, any> = {};
+    if (!kbdList) {
+        return styles;
+    }
+    for (let kbd of kbdList) {
+        for (let [name, style] of Object.entries(kbd)) {
+            if (name && style) {
+                styles[name] = style;
+            }
+        }
+    }
+    return styles;
+}
+
 export function importKeyboards(obj: any): { keyboardLayouts: Keyboard[] | null; keyStyles: KeyStyle[] | null } {
     var keyboardLayouts: Keyboard[] | null = null;
     var keyStyles: KeyStyle[] | null = null;
@@ -65,16 +80,27 @@ export function importKeyboards(obj: any): { keyboardLayouts: Keyboard[] | null;
         if (obj && obj.customKeyStyles) {
             obj.keyStyle = obj.customKeyStyles;
         }
+        if (!Object.keys(obj.keyStyle || {}).length) {
+            for (let kbd of obj.keyboards || []) {
+                Object.entries(kbd.keyStyle || {})
+                    .filter(([name, keyStyle]) => name && keyStyle)
+                    .map(([name, keyStyle]) => {
+                        if (!obj.keyStyle) {
+                            obj.keyStyle = {};
+                        }
+                        obj.keyStyle[name] = keyStyle;
+                    })
+            }
+        }
         if (obj && obj.keyStyle) {
-            let styles = obj.keyStyle;
-            keyStyles = Object.keys(styles)
-                .map((name) => {
+            keyStyles = Object.entries(obj.keyStyle)
+                .filter(([name, keyStyle]) => name && keyStyle)
+                .map(([name, keyStyle]) => {
                     let style = new KeyStyle();
                     style.name = name;
-                    if (styles) style.fromObject(styles[name]);
+                    if (keyStyle) style.fromObject(keyStyle);
                     return style;
                 })
-                .filter((style) => style.name)
                 .sort((a, b) => (a.name < b.name ? -1 : a.name === b.name ? 0 : 1));
         }
     } catch (err) {

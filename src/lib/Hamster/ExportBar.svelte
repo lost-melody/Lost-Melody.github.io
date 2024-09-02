@@ -7,7 +7,7 @@
 
     import { exportFile } from "./utils/common";
     import { exportSchemas, importSchemas } from "./utils/colorschemas";
-    import { assignKeyStyles, exportKeyboards, exportKeyStyles, importKeyboards } from "./utils/keyboardlayouts";
+    import { exportKeyboards, exportKeyStyles, importKeyboards } from "./utils/keyboardlayouts";
     import { getDateTimeString } from "./utils/format";
 
     export var colorSchemas: ColorSchema[];
@@ -37,12 +37,12 @@
     // export code
     const exportConfigs = () => {
         const expSchemas = exportSchemas(colorSchemas);
-        const expLayouts: any = exportKeyboards(keyboardLayouts);
-        const expStyles: any = exportKeyStyles(keyStyles);
-        expLayouts.keyboards = assignKeyStyles(expLayouts.keyboards, expStyles.keyStyle);
+        const expLayouts: any = exportKeyboards(keyboardLayouts, keyStyles);
+        // const expStyles: any = exportKeyStyles(keyStyles);
+        // expLayouts.keyboards = assignKeyStyles(expLayouts.keyboards, expStyles.keyStyle);
         const data = YAML.stringify({
             ...expSchemas,
-            ...expStyles,
+            // ...expStyles,
             ...expLayouts,
         });
         exportFile(data, `custom_configs-${getDateTimeString()}.yaml`);

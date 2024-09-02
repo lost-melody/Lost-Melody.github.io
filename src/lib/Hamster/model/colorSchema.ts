@@ -8,7 +8,7 @@ function newId(): number {
 function asString(obj: any, defaultValue?: string): string {
     if (typeof obj === "number") {
         // 數字轉字符串: 0xabcdef => "0xabcdef"
-        obj = "0x" + obj.toString(16);
+        obj = "0x" + obj.toString(16).padStart(8, "0");
     }
     return typeof obj === "string" ? obj : defaultValue || "";
 }
