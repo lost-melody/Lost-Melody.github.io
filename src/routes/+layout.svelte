@@ -82,7 +82,7 @@
     const modalStore = getModalStore();
     const openNavigator = () => {
         drawerStore.open({
-            width: "w-96",
+            width: "w-96 max-w-[80lvw]",
         });
     };
 
