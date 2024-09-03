@@ -1,32 +1,42 @@
 <script lang="ts">
-    import { createEventDispatcher } from "svelte";
     import Icon from "@iconify/svelte";
 
     /** 導航列表 */
     export let navigations: [string, string][] = [];
     export let themes: { [key: string]: string } = {};
     export let theme: string;
-
-    const dispatch = createEventDispatcher();
-    function onNavigate(): void {
-        dispatch("navigate");
-    }
 </script>
 
-<nav class="flex flex-col list-nav grow gap-2">
-    <!-- 導航列表 -->
-    {#each navigations as navigation}
-        <a class="variant-ghost" on:click={onNavigate} href={navigation[1]}>
-            <Icon height="20" icon="mdi:menu-right" />
-            {navigation[0]}
-        </a>
-    {/each}
-    <!-- 主題切換 -->
-    <select bind:value={theme} class="select rounded-full">
-        {#each Object.keys(themes) as theme}
-            <option value={theme}>
-                主題: {themes[theme]}
-            </option>
+<div class="h-full space-y-2 px-2 py-16">
+    <nav class="m-2 flex flex-col list-nav gap-2">
+        <span class="col-span-2 mx-auto inline-flex items-center gap-2">
+            <Icon icon="mdi:map-marker-radius" />
+            导航
+        </span>
+        <!-- 導航列表 -->
+        {#each navigations as navigation}
+            <a class="variant-ghost" href={navigation[1]}>
+                <Icon height="20" icon="mdi:menu-right" />
+                {navigation[0]}
+            </a>
         {/each}
-    </select>
-</nav>
+    </nav>
+    <!-- 主題切換 -->
+    <div class="sticky top-full m-2 grid grid-cols-2 gap-2">
+        <span class="col-span-2 mx-auto inline-flex items-center gap-2">
+            <Icon icon="mdi:map-marker-radius" />
+            主题
+        </span>
+        {#each Object.keys(themes) as t}
+            <button
+                class="variant-ghost btn"
+                data-theme={t}
+                on:click={() => {
+                    theme = t;
+                }}
+            >
+                {themes[t]}
+            </button>
+        {/each}
+    </div>
+</div>

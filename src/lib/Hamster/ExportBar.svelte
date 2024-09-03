@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { getToastStore } from "@skeletonlabs/skeleton";
     import YAML from "yaml";
     import IconButton from "$lib/Component/IconButton.svelte";
 
@@ -9,11 +10,13 @@
     import { exportSchemas, importSchemas } from "./utils/colorschemas";
     import { exportKeyboards, exportKeyStyles, importKeyboards } from "./utils/keyboardlayouts";
     import { getDateTimeString } from "./utils/format";
+    import { toastError } from "$lib/utils/error";
 
     export var colorSchemas: ColorSchema[];
     export var keyboardLayouts: Keyboard[];
     export var keyStyles: KeyStyle[];
 
+    const toastStore = getToastStore();
     const timeoutDelay = 2000;
     // copy code
     var colorSchemasCopied = false;
@@ -66,7 +69,7 @@
         try {
             obj = YAML.parse(data, { maxAliasCount: -1 });
         } catch (err) {
-            alert(`failed to parse file: ${(err as Error).message}`);
+            toastError(toastStore, `failed to parse file: ${(err as Error).message}`);
             return;
         }
         const schemas = importSchemas(obj);

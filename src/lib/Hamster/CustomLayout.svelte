@@ -1,8 +1,10 @@
 <script lang="ts">
+    import { getToastStore } from "@skeletonlabs/skeleton";
     import { browser } from "$app/environment";
     import YAML from "yaml";
     import KeyboardLoad from "./KeyboardLoad.svelte";
     import type { Keyboard } from "./model/keyboardLayout";
+    import { toastError } from "$lib/utils/error";
 
     export var layout: Keyboard;
     /** 自定義鍵盤存儲位 */
@@ -16,13 +18,14 @@
                     var obj = YAML.parse(keyboardData);
                     return obj;
                 } catch (err) {
-                    alert(`parse custom keyboard failed: ${(err as Error).message}`);
+                    toastError(toastStore, `parse custom keyboard failed: ${(err as Error).message}`);
                 }
             }
             return { name: nameEmpty };
         });
     }
 
+    const toastStore = getToastStore();
     const nameEmpty = "空的";
     /** LocalStorage 自定義鍵檔案鍵名 */
     function customKeyboardKey(index: number): string {
@@ -50,7 +53,7 @@
                 localStorage.setItem(customKeyboardKey(index), keyboardData);
                 customKeyboards[index] = obj;
             } catch (err) {
-                alert(`save to local storage failed: ${(err as Error).message}`);
+                toastError(toastStore, `save to local storage failed: ${(err as Error).message}`);
             }
         }
     }
