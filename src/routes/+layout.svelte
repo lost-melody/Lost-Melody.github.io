@@ -2,13 +2,13 @@
     import type { LayoutData } from "./$types";
     import { onNavigate } from "$app/navigation";
     import { browser } from "$app/environment";
-    import { setContext } from "svelte";
+    import { onMount, setContext } from "svelte";
     import { writable } from "svelte/store";
     import "../app.postcss";
     import { page } from "$app/stores";
     import { Drawer, Modal, Toast } from "@skeletonlabs/skeleton";
     import { AppBar, LightSwitch } from "@skeletonlabs/skeleton";
-    import { getDrawerStore, getModalStore, initializeStores } from "@skeletonlabs/skeleton";
+    import { autoModeWatcher, getDrawerStore, getModalStore, initializeStores } from "@skeletonlabs/skeleton";
     import Icon from "@iconify/svelte";
     import Navigation from "$lib/Navigation/Navigation.svelte";
     import { persisted } from "$lib/utils/persisted";
@@ -37,7 +37,7 @@
     };
 
     /** 主題選擇控件綁定值 */
-    var theme = persisted("data-theme", "skeleton");
+    var theme = setContext("data-theme", persisted("data-theme", "skeleton"));
     /** 暗色模式監聽值 */
     var darkMode = setContext("darkMode", writable(false));
     // 設置頁面主題
@@ -89,6 +89,9 @@
     onNavigate(() => {
         $drawerStore.open && drawerStore.close();
         $modalStore?.length && modalStore.close();
+    });
+    onMount(() => {
+        autoModeWatcher();
     });
 </script>
 
