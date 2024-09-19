@@ -107,6 +107,8 @@ export enum ShortCmd {
     righthand = "右手模式",
     clearAll = "清空",
     selectAll = "全选",
+    deleteText = "deleteText",
+    selectText = "selectText",
     cut = "剪切",
     copy = "复制",
     paste = "粘贴",
@@ -195,6 +197,10 @@ export class Action {
                     case ShortCmd.clearAll:
                         return "󰗨";
                     case ShortCmd.selectAll:
+                        return "󰄭";
+                    case ShortCmd.deleteText:
+                        return "󰗨";
+                    case ShortCmd.selectText:
                         return "󰄭";
                     case ShortCmd.cut:
                         return "󰆐";

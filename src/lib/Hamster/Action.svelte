@@ -22,6 +22,12 @@
 
     // 包含内容文本的動作類型
     const text: ActionType[] = [ActionType.character, ActionType.characterMargin, ActionType.symbol];
+    const cmdTypeWarnings: Record<string, string> = {
+        [ShortCmd.selectAll]: "指令已移除, 請使用 selectText",
+        [ShortCmd.clearAll]: "指令已移除, 請使用 deleteText",
+        [ShortCmd.selectText]: "此指令存在諸多問題, 係 iOS 系統限制, 請勿反饋",
+        [ShortCmd.deleteText]: "此指令存在諸多問題, 係 iOS 系統限制, 請勿反饋",
+    };
 
     function copyAction(): void {
         clipAction = action.clone();
@@ -98,6 +104,14 @@
                 class="grow h-full px-2 rounded-none rounded-b-md variant-ringed hover:variant-ghost"
                 placeholder="自定義鍵盤名"
             />
+        </div>
+    {/if}
+
+    <!-- 提示: 快捷命令警告 -->
+    {#if cmdTypeWarnings[action.cmd]}
+        <div class="flex h-8 items-center text-warning-500 text-sm gap-1">
+            <Icon icon="mdi:warning-box" />
+            {cmdTypeWarnings[action.cmd]}
         </div>
     {/if}
 
