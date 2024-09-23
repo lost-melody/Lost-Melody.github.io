@@ -22,6 +22,22 @@
 
     // 包含内容文本的動作類型
     const text: ActionType[] = [ActionType.character, ActionType.characterMargin, ActionType.symbol];
+    const cmdTypeInfos: Record<string, string> = {
+        [ShortCmd.clear]: "清空預編輯串, 卽尚未上屏的文本",
+        [ShortCmd.trad]: "請先在 Rime 配置頁面填寫切換鍵值",
+        [ShortCmd.return]: "向輸入框發送換行, 不經由 Rime 處理",
+        [ShortCmd.switcher]: "Rime 方案選單",
+        [ShortCmd.left]: "輸入框光標左移",
+        [ShortCmd.right]: "輸入框光標右移",
+        [ShortCmd.selectText]: "全選",
+        [ShortCmd.deleteText]: "清空輸入框",
+        [ShortCmd.sendkeys]: "向 Rime 發送連續按鍵或組合鍵",
+        [ShortCmd.enter]: "直接向文本框發送回車指令",
+        [ShortCmd.showPhrase]: "打開短語視圖",
+        [ShortCmd.showPasteboard]: "打開粘貼板視圖",
+        [ShortCmd.showScript]: "顯示脚本視圖",
+        [ShortCmd.hideScript]: "關閉脚本視圖",
+    };
     const cmdTypeWarnings: Record<string, string> = {
         [ShortCmd.selectAll]: "指令已移除, 請使用 selectText",
         [ShortCmd.clearAll]: "指令已移除, 請使用 deleteText",
@@ -107,8 +123,17 @@
         </div>
     {/if}
 
+    <!-- 提示: 快捷命令簡介 -->
+    {#if action.type === ActionType.shortCommand && cmdTypeInfos[action.cmd]}
+        <div class="flex h-8 items-center text-sm gap-1">
+            <Icon icon="mdi:information-box" />
+            {cmdTypeInfos[action.cmd]}
+        </div>
+        <hr class="w-64 !border-t-2" />
+    {/if}
+
     <!-- 提示: 快捷命令警告 -->
-    {#if cmdTypeWarnings[action.cmd]}
+    {#if action.type === ActionType.shortCommand && cmdTypeWarnings[action.cmd]}
         <div class="flex h-8 items-center text-warning-500 text-sm gap-1">
             <Icon icon="mdi:warning-box" />
             {cmdTypeWarnings[action.cmd]}

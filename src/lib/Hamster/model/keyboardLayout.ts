@@ -116,6 +116,11 @@ export enum ShortCmd {
     redo = "重做",
     sendkeys = "sendKeys",
     close = "关闭键盘",
+    enter = "Enter",
+    showPhrase = "showPhraseView",
+    showPasteboard = "showPasteboardView",
+    showScript = "showScriptView",
+    hideScript = "hideScriptView",
 }
 
 /** 按鍵動作 */
@@ -214,6 +219,16 @@ export class Action {
                         return "󰑎";
                     case ShortCmd.close:
                         return "󰹋";
+                    case ShortCmd.enter:
+                        return "";
+                    case ShortCmd.showPhrase:
+                        return "";
+                    case ShortCmd.showPasteboard:
+                        return "";
+                    case ShortCmd.showScript:
+                        return "󰈮";
+                    case ShortCmd.hideScript:
+                        return "";
                     case ShortCmd.sendkeys:
                         return "󰌹";
                     default:
