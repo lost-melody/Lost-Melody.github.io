@@ -121,7 +121,7 @@ export enum ShortCmd {
     showPasteboard = "showPasteboardView",
     showScript = "showScriptView",
     hideScript = "hideScriptView",
-    toggleScript = "toggleScript",
+    toggleScript = "toggleScriptView",
 }
 
 /** 按鍵動作 */
