@@ -37,12 +37,15 @@
         [ShortCmd.showPasteboard]: "打開粘貼板視圖",
         [ShortCmd.showScript]: "顯示脚本視圖",
         [ShortCmd.hideScript]: "關閉脚本視圖",
+        [ShortCmd.toggleScript]: "開啓或關閉脚本視圖",
     };
     const cmdTypeWarnings: Record<string, string> = {
         [ShortCmd.selectAll]: "指令已移除, 請使用 selectText",
         [ShortCmd.clearAll]: "指令已移除, 請使用 deleteText",
         [ShortCmd.selectText]: "此指令存在諸多問題, 係 iOS 系統限制, 請勿反饋",
         [ShortCmd.deleteText]: "此指令存在諸多問題, 係 iOS 系統限制, 請勿反饋",
+        [ShortCmd.showScript]: "指令已移除, 請使用 toggleScript",
+        [ShortCmd.hideScript]: "指令已移除, 請使用 toggleScript",
     };
 
     function copyAction(): void {

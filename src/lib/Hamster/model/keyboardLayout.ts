@@ -121,6 +121,7 @@ export enum ShortCmd {
     showPasteboard = "showPasteboardView",
     showScript = "showScriptView",
     hideScript = "hideScriptView",
+    toggleScript = "toggleScript",
 }
 
 /** 按鍵動作 */
@@ -229,6 +230,8 @@ export class Action {
                         return "󰈮";
                     case ShortCmd.hideScript:
                         return "";
+                    case ShortCmd.toggleScript:
+                        return "󰈮";
                     case ShortCmd.sendkeys:
                         return "󰌹";
                     default:
