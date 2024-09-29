@@ -122,6 +122,7 @@ export enum ShortCmd {
     showScript = "showScriptView",
     hideScript = "hideScriptView",
     toggleScript = "toggleScriptView",
+    openUrl = "openURL",
 }
 
 /** 按鍵動作 */
@@ -234,6 +235,8 @@ export class Action {
                         return "󰈮";
                     case ShortCmd.sendkeys:
                         return "󰌹";
+                    case ShortCmd.openUrl:
+                        return "";
                     default:
                         return this.cmd;
                 }
@@ -349,6 +352,16 @@ export class Action {
                     return;
                 }
             }
+            // { shortcutCommand: { openURL: { url: "#pasteboardContent | weixin://" } } }
+            if (obj.shortcutCommand && typeof obj.shortcutCommand === "object") {
+                let sc = obj.shortcutCommand;
+                if (sc.openURL && typeof sc.openURL === "object" && typeof sc.openURL.url === "string") {
+                    this.type = ActionType.shortCommand;
+                    this.cmd = ShortCmd.openUrl;
+                    this.text = sc.openURL.url;
+                    return;
+                }
+            }
         }
         this.type = ActionType.none;
     }
@@ -375,6 +388,8 @@ export class Action {
             case ActionType.shortCommand:
                 if (this.cmd === ShortCmd.sendkeys) {
                     return { shortcutCommand: { [this.cmd]: { keys: this.text } } };
+                } else if (this.cmd === ShortCmd.openUrl) {
+                    return { shortcutCommand: { [this.cmd]: { url: this.text } } };
                 }
                 return { shortcutCommand: "#" + this.cmd };
             default:

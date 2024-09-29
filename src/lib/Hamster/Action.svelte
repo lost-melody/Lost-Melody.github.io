@@ -38,6 +38,7 @@
         [ShortCmd.showScript]: "顯示脚本視圖",
         [ShortCmd.hideScript]: "關閉脚本視圖",
         [ShortCmd.toggleScript]: "開啓或關閉脚本視圖",
+        [ShortCmd.openUrl]: "打開指定 URL, 或打開剪貼板 URL",
     };
     const cmdTypeWarnings: Record<string, string> = {
         [ShortCmd.selectAll]: "指令已移除, 請使用 selectText",
@@ -149,7 +150,7 @@
             <select
                 bind:value={action.cmd}
                 class="appearance-none grow h-full px-2 variant-ringed hover:variant-ghost"
-                class:rounded-b-md={action.cmd !== ShortCmd.sendkeys}
+                class:rounded-b-md={action.cmd !== ShortCmd.sendkeys && action.cmd !== ShortCmd.openUrl}
             >
                 {#each shortCmdTypes as typ}
                     <option value={typ}>
@@ -160,13 +161,24 @@
         </div>
     {/if}
 
-    <!-- 輸入: 快捷命令·快捷键 -->
+    <!-- 輸入: 快捷命令·快捷鍵 -->
     {#if action.type === ActionType.shortCommand && action.cmd === ShortCmd.sendkeys}
         <div class="flex w-full h-10 items-center">
             <input
                 bind:value={action.text}
                 class="grow h-full px-2 rounded-none rounded-b-md variant-ringed hover:variant-ghost"
-                placeholder="快捷鍵内容"
+                placeholder="nihao | Control_L+a"
+            />
+        </div>
+    {/if}
+
+    <!-- 輸入: 快捷命令·打開 URL -->
+    {#if action.type === ActionType.shortCommand && action.cmd === ShortCmd.openUrl}
+        <div class="flex w-full h-10 items-center">
+            <input
+                bind:value={action.text}
+                class="grow h-full px-2 rounded-none rounded-b-md variant-ringed hover:variant-ghost"
+                placeholder="#pasteboardContent | weixin://xxx"
             />
         </div>
     {/if}
