@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { getContext } from "svelte";
+    import { type Writable } from "svelte/store";
     import type { Color } from "./model/colorSchema";
 
     export var color: Color;
@@ -6,15 +8,29 @@
     export var allowEmpty: boolean = false;
 
     const [min, max, step] = [0, 0xff, 0x05];
+    const preferAbgr: Writable<boolean> = getContext("prefer-abgr");
+
+    const reverse = (c: string) => {
+        const r = /^#?(\w{2})(\w{2})(\w{2})$/;
+        var s = c.match(r)?.slice(1, 4).reverse().join("");
+        return s || "";
+    };
+    var abgr: string = reverse(color.color); // 使用 abgr 格式而不是 rgba 格式
 
     var typing = false;
     var before = "";
     const onTyping = () => {
         typing = true;
         before = color.color;
+        abgr = reverse(color.color);
     };
     const postTyping = () => {
         typing = false;
+        if ($preferAbgr) {
+            color.color = "#" + reverse(abgr);
+        } else {
+            abgr = reverse(color.color);
+        }
         if (allowEmpty && !color.color) {
             return;
         }
@@ -30,10 +46,14 @@
     </span>
     {#if typing}
         <!-- svelte-ignore a11y-autofocus -->
-        <input type="text" bind:value={color.color} autofocus on:blur={postTyping} class="w-16 code" />
+        {#if $preferAbgr}
+            <input type="text" bind:value={abgr} autofocus on:blur={postTyping} class="w-16 code" />
+        {:else}
+            <input type="text" bind:value={color.color} autofocus on:blur={postTyping} class="w-16 code" />
+        {/if}
     {:else}
         <button on:click={onTyping} class="w-12 code">
-            {color.color.slice(1).toUpperCase() || "-"}
+            {($preferAbgr ? abgr : color.color).replace(/^#/, "").toUpperCase() || "-"}
         </button>
     {/if}
     <span class="grow shrink"> {title} </span>

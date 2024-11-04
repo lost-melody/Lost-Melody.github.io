@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { setContext } from "svelte";
     import Icon from "@iconify/svelte";
     import { flip } from "svelte/animate";
     import { ColorSchema, KeyStyle } from "./model/colorSchema";
@@ -6,9 +7,13 @@
     import IconButton from "$lib/Component/IconButton.svelte";
     import Details from "$lib/Component/Details.svelte";
     import KeyStylePreview from "./KeyStylePreview.svelte";
+    import { persisted } from "$lib/utils/persisted";
 
     export var colorSchema: ColorSchema;
     export var keyStyles: KeyStyle[] = [];
+
+    const preferAbgr = setContext("prefer-abgr", persisted("prefer-abgr", false));
+
     const sortKeyStyles = () => {
         keyStyles.sort((a, b) => (a.name < b.name ? -1 : a.name === b.name ? 0 : 1));
     };
@@ -23,6 +28,18 @@
 </script>
 
 <div class="w-full p-2 gap-1 flex flex-col rounded-md variant-soft">
+    <div class="w-full gap-2 flex items-center">
+        <Icon icon={$preferAbgr ? "mdi:checkbox-marked" : "mdi:checkbox-blank-off"} class="p-2 w-10 h-10" />
+        <button
+            class="grow shrink"
+            on:click={() => {
+                $preferAbgr = !$preferAbgr;
+            }}
+        >
+            使用 ABGR 顔色格式
+        </button>
+        <span class="w-6 code"> {$preferAbgr ? "是" : "否"} </span>
+    </div>
     {#each keyStyles as keyStyle, index (keyStyle.id)}
         <div animate:flip={{ duration: 250 }}>
             <Details>

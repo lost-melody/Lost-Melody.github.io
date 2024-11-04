@@ -1,9 +1,13 @@
 <script lang="ts">
+    import { setContext } from "svelte";
     import Icon from "@iconify/svelte";
     import type { ColorSchema } from "./model/colorSchema";
     import ColorSelector from "./ColorSelector.svelte";
+    import { persisted } from "$lib/utils/persisted";
 
     export var schema: ColorSchema;
+
+    const preferAbgr = setContext("prefer-abgr", persisted("prefer-abgr", false));
 </script>
 
 <div class="w-full p-2 gap-2 flex flex-col rounded-md variant-soft">
@@ -35,6 +39,18 @@
                 class="h-10 w-[40%] px-2 rounded-none rounded-br-md variant-ringed hover:variant-ghost"
             />
         </div>
+    </div>
+    <div class="w-full gap-2 flex items-center">
+        <Icon icon={$preferAbgr ? "mdi:checkbox-marked" : "mdi:checkbox-blank-off"} class="p-2 w-10 h-10" />
+        <button
+            class="grow shrink"
+            on:click={() => {
+                $preferAbgr = !$preferAbgr;
+            }}
+        >
+            使用 ABGR 顔色格式
+        </button>
+        <span class="w-6 code"> {$preferAbgr ? "是" : "否"} </span>
     </div>
     <div class="w-full gap-2 flex items-center">
         <Icon icon="mdi:rounded-corner" class="p-2 w-10 h-10" />
