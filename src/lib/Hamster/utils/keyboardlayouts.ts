@@ -89,7 +89,7 @@ export function importKeyboards(obj: any): { keyboardLayouts: Keyboard[] | null;
                             obj.keyStyle = {};
                         }
                         obj.keyStyle[name] = keyStyle;
-                    })
+                    });
             }
         }
         if (obj && obj.keyStyle) {

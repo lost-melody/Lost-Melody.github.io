@@ -11,7 +11,7 @@
 </script>
 
 {#each layout.rows as row}
-    <div class="w-full grow shrink flex">
+    <div class="flex w-full shrink grow">
         {#each row.keys as key}
             <div
                 class="h-full p-px"

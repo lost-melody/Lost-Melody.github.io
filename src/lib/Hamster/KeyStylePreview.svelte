@@ -10,14 +10,14 @@
     $: shadowColor.alpha = shadowColor.alpha / shadowSize;
 </script>
 
-<div class="w-[32px] h-[48px] pt-[8px] pb-[4px] pl-[3px] pr-[3px] variant-ringed">
+<div class="variant-ringed h-[48px] w-[32px] pb-[4px] pl-[3px] pr-[3px] pt-[8px]">
     <!-- key -->
     <div
         style:border-radius={`${keyStyle.cornerRadius}px`}
         style:border-bottom-color={`${keyStyle.lowerEdgeColor.rgba() || colorSchema.lower_edge_color.rgba()}`}
         style:border-bottom-style="solid"
         style:border-bottom-width="1px"
-        class="w-full h-full relative"
+        class="relative h-full w-full"
     >
         <div
             style:background-color={pressed
@@ -27,7 +27,7 @@
             style:border-color={keyStyle.borderColor.rgba() || colorSchema.border_color.rgba()}
             style:border-width={`${keyStyle.borderSize >= 0 ? keyStyle.borderSize : colorSchema.border_size}px`}
             style:box-shadow={`0 ${shadowSize}px ${shadowSize}px ${shadowColor.rgba()}`}
-            class="w-full h-full rounded-md absolute"
+            class="absolute h-full w-full rounded-md"
         >
             <!-- swipe up and down -->
             <div
@@ -36,7 +36,7 @@
                     : keyStyle.swipeForegroundColor.rgba() || colorSchema.button_swipe_front_color.rgba()}
                 style:font-size={`${keyStyle.swipeFontSize || 8}px`}
                 style:line-height={`${(keyStyle.swipeFontSize || 8) + 2}px`}
-                class="w-full absolute top-0 flex justify-around"
+                class="absolute top-0 flex w-full justify-around"
             >
                 {#each ["up", "dn"] as swipe}
                     <span>
@@ -51,7 +51,7 @@
                     : keyStyle.buttonForegroundColor.rgba() || colorSchema.button_front_color.rgba()}
                 style:font-size={`${keyStyle.fontSize || 16}px`}
                 style:line-height={`${(keyStyle.fontSize || 16) + 2}px`}
-                class="w-full h-full absolute top-0 flex items-center justify-center"
+                class="absolute top-0 flex h-full w-full items-center justify-center"
             >
                 c
             </div>

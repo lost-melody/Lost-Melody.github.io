@@ -49,21 +49,21 @@
                 style:border-color={schema.border_color.rgba()}
                 class:border-2={index === indexSchema}
                 class:border-dashed={index === indexSchema}
-                class="w-32 h-20 p-2 shrink-0 flex flex-col rounded-md border active:scale-95"
+                class="flex h-20 w-32 shrink-0 flex-col rounded-md border p-2 active:scale-95"
             >
                 <Thumbnail layout={currentLayout} {schema} />
             </button>
             <span
                 style={`color: ${schema.hilited_candidate_text_color.rgba()};`}
                 style:background-color={schema.hilited_candidate_back_color.rgba()}
-                class="absolute right-0.5 bottom-6 p-0.5 rounded-md border text-xs"
+                class="absolute bottom-6 right-0.5 rounded-md border p-0.5 text-xs"
             >
                 {schema.schemaName}
             </span>
             <span
                 style:color={schema.hilited_candidate_text_color.rgba()}
                 style:background-color={schema.hilited_candidate_back_color.rgba()}
-                class="absolute right-0.5 bottom-0.5 p-0.5 rounded-md border text-xs"
+                class="absolute bottom-0.5 right-0.5 rounded-md border p-0.5 text-xs"
             >
                 {schema.name}
             </span>
@@ -72,24 +72,24 @@
                     icon="mdi:close"
                     color="red"
                     on:click={delSchema}
-                    class="absolute top-0 left-0 p-1 active:scale-90 rounded-full variant-filled hover:variant-ghost"
+                    class="variant-filled absolute left-0 top-0 rounded-full p-1 hover:variant-ghost active:scale-90"
                 />
                 <IconButton
                     icon="mdi:content-copy"
                     on:click={copySchema}
-                    class="absolute top-0 right-6 p-1 active:scale-90 rounded-full variant-filled hover:variant-ghost"
+                    class="variant-filled absolute right-6 top-0 rounded-full p-1 hover:variant-ghost active:scale-90"
                 />
                 <IconButton
                     icon="mdi:content-paste"
                     on:click={pasteSchema}
-                    class="absolute top-0 right-0 p-1 active:scale-90 rounded-full variant-filled hover:variant-ghost"
+                    class="variant-filled absolute right-0 top-0 rounded-full p-1 hover:variant-ghost active:scale-90"
                 />
             {/if}
         </div>
     {/each}
     <button
         on:click={addSchema}
-        class="flex justify-center items-center w-32 h-20 p-2 shrink-0 btn rounded-md variant-ghost"
+        class="variant-ghost btn flex h-20 w-32 shrink-0 items-center justify-center rounded-md p-2"
     >
         <Icon height="64" icon="mdi:plus" />
     </button>

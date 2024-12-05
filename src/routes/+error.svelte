@@ -6,7 +6,7 @@
 <h1 class="h1">{$page.status}</h1>
 <h2 class="h2">{$page.error && $page.error.message}</h2>
 
-<a href="/" class="btn variant-ghost">
+<a href="/" class="variant-ghost btn">
     <Icon icon="mdi:home" />
     返回首頁
 </a>

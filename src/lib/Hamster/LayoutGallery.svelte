@@ -49,14 +49,14 @@
                 style:border-color={currentSchema.border_color.rgba()}
                 class:border-2={index === indexLayout}
                 class:border-dashed={index === indexLayout}
-                class="w-32 h-20 p-2 shrink-0 flex flex-col rounded-md border active:scale-95"
+                class="flex h-20 w-32 shrink-0 flex-col rounded-md border p-2 active:scale-95"
             >
                 <Thumbnail {layout} schema={currentSchema} />
             </button>
             <span
                 style:color={currentSchema.hilited_candidate_text_color.rgba()}
                 style:background-color={currentSchema.hilited_candidate_back_color.rgba()}
-                class="absolute right-0.5 bottom-0.5 p-0.5 rounded-md border text-xs"
+                class="absolute bottom-0.5 right-0.5 rounded-md border p-0.5 text-xs"
             >
                 {layout.name}
             </span>
@@ -65,24 +65,24 @@
                     icon="mdi:close"
                     color="red"
                     on:click={delLayout}
-                    class="absolute top-0 left-0 p-1 active:scale-[90%] rounded-full variant-filled hover:variant-ghost"
+                    class="variant-filled absolute left-0 top-0 rounded-full p-1 hover:variant-ghost active:scale-[90%]"
                 />
                 <IconButton
                     icon="mdi:content-copy"
                     on:click={copyLayout}
-                    class="absolute top-0 right-6 p-1 active:scale-[90%] rounded-full variant-filled hover:variant-ghost"
+                    class="variant-filled absolute right-6 top-0 rounded-full p-1 hover:variant-ghost active:scale-[90%]"
                 />
                 <IconButton
                     icon="mdi:content-paste"
                     on:click={pasteLayout}
-                    class="absolute top-0 right-0 p-1 active:scale-[90%] rounded-full variant-filled hover:variant-ghost"
+                    class="variant-filled absolute right-0 top-0 rounded-full p-1 hover:variant-ghost active:scale-[90%]"
                 />
             {/if}
         </div>
     {/each}
     <button
         on:click={addLayout}
-        class="flex justify-center items-center w-32 h-20 p-2 shrink-0 btn rounded-md variant-ghost"
+        class="variant-ghost btn flex h-20 w-32 shrink-0 items-center justify-center rounded-md p-2"
     >
         <Icon height="64" icon="mdi:plus" />
     </button>

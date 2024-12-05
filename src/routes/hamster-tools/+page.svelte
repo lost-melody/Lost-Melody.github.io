@@ -142,20 +142,20 @@
 <!-- this does not work in Safari -->
 <!-- <svelte:window on:beforeunload={saveLocalData} /> -->
 
-<div class="max-lg:flex max-lg:flex-col lg:grid lg:grid-cols-2 gap-2">
+<div class="gap-2 max-lg:flex max-lg:flex-col lg:grid lg:grid-cols-2">
     <div
-        class="-top-44 py-1 gap-2 flex flex-col lg:col-start-2 lg:h-full z-10"
+        class="-top-44 z-10 flex flex-col gap-2 py-1 lg:col-start-2 lg:h-full"
         class:sticky={!actionTab && stickyPreview}
     >
         <!-- Action Tab Bar -->
-        <div class="h-8 px-1 w-full max-w-md mx-auto flex gap-2">
+        <div class="mx-auto flex h-8 w-full max-w-md gap-2 px-1">
             {#each [actExport, actTemp, actSave, actBatch] as tab}
                 <button
                     on:click={() => {
                         selectActTab(tab);
                     }}
                     class:variant-soft={actionTab === tab}
-                    class="p-2 gap-2 grow shrink flex items-center justify-center rounded-md hover:variant-ghost"
+                    class="flex shrink grow items-center justify-center gap-2 rounded-md p-2 hover:variant-ghost"
                 >
                     {actNames[tab]}
                 </button>
@@ -163,28 +163,28 @@
         </div>
 
         <!-- Action Tab Content -->
-        <SmoothDiv height outerClass="px-1 w-full max-w-md mx-auto" class="max-h-[25vh] overflow-y-auto w-full">
+        <SmoothDiv height outerClass="px-1 w-full max-w-md mx-auto" class="max-h-[25vh] w-full overflow-y-auto">
             {#if actionTab === actExport}
-                <div in:fade class="p-2 w-full rounded-md variant-ghost">
+                <div in:fade class="variant-ghost w-full rounded-md p-2">
                     <ExportBar bind:colorSchemas bind:keyboardLayouts bind:keyStyles />
                 </div>
             {:else if actionTab === actTemp}
-                <div in:fade class="p-2 w-full rounded-md variant-ghost">
+                <div in:fade class="variant-ghost w-full rounded-md p-2">
                     <PredefinedLayout bind:layout={currentLayout} bind:predefinedKeyboards />
                 </div>
             {:else if actionTab === actSave}
-                <div in:fade class="p-2 w-full rounded-md variant-ghost">
+                <div in:fade class="variant-ghost w-full rounded-md p-2">
                     <CustomLayout bind:layout={currentLayout} bind:customKeyboards />
                 </div>
             {:else if actionTab === actBatch}
-                <div in:fade class="p-2 w-full rounded-md variant-ghost">
+                <div in:fade class="variant-ghost w-full rounded-md p-2">
                     <BatchKeyEdit bind:layout={currentLayout} />
                 </div>
             {/if}
         </SmoothDiv>
 
         <!-- Gallery Tab Bar -->
-        <div class="h-8 px-1 w-full max-w-md mx-auto flex gap-2">
+        <div class="mx-auto flex h-8 w-full max-w-md gap-2 px-1">
             {#each [galLayout, galColor] as tab}
                 <button
                     disabled={galleryTab === tab}
@@ -192,21 +192,21 @@
                         selectGalTab(tab);
                     }}
                     class:variant-soft={galleryTab === tab}
-                    class="p-2 gap-2 grow shrink flex items-center justify-center rounded-md hover:variant-ghost"
+                    class="flex shrink grow items-center justify-center gap-2 rounded-md p-2 hover:variant-ghost"
                 >
                     {galNames[tab]}
                 </button>
             {/each}
         </div>
-        <div class="w-full grid grid-cols-1 grid-rows-1">
+        <div class="grid w-full grid-cols-1 grid-rows-1">
             {#if galleryTab === galColor}
                 <!-- Color Schemas Gallery -->
-                <div transition:fade class="flex max-w-full mx-auto overflow-auto row-start-1 col-start-1">
+                <div transition:fade class="col-start-1 row-start-1 mx-auto flex max-w-full overflow-auto">
                     <SchemaGallery bind:colorSchemas bind:indexSchema {currentLayout} {currentSchema} />
                 </div>
             {:else if galleryTab === galLayout}
                 <!-- Layouts Gallery -->
-                <div transition:fade class="flex max-w-full mx-auto overflow-auto row-start-1 col-start-1">
+                <div transition:fade class="col-start-1 row-start-1 mx-auto flex max-w-full overflow-auto">
                     <LayoutGallery bind:keyboardLayouts bind:indexLayout {currentLayout} {currentSchema} />
                 </div>
             {/if}
@@ -219,7 +219,7 @@
             class:max-w-3xl={landscapePreview}
             class:max-h-[50vh]={stickyPreview}
             class:sticky={!actionTab && stickyPreview}
-            class="top-2 w-full max-w-md mx-auto overflow-auto"
+            class="top-2 mx-auto w-full max-w-md overflow-auto"
         >
             <!-- color schema and keyboard layout preview -->
             <Preview
@@ -237,9 +237,9 @@
         </div>
     </div>
 
-    <div class="py-1 gap-2 flex flex-col lg:row-start-1 lg:overflow-y-auto lg:h-full">
+    <div class="flex flex-col gap-2 py-1 lg:row-start-1 lg:h-full lg:overflow-y-auto">
         <!-- Editor Tab Bar -->
-        <div class="px-1 h-8 w-full max-w-md mx-auto flex gap-2">
+        <div class="mx-auto flex h-8 w-full max-w-md gap-2 px-1">
             {#each [editKey, editColor, editLayout, editInset, editKeyStyle] as tab}
                 <button
                     disabled={editorTab === tab}
@@ -247,7 +247,7 @@
                         selectEditTab(tab);
                     }}
                     class:variant-soft={editorTab === tab}
-                    class="p-2 gap-2 grow shrink flex items-center justify-center rounded-md hover:variant-ghost"
+                    class="flex shrink grow items-center justify-center gap-2 rounded-md p-2 hover:variant-ghost"
                 >
                     {editNames[tab]}
                 </button>
@@ -267,7 +267,7 @@
                 </div>
             {:else if editorTab === editKey}
                 <!-- Key Editor -->
-                <div in:fade class="w-full flex flex-col gap-2 lg:overflow-y-auto">
+                <div in:fade class="flex w-full flex-col gap-2 lg:overflow-y-auto">
                     <KeyEdit
                         bind:layout={currentLayout}
                         bind:selected={selectedKey}
@@ -278,7 +278,7 @@
             {:else if editorTab === editInset}
                 <!-- Button Insets Editor -->
                 <div in:fade class="w-full lg:overflow-y-auto">
-                    <div class="p-2 gap-2 flex flex-col rounded-md variant-soft">
+                    <div class="variant-soft flex flex-col gap-2 rounded-md p-2">
                         <IconButton
                             icon={currentLayout.buttonInsets.expr
                                 ? "mdi:checkbox-blank-outline"
@@ -287,7 +287,7 @@
                             on:click={() => {
                                 currentLayout.buttonInsets.expr = !currentLayout.buttonInsets.expr;
                             }}
-                            class="p-2 gap-2 w-full flex items-center rounded-md variant-ringed hover:variant-ghost"
+                            class="variant-ringed flex w-full items-center gap-2 rounded-md p-2 hover:variant-ghost"
                         >
                             <span class="grow text-left">使用統一内距</span>
                         </IconButton>
@@ -303,8 +303,8 @@
         </SmoothDiv>
     </div>
 
-    <div class="w-full max-w-2xl mx-auto grid grid-cols-1 grid-rows-1 lg:col-span-2">
-        <div class="italic text-xs">
+    <div class="mx-auto grid w-full max-w-2xl grid-cols-1 grid-rows-1 lg:col-span-2">
+        <div class="text-xs italic">
             倉輸入法而今已實現内建佈局和配色方案編輯器,<br />
             是故本工具將不再添加新功能.<br />
             您可通過「導出配置」來將以往配置輸出並轉入内建編輯器,<br />
@@ -314,8 +314,8 @@
     </div>
 
     <SmoothDiv height outerClass="w-full max-w-2xl mx-auto rounded-md hover:variant-ghost lg:col-span-2" class="w-full">
-        <details class="p-2 w-full">
-            <summary class="max-w-md mx-auto p-2">可能有用的簡易説明書</summary>
+        <details class="w-full p-2">
+            <summary class="mx-auto max-w-md p-2">可能有用的簡易説明書</summary>
             <Manual />
         </details>
     </SmoothDiv>

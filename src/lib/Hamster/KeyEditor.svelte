@@ -84,7 +84,7 @@
 </script>
 
 <!-- 按鍵編輯器 -->
-<div class="w-full rounded-md variant-soft">
+<div class="variant-soft w-full rounded-md">
     <KeyEdit
         bind:key={selectedKey}
         bind:clipAction

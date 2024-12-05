@@ -33,7 +33,7 @@
     }
 </script>
 
-<div class="gap-1 p-2 m-auto flex flex-col">
+<div class="m-auto flex flex-col gap-1 p-2">
     {#each ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM,"] as line}
         <!-- 逐行繪製字根圖 -->
         <div class="flex gap-1">

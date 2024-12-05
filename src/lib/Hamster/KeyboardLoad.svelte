@@ -79,13 +79,13 @@
     }
 </script>
 
-<div class="px-2 py-1 h-8 gap-1 rounded-md variant-ringed hover:variant-ghost flex items-center">
+<div class="variant-ringed flex h-8 items-center gap-1 rounded-md px-2 py-1 hover:variant-ghost">
     <!-- 删除檔案 -->
     {#if remove}
         <button
             title="删除此檔案數據"
             on:click={tryRemove}
-            class="p-1 rounded-full hover:variant-ringed flex items-center"
+            class="flex items-center rounded-full p-1 hover:variant-ringed"
         >
             <Icon icon={opMode === modeRemove ? "mdi:cancel" : "mdi:close"} />
         </button>
@@ -94,7 +94,7 @@
     <button
         title="點擊以此檔案數據覆蓋當前編輯配置"
         on:click={tryLoad}
-        class="p-1 w-full justify-center rounded-md flex items-center text-nowrap"
+        class="flex w-full items-center justify-center text-nowrap rounded-md p-1"
         class:text-xs={opMode}
     >
         {display}
@@ -104,7 +104,7 @@
         <button
             title="將當前編輯配置覆蓋到此存檔上"
             on:click={tryOverride}
-            class="p-1 rounded-full hover:variant-ringed flex items-center"
+            class="flex items-center rounded-full p-1 hover:variant-ringed"
         >
             <Icon icon={opMode === modeOverride ? "mdi:cancel" : "mdi:content-save"} />
         </button>

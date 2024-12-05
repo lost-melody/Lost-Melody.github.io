@@ -40,23 +40,23 @@
     };
 </script>
 
-<div class="w-full gap-2 flex items-center">
-    <span class="px-2 py-1 flex items-center">
-        <input type="color" bind:value={color.color} class="input !w-6 !h-6 !rounded-sm" />
+<div class="flex w-full items-center gap-2">
+    <span class="flex items-center px-2 py-1">
+        <input type="color" bind:value={color.color} class="input !h-6 !w-6 !rounded-sm" />
     </span>
     {#if typing}
         <!-- svelte-ignore a11y-autofocus -->
         {#if $preferAbgr}
-            <input type="text" bind:value={abgr} autofocus on:blur={postTyping} class="w-16 code" />
+            <input type="text" bind:value={abgr} autofocus on:blur={postTyping} class="code w-16" />
         {:else}
-            <input type="text" bind:value={color.color} autofocus on:blur={postTyping} class="w-16 code" />
+            <input type="text" bind:value={color.color} autofocus on:blur={postTyping} class="code w-16" />
         {/if}
     {:else}
-        <button on:click={onTyping} class="w-12 code">
+        <button on:click={onTyping} class="code w-12">
             {($preferAbgr ? abgr : color.color).replace(/^#/, "").toUpperCase() || "-"}
         </button>
     {/if}
-    <span class="grow shrink"> {title} </span>
+    <span class="shrink grow"> {title} </span>
     <input type="range" {min} {max} {step} bind:value={color.alpha} class="w-[30%]" />
-    <span class="w-6 code"> {color.alpha.toString(16).toUpperCase()} </span>
+    <span class="code w-6"> {color.alpha.toString(16).toUpperCase()} </span>
 </div>

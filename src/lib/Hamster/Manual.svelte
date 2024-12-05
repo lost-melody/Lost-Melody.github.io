@@ -3,6 +3,6 @@
     import manual from "$lib/assets/hamster-tools/manual.md?raw";
 </script>
 
-<div class="p-2 rounded-md variant-soft">
+<div class="variant-soft rounded-md p-2">
     <Markdown source={manual} />
 </div>

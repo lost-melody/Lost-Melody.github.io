@@ -100,16 +100,16 @@
     <title>{$page.data.title} · Lost Melody</title>
 </svelte:head>
 
-<div class="flex flex-col min-h-lvh">
+<div class="flex min-h-lvh flex-col">
     <!-- 頂部標題欄 -->
     <AppBar gridColumns="grid-cols-3" slotDefault="place-self-center" slotTrail="place-content-end">
         <!-- 左側動作按鈕 -->
         <svelte:fragment slot="lead">
             <div class="flex items-center space-x-2">
-                <button class="btn-icon btn-icon-sm variant-ghost" on:click={openNavigator}>
+                <button class="variant-ghost btn-icon btn-icon-sm" on:click={openNavigator}>
                     <Icon icon="mdi:menu" />
                 </button>
-                <a href="/" class="btn-icon btn-icon-sm variant-ghost">
+                <a href="/" class="variant-ghost btn-icon btn-icon-sm">
                     <Icon icon="mdi:home" />
                 </a>
             </div>
@@ -124,7 +124,7 @@
                 <LightSwitch on:click={updateDarkMode} class="variant-ghost" />
                 <a
                     title="倉庫"
-                    class="btn-icon btn-icon-sm variant-ghost"
+                    class="variant-ghost btn-icon btn-icon-sm"
                     target="_blank"
                     href="https://github.com/lost-melody/Lost-Melody.github.io"
                 >
@@ -146,9 +146,9 @@
 
     <div class="sticky top-full flex justify-center">
         <!-- 底部鏈接欄 -->
-        <div class="w-full max-w-md btn-group rounded-md variant-soft">
+        <div class="variant-soft btn-group w-full max-w-md rounded-md">
             {#each credits as credit}
-                <a target="_blank" href={credit[1]} class="grow shrink">
+                <a target="_blank" href={credit[1]} class="shrink grow">
                     {credit[0]}
                 </a>
             {/each}

@@ -5,7 +5,7 @@
     export var data: PageData;
 </script>
 
-<div class="max-w-screen-xl flex flex-wrap p-4 gap-4 justify-center mx-auto">
+<div class="mx-auto flex max-w-screen-xl flex-wrap justify-center gap-4 p-4">
     {#each data.profiles as profile}
         <AvatarCard {profile} />
     {/each}

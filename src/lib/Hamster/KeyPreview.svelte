@@ -104,22 +104,22 @@
         style:border-bottom-color={bottomColor}
         style:border-bottom-style="solid"
         style:border-bottom-width={bgBtnDisplay ? "1px" : undefined}
-        class="w-full h-full relative"
+        class="relative h-full w-full"
     >
         {#if holdState === holdBubble}
             <div
-                class="h-10 px-2 min-w-10 flex items-center justify-center rounded-md absolute -top-11"
+                class="absolute -top-11 flex h-10 min-w-10 items-center justify-center rounded-md px-2"
                 class:left-0={coordinate.col < row.keys.length / 2}
                 class:right-0={coordinate.col >= row.keys.length / 2}
                 style:background-color={bubbleColor}
             >
-                <div class="px-2 rounded-md" style:color={pressedFrontColor}>
+                <div class="rounded-md px-2" style:color={pressedFrontColor}>
                     {key.label.text ? key.label.text : key.action.display()}
                 </div>
             </div>
         {:else if holdState === holdCallout}
             <div
-                class="h-10 px-2 min-w-10 text-nowrap flex items-center rounded-md absolute -top-11 overflow-x-auto"
+                class="absolute -top-11 flex h-10 min-w-10 items-center overflow-x-auto text-nowrap rounded-md px-2"
                 class:flex-row-reverse={coordinate.col >= row.keys.length / 2}
                 class:left-0={coordinate.col < row.keys.length / 2}
                 class:right-0={coordinate.col >= row.keys.length / 2}
@@ -128,7 +128,7 @@
             >
                 {#each key.callout as callout, index}
                     <button
-                        class="px-2 rounded-md"
+                        class="rounded-md px-2"
                         style:background-color={index === calloutSelectedIndex ? calloutSelected : undefined}
                         style:color={index === calloutSelectedIndex
                             ? calloutSelectedFg
@@ -148,7 +148,7 @@
             style:border-color={borderColor}
             style:border-width={bgBtnDisplay ? `${borderWidth}px` : undefined}
             style:box-shadow={bgBtnDisplay ? `0 ${shadowSize}px ${shadowSize}px ${shadowColor.rgba()}` : undefined}
-            class="w-full h-full rounded-md absolute"
+            class="absolute h-full w-full rounded-md"
             on:click={onClick}
         >
             <!-- swipe up and down -->
@@ -156,7 +156,7 @@
                 style:color={selected ? pressedSwipeColor : swipeColor}
                 style:font-size={`${swipeFont || 8}px`}
                 style:line-height={`${(swipeFont || 8) + 2}px`}
-                class="w-full absolute top-0 flex justify-around"
+                class="absolute top-0 flex w-full justify-around"
             >
                 {#each [key.swipe[2], key.swipe[1]] as swipe}
                     {#if swipe.action.type !== ActionType.none && swipe.display}
@@ -171,7 +171,7 @@
                 style:color={selected ? pressedFrontColor : frontColor}
                 style:font-size={`${fontSize || 16}px`}
                 style:line-height={`${(swipeFont || 16) + 2}px`}
-                class="w-full h-full absolute top-0 flex items-center justify-center"
+                class="absolute top-0 flex h-full w-full items-center justify-center"
             >
                 <span> {key.label.text ? key.label.text : key.action.display()} </span>
             </div>

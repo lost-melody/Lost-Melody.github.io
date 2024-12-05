@@ -36,14 +36,14 @@
         <span style:color={schema.text_color.rgba()} class="px-1 text-xs"> lleiu </span>
     </div>
     <!-- candidates -->
-    <div class="w-full px-2 gap-1 flex items-center text-sm">
+    <div class="flex w-full items-center gap-1 px-2 text-sm">
         {#each ["卢老师", "罗老师", "罗利市"] as cand, index}
             <span
                 style:color={index === 0
                     ? schema.hilited_candidate_text_color.rgba()
                     : schema.candidate_text_color.rgba()}
                 style:background-color={index === 0 ? schema.hilited_candidate_back_color.rgba() : undefined}
-                class="px-1 rounded-md text-md text-nowrap"
+                class="text-md text-nowrap rounded-md px-1"
             >
                 <span
                     style:color={index == 0 ? schema.hilited_candidate_label_color.rgba() : schema.label_color.rgba()}
@@ -81,7 +81,7 @@
     </div>
     <!-- keyboard layout -->
     {#each keyboard.rows as row, indexRow (row.id)}
-        <div style:height={`${landscape ? row.landscapeHeight || 56 : row.rowHeight || 56}px`} class="w-full flex">
+        <div style:height={`${landscape ? row.landscapeHeight || 56 : row.rowHeight || 56}px`} class="flex w-full">
             {#each row.keys as key, indexKey (key.id)}
                 <KeyPreview
                     {landscape}

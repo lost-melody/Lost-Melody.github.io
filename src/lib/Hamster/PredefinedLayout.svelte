@@ -35,7 +35,7 @@
     }
 </script>
 
-<div class="gap-1 grid grid-cols-3">
+<div class="grid grid-cols-3 gap-1">
     {#each predefinedKeyboards as keyboard, index}
         <KeyboardLoad on:load={() => loadPredefined(index)} {keyboard} />
     {/each}

@@ -11,10 +11,10 @@
     var desc = profile.desc;
 </script>
 
-<div class="w-64 card card-hover p-4 gap-2 flex flex-col items-center">
+<div class="card card-hover flex w-64 flex-col items-center gap-2 p-4">
     <!-- 頭像, 名稱及主頁鏈接 -->
-    <a {target} {href} class="flex gap-2 p-1 hover:variant-soft rounded-full">
-        <img {src} alt="頭像" class="w-12 h-12 rounded-full" />
+    <a {target} {href} class="flex gap-2 rounded-full p-1 hover:variant-soft">
+        <img {src} alt="頭像" class="h-12 w-12 rounded-full" />
         <div class="flex flex-col justify-around">
             {#each labels as label}
                 <p class="text-sm">{label}</p>
@@ -25,7 +25,7 @@
     {#if badges.length !== 0}
         <div class="flex gap-1">
             {#each badges as badge}
-                <span class="badge variant-filled">{badge}</span>
+                <span class="variant-filled badge">{badge}</span>
             {/each}
         </div>
     {/if}
@@ -36,7 +36,7 @@
                 <a
                     target={link.address.startsWith("/") ? "_self" : "_blank"}
                     href={link.address}
-                    class="badge variant-ghost hover:variant-ringed"
+                    class="variant-ghost badge hover:variant-ringed"
                 >
                     {link.label}
                 </a>

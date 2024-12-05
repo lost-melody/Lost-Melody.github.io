@@ -100,11 +100,11 @@
 </script>
 
 <!-- 劃動配置 -->
-<div class="p-2 gap-2 flex flex-col">
+<div class="flex flex-col gap-2 p-2">
     <!-- 鍵寛和鍵值編輯區 -->
-    <div class="flex flex-col items-center p-[0.5px] rounded-md variant-ringed">
+    <div class="variant-ringed flex flex-col items-center rounded-md p-[0.5px]">
         <div class="flex w-full items-center">
-            <div class="h-10 px-2 flex items-center rounded-tl-md variant-ringed">
+            <div class="variant-ringed flex h-10 items-center rounded-tl-md px-2">
                 <Icon height="20" icon="mdi:gesture-touch" />
             </div>
             <input
@@ -112,12 +112,12 @@
                 bind:value={key.label.text}
                 placeholder="標籤"
                 style:font-family="sans-serif, Symbols Nerd Font"
-                class="h-10 px-2 grow rounded-none variant-ringed hover:variant-ghost"
+                class="variant-ringed h-10 grow rounded-none px-2 hover:variant-ghost"
             />
             <button
                 title="是否經由 Rime 處理"
                 on:click={() => (key.processByRIME = !key.processByRIME)}
-                class="h-10 px-2 rounded-tr-md hover:variant-ghost active:scale-95 variant-ringed"
+                class="variant-ringed h-10 rounded-tr-md px-2 hover:variant-ghost active:scale-95"
             >
                 <Icon height="20" icon={key.processByRIME ? "mdi:web" : "mdi:web-off"} />
             </button>
@@ -129,7 +129,7 @@
                     bind:value={key.label.loading}
                     placeholder="加載標籤"
                     style:font-family="sans-serif, Symbols Nerd Font"
-                    class="h-10 px-2 grow rounded-none variant-ringed hover:variant-ghost"
+                    class="variant-ringed h-10 grow rounded-none px-2 hover:variant-ghost"
                 />
             </div>
         {/if}
@@ -138,19 +138,19 @@
                 title="使用 SF Symbol 作爲標籤 (覆蓋文本標籤)"
                 bind:value={key.label.sysImage}
                 placeholder="SF Symbol"
-                class="h-10 px-2 font-mono grow rounded-none variant-ringed hover:variant-ghost"
+                class="variant-ringed h-10 grow rounded-none px-2 font-mono hover:variant-ghost"
             />
         </div>
         <ActionEdit bind:action={key.action} bind:clipAction />
     </div>
 
     <Details summary="劃動動作配置">
-        <div class="p-1.5 gap-2 flex flex-col">
+        <div class="flex flex-col gap-2 p-1.5">
             {#each [2, 1, 0, 3] as index (key.swipe[index].id)}
-                <div class="flex flex-col items-center p-[0.5px] rounded-md variant-ringed">
+                <div class="variant-ringed flex flex-col items-center rounded-md p-[0.5px]">
                     {#if key.swipe[index].action.type === ActionType.none}
                         <div class="flex w-full">
-                            <div class="h-10 px-2 flex items-center rounded-l-md variant-ringed">
+                            <div class="variant-ringed flex h-10 items-center rounded-l-md px-2">
                                 <Icon height="20" icon={icons[index]} />
                             </div>
                             <button
@@ -158,14 +158,14 @@
                                 on:click={() => {
                                     activateSwipe(index);
                                 }}
-                                class="h-10 px-2 rounded-r-md grow flex justify-center items-center variant-ringed hover:variant-ghost"
+                                class="variant-ringed flex h-10 grow items-center justify-center rounded-r-md px-2 hover:variant-ghost"
                             >
                                 <Icon height="20" icon="mdi:plus" />
                             </button>
                         </div>
                     {:else}
                         <div class="flex w-full">
-                            <div class="h-10 px-2 flex items-center rounded-tl-md variant-ringed">
+                            <div class="variant-ringed flex h-10 items-center rounded-tl-md px-2">
                                 <Icon height="20" icon={icons[index]} />
                             </div>
                             <input
@@ -173,13 +173,13 @@
                                 bind:value={key.swipe[index].label.text}
                                 placeholder="標籤"
                                 style:font-family="sans-serif, Symbols Nerd Font"
-                                class="h-10 px-2 grow rounded-none variant-ringed hover:variant-ghost"
+                                class="variant-ringed h-10 grow rounded-none px-2 hover:variant-ghost"
                             />
                             <!-- 經由 rime 處理 -->
                             <button
                                 title="劃動是否經由 Rime 處理"
                                 on:click={() => (key.swipe[index].processByRIME = !key.swipe[index].processByRIME)}
-                                class="h-10 px-2 variant-ringed hover:variant-ghost"
+                                class="variant-ringed h-10 px-2 hover:variant-ghost"
                             >
                                 <Icon height="20" icon={key.swipe[index].processByRIME ? "mdi:web" : "mdi:web-off"} />
                             </button>
@@ -187,7 +187,7 @@
                             <button
                                 title="是否顯示此劃動"
                                 on:click={() => (key.swipe[index].display = !key.swipe[index].display)}
-                                class="h-10 px-2 rounded-tr-md variant-ringed hover:variant-ghost"
+                                class="variant-ringed h-10 rounded-tr-md px-2 hover:variant-ghost"
                             >
                                 <Icon height="20" icon={key.swipe[index].display ? "mdi:eye" : "mdi:eye-off"} />
                             </button>
@@ -201,7 +201,7 @@
 
     <!-- 長按動作 -->
     <Details summary="長按動作配置">
-        <div class="p-1.5 gap-2 flex flex-col">
+        <div class="flex flex-col gap-2 p-1.5">
             <IconRange
                 icon="mdi:table-cog"
                 title="長按動作數量"
@@ -209,12 +209,12 @@
                 on:change={onCalloutCountChange}
                 min="0"
                 max="12"
-                class="h-10 px-2 flex items-center rounded-md variant-ringed hover:variant-ghost"
+                class="variant-ringed flex h-10 items-center rounded-md px-2 hover:variant-ghost"
             />
             {#each key.callout as callout, index (callout.id)}
-                <div class="flex flex-col items-center p-[0.5px] rounded-md variant-ringed">
+                <div class="variant-ringed flex flex-col items-center rounded-md p-[0.5px]">
                     <div class="flex w-full items-center">
-                        <div class="h-10 px-2 flex items-center rounded-tl-md variant-ringed">
+                        <div class="variant-ringed flex h-10 items-center rounded-tl-md px-2">
                             <Icon height="20" icon="mdi:message-outline" />
                         </div>
                         <input
@@ -222,7 +222,7 @@
                             bind:value={callout.label.text}
                             placeholder="標籤"
                             style:font-family="sans-serif, Symbols Nerd Font"
-                            class="h-10 px-2 grow rounded-none variant-ringed hover:variant-ghost"
+                            class="variant-ringed h-10 grow rounded-none px-2 hover:variant-ghost"
                         />
                         <IconButton
                             icon="mdi:arrow-up"
@@ -231,7 +231,7 @@
                             on:click={() => {
                                 moveCalloutUp(index);
                             }}
-                            class="h-10 px-2 variant-ringed hover:variant-ghost active:scale-95"
+                            class="variant-ringed h-10 px-2 hover:variant-ghost active:scale-95"
                         />
                         <IconButton
                             icon="mdi:arrow-down"
@@ -240,7 +240,7 @@
                             on:click={() => {
                                 moveCalloutDown(index);
                             }}
-                            class="h-10 px-2 rounded-tr-md variant-ringed hover:variant-ghost active:scale-95"
+                            class="variant-ringed h-10 rounded-tr-md px-2 hover:variant-ghost active:scale-95"
                         />
                     </div>
                     <ActionEdit bind:action={callout.action} bind:clipAction />
@@ -250,15 +250,15 @@
     </Details>
 
     <!-- 按鍵樣式設置 -->
-    <div class="w-full p-[0.5px] rounded-md variant-ringed">
-        <div class="w-full flex">
-            <div class="h-10 px-2 flex items-center rounded-tl-md variant-ringed">
+    <div class="variant-ringed w-full rounded-md p-[0.5px]">
+        <div class="flex w-full">
+            <div class="variant-ringed flex h-10 items-center rounded-tl-md px-2">
                 <Icon icon="mdi:weather-sunny" />
             </div>
-            <span class="h-10 px-2 items-center flex variant-ringed grow shrink"> 亮色樣式 </span>
+            <span class="variant-ringed flex h-10 shrink grow items-center px-2"> 亮色樣式 </span>
             <select
                 bind:value={key.lightStyle}
-                class="w-[50%] h-10 px-2 bg-transparent rounded-tr-md variant-ringed hover:variant-ghost"
+                class="variant-ringed h-10 w-[50%] rounded-tr-md bg-transparent px-2 hover:variant-ghost"
             >
                 <option value="">none</option>
                 {#each keyStyleNames as name}
@@ -266,14 +266,14 @@
                 {/each}
             </select>
         </div>
-        <div class="w-full flex">
-            <div class="h-10 px-2 flex items-center rounded-bl-md variant-ringed">
+        <div class="flex w-full">
+            <div class="variant-ringed flex h-10 items-center rounded-bl-md px-2">
                 <Icon icon="mdi:weather-night" />
             </div>
-            <span class="h-10 px-2 items-center flex variant-ringed grow shrink"> 暗色樣式 </span>
+            <span class="variant-ringed flex h-10 shrink grow items-center px-2"> 暗色樣式 </span>
             <select
                 bind:value={key.darkStyle}
-                class="w-[50%] h-10 px-2 bg-transparent rounded-br-md variant-ringed hover:variant-ghost"
+                class="variant-ringed h-10 w-[50%] rounded-br-md bg-transparent px-2 hover:variant-ghost"
             >
                 <option value="">none</option>
                 {#each keyStyleNames as name}
@@ -284,18 +284,18 @@
     </div>
 
     <!-- 按鍵動作按鈕 -->
-    <div class="w-full flex mx-auto p-[0.5px] rounded-md variant-ringed overflow-auto">
+    <div class="variant-ringed mx-auto flex w-full overflow-auto rounded-md p-[0.5px]">
         <button
             title="在鍵盤中删除此按鍵"
             on:click={delKey}
-            class="gap-1 p-2 flex items-center rounded-l-md variant-ringed hover:variant-ghost active:scale-95"
+            class="variant-ringed flex items-center gap-1 rounded-l-md p-2 hover:variant-ghost active:scale-95"
         >
             <Icon height="20" icon="mdi:close" />
         </button>
         <button
             title="將此按鍵左移一位"
             on:click={moveLeft}
-            class="gap-1 p-2 flex items-center variant-ringed hover:variant-ghost active:scale-95"
+            class="variant-ringed flex items-center gap-1 p-2 hover:variant-ghost active:scale-95"
         >
             <Icon height="20" icon="mdi:arrow-left" />
         </button>
@@ -308,7 +308,7 @@
                     key.autoWidth = !key.autoWidth;
                 }
             }}
-            class="gap-1 p-2 flex items-center variant-ringed hover:variant-ghost active:scale-95"
+            class="variant-ringed flex items-center gap-1 p-2 hover:variant-ghost active:scale-95"
         >
             <Icon
                 height="20"
@@ -323,7 +323,7 @@
                 placeholder="鍵寛"
                 min={1}
                 max={100}
-                class="min-w-0 grow shrink p-2 rounded-none variant-ringed hover:variant-ghost"
+                class="variant-ringed min-w-0 shrink grow rounded-none p-2 hover:variant-ghost"
             />
         {:else}
             <input
@@ -333,34 +333,34 @@
                 placeholder="鍵寛"
                 min={1}
                 max={100}
-                class="min-w-0 grow shrink p-2 rounded-none variant-ringed hover:variant-ghost"
+                class="variant-ringed min-w-0 shrink grow rounded-none p-2 hover:variant-ghost"
             />
         {/if}
         <button
             title="複製按鍵配置"
             on:click={copyKey}
-            class="gap-1 p-2 flex items-center variant-ringed hover:variant-ghost active:scale-95"
+            class="variant-ringed flex items-center gap-1 p-2 hover:variant-ghost active:scale-95"
         >
             <Icon height="20" icon="mdi:content-copy" />
         </button>
         <button
             title="粘貼按鍵配置"
             on:click={pasteKey}
-            class="gap-1 p-2 flex items-center variant-ringed hover:variant-ghost active:scale-95"
+            class="variant-ringed flex items-center gap-1 p-2 hover:variant-ghost active:scale-95"
         >
             <Icon height="20" icon="mdi:content-paste" />
         </button>
         <button
             title="將此按鍵右移一位"
             on:click={moveRight}
-            class="gap-1 p-2 flex items-center variant-ringed hover:variant-ghost active:scale-95"
+            class="variant-ringed flex items-center gap-1 p-2 hover:variant-ghost active:scale-95"
         >
             <Icon height="20" icon="mdi:arrow-right" />
         </button>
         <button
             title="繼續編輯下一個按鍵"
             on:click={selectNextKey}
-            class="gap-1 p-2 flex items-center rounded-r-md variant-ringed hover:variant-ghost active:scale-95"
+            class="variant-ringed flex items-center gap-1 rounded-r-md p-2 hover:variant-ghost active:scale-95"
         >
             <Icon height="20" icon="mdi:check-circle-outline" />
         </button>

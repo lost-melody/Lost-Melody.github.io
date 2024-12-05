@@ -4,4 +4,4 @@
     export var lang: string;
 </script>
 
-<pre title={lang} class="p-2 pre text-sm rounded-md variant-soft">{#if text}{text}{:else}<slot />{/if}</pre>
+<pre title={lang} class="variant-soft pre rounded-md p-2 text-sm">{#if text}{text}{:else}<slot />{/if}</pre>

@@ -57,12 +57,12 @@
     }
 </script>
 
-<div class="flex flex-col w-full items-center">
+<div class="flex w-full flex-col items-center">
     <div class="flex w-full items-center">
         <!-- 單選: 動作類型 -->
         <select
             bind:value={action.type}
-            class="appearance-none w-full h-10 px-2 variant-ringed hover:variant-ghost"
+            class="variant-ringed h-10 w-full appearance-none px-2 hover:variant-ghost"
             class:rounded-bl-md={funcKeys}
         >
             {#each actionTypes as typ}
@@ -74,14 +74,14 @@
         <button
             title="複製動作配置"
             on:click={copyAction}
-            class="h-10 px-2 flex items-center variant-ringed hover:variant-ghost active:scale-95"
+            class="variant-ringed flex h-10 items-center px-2 hover:variant-ghost active:scale-95"
         >
             <Icon height="20" icon="mdi:content-copy" />
         </button>
         <button
             title="粘貼動作配置"
             on:click={pasteAction}
-            class="h-10 px-2 flex items-center variant-ringed hover:variant-ghost active:scale-95"
+            class="variant-ringed flex h-10 items-center px-2 hover:variant-ghost active:scale-95"
             class:rounded-br-md={funcKeys}
         >
             <Icon height="20" icon="mdi:content-paste" />
@@ -90,10 +90,10 @@
 
     <!-- 輸入: 動作内容文本 -->
     {#if text.includes(action.type)}
-        <div class="flex w-full h-10 items-center">
+        <div class="flex h-10 w-full items-center">
             <input
                 bind:value={action.text}
-                class="w-full h-full px-2 grow rounded-none rounded-b-md variant-ringed hover:variant-ghost"
+                class="variant-ringed h-full w-full grow rounded-none rounded-b-md px-2 hover:variant-ghost"
                 placeholder="按鍵字符内容"
             />
         </div>
@@ -101,10 +101,10 @@
 
     <!-- 單選: 切換鍵盤類型 -->
     {#if action.type === ActionType.keyboardType}
-        <div class="flex w-full h-10 items-center">
+        <div class="flex h-10 w-full items-center">
             <select
                 bind:value={action.kbd}
-                class="appearance-none grow h-full px-2 variant-ringed hover:variant-ghost"
+                class="variant-ringed h-full grow appearance-none px-2 hover:variant-ghost"
                 class:rounded-b-md={action.kbd !== KeyboardType.custom}
             >
                 {#each keyboardTypes as typ}
@@ -118,10 +118,10 @@
 
     <!-- 輸入: 自定義鍵盤名稱 -->
     {#if action.type === ActionType.keyboardType && action.kbd === KeyboardType.custom}
-        <div class="flex w-full h-10 items-center">
+        <div class="flex h-10 w-full items-center">
             <input
                 bind:value={action.text}
-                class="grow h-full px-2 rounded-none rounded-b-md variant-ringed hover:variant-ghost"
+                class="variant-ringed h-full grow rounded-none rounded-b-md px-2 hover:variant-ghost"
                 placeholder="自定義鍵盤名"
             />
         </div>
@@ -129,7 +129,7 @@
 
     <!-- 提示: 快捷命令簡介 -->
     {#if action.type === ActionType.shortCommand && cmdTypeInfos[action.cmd]}
-        <div class="flex h-8 items-center text-sm gap-1">
+        <div class="flex h-8 items-center gap-1 text-sm">
             <Icon icon="mdi:information-box" />
             {cmdTypeInfos[action.cmd]}
         </div>
@@ -138,7 +138,7 @@
 
     <!-- 提示: 快捷命令警告 -->
     {#if action.type === ActionType.shortCommand && cmdTypeWarnings[action.cmd]}
-        <div class="flex h-8 items-center text-warning-500 text-sm gap-1">
+        <div class="flex h-8 items-center gap-1 text-sm text-warning-500">
             <Icon icon="mdi:warning-box" />
             {cmdTypeWarnings[action.cmd]}
         </div>
@@ -146,10 +146,10 @@
 
     <!-- 單選: 快捷命令類型 -->
     {#if action.type === ActionType.shortCommand}
-        <div class="flex w-full h-10 items-center">
+        <div class="flex h-10 w-full items-center">
             <select
                 bind:value={action.cmd}
-                class="appearance-none grow h-full px-2 variant-ringed hover:variant-ghost"
+                class="variant-ringed h-full grow appearance-none px-2 hover:variant-ghost"
                 class:rounded-b-md={action.cmd !== ShortCmd.sendkeys && action.cmd !== ShortCmd.openUrl}
             >
                 {#each shortCmdTypes as typ}
@@ -163,10 +163,10 @@
 
     <!-- 輸入: 快捷命令·快捷鍵 -->
     {#if action.type === ActionType.shortCommand && action.cmd === ShortCmd.sendkeys}
-        <div class="flex w-full h-10 items-center">
+        <div class="flex h-10 w-full items-center">
             <input
                 bind:value={action.text}
-                class="grow h-full px-2 rounded-none rounded-b-md variant-ringed hover:variant-ghost"
+                class="variant-ringed h-full grow rounded-none rounded-b-md px-2 hover:variant-ghost"
                 placeholder="nihao | Control_L+a"
             />
         </div>
@@ -174,10 +174,10 @@
 
     <!-- 輸入: 快捷命令·打開 URL -->
     {#if action.type === ActionType.shortCommand && action.cmd === ShortCmd.openUrl}
-        <div class="flex w-full h-10 items-center">
+        <div class="flex h-10 w-full items-center">
             <input
                 bind:value={action.text}
-                class="grow h-full px-2 rounded-none rounded-b-md variant-ringed hover:variant-ghost"
+                class="variant-ringed h-full grow rounded-none rounded-b-md px-2 hover:variant-ghost"
                 placeholder="#pasteboardContent | weixin://xxx"
             />
         </div>

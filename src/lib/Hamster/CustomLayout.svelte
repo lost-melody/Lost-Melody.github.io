@@ -59,7 +59,7 @@
     }
 </script>
 
-<div class="gap-2 grid grid-cols-2">
+<div class="grid grid-cols-2 gap-2">
     {#each customKeyboards as keyboard, index}
         <KeyboardLoad
             on:load={() => loadCustom(index)}

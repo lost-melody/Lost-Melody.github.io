@@ -1,6 +1,12 @@
 printWidth: 120
 tabWidth: 4
+plugins:
+  - prettier-plugin-svelte
+  - prettier-plugin-tailwindcss
 overrides:
   - files: ["*.md", "*.yaml", "*.yml"]
     options:
       tabWidth: 2
+  - files: ["*.svelte"]
+    options:
+      parser: svelte

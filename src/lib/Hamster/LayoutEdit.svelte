@@ -50,28 +50,28 @@
     }
 </script>
 
-<div class="w-full p-2 gap-2 flex flex-col rounded-md variant-soft">
+<div class="variant-soft flex w-full flex-col gap-2 rounded-md p-2">
     <!-- 佈局名稱 -->
-    <div class="w-full p-[0.5px] rounded-md variant-ringed">
-        <div class="w-full flex items-center">
-            <div class="h-10 px-2 flex items-center rounded-tl-md variant-ringed">
+    <div class="variant-ringed w-full rounded-md p-[0.5px]">
+        <div class="flex w-full items-center">
+            <div class="variant-ringed flex h-10 items-center rounded-tl-md px-2">
                 <Icon icon="mdi:rename-box" />
             </div>
-            <span class="h-10 px-2 flex items-center grow shrink variant-ringed"> 佈局名稱 </span>
+            <span class="variant-ringed flex h-10 shrink grow items-center px-2"> 佈局名稱 </span>
             <input
                 title="鍵盤名稱"
                 type="text"
                 bind:value={layout.name}
                 placeholder="天行鍵"
-                class="w-[50%] h-10 px-2 rounded-none rounded-tr-md variant-ringed hover:variant-ghost"
+                class="variant-ringed h-10 w-[50%] rounded-none rounded-tr-md px-2 hover:variant-ghost"
             />
         </div>
-        <div class="w-full flex items-center">
-            <div class="h-10 px-2 flex items-center rounded-bl-md variant-ringed">
+        <div class="flex w-full items-center">
+            <div class="variant-ringed flex h-10 items-center rounded-bl-md px-2">
                 <Icon icon={layout.primary ? "mdi:checkbox-marked-outline" : "mdi:checkbox-blank-outline"} />
             </div>
             <button
-                class="h-10 p-2 flex grow shrink items-center rounded-br-md variant-ringed hover:variant-ghost active:scale-95"
+                class="variant-ringed flex h-10 shrink grow items-center rounded-br-md p-2 hover:variant-ghost active:scale-95"
                 on:click={() => {
                     layout.primary = !layout.primary;
                 }}
@@ -82,7 +82,7 @@
     </div>
 
     <!-- 編輯按鍵行數 -->
-    <div class="w-full p-[0.5px] rounded-md variant-ringed">
+    <div class="variant-ringed w-full rounded-md p-[0.5px]">
         <IconRange
             icon="mdi:table-cog"
             title="按鍵行数"
@@ -90,13 +90,13 @@
             on:change={onRowCountChange}
             min="0"
             max="8"
-            class="h-10 px-2 flex items-center rounded-md variant-ringed hover:variant-ghost"
+            class="variant-ringed flex h-10 items-center rounded-md px-2 hover:variant-ghost"
         />
     </div>
 
     <!-- 編輯每行按鍵數量 -->
-    <div class="w-full p-[0.5px] rounded-md variant-ringed">
-        <div class="p-[0.5px] rounded-md variant-ringed">
+    <div class="variant-ringed w-full rounded-md p-[0.5px]">
+        <div class="variant-ringed rounded-md p-[0.5px]">
             {#each layout.rows as row, index (row.id)}
                 <IconRange
                     icon="mdi:table-cog"
@@ -111,9 +111,9 @@
                     r_tr={index === 0}
                     r_bl={index === layout.rows.length - 1}
                     r_br={index === layout.rows.length - 1}
-                    class="h-10 px-2 flex items-center variant-ringed hover:variant-ghost"
+                    class="variant-ringed flex h-10 items-center px-2 hover:variant-ghost"
                 >
-                    <span class="h-10 px-2 grow shrink flex border-surface-500 border-r items-center">
+                    <span class="flex h-10 shrink grow items-center border-r border-surface-500 px-2">
                         {`第 ${index + 1} 行`}
                     </span>
                     <IconButton
@@ -122,7 +122,7 @@
                         on:click={() => {
                             moveRowUp(index);
                         }}
-                        class="h-10 px-2 border-surface-500 border-r hover:variant-ghost active:scale-95 active:border-l"
+                        class="h-10 border-r border-surface-500 px-2 hover:variant-ghost active:scale-95 active:border-l"
                     />
                     <IconButton
                         icon="mdi:arrow-down"
@@ -130,7 +130,7 @@
                         on:click={() => {
                             moveRowDown(index);
                         }}
-                        class="h-10 px-2 border-surface-500 border-r hover:variant-ghost active:scale-95 active:border-l"
+                        class="h-10 border-r border-surface-500 px-2 hover:variant-ghost active:scale-95 active:border-l"
                     />
                     {#if landscape}
                         <input
@@ -138,7 +138,7 @@
                             placeholder="行高"
                             type="number"
                             bind:value={row.landscapeHeight}
-                            class="w-16 h-10 p-2 rounded-none bg-transparent border-surface-500 border-r hover:variant-ghost"
+                            class="h-10 w-16 rounded-none border-r border-surface-500 bg-transparent p-2 hover:variant-ghost"
                             min="0"
                             max="128"
                         />
@@ -148,7 +148,7 @@
                             placeholder="行高"
                             type="number"
                             bind:value={row.rowHeight}
-                            class="w-16 h-10 p-2 rounded-none bg-transparent border-surface-500 border-r hover:variant-ghost"
+                            class="h-10 w-16 rounded-none border-r border-surface-500 bg-transparent p-2 hover:variant-ghost"
                             min="0"
                             max="128"
                         />

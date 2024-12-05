@@ -8,7 +8,7 @@
 </script>
 
 <div class="h-full space-y-2 px-2 py-16">
-    <nav class="m-2 flex flex-col list-nav gap-2">
+    <nav class="list-nav m-2 flex flex-col gap-2">
         <span class="col-span-2 mx-auto inline-flex items-center gap-2">
             <Icon icon="mdi:map-marker-radius" />
             导航

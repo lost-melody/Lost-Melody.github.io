@@ -10,15 +10,15 @@
     });
 </script>
 
-<div style={`height: ${$height}px`} class="p-[0.5px] w-full rounded-md variant-ringed overflow-y-hidden">
+<div style={`height: ${$height}px`} class="variant-ringed w-full overflow-y-hidden rounded-md p-[0.5px]">
     <details bind:clientHeight={$height} bind:open {...$$restProps}>
         <summary
-            class="pl-2 flex items-center rounded-t-md variant-ringed hover:variant-ghost"
+            class="variant-ringed flex items-center rounded-t-md pl-2 hover:variant-ghost"
             class:rounded-b-md={!open}
             class:variant-ghost={open}
         >
             <slot name="summary">
-                <span class="h-10 pr-2 flex items-center"> {summary} </span>
+                <span class="flex h-10 items-center pr-2"> {summary} </span>
             </slot>
         </summary>
         <slot />

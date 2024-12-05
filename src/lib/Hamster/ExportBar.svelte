@@ -100,12 +100,12 @@
         "h-8 w-full p-2 gap-2 flex items-center justify-center rounded-md variant-ringed hover:variant-ghost";
 </script>
 
-<div class="w-full gap-1 flex flex-col">
+<div class="flex w-full flex-col gap-1">
     <div class="flex gap-1">
         <!-- import -->
         <IconButton title="導入配色或佈局文件" icon="mdi:import" on:click={onClickImport} class={classNames}>
             導入配置
-            <div class="w-0 h-0 overflow-hidden">
+            <div class="h-0 w-0 overflow-hidden">
                 <input
                     type="file"
                     name="import_file"
