@@ -1,3 +1,39 @@
+export class Rect {
+    x: number = 0;
+    y: number = 0;
+    width: number = 0;
+    height: number = 0;
+}
+
+export class Insets {
+    top: number = 0;
+    bottom: number = 0;
+    left: number = 0;
+    right: number = 0;
+}
+
+/** 貼圖册, 包含多個貼圖集 */
+export class ImageAlbum {
+    /** 貼圖集列表 */
+    atlases: ImageAtlas[] = [];
+}
+
+/** 貼圖集, 描述一張原始圖片上的多個貼圖引用 */
+export class ImageAtlas {
+    name: string = "";
+    /** 源貼圖 */
+    source: string = "";
+    descriptors: ImageDescriptor[] = [];
+}
+
+/** 貼圖引用, 描述貼圖集中的單張貼圖 */
+export class ImageDescriptor {
+    /** 裁切的圖片引用 */
+    crop: string = "";
+    rect: Rect = new Rect();
+    insets: Insets = new Insets();
+}
+
 export class SkinConfig {
     name: string = "倉鼠皮";
     author: string = "倉師傅";
@@ -79,18 +115,4 @@ export class SkinKbdCell {
     uppercaseStateForegroundStyle: any;
     capsLockedStateForegroundStyle: any;
     preeditStateForegroundStyle: any;
-}
-
-export class Rect {
-    x: number = 0;
-    y: number = 0;
-    width: number = 0;
-    height: number = 0;
-}
-
-export class Insets {
-    top: number = 0;
-    bottom: number = 0;
-    left: number = 0;
-    right: number = 0;
 }
