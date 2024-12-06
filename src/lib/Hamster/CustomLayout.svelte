@@ -6,6 +6,9 @@
     import type { Keyboard } from "./model/keyboardLayout";
     import { toastError } from "$lib/utils/error";
 
+    const toastStore = getToastStore();
+    const nameEmpty = "空的";
+
     export var layout: Keyboard;
     /** 自定義鍵盤存儲位 */
     export var customKeyboards: object[];
@@ -25,8 +28,6 @@
         });
     }
 
-    const toastStore = getToastStore();
-    const nameEmpty = "空的";
     /** LocalStorage 自定義鍵檔案鍵名 */
     function customKeyboardKey(index: number): string {
         return `customKeyboard${index}`;
