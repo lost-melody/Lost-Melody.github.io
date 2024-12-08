@@ -7,9 +7,8 @@
     let { album = $bindable() }: Props = $props();
 </script>
 
-<div class="flex gap-2 overflow-x-auto p-2 variant-ghost">
+<div class="variant-ghost flex gap-2 overflow-x-auto p-2">
     {#each album.atlases as atlas}
-        {atlas.name}
-        <img class="h-32 w-32 variant-ghost" src={atlas.source} alt={atlas.name} />
+        <img class="variant-ghost h-32 w-32" src={atlas.source} alt={atlas.name} title={atlas.name} />
     {/each}
 </div>
