@@ -1,3 +1,4 @@
+/** 區域坐標及大小 */
 export class Rect {
     x: number = 0;
     y: number = 0;
@@ -5,6 +6,7 @@ export class Rect {
     height: number = 0;
 }
 
+/** 區域内距 */
 export class Insets {
     top: number = 0;
     bottom: number = 0;
@@ -34,79 +36,68 @@ export class ImageDescriptor {
     insets: Insets = new Insets();
 }
 
-export class SkinConfig {
-    name: string = "倉鼠皮";
-    author: string = "倉師傅";
-
-    pinyin?: SkinEntries;
-    alphabetic?: SkinEntries;
-    numeric?: SkinEntries;
-    symbolic?: SkinEntries;
-}
-
-export class SkinEntries {
-    iphone?: SkinEntry;
-    ipad?: SkinEntry;
-}
-
-export class SkinEntry {
-    portrait?: SkinStyles;
-    landscape?: SkinStyles;
-    floating?: SkinStyles;
-}
-
-export class SkinStyles {
-    dark?: Skin;
-    light?: Skin;
-}
-
+/** 皮膚頁面定義 */
 export class Skin {
     preeditHeight: number = 0;
     toolbarHeight: number = 0;
     keyboardHeight: number = 0;
-    preedit?: SkinPreedit;
-    toolbar?: SkinToolbar;
-    keyboard?: SkinKeyboard;
+    preedit: SkinPreedit = new SkinPreedit();
+    toolbar: SkinToolbar = new SkinToolbar();
+    keyboard: SkinKeyboard = new SkinKeyboard();
 }
 
+/** 預編輯區風格 */
 export class SkinPreedit {
-    insets: any;
+    insets: Insets = new Insets();
     backgroundStyle: any;
     foregroundStyle: any;
 }
 
+/** 工具欄風格 */
 export class SkinToolbar {
     backgroundStyle: any;
     primaryButtonStyle: any;
     secondaryButtonStyle: any;
     horizontalCandidateStyle: any;
     verticalCandidateStyle: any;
+    candidateContextMenu: any;
 }
 
+/** 鍵盤佈局 */
 export class SkinKeyboard {
     style: any;
     subviews: SkinSubview[] = [];
 }
 
+/** 子視圖定義: 單元格, 横向排列, 縱向排列 */
 export type SkinSubview = SkinKbdCell | SkinKbdHStack | SkinKbdVStack;
 
+/** 排列視圖: 横向, 縱向 */
 export class SkinKbdStack {
-    style: any;
+    style: SkinKbdStackSize = new SkinKbdStackSize();
     subviews: SkinSubview[] = [];
 }
 
+export class SkinKbdStackSize {
+    width: number = 0;
+    height: number = 0;
+}
+
+/** 横向排列視圖 */
 export class SkinKbdHStack extends SkinKbdStack {
     constructor() {
         super();
     }
 }
 
+/** 縱向排列視圖 */
 export class SkinKbdVStack extends SkinKbdStack {
     constructor() {
         super();
     }
 }
 
+/** 單元格, 表示單個按鍵 */
 export class SkinKbdCell {
     size: any;
     bounds: any;
