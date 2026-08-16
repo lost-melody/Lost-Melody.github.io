@@ -3,51 +3,51 @@
     import { onNavigate } from "$app/navigation";
     import { fade } from "svelte/transition";
 
-    import IconButton from "$lib/Component/IconButton.svelte";
-    import SmoothDiv from "$lib/Component/SmoothDiv.svelte";
-    import { ColorSchema, KeyStyle } from "$lib/Hamster/model/colorSchema";
-    import { Keyboard } from "$lib/Hamster/model/keyboardLayout";
-    import ColorsEditor from "$lib/Hamster/ColorSchemaEdit.svelte";
-    import SchemaGallery from "$lib/Hamster/ColorSchemaGallery.svelte";
-    import LayoutEdit from "$lib/Hamster/LayoutEdit.svelte";
-    import LayoutGallery from "$lib/Hamster/LayoutGallery.svelte";
-    import Preview from "$lib/Hamster/Preview.svelte";
-    import ExportBar from "$lib/Hamster/ExportBar.svelte";
-    import BatchKeyEdit from "$lib/Hamster/BatchKeyEdit.svelte";
-    import PredefinedLayout from "$lib/Hamster/PredefinedLayout.svelte";
-    import CustomLayout from "$lib/Hamster/CustomLayout.svelte";
-    import ButtonInsets from "$lib/Hamster/ButtonInsets.svelte";
-    import KeyEdit from "$lib/Hamster/KeyEditor.svelte";
-    import KeyStyleEdit from "$lib/Hamster/KeyStyleEdit.svelte";
-    import Manual from "$lib/Hamster/Manual.svelte";
+    import IconButton from "$lib/components/IconButton.svelte";
+    import SmoothDiv from "$lib/components/SmoothDiv.svelte";
+    import { ColorSchema, KeyStyle } from "./model/colorSchema.svelte.ts";
+    import { Keyboard } from "./model/keyboardLayout.svelte.ts";
+    import ColorsEditor from "./components/ColorSchemaEdit.svelte";
+    import SchemaGallery from "./components/ColorSchemaGallery.svelte";
+    import LayoutEdit from "./components/LayoutEdit.svelte";
+    import LayoutGallery from "./components/LayoutGallery.svelte";
+    import Preview from "./components/Preview.svelte";
+    import ExportBar from "./components/ExportBar.svelte";
+    import BatchKeyEdit from "./components/BatchKeyEdit.svelte";
+    import PredefinedLayout from "./components/PredefinedLayout.svelte";
+    import CustomLayout from "./components/CustomLayout.svelte";
+    import ButtonInsets from "./components/ButtonInsets.svelte";
+    import KeyEdit from "./components/KeyEditor.svelte";
+    import KeyStyleEdit from "./components/KeyStyleEdit.svelte";
+    import Manual from "./components/Manual.svelte";
 
-    import { loadSchemas, saveSchemas } from "$lib/Hamster/utils/colorschemas";
-    import { loadKeyboards, saveKeyboards } from "$lib/Hamster/utils/keyboardlayouts";
-    import { loadKeyStyles, saveKeyStyles } from "$lib/Hamster/utils/keystyles";
+    import { loadSchemas, saveSchemas } from "./utils/colorschemas";
+    import { loadKeyboards, saveKeyboards } from "./utils/keyboardlayouts";
+    import { loadKeyStyles, saveKeyStyles } from "./utils/keystyles";
 
-    var colorSchemas: ColorSchema[] = [new ColorSchema()];
-    var keyboardLayouts: Keyboard[] = [new Keyboard()];
-    var keyStyles: KeyStyle[] = [];
-    var indexSchema = 0;
-    var indexLayout = 0;
-    $: currentSchema = colorSchemas[indexSchema];
-    $: currentLayout = keyboardLayouts[indexLayout];
-    $: keyStyleNames = keyStyles.map((style) => style.name);
-    var keyStyleMap: { [name: string]: KeyStyle };
-    $: {
-        keyStyleMap = {};
-        for (let keyStyle of keyStyles) {
-            keyStyleMap[keyStyle.name] = keyStyle;
+    let colorSchemas = $state<ColorSchema[]>([new ColorSchema()]);
+    let keyboardLayouts = $state<Keyboard[]>([new Keyboard()]);
+    let keyStyles = $state<KeyStyle[]>([]);
+    let indexSchema = $state(0);
+    let indexLayout = $state(0);
+    let currentSchema = $derived(colorSchemas[indexSchema]);
+    let currentLayout = $derived(keyboardLayouts[indexLayout]);
+    let keyStyleNames = $derived(keyStyles.map((style) => style.name));
+    let keyStyleMap = $derived.by(() => {
+        const map: { [name: string]: KeyStyle } = {};
+        for (const keyStyle of keyStyles) {
+            map[keyStyle.name] = keyStyle;
         }
-    }
+        return map;
+    });
 
     /** 預設鍵盤模板 */
-    var predefinedKeyboards: object[] = [];
+    let predefinedKeyboards = $state<object[]>([]);
     /** 自定義鍵盤存儲位 */
-    var customKeyboards: object[];
+    let customKeyboards = $state<object[]>([]);
 
     const [actExport, actTemp, actSave, actBatch] = [1, 2, 3, 4];
-    var actionTab = 0;
+    let actionTab = $state(0);
     const actNames = {
         [actExport]: "導出",
         [actTemp]: "模板",
@@ -63,7 +63,7 @@
         }
     };
 
-    var galleryTab = 0;
+    let galleryTab = $state(0);
     const [galLayout, galColor] = [0, 1];
     const galNames = {
         [galLayout]: "鍵盤佈局",
@@ -73,7 +73,7 @@
         galleryTab = tab;
     };
 
-    var editorTab = 0;
+    let editorTab = $state(0);
     const [editKey, editColor, editLayout, editInset, editKeyStyle] = [0, 1, 2, 3, 4];
     const editNames = {
         [editKey]: "按鍵",
@@ -86,13 +86,13 @@
         editorTab = tab;
     };
 
-    var selectedKey: { row: number; col: number } = { row: 0, col: 0 };
+    let selectedKey = $state({ row: 0, col: 0 });
     const selectKey = (row: number, col: number) => {
         selectedKey = { row, col };
     };
 
-    var stickyPreview = false;
-    var landscapePreview = false;
+    let stickyPreview = $state(false);
+    let landscapePreview = $state(false);
     const onStickyClick = () => {
         stickyPreview = !stickyPreview;
         if (stickyPreview) {
@@ -129,14 +129,15 @@
     // load data if in browser
     if (browser) {
         loadLocalData();
-        if (keyboardLayouts[0].rows.length === 0) {
+        const isEmptyFirstLayout = (): boolean => keyboardLayouts[0].rows.length === 0;
+        if (isEmptyFirstLayout()) {
             actionTab = actExport;
         }
     }
 </script>
 
 <!-- save before hidden -->
-<svelte:document on:visibilitychange={onVisibilityChange} />
+<svelte:document onvisibilitychange={onVisibilityChange} />
 
 <!-- save before unload -->
 <!-- this does not work in Safari -->
@@ -151,11 +152,11 @@
         <div class="mx-auto flex h-8 w-full max-w-md gap-2 px-1">
             {#each [actExport, actTemp, actSave, actBatch] as tab}
                 <button
-                    on:click={() => {
+                    onclick={() => {
                         selectActTab(tab);
                     }}
-                    class:variant-soft={actionTab === tab}
-                    class="flex shrink grow items-center justify-center gap-2 rounded-md p-2 hover:variant-ghost"
+                    class:preset-tonal={actionTab === tab}
+                    class="hover:preset-tonal flex shrink grow items-center justify-center gap-2 rounded-md p-2"
                 >
                     {actNames[tab]}
                 </button>
@@ -165,19 +166,19 @@
         <!-- Action Tab Content -->
         <SmoothDiv height outerClass="px-1 w-full max-w-md mx-auto" class="max-h-[25vh] w-full overflow-y-auto">
             {#if actionTab === actExport}
-                <div in:fade class="variant-ghost w-full rounded-md p-2">
+                <div in:fade class="preset-tonal w-full rounded-md p-2">
                     <ExportBar bind:colorSchemas bind:keyboardLayouts bind:keyStyles />
                 </div>
             {:else if actionTab === actTemp}
-                <div in:fade class="variant-ghost w-full rounded-md p-2">
+                <div in:fade class="preset-tonal w-full rounded-md p-2">
                     <PredefinedLayout bind:layout={currentLayout} bind:predefinedKeyboards />
                 </div>
             {:else if actionTab === actSave}
-                <div in:fade class="variant-ghost w-full rounded-md p-2">
+                <div in:fade class="preset-tonal w-full rounded-md p-2">
                     <CustomLayout bind:layout={currentLayout} bind:customKeyboards />
                 </div>
             {:else if actionTab === actBatch}
-                <div in:fade class="variant-ghost w-full rounded-md p-2">
+                <div in:fade class="preset-tonal w-full rounded-md p-2">
                     <BatchKeyEdit bind:layout={currentLayout} />
                 </div>
             {/if}
@@ -188,11 +189,11 @@
             {#each [galLayout, galColor] as tab}
                 <button
                     disabled={galleryTab === tab}
-                    on:click={() => {
+                    onclick={() => {
                         selectGalTab(tab);
                     }}
-                    class:variant-soft={galleryTab === tab}
-                    class="flex shrink grow items-center justify-center gap-2 rounded-md p-2 hover:variant-ghost"
+                    class:preset-tonal={galleryTab === tab}
+                    class="hover:preset-tonal flex shrink grow items-center justify-center gap-2 rounded-md p-2"
                 >
                     {galNames[tab]}
                 </button>
@@ -229,10 +230,10 @@
                 keyboard={currentLayout}
                 {keyStyleMap}
                 selected={selectedKey}
-                on:clicked={(event) => {
-                    selectKey(event.detail.row, event.detail.col);
+                onclicked={({ row, col }) => {
+                    selectKey(row, col);
                 }}
-                on:sticky={onStickyClick}
+                onsticky={onStickyClick}
             />
         </div>
     </div>
@@ -243,11 +244,11 @@
             {#each [editKey, editColor, editLayout, editInset, editKeyStyle] as tab}
                 <button
                     disabled={editorTab === tab}
-                    on:click={() => {
+                    onclick={() => {
                         selectEditTab(tab);
                     }}
-                    class:variant-soft={editorTab === tab}
-                    class="flex shrink grow items-center justify-center gap-2 rounded-md p-2 hover:variant-ghost"
+                    class:preset-tonal={editorTab === tab}
+                    class="hover:preset-tonal flex shrink grow items-center justify-center gap-2 rounded-md p-2"
                 >
                     {editNames[tab]}
                 </button>
@@ -278,21 +279,21 @@
             {:else if editorTab === editInset}
                 <!-- Button Insets Editor -->
                 <div in:fade class="w-full lg:overflow-y-auto">
-                    <div class="variant-soft flex flex-col gap-2 rounded-md p-2">
+                    <div class="preset-tonal flex flex-col gap-2 rounded-md p-2">
                         <IconButton
                             icon={currentLayout.buttonInsets.expr
                                 ? "mdi:checkbox-blank-outline"
                                 : "mdi:checkbox-marked-outline"}
                             height="20"
-                            on:click={() => {
+                            onclick={() => {
                                 currentLayout.buttonInsets.expr = !currentLayout.buttonInsets.expr;
                             }}
-                            class="variant-ringed flex w-full items-center gap-2 rounded-md p-2 hover:variant-ghost"
+                            class="preset-outlined hover:preset-tonal flex w-full items-center gap-2 rounded-md p-2"
                         >
                             <span class="grow text-left">使用統一内距</span>
                         </IconButton>
 
-                        <ButtonInsets bind:buttonInsets={currentLayout.buttonInsets} />
+                        <ButtonInsets buttonInsets={currentLayout.buttonInsets} />
                     </div>
                 </div>
             {:else if editorTab === editKeyStyle}
@@ -313,7 +314,7 @@
         </div>
     </div>
 
-    <SmoothDiv height outerClass="w-full max-w-2xl mx-auto rounded-md hover:variant-ghost lg:col-span-2" class="w-full">
+    <SmoothDiv height outerClass="w-full max-w-2xl mx-auto rounded-md hover:preset-tonal lg:col-span-2" class="w-full">
         <details class="w-full p-2">
             <summary class="mx-auto max-w-md p-2">可能有用的簡易説明書</summary>
             <Manual />

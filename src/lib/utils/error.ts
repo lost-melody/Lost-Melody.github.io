@@ -1,10 +1,8 @@
-import type { ToastStore } from "@skeletonlabs/skeleton";
+import { toaster } from "$lib/utils/toaster";
 
-export function toastError(toastStore: ToastStore, message: string) {
-    toastStore.trigger({
-        message,
-        timeout: 3000,
-        hoverable: true,
-        background: "variant-filled-error",
+export function toastError(message: string) {
+    toaster.error({
+        title: message,
+        duration: 3000,
     });
 }

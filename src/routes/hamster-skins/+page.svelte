@@ -1,13 +1,10 @@
 <script lang="ts">
     import type { Writable } from "svelte/store";
     import { writable } from "svelte/store";
-    import { getToastStore } from "@skeletonlabs/skeleton";
     import { toastError } from "$lib/utils/error";
     import { dataUrlFromFile } from "$lib/utils/file";
     import { ImageAlbum, ImageAtlas } from "./models";
     import AtlasGallery from "./AtlasGallery.svelte";
-
-    const toastStore = getToastStore();
 
     var fileInput: HTMLInputElement | undefined = $state();
     var album: Writable<ImageAlbum> = writable(new ImageAlbum());
@@ -39,7 +36,7 @@
                     $album = $album;
                 })
                 .catch((err) => {
-                    toastError(toastStore, "貼圖集加載失敗!");
+                    toastError("貼圖集加載失敗!");
                     console.error("failed to load altas:", err);
                 })
                 .finally(() => {

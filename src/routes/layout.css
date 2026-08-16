@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@import "@skeletonlabs/skeleton";
+@import "@skeletonlabs/skeleton-svelte";
+
+/* Skeleton 主題 (v5) */
+@import "@skeletonlabs/skeleton/themes/catppuccin";
+@import "@skeletonlabs/skeleton/themes/cerberus";
+@import "@skeletonlabs/skeleton/themes/dracula";
+@import "@skeletonlabs/skeleton/themes/legacy";
+@import "@skeletonlabs/skeleton/themes/modern";
+@import "@skeletonlabs/skeleton/themes/nouveau";
+
+/* 依賴注入 */
+@plugin "@tailwindcss/typography";
+
+/* 暗色模式改為 class 驅動 (原先 darkMode: "selector") */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Tailwind v4 preflight 將 svg 設為 display:block, 導致 Iconify 圖示換行 */
+svg.iconify {
+    display: inline-block;
+    vertical-align: middle;
+}

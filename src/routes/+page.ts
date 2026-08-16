@@ -1,6 +1,6 @@
 import type { PageLoad } from "./$types";
-import type { Profile } from "$lib/Card/AvatarCard";
-import { profilesFromYaml } from "$lib/Card/AvatarCard";
+import type { Profile } from "./components/AvatarCard";
+import { profilesFromYaml } from "./components/AvatarCard";
 
 // 導入 yaml 文件數據
 import profilesYaml from "$lib/assets/profiles.yaml?raw";
